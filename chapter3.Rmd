@@ -2,7 +2,7 @@
 title       : Dimensionality reduction
 description : SVD, PCA, Correspondence analysis
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:2180e19ae8
 ## Exercise title
 
 Exercise info here
