@@ -2,7 +2,7 @@
 title       : Multivariate analysis
 description : Factor analysis, structural equation models
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
 ## Exercise title
 
 Exercise info here
