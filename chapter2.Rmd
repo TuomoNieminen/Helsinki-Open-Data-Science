@@ -1,6 +1,6 @@
 ---
 title       : Clustering and cross-validation
-description : K-means, Dsitribution based clustering(?)
+description : K-means clustering, K-medoids clustering(?), Distribution based clustering(?)
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:759a24476e
 ## Exercise title

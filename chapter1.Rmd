@@ -1,6 +1,6 @@
 ---
 title       : Regression
-description : Linear regression, polynomial regression, logistic regression, multinomial regression
+description : Linear regression, polynomial regression(?), logistic regression, multinomial regression(?)
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:4fc38a823f
 ## Exercise title
