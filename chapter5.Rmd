@@ -1,6 +1,6 @@
 ---
 title       : Causal inference
-description : Path analysis, Hidden Markov Model(?)
+description : Path analysis
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
 ## Exercise title
