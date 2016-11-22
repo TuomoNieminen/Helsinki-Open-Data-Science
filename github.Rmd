@@ -1,0 +1,52 @@
+
+---
+title: "Get started with Git and Github Desktop"
+output:
+  html_document:
+    code_folding: show
+    theme: cosmo
+    highlight: tango
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+## Useful links
+
+### RMarkdown
+- [HTML Documents](http://rmarkdown.rstudio.com/html_document_format.html)
+- [Themes](http://bootswatch.com/)
+- [R chunks](http://rmarkdown.rstudio.com/authoring_rcodechunks.html)
+- [Cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+- [Basic RMarkdown](http://rmarkdown.rstudio.com/authoring_basics.html)
+- [More about rmarkdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#raw_html)
+
+### Github
+
+- Create an Github account at [https://github.com/](https://github.com/)
+- Download Github Desktop from [https://desktop.github.com/](https://desktop.github.com/)
+- Get yourself (=Fork) the course project template from here (https://github.com/TuomoNieminen/IODS-project)
+![](C:\Users\emmak\OneDrive\DataCamp\Helsinki-Open-Data-Science\instructions\Fork.png)
+
+  - After forking the repository you will have the "IODS-project" repository under your own profile   https://github.com/*your_github_username*/IODS-project
+  - The repository holds the templates to your course diary. There are .Rmd files for every week of the course. You will modify them as the course goes on.
+  
+#### Github Desktop
+- Open and sign in into Github Desktop with the same username and password you used signing into Github
+- Next we are going to clone the repository from Github to your computer:
+    + On the left corner there is a + -mark. Under 'Clone' you should see the IODS-project repository: click and clone the repo into your computer in a location of your choosing.
+![](C:\Users\emmak\OneDrive\DataCamp\Helsinki-Open-Data-Science\instructions\clone.png)
+- Now when you do changes in the files in your computer, you can sync the changes to Github through Github Desktop. 
+
+#### Syncing
+
+- When you edit the files in your computer, they appear in the Changes at Github Desktop
+![](C:\Users\emmak\OneDrive\DataCamp\Helsinki-Open-Data-Science\instructions\changes.png)
+- To push the changes to Github, you will need to commit your changes. After writing the commit, use the 'Commit to master' button. 
+    + Commits should be short and descrive 
+![](C:\Users\emmak\OneDrive\DataCamp\Helsinki-Open-Data-Science\instructions\commit.png)
+
+- After commiting you will need to push the changes to Github e.g. use the sync button in the right corner.
+- Using the sync will push the changes from your computer to Github. You can use it also to pull the changes from Github. For example, if you do manual changes in the Github webpage or use another computer to commit changes, you will need to use sync to fetch the up-to-date files from Github.
+- After syncing you can go to your Github profile (https://github.com/*your_github_username*/IODS-project) to see the changes there.
