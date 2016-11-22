@@ -50,5 +50,3 @@ output:
 - After commiting you will need to push the changes to Github e.g. use the sync button in the right corner.
 - Using the sync will push the changes from your computer to Github. You can use it also to pull the changes from Github. For example, if you do manual changes in the Github webpage or use another computer to commit changes, you will need to use sync to fetch the up-to-date files from Github.
 - After syncing you can go to your Github profile (https://github.com/*your_github_username*/IODS-project) to see the changes there.
-
-- github account testi, ignore
