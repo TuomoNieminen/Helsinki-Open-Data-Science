@@ -46,7 +46,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:537efee431
 ## Simple Linear regression
 
 Exercise info here
@@ -83,7 +83,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:b48fefcaa3
 ## Multiple linear regression
 
 Exercise info here
@@ -120,7 +120,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:5f575264dd
 ## Regression with interactions
 
 Exercise info here
@@ -157,7 +157,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:cc303b6569
 ## Polynomial regression
 
 Exercise info here
@@ -194,7 +194,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:21f7ebfe47
 ## Logistic regression
 
 Exercise info here
@@ -231,7 +231,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:1e242cc4dd
 ## Multiple logistic regression
 
 Exercise info here
