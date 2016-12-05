@@ -102,6 +102,10 @@ In the general case, there can be any number of explanatory variables
 
 $$\mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + ... + \beta_d \cdot \mathbf{x}_d + \mathbf{\epsilon}$$
 
+In matrix notation  
+
+$$\mathbf{y} = \alpha + \mathbf{\beta} \cdot \mathbf{X} + \mathbf{\epsilon}$$
+
 R:  
 ```lm(y ~ x1 + x2 + ... + xd)```  
 
