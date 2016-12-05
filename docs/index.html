@@ -841,11 +841,11 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <!-- spoken: Linear regression is an approach for modeling the relationship between a scalar dependent variable \( y \) and one or more explanatory variables \( X \). -->
 
-<p>In linear regression, it is asumed that the relationship between a dependent variable \( y \) and explanatory variable(s) \( X \) is <em>linear</em></p>
+<p>In linear regression, it is assumed that the relationship between a dependent variable \( y \) and explanatory variable(s) \( X \) is <em>linear</em></p>
 
-<p class="fragment">\[ y = a + b \cdot X \]</p>
+<p class="fragment">\[ y = \alpha + \beta \cdot X \]</p>
 
-<p class="fragment">The goal is to estimate the unkown parameters \( a \) and \( b \).</p>
+<p class="fragment">The goal is to estimate the unkown parameters \( \alpha \) and \( \beta \).</p>
 
 </div>
 
@@ -855,7 +855,7 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <p>An unobservable random variable is assumed to add noise to the observations</p>
 
-<p class="fragment">\[ y = a + b \cdot X + \epsilon \]</p>
+<p class="fragment">\[ y = \alpha + \beta \cdot X + \epsilon \]</p>
 
 <p class="fragment">Often it is reasonable to assume \( \epsilon \sim N(0, \sigma) \)</p>
 
@@ -882,7 +882,7 @@ hljs.initHighlightingOnLoad();
 <div class="column column1 slideContent" >
 <p>In a simple case, there is only one explanatory variable \( x \)</p>
 
-<p class="fragment">\( y =  a + b \cdot x + \epsilon \)</p>
+<p class="fragment">\( y =  \alpha + \beta \cdot x + \epsilon \)</p>
 
 
 </div>
@@ -900,7 +900,7 @@ hljs.initHighlightingOnLoad();
 <div class="column column1 slideContent" >
 <p>The model can also include more than one explanatory variable</p>
 
-<p class="fragment">\[ y = a + b_1 \cdot x_1 + b_2 \cdot x_2 + \epsilon \]</p>
+<p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \epsilon \]</p>
 
 
 </div>
@@ -916,19 +916,25 @@ hljs.initHighlightingOnLoad();
 <section data-transition="concave" data-transition-speed="default">
 <h3>Multiple regression (2)</h3>
 <div class="slideContent" >
-<p>And ofcourse in the general case, there can be any number of explanatory variables</p>
+<p>In the general case, there can be any number of explanatory variables</p>
 
-<p class="fragment">\[ y = a + b_1 \cdot x_1 + b_2 \cdot x_2 + ... + b_d \cdot x_d + \epsilon \]</p>
+<p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + ... + \beta_d \cdot x_d + \epsilon \]</p>
 
 </div>
 
 </section>
 <section data-transition="concave" data-transition-speed="default">
 <h3>Polynomial terms</h3>
-<div class="mediaInline slideContent" >
+<div class="column column1 slideContent" >
 <p>It is also possible to add polynomial terms, if the effect of a variable is non-linear</p>
 
-<p class="fragment">\[ y = a + b_1 \cdot x + b_2 \cdot x^2 \]</p>
+<p class="fragment">\[ y = \alpha + \beta_1 \cdot x + \beta_2 \cdot x^2 \]</p>
+
+
+</div>
+
+<div class="column column2 slideContent" >
+
 
 <p class="fragment"><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-3"/></p>
 
@@ -940,7 +946,7 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <p>Finally, it is also possible to add interaction terms, if the variables can affect each other</p>
 
-<p class="fragment">\[ y = a + b_1 \cdot x_1 + b_2 \cdot x_2 + b_3 \cdot x_1 \cdot x_2 \]</p>
+<p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_1 \cdot x_2 \]</p>
 
 </div>
 
