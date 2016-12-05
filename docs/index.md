@@ -126,7 +126,7 @@ R:
 
 Interaction terms
 ========================================================
- Finally, it is also possible to add interaction terms, if the variables can affect each other
+ Finally, it is also possible to add interaction terms, if the explanatory variables can affect each other
  
  $$\mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + \beta_3 \cdot \mathbf{x}_1 \cdot \mathbf{x}_2 + \mathbf{\epsilon}$$
  
