@@ -1,11 +1,22 @@
 
-# Adding a presentaion of a chapter
+# Adding a presentation of a chapter
 
-These instructions tell you how to add a chapter to the course slide located [here](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/)
+These instructions tell you how to add a chapter to the course slides located [here](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/)
 
-1. Create a new presentation (.Rpres) file "chapterx.Rpres" ([instructions here](https://support.rstudio.com/hc/en-us/articles/200486468-Authoring-R-Presentations))
-2. Use the knit() function in the knitr library to transform the file into a markdown file: `knit(input = "chapterx.Rpres", output = "chapterx.md")`
-3. Add the "chapterx.md" to the index.Rpres which combines the chapters. See how the other chapters have been added and replicate.
-4. Transform the index.Rpres into an html document. For this, use Rstudio: Presentation viewer -> More -> Save as web page 
-![](pres2html.png)
-5. push the changes to github and the presentation will be updated at https://tuomonieminen.github.io/Helsinki-Open-Data-Science/
+## 1.  
+Create a new presentation file: "chapterX.Rpres" ([instructions here](https://support.rstudio.com/hc/en-us/articles/200486468-Authoring-R-Presentations))  
+
+##  2.  
+Use the knit() function in the knitr library to transform the file into a markdown file: `knit(input = "chapterX.Rpres", output = "chapterX.md")`  
+
+## 3.  
+Add the "chapterX.md" to the "index.Rpres", which combines the chapters. See how the other chapters have been added and replicate.  
+
+## 4.  
+Finally, transform the "index.Rpres" into an html document. For this, use Rstudio: Presentation viewer -> More -> Save as web page 
+![](pres2html.png)  
+
+## 5.  
+After these steps, simply push the changes to GitHub and the presentation will be updated at https://tuomonieminen.github.io/Helsinki-Open-Data-Science/
+
+<hr>
