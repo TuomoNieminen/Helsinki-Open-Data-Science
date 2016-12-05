@@ -34,8 +34,8 @@ What is a statistical model?
 A statistical model 
 
 - Embodies a set of assumptions and describes the generation of a sample from a population
-- Represents the data-generating process
-
+- Represents the data generating process
+- The uncertainty related to a sample of data is described using probability distributions
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
 
@@ -125,5 +125,5 @@ Interaction terms
  $$y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_1 \cdot x_2$$
  
 R:  
-```lm(y ~ x1 + x2 + I(x1 + x2))```  
+```lm(y ~ x1 + x2 + I(x1*x2))```  
 

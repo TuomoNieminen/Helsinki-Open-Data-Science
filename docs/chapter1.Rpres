@@ -10,7 +10,7 @@ What is a statistical model?
 A statistical model 
 
 - Embodies a set of assumptions and describes the generation of a sample from a population
-- Represents the data-generating process
+- Represents the data generating process
 - The uncertainty related to a sample of data is described using probability distributions
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
