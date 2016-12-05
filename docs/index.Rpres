@@ -1,0 +1,18 @@
+```{r, include = F}
+knitr::opts_chunk$set(echo = F)
+```
+
+Introduction to Open Data Science
+========================================================
+incremental: true
+autosize: true
+transition: concave
+
+- Kimmo Vehkalahti  
+- Tuomo Nieminen  
+- Emma Kämäräinen  
+
+```{r child ="chapter1.md"}
+
+```
+

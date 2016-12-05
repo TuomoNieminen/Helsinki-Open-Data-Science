@@ -1,0 +1,9 @@
+.reveal section p, ol, ul {
+  color: #393B3C;
+}
+
+.reveal section h3 {
+  padding-bottom: 20px;
+  border-bottom: solid 10px;
+  border-color: #D9EEF7;
+}
