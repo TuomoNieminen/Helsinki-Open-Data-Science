@@ -11,39 +11,34 @@ A statistical model
 
 - Embodies a set of assumptions and describes the generation of a sample from a population
 - Represents the data-generating process
-
+- The uncertainty related to a sample of data is described using probability distributions
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
 
-Linear regression models (1)
+Linear regression models
 ========================================================
 
-<!-- spoken: Linear regression is an approach for modeling the relationship between a scalar dependent variable $y$ and one or more explanatory variables $X$. -->
+Linear regression is an approach for modeling the relationship between a scalar dependent variable $y$ and one or more explanatory variables $X$.  
 
-In linear regression, it is assumed that the relationship between a dependent variable $y$ and explanatory variable(s) $X$ is *linear*
-
-$$y = \alpha + \beta \cdot X$$
-
-The goal is to estimate the unkown parameters $\alpha$ and $\beta$.
-
-Linear regression models (2)
-========================================================
-
-An unobservable random variable is assumed to add noise to the observations
-
-$$y = \alpha + \beta \cdot X + \epsilon$$
-
-Often it is reasonable to assume $\epsilon \sim N(0, \sigma)$
-
-<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
-
-
-Applications of linear regression models
-========================================================
 There are many applications for linear models such as
 
 - Prediction or forecasting
 - Quantifying the strength of the relationship between $y$ and $X$
+
+
+Assumptions of linear regression models
+========================================================
+
+In linear regression, it is assumed that the relationship between $y$ and  $X$ is *linear*:
+
+$$y = \alpha + \beta \cdot X + \epsilon$$
+
+- The goal is to estimate the unkown parameters $\alpha$ and $\beta$
+- An unobservable random variable ($\epsilon$) is assumed to add noise to the observations
+- Often it is reasonable to assume $\epsilon \sim N(0, \sigma^2)$
+
+<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
+
 
 Simple regression
 ========================================================
@@ -51,6 +46,9 @@ Simple regression
 In a simple case, there is only one explanatory variable $x$
 
 $y =  \alpha + \beta \cdot x + \epsilon$
+
+R:  
+```lm(y ~ x)```  
 
 ***
 ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png)
@@ -64,6 +62,9 @@ The model can also include more than one explanatory variable
 
 $$y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \epsilon$$
 
+R:  
+```lm(y ~ x1 + x2)```  
+
 ***
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
 
@@ -75,6 +76,8 @@ In the general case, there can be any number of explanatory variables
 
 $$y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + ... + \beta_d \cdot x_d + \epsilon$$
 
+R:  
+```lm(y ~ x1 + x2 + ... + xd)```  
 
 Polynomial terms
 ========================================================
@@ -82,6 +85,9 @@ Polynomial terms
 It is also possible to add polynomial terms, if the effect of a variable is non-linear
 
 $$y = \alpha + \beta_1 \cdot x + \beta_2 \cdot x^2$$
+
+R:  
+```lm(y ~ x + I(x^2))```  
 
 ***
 
@@ -94,3 +100,5 @@ Interaction terms
  
  $$y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_1 \cdot x_2$$
  
+R:  
+```lm(y ~ x1 + x2 + I(x1*x2))```  

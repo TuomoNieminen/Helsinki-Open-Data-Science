@@ -565,8 +565,8 @@ body {
 
 .reveal section h3 {
   padding-bottom: 20px;
-  border-bottom: solid 7px;
-  border-color: #DADFF6;
+  border-bottom: solid 8px;
+  border-color: #EBEEEF;
 }
 
   </style>
@@ -801,7 +801,7 @@ hljs.initHighlightingOnLoad();
   <div class="reveal">
   <div class="slides">
 
-<section data-state="section" data-transition="concave" data-transition-speed="default">
+<section data-state="section" data-transition="none" data-transition-speed="default">
 <h1>Introduction to Open Data Science</h1><p></p>
 
 <div class="slideContent" >
@@ -815,7 +815,7 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
+<section data-transition="none" data-transition-speed="default">
 <h3>Contents</h3>
 <div class="slideContent" >
 <ul>
@@ -829,14 +829,14 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
-<section data-state="sub-section" data-transition="concave" data-transition-speed="default">
+<section data-state="sub-section" data-transition="none" data-transition-speed="default">
 <h2>Regression and model validation</h2>
 <div class="slideContent" >
 
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
+<section data-transition="none" data-transition-speed="default">
 <h3>What is a statistical model?</h3>
 <div class="slideContent" >
 <p>A statistical model </p>
@@ -851,38 +851,12 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
-<h3>Linear regression models (1)</h3>
+<section data-transition="none" data-transition-speed="default">
+<h3>Linear regression models</h3>
 <div class="slideContent" >
-<!-- spoken: Linear regression is an approach for modeling the relationship between a scalar dependent variable \( y \) and one or more explanatory variables \( X \). -->
+<p>Linear regression is an approach for modeling the relationship between a scalar dependent variable \( y \) and one or more explanatory variables \( X \).  </p>
 
-<p>In linear regression, it is assumed that the relationship between a dependent variable \( y \) and explanatory variable(s) \( X \) is <em>linear</em></p>
-
-<p class="fragment">\[ y = \alpha + \beta \cdot X \]</p>
-
-<p class="fragment">The goal is to estimate the unkown parameters \( \alpha \) and \( \beta \).</p>
-
-</div>
-
-</section>
-<section data-transition="concave" data-transition-speed="default">
-<h3>Linear regression models (2)</h3>
-<div class="slideContent" >
-<p>An unobservable random variable is assumed to add noise to the observations</p>
-
-<p class="fragment">\[ y = \alpha + \beta \cdot X + \epsilon \]</p>
-
-<p class="fragment">Often it is reasonable to assume \( \epsilon \sim N(0, \sigma) \)</p>
-
-<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
-
-</div>
-
-</section>
-<section data-transition="concave" data-transition-speed="default">
-<h3>Applications of linear regression models</h3>
-<div class="slideContent" >
-<p>There are many applications for linear models such as</p>
+<p class="fragment">There are many applications for linear models such as</p>
 
 <ul>
 <li class="fragment">Prediction or forecasting</li>
@@ -892,12 +866,33 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
+<section data-transition="none" data-transition-speed="default">
+<h3>Assumptions of linear regression models</h3>
+<div class="slideContent" >
+<p>In linear regression, it is assumed that the relationship between \( y \) and  \( X \) is <em>linear</em>:</p>
+
+<p class="fragment">\[ y = \alpha + \beta \cdot X + \epsilon \]</p>
+
+<ul>
+<li class="fragment">The goal is to estimate the unkown parameters \( \alpha \) and \( \beta \)</li>
+<li class="fragment">An unobservable random variable (\( \epsilon \)) is assumed to add noise to the observations</li>
+<li class="fragment">Often it is reasonable to assume \( \epsilon \sim N(0, \sigma^2) \)</li>
+</ul>
+
+<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
 <h3>Simple regression</h3>
 <div class="column column1 slideContent" >
 <p>In a simple case, there is only one explanatory variable \( x \)</p>
 
 <p class="fragment">\( y =  \alpha + \beta \cdot x + \epsilon \)</p>
+
+<p class="fragment">R:<br/>
+<code>lm(y ~ x)</code>  </p>
 
 
 </div>
@@ -910,12 +905,15 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
+<section data-transition="none" data-transition-speed="default">
 <h3>Multiple regression (1)</h3>
 <div class="column column1 slideContent" >
 <p>The model can also include more than one explanatory variable</p>
 
 <p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \epsilon \]</p>
+
+<p class="fragment">R:<br/>
+<code>lm(y ~ x1 + x2)</code>  </p>
 
 
 </div>
@@ -928,22 +926,28 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
+<section data-transition="none" data-transition-speed="default">
 <h3>Multiple regression (2)</h3>
 <div class="slideContent" >
 <p>In the general case, there can be any number of explanatory variables</p>
 
 <p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + ... + \beta_d \cdot x_d + \epsilon \]</p>
 
+<p class="fragment">R:<br/>
+<code>lm(y ~ x1 + x2 + ... + xd)</code>  </p>
+
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
+<section data-transition="none" data-transition-speed="default">
 <h3>Polynomial terms</h3>
 <div class="column column1 slideContent" >
 <p>It is also possible to add polynomial terms, if the effect of a variable is non-linear</p>
 
 <p class="fragment">\[ y = \alpha + \beta_1 \cdot x + \beta_2 \cdot x^2 \]</p>
+
+<p class="fragment">R:<br/>
+<code>lm(y ~ x + I(x^2))</code>  </p>
 
 
 </div>
@@ -956,12 +960,15 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
-<section data-transition="concave" data-transition-speed="default">
+<section data-transition="none" data-transition-speed="default">
 <h3>Interaction terms</h3>
 <div class="slideContent" >
 <p>Finally, it is also possible to add interaction terms, if the variables can affect each other</p>
 
 <p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_1 \cdot x_2 \]</p>
+
+<p class="fragment">R:<br/>
+<code>lm(y ~ x1 + x2 + I(x1 + x2))</code>  </p>
 
 </div>
 
@@ -1017,7 +1024,7 @@ function commandsForSlide(indexh) {
       rollingLinks: false,
       
       theme: 'simple', 
-      transition: 'concave',
+      transition: 'none',
       transitionSpeed: 'default',
       rtl: false,
       width: 960,

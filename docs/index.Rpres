@@ -6,7 +6,7 @@ Introduction to Open Data Science
 ========================================================
 incremental: true
 autosize: true
-transition: concave
+transition: none
 
 University of Helsinki, spring 2017
 - prof. Kimmo Vehkalahti with  
