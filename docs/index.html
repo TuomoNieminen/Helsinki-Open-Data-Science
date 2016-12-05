@@ -832,6 +832,7 @@ hljs.initHighlightingOnLoad();
 <section data-state="sub-section" data-transition="none" data-transition-speed="default">
 <h2>Regression and model validation</h2>
 <div class="slideContent" >
+<p>Tuomo Nieminen</p>
 
 </div>
 
@@ -855,13 +856,13 @@ hljs.initHighlightingOnLoad();
 <section data-transition="none" data-transition-speed="default">
 <h3>Linear regression models</h3>
 <div class="slideContent" >
-<p>Linear regression is an approach for modeling the relationship between a scalar dependent variable \( y \) and one or more explanatory variables \( X \).  </p>
+<p>Linear regression is an approach for modeling the relationship between a scalar dependent variable \( \mathbf{y} \) and one or more explanatory variables \( \mathbf{X} \).  </p>
 
 <p class="fragment">There are many applications for linear models such as</p>
 
 <ul>
 <li class="fragment">Prediction or forecasting</li>
-<li class="fragment">Quantifying the strength of the relationship between \( y \) and \( X \)</li>
+<li class="fragment">Quantifying the strength of the relationship between \( \mathbf{y} \) and \( \mathbf{x} \)</li>
 </ul>
 
 </div>
@@ -870,14 +871,14 @@ hljs.initHighlightingOnLoad();
 <section data-transition="none" data-transition-speed="default">
 <h3>Assumptions of linear regression models</h3>
 <div class="slideContent" >
-<p>In linear regression, it is assumed that the relationship between \( y \) and  \( X \) is <em>linear</em>:</p>
+<p>In linear regression, it is assumed that the relationship between \( \mathbf{y} \) and  \( \mathbf{X} \) is <em>linear</em>:</p>
 
-<p class="fragment">\[ y = \alpha + \beta \cdot X + \epsilon \]</p>
+<p class="fragment">\[ \mathbf{y} = \alpha + \mathbf{\beta} \cdot \mathbf{X} + \mathbf{\epsilon} \]</p>
 
 <ul>
-<li class="fragment">The goal is to estimate the unkown parameters \( \alpha \) and \( \beta \)</li>
-<li class="fragment">An unobservable random variable (\( \epsilon \)) is assumed to add noise to the observations</li>
-<li class="fragment">Often it is reasonable to assume \( \epsilon \sim N(0, \sigma^2) \)</li>
+<li class="fragment">The goal is to estimate the unkown parameters \( \alpha \) and \( \mathbf{\beta} \)</li>
+<li class="fragment">An unobservable random variable (\( \mathbf{\epsilon} \)) is assumed to add noise to the observations</li>
+<li class="fragment">Often it is reasonable to assume \( \mathbf{\epsilon} \sim N(0, \sigma^2) \)</li>
 </ul>
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
@@ -888,9 +889,9 @@ hljs.initHighlightingOnLoad();
 <section data-transition="none" data-transition-speed="default">
 <h3>Simple regression</h3>
 <div class="column column1 slideContent" >
-<p>In a simple case, there is only one explanatory variable \( x \)</p>
+<p>In a simple case, there is only one explanatory variable \( \mathbf{x} \)</p>
 
-<p class="fragment">\( y =  \alpha + \beta \cdot x + \epsilon \)</p>
+<p class="fragment">\( \mathbf{y} =  \alpha + \beta \cdot \mathbf{x} + \mathbf{\epsilon} \)</p>
 
 <p class="fragment">R:<br/>
 <code>lm(y ~ x)</code>  </p>
@@ -911,7 +912,7 @@ hljs.initHighlightingOnLoad();
 <div class="column column1 slideContent" >
 <p>The model can also include more than one explanatory variable</p>
 
-<p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \epsilon \]</p>
+<p class="fragment">\[ \mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + \mathbf{\epsilon} \]</p>
 
 <p class="fragment">R:<br/>
 <code>lm(y ~ x1 + x2)</code>  </p>
@@ -932,7 +933,7 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <p>In the general case, there can be any number of explanatory variables</p>
 
-<p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + ... + \beta_d \cdot x_d + \epsilon \]</p>
+<p class="fragment">\[ \mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + ... + \beta_d \cdot \mathbf{x}_d + \mathbf{\epsilon} \]</p>
 
 <p class="fragment">R:<br/>
 <code>lm(y ~ x1 + x2 + ... + xd)</code>  </p>
@@ -945,7 +946,7 @@ hljs.initHighlightingOnLoad();
 <div class="column column1 slideContent" >
 <p>It is also possible to add polynomial terms, if the effect of a variable is non-linear</p>
 
-<p class="fragment">\[ y = \alpha + \beta_1 \cdot x + \beta_2 \cdot x^2 \]</p>
+<p class="fragment">\[ \mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x} + \beta_2 \cdot \mathbf{x}^2 + \mathbf{\epsilon} \]</p>
 
 <p class="fragment">R:<br/>
 <code>lm(y ~ x + I(x^2))</code>  </p>
@@ -966,7 +967,7 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <p>Finally, it is also possible to add interaction terms, if the variables can affect each other</p>
 
-<p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_1 \cdot x_2 \]</p>
+<p class="fragment">\[ \mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + \beta_3 \cdot \mathbf{x}_1 \cdot \mathbf{x}_2 + \mathbf{\epsilon} \]</p>
 
 <p class="fragment">R:<br/>
 <code>lm(y ~ x1 + x2 + I(x1*x2))</code>  </p>

@@ -4,6 +4,8 @@ Regression and model validation
 ========================================================
 type: sub-section
 
+Tuomo Nieminen
+
 What is a statistical model?
 ========================================================
 
@@ -18,24 +20,24 @@ A statistical model
 Linear regression models
 ========================================================
 
-Linear regression is an approach for modeling the relationship between a scalar dependent variable $y$ and one or more explanatory variables $X$.  
+Linear regression is an approach for modeling the relationship between a scalar dependent variable $\mathbf{y}$ and one or more explanatory variables $\mathbf{X}$.  
 
 There are many applications for linear models such as
 
 - Prediction or forecasting
-- Quantifying the strength of the relationship between $y$ and $X$
+- Quantifying the strength of the relationship between $\mathbf{y}$ and $\mathbf{x}$
 
 
 Assumptions of linear regression models
 ========================================================
 
-In linear regression, it is assumed that the relationship between $y$ and  $X$ is *linear*:
+In linear regression, it is assumed that the relationship between $\mathbf{y}$ and  $\mathbf{X}$ is *linear*:
 
-$$y = \alpha + \beta \cdot X + \epsilon$$
+$$\mathbf{y} = \alpha + \mathbf{\beta} \cdot \mathbf{X} + \mathbf{\epsilon}$$
 
-- The goal is to estimate the unkown parameters $\alpha$ and $\beta$
-- An unobservable random variable ($\epsilon$) is assumed to add noise to the observations
-- Often it is reasonable to assume $\epsilon \sim N(0, \sigma^2)$
+- The goal is to estimate the unkown parameters $\alpha$ and $\mathbf{\beta}$
+- An unobservable random variable ($\mathbf{\epsilon}$) is assumed to add noise to the observations
+- Often it is reasonable to assume $\mathbf{\epsilon} \sim N(0, \sigma^2)$
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
@@ -43,9 +45,9 @@ $$y = \alpha + \beta \cdot X + \epsilon$$
 Simple regression
 ========================================================
 
-In a simple case, there is only one explanatory variable $x$
+In a simple case, there is only one explanatory variable $\mathbf{x}$
 
-$y =  \alpha + \beta \cdot x + \epsilon$
+$\mathbf{y} =  \alpha + \beta \cdot \mathbf{x} + \mathbf{\epsilon}$
 
 R:  
 ```lm(y ~ x)```  
@@ -60,7 +62,7 @@ Multiple regression (1)
 
 The model can also include more than one explanatory variable
 
-$$y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \epsilon$$
+$$\mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + \mathbf{\epsilon}$$
 
 R:  
 ```lm(y ~ x1 + x2)```  
@@ -74,7 +76,7 @@ Multiple regression (2)
 
 In the general case, there can be any number of explanatory variables
 
-$$y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + ... + \beta_d \cdot x_d + \epsilon$$
+$$\mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + ... + \beta_d \cdot \mathbf{x}_d + \mathbf{\epsilon}$$
 
 R:  
 ```lm(y ~ x1 + x2 + ... + xd)```  
@@ -84,7 +86,7 @@ Polynomial terms
 
 It is also possible to add polynomial terms, if the effect of a variable is non-linear
 
-$$y = \alpha + \beta_1 \cdot x + \beta_2 \cdot x^2$$
+$$\mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x} + \beta_2 \cdot \mathbf{x}^2 + \mathbf{\epsilon}$$
 
 R:  
 ```lm(y ~ x + I(x^2))```  
@@ -98,7 +100,7 @@ Interaction terms
 ========================================================
  Finally, it is also possible to add interaction terms, if the variables can affect each other
  
- $$y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_1 \cdot x_2$$
+ $$\mathbf{y} = \alpha + \beta_1 \cdot \mathbf{x}_1 + \beta_2 \cdot \mathbf{x}_2 + \beta_3 \cdot \mathbf{x}_1 \cdot \mathbf{x}_2 + \mathbf{\epsilon}$$
  
 R:  
 ```lm(y ~ x1 + x2 + I(x1*x2))```  
