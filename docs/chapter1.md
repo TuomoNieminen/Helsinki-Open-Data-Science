@@ -71,7 +71,7 @@ $$y = a + b_1 \cdot x_1 + b_2 \cdot x_2 + \epsilon$$
 Multiple regression (2)
 ========================================================
 
-And ofcourse in the general case, there can be any number of explanatory variables
+In the general case, there can be any number of explanatory variables
 
 $$y = a + b_1 \cdot x_1 + b_2 \cdot x_2 + ... + b_d \cdot x_d + \epsilon$$
 
@@ -82,6 +82,8 @@ Polynomial terms
 It is also possible to add polynomial terms, if the effect of a variable is non-linear
 
 $$y = a + b_1 \cdot x + b_2 \cdot x^2$$
+
+***
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
 
