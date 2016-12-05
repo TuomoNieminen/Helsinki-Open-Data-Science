@@ -20,7 +20,7 @@ A statistical model
 Linear regression models
 ========================================================
 
-Linear regression is an approach for modeling the relationship between a scalar dependent variable $\mathbf{y}$ and one or more explanatory variables $\mathbf{X}$.  
+Linear regression is an approach for modeling the relationship between a dependent variable $\mathbf{y}$ and one or more explanatory variables $\mathbf{X}$.  
 
 There are many applications for linear models such as
 
