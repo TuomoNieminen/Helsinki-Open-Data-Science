@@ -843,7 +843,8 @@ hljs.initHighlightingOnLoad();
 
 <ul>
 <li class="fragment">Embodies a set of assumptions and describes the generation of a sample from a population</li>
-<li class="fragment">Represents the data-generating process</li>
+<li class="fragment">Represents the data generating process</li>
+<li class="fragment">The uncertainty related to a sample of data is described using probability distributions</li>
 </ul>
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
@@ -968,7 +969,7 @@ hljs.initHighlightingOnLoad();
 <p class="fragment">\[ y = \alpha + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_1 \cdot x_2 \]</p>
 
 <p class="fragment">R:<br/>
-<code>lm(y ~ x1 + x2 + I(x1 + x2))</code>  </p>
+<code>lm(y ~ x1 + x2 + I(x1*x2))</code>  </p>
 
 </div>
 
