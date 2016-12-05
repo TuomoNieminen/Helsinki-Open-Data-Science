@@ -6,9 +6,20 @@ incremental: true
 autosize: true
 transition: concave
 
-- Kimmo Vehkalahti  
-- Tuomo Nieminen  
-- Emma Kämäräinen  
+University of Helsinki, spring 2017
+- prof. Kimmo Vehkalahti with  
+- Tuomo Nieminen and Emma Kämäräinen  
+
+Contents
+========================================================
+incremental: false
+
+- Regression and model validation  
+- Clustering and classification  
+- Dimensionality reduction techniques  
+- Multivariate statistical modelling   
+- Causal inference  
+
 
 
 
