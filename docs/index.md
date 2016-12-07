@@ -33,10 +33,9 @@ Tuomo Nieminen
 What is a statistical model?
 ========================================================
 
-A statistical model 
-
+A statistical model: 
 - Embodies a set of assumptions and describes the generation of a sample from a population
-- Represents the data generating process
+- The model represents the data generating process
 - The uncertainty related to a sample of data is described using probability distributions
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
@@ -77,7 +76,7 @@ R:
 ```lm(y ~ x)```  
 
 ***
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png)
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
 
 
 
@@ -92,7 +91,7 @@ R:
 ```lm(y ~ x1 + x2)```  
 
 ***
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
 
 
 Multiple regression (2)
@@ -121,7 +120,7 @@ R:
 
 ***
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
 
 Interaction terms
