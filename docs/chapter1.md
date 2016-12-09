@@ -6,6 +6,18 @@ type: sub-section
 
 Tuomo Nieminen
 
+========================================================
+type: prompt
+incremental: false
+
+Linear regression
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+
+***
+
+Model validation
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+
 What is a statistical model?
 ========================================================
 
@@ -52,7 +64,7 @@ R:
 ```lm(y ~ x)```  
 
 ***
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
 
 
 
@@ -67,7 +79,7 @@ R:
 ```lm(y ~ x1 + x2)```  
 
 ***
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
 
 Multiple regression (2)
@@ -96,7 +108,7 @@ R:
 
 ***
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
 
 
 Interaction terms

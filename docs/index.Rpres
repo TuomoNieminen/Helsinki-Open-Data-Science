@@ -12,6 +12,22 @@ University of Helsinki, spring 2017
 - prof. Kimmo Vehkalahti with  
 - Tuomo Nieminen and Emma Kämäräinen  
 
+========================================================
+type: prompt
+
+```{r, fig.align = "center", fig.width = 10}
+library(ggplot2); library(ggExtra)
+
+learning2014 <-  read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/learning2014.txt", sep = "\t", header = TRUE)
+df <- learning2014[learning2014$points > 0,]
+
+
+theme_set(theme_grey(base_size = 18))
+p <- qplot(attitude, points, col = gender, data = df) + geom_smooth(method = "lm")
+ggMarginal(p,type="histogram", bins=15, colour="white")
+```
+
+
 Contents
 ========================================================
 incremental: false
