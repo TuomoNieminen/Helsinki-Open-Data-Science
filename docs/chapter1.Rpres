@@ -14,29 +14,14 @@ incremental: false
 
 Linear regression
 ```{r}
-library(ggplot2); library(ggExtra)
+library(ggplot2)
 
-# load data
 learning2014 <-  read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/learning2014.txt", sep = "\t", header = TRUE)
-df <- learning2014[,c("attitude","points")]
-df <- df[df$points > 0,]
+df <- learning2014[learning2014$points > 0,]
 
-# increase font size for plot
 theme_set(theme_grey(base_size = 18))
-
-# define what to plot
-p <- ggplot(df,aes(attitude,points))
-# define plot type
-p <- p + geom_point()
-
-# add regression line
-lm_fit <- lm(points~attitude, data = df)
-lm_params <- lm_fit$coefficients
-p <- p +  geom_abline(intercept=lm_params[1], 
-                      slope = lm_params[2],
-                      colour="red")
+p <- qplot(attitude, points, data = df) + geom_smooth(method = "lm", col = "red")
 p
-
 ```
 
 ***
