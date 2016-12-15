@@ -40,7 +40,11 @@ type: sub-section
 
 Tuomo Nieminen
 
-[code](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/chapter1.Rpres)
+<br>
+<br>
+<br>
+
+code for this presentation [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/chapter1.Rpres)
 
 Linear regression models
 ========================================================
@@ -127,7 +131,7 @@ R:
 
 Finding the model
 ========================================================
-A requirement for finding the best model is to mimize the prediction errors that the model makes
+A requirement for finding the best model is to minimize the prediction errors that the model makes
 
 - $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions
 - $\hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors
@@ -143,7 +147,7 @@ When the model is $$\boldsymbol{y} = \alpha + \beta_1 \boldsymbol{x}_1 + \beta_2
 
 - The main interest is to estimate the $\beta$ parameters
 - Interpretation of $\hat{\beta_1} = 2$: 
-  - When $x_1$ increases by one unit, the avarage change in $y$ is 2 units, given that the other variables (here $x_2$) do not change.
+  - When $x_1$ increases by one unit, the average change in $y$ is 2 units, given that the other variables (here $x_2$) do not change.
 
 
 Advanced example: Polynomial terms
