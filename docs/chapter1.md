@@ -117,7 +117,9 @@ When the model is $$\boldsymbol{y} = \alpha + \beta_1 \boldsymbol{x}_1 + \beta_2
 Advanced example: Polynomial terms
 ========================================================
 
-The linearity assumption isn's as restrictive as one could imagine. It is possible to add polynomial terms to the model, if the effect of a variable is non-linear
+The linearity assumption isn's as restrictive as one could imagine.  
+
+It is possible to add polynomial terms to the model, if the effect of a variable is non-linear
 
 $$\boldsymbol{y} = \alpha + \beta_1 \cdot \boldsymbol{x} + \beta_2 \cdot \boldsymbol{x}^2 + \boldsymbol{\epsilon}$$
 
@@ -145,11 +147,11 @@ A statistical model always includes several assumptions which describe the data 
 - Usually it is assumed that the errors are normally distributed.
 
 
-Assumptions of Linear regression models
+Assumptions of linear regression models
 ========================================================
 Analyzing the *residuals* of the model provides a method to exlopore the validity of the model assumptions. A lot of interesting assumptions are included in the expression 
 
-$$\boldsymbol{\epsilon} \dis N(0, \sigma^2)$$
+$$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 
 - The errors are normally distributed
 - The errors are not correlated
@@ -165,12 +167,6 @@ Constant variance of errors
 ========================================================
 
 The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. This can be explored with a simple scatter plot of residuals and model predictions.
-
-
-```
-## `geom_smooth()` using method = 'loess'
-## `geom_smooth()` using method = 'loess'
-```
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
