@@ -1,8 +1,8 @@
 ---
-title       : Multivariate statistical modelling
-description : Factor analysis
+title       : Dimensionality reduction techniques
+description : Principal component analysis (PCA), Correspondence analysis (CA)
 
---- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
+--- type:NormalExercise lang:r xp:100 skills:1 key:2180e19ae8
 ## Exercise title
 
 UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.

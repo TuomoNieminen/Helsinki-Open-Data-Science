@@ -2,6 +2,13 @@
 title       : Regression and model validation 
 description : Simple regression, multiple regression, regression diagnostics
 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Welcome!
+
+*** =video_link
+//player.vimeo.com/video/195829801
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:4fc38a823f
 ## Formatting data for regression
 
@@ -9,7 +16,7 @@ Welcome to chapter1: Regression and model validation.
 
 The first step of data analysis with R is reading data into R. Which function and function arguments to use to do this depends on the original format of the data. After the correct function has been identified and data read into R, the data will be in R's `data.frame` format. An $n$ x $d$ data frame has $d$ columns (the variables) and $n$ rows (the observations).
 
-For regression analysis, you choose one variable as the response and some other variable(s) as the predictor(s). There are multiple ways to select columns from a data.frame. This exercise introduces some of them.
+For regression analysis, you choose one variable as the response and some other variable(s) as the predictor(s).
 
 
 *** =instructions
@@ -120,119 +127,9 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:5f575264dd
-## Regression with interactions
-
-Exercise info here
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
-success_msg("Good work!")
-```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:cc303b6569
 ## Polynomial regression
-
-Exercise info here
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
-success_msg("Good work!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:21f7ebfe47
-## Logistic regression
-
-Exercise info here
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
-success_msg("Good work!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:1e242cc4dd
-## Multiple logistic regression
 
 Exercise info here
 
