@@ -219,7 +219,7 @@ $$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 
 - The errors are normally distributed
 - The errors are not correlated
-- The errors have constant variance
+- The errors have constant variance, $\sigma^2$
 - The size of a given error does not depend on the explanatory variables
 
 Normality of the errors (QQ-plot)
@@ -232,8 +232,8 @@ Constant variance of errors
 
 The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. This can be explored with a simple scatter plot of residuals and model predictions.
 
-```{r}
-set.seed(666)
+```{r, fig.align = "center", fig.width = 10}
+set.seed(444)
 library(gridExtra)
 x1 <- rnorm(100, mean = 4)
 x2 <- x1**2
