@@ -1,3 +1,5 @@
+
+
 ```{r, include = F}
 knitr::opts_chunk$set(echo = F)
 ```
@@ -32,10 +34,10 @@ Contents
 incremental: false
 
 - Regression and model validation  
+- Logistic regression
 - Clustering and classification  
 - Dimensionality reduction techniques  
 - Multivariate statistical modelling   
-- Causal inference  
 
 
 ```{r child ="chapter1.md"}
