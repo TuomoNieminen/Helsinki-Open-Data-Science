@@ -923,13 +923,12 @@ hljs.initHighlightingOnLoad();
 <section data-transition="none" data-transition-speed="default">
 <h3>Assumptions of linear regression models</h3>
 <div class="slideContent" >
-<p>In linear regression, it is assumed that the relationship between the target variable \( \boldsymbol{y} \) and the parameters is <em>linear</em>:</p>
+<p>In linear regression, it is assumed that the relationship between the target variable \( \boldsymbol{y} \) and the parameters (\( \alpha \), \( \boldsymbol{\beta} \)) is <em>linear</em>:</p>
 
 <p class="fragment">\[ \boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon} \]</p>
 
 <ul>
-<li class="fragment">\( \alpha \) and \( \boldsymbol{\beta} \) describe the relationship with the explanatory variables \( \boldsymbol{X} \),</li>
-<li class="fragment">The goal is to estimate the parameters \( \alpha \) and \( \boldsymbol{\beta} \)</li>
+<li class="fragment">The goal is to estimate the parameters \( \alpha \) and \( \boldsymbol{\beta} \), which describe the relationship with the explanatory variables \( \boldsymbol{X} \)</li>
 <li class="fragment">An unobservable random variable (\( \boldsymbol{\epsilon} \)) is assumed to add noise to the observations</li>
 <li class="fragment">Often it is reasonable to assume \( \boldsymbol{\epsilon} \sim N(0, \sigma^2) \)</li>
 </ul>
@@ -1019,7 +1018,7 @@ hljs.initHighlightingOnLoad();
 <div class="column column1 slideContent" >
 <p>The linearity assumption isn&#39;s as restrictive as one could imagine.  </p>
 
-<p class="fragment">It is possible to add polynomial terms to the model, if the effect of a variable is non-linear</p>
+<p class="fragment">It is possible to add polynomial terms to the model if the effect of a variable is non-linear</p>
 
 <p class="fragment">\[ \boldsymbol{y} = \alpha + \beta_1 \cdot \boldsymbol{x} + \beta_2 \cdot \boldsymbol{x}^2 + \boldsymbol{\epsilon} \]</p>
 
@@ -1092,6 +1091,8 @@ hljs.initHighlightingOnLoad();
 <p>The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. </p>
 
 <p class="fragment">This can be explored with a simple scatter plot of residuals versus model predictions.</p>
+
+<p class="fragment"><strong>Any</strong> patter in the scatter plot implies a problem with the assumptions</p>
 
 
 </div>

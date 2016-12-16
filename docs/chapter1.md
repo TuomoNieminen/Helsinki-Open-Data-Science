@@ -177,6 +177,8 @@ The constant variance assumption implies that the size of the errors should not 
 
 This can be explored with a simple scatter plot of residuals versus model predictions.
 
+**Any** patter in the scatter plot implies a problem with the assumptions
+
 ***
 
 ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)

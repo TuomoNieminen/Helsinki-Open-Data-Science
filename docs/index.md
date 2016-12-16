@@ -26,7 +26,7 @@ incremental: false
 - Logistic regression
 - Clustering and classification  
 - Dimensionality reduction techniques  
-- Multivariate statistical modelling   
+- Multivariate statistical modelling  
 
 
 
@@ -96,12 +96,11 @@ R:
 Assumptions of linear regression models
 ========================================================
 
-In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters is *linear*:
+In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
 
 $$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
 
-- $\alpha$ and $\boldsymbol{\beta}$ describe the relationship with the explanatory variables $\boldsymbol{X}$,
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
 - An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
 - Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
 
@@ -156,7 +155,7 @@ Advanced example: Polynomial terms
 
 The linearity assumption isn's as restrictive as one could imagine.  
 
-It is possible to add polynomial terms to the model, if the effect of a variable is non-linear
+It is possible to add polynomial terms to the model if the effect of a variable is non-linear
 
 $$\boldsymbol{y} = \alpha + \beta_1 \cdot \boldsymbol{x} + \beta_2 \cdot \boldsymbol{x}^2 + \boldsymbol{\epsilon}$$
 
@@ -209,6 +208,8 @@ Constant variance of errors
 The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. 
 
 This can be explored with a simple scatter plot of residuals versus model predictions.
+
+**Any** patter in the scatter plot implies a problem with the assumptions
 
 ***
 
