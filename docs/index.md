@@ -43,8 +43,9 @@ Tuomo Nieminen
 <br>
 <br>
 <br>
+<br>
 
-code for this presentation [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/chapter1.Rpres)
+The code for this presentation is  [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/chapter1.Rpres)
 
 Linear regression models
 ========================================================
@@ -95,20 +96,20 @@ R:
 Assumptions of linear regression models
 ========================================================
 
-In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$ ,$\boldsymbol{\beta}$) which describe the relationship with $\boldsymbol{X}$, is *linear*:
+In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters is *linear*:
 
-$$\boldsymbol{y} = \alpha +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
 
+- $\alpha$ and $\boldsymbol{\beta}$ describe the relationship with the explanatory variables $\boldsymbol{X}$,
 - The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$
 - An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
 - Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
-
 Structure of a linear model
 ========================================================
-In the linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
+In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
 
 - $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
 - $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
@@ -131,11 +132,11 @@ R:
 
 Finding the model
 ========================================================
-A requirement for finding the best model is to minimize the prediction errors that the model makes
+The best model is found by minimizing the prediction errors that the model would make
 
 - $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions
-- $\hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors
-- The best possible model is found by minimizing the sum of squared errors
+- $\hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals
+- The best model is found by minimizing the sum of squared residuals
 
 ***
 
@@ -197,18 +198,40 @@ $$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 Normality of the errors (QQ-plot)
 ========================================================
 
-QQ-plot of the residuals provides a method to explore the assumptio that the errors of the model are normally distributed
+QQ-plot of the residuals provides a method to explore the assumption that the errors of the model are normally distributed
+
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+
 
 Constant variance of errors
 ========================================================
 
-The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. This can be explored with a simple scatter plot of residuals and model predictions.
+The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. 
 
-<img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+This can be explored with a simple scatter plot of residuals versus model predictions.
+
+***
+
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
 
 
-Advanced: Leverage of observations
+Leverage of observations (1)
 ========================================================
 
-Residuals vs leverage
+Leverage measures how much impact a single observation has on the model. 
+
+- Residuals vs leverage plot can help identify which observations have an unusually high impact.
+- The next two slides show four examples 
+
+Leverage of observations (2)
+========================================================
+
+
+
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
+
+Leverage of observations (3)
+========================================================
+
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 

@@ -2,6 +2,10 @@
 
 ```{r, include = F}
 knitr::opts_chunk$set(echo = F)
+
+# a data set used on some plots
+learning2014 <-  read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/learning2014.txt", sep = "\t", header = TRUE)
+learning2014 <- learning2014[learning2014$points > 0,]
 ```
 
 Linear regression and model validation
@@ -13,8 +17,9 @@ Tuomo Nieminen
 <br>
 <br>
 <br>
+<br>
 
-code for this presentation [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/chapter1.Rpres)
+The code for this presentation is  [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/chapter1.Rpres)
 
 Linear regression models
 ========================================================
@@ -23,11 +28,8 @@ incremental: false
 
 ```{r}
 library(ggplot2)
-
-learning2014 <-  read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/learning2014.txt", sep = "\t", header = TRUE)
-df <- learning2014[learning2014$points > 0,]
 theme_set(theme_grey(base_size = 18))
-p <- qplot(attitude, points, data = df) + geom_smooth(method = "lm", col = "red")
+p <- qplot(attitude, points, data = learning2014) + geom_smooth(method = "lm", col = "red")
 p
 ```
 
@@ -89,20 +91,19 @@ qplot(x, y) + geom_smooth(method = "lm", se = F) + theme(
 Assumptions of linear regression models
 ========================================================
 
-In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$ ,$\boldsymbol{\beta}$) which describe the relationship with $\boldsymbol{X}$, is *linear*:
+In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
 
-$$\boldsymbol{y} = \alpha +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
 
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
 - An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
 - Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
-
 Structure of a linear model
 ========================================================
-In the linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
+In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
 
 - $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
 - $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
@@ -134,11 +135,11 @@ p$plane3d(lm(y~x1+x2))
 
 Finding the model
 ========================================================
-A requirement for finding the best model is to minimize the prediction errors that the model makes
+The best model is found by minimizing the prediction errors that the model would make
 
 - $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions
-- $\hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors
-- The best possible model is found by minimizing the sum of squared errors
+- $\hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals
+- The best model is found by minimizing the sum of squared residuals
 
 ***
 
@@ -172,7 +173,7 @@ Advanced example: Polynomial terms
 
 The linearity assumption isn's as restrictive as one could imagine.  
 
-It is possible to add polynomial terms to the model, if the effect of a variable is non-linear
+It is possible to add polynomial terms to the model if the effect of a variable is non-linear
 
 $$\boldsymbol{y} = \alpha + \beta_1 \cdot \boldsymbol{x} + \beta_2 \cdot \boldsymbol{x}^2 + \boldsymbol{\epsilon}$$
 
@@ -195,9 +196,9 @@ Model validation
 ========================================================
 type: prompt
 
-```{r, fig.align = "center", fig.width = 10}
+```{r, fig.align = "center", fig.width = 14, fig.height = 8}
 library(ggfortify)
-lm_fit <- lm(attitude~points, data = df)
+lm_fit <- lm(attitude~points, data = learning2014)
 autoplot(lm_fit, which = c(1,2,5))
 ```
 
@@ -225,29 +226,110 @@ $$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 Normality of the errors (QQ-plot)
 ========================================================
 
-QQ-plot of the residuals provides a method to explore the assumptio that the errors of the model are normally distributed
+QQ-plot of the residuals provides a method to explore the assumption that the errors of the model are normally distributed
+
+```{r, fig.width = 14, fig.height = 7}
+set.seed(444)
+x <- rpois(40, lambda = 10)
+y1 <- x + rnorm(40)
+y2 <- x + x*rnorm(40)
+lm1 <- lm(y1~x)
+lm2 <- lm(y2~x)
+
+p1 <- autoplot(lm1, which = 2) + ggtitle("Good")
+p2 <- autoplot(lm2, which = 2) + ggtitle("Bad")
+p1 + p2
+```
+
 
 Constant variance of errors
 ========================================================
 
-The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. This can be explored with a simple scatter plot of residuals and model predictions.
+The constant variance assumption implies that the size of the errors should not depend on the explanatory variables. 
 
-```{r, fig.align = "center", fig.width = 10}
-set.seed(444)
+This can be explored with a simple scatter plot of residuals versus model predictions.
+
+***
+
+```{r, fig.height = 8}
 library(gridExtra)
-x1 <- rnorm(100, mean = 4)
-x2 <- x1**2
-y <- x1 + 2*x2 + rnorm(100)
 
-lm1 <- lm(y~x1)
-lm2 <- lm(y~x1+x2)
-p1 <- ggplot(fortify(lm1), aes(.fitted, .resid)) + geom_point() + ggtitle("Bad") + geom_smooth(method = "loess", se = F)
-p2 <- ggplot(fortify(lm2), aes(.fitted, .resid), title = "Good") + geom_point() + ggtitle("Good") + geom_smooth(method = "loess", se = F)
-grid.arrange(p2, p1, ncol = 2)
+set.seed(444)
+x <- rnorm(40, mean = 2)
+y1 <- x + rnorm(40)
+y2 <- sort(x) + sapply((1:40)/10, function(s) rnorm(n = 1, sd = s))
+lm1 <- lm(y1~x)
+lm2 <- lm(y2~sort(x))
+
+p1 <- ggplot(fortify(lm1), aes(.fitted, .resid)) + geom_point() + ggtitle("Good") + geom_smooth(method = "loess", se = F)
+p2 <- ggplot(fortify(lm2), aes(.fitted, .resid)) + geom_point() + ggtitle("Bad") + geom_smooth(method = "loess", se = F)
+grid.arrange(p1,p2, ncol = 1)
 ```
 
 
-Advanced: Leverage of observations
+Leverage of observations (1)
 ========================================================
 
-Residuals vs leverage
+Leverage measures how much impact a single observation has on the model. 
+
+- Residuals vs leverage plot can help identify which observations have an unusually high impact.
+- The next two slides show four examples 
+
+Leverage of observations (2)
+========================================================
+
+```{r}
+library(ggplot2)
+library(broom)
+library(gridExtra)
+
+set.seed(666)
+n <- 30
+
+# regular relationship
+x1 <- rnorm(n, mean = 2)
+y1 <- x1 + rnorm(n)
+df1 <- augment(lm(y1 ~ x1))
+
+# unexpectedly high x value with no error
+x2 <- c(x1[-n], 2*max(x1))
+y2 <- x2 + c(rnorm(n-1),0)
+df2 <- augment(lm(y2 ~ x2))
+
+# unexpectedly high y value at the mean of x
+x3 <- c(x1[-n], mean(x1))
+y3 <- c(y1[-n], 2*max(y1))
+df3 <- augment(lm(y3 ~ x3))
+
+# high error high leverage
+x4 <- x2
+y4 <- c(y1[-which.max(x4)], min(y1))
+df4 <- augment(lm(y4 ~ x4))
+
+# plots
+sc1 <- qplot(x1,y1) + geom_smooth(method = "lm", se = F) + ggtitle("data: regular errors")
+sc2 <- qplot(x2,y2) + geom_smooth(method = "lm", se = F) + ggtitle("data: regular errors with an outlier")
+sc3 <- qplot(x3,y3) + geom_smooth(method = "lm", se = F) + ggtitle("data: high error with an outlier at the mean")
+sc4 <- qplot(x4,y4) + geom_smooth(method = "lm", se = F) + ggtitle("data: high error with an outlier")
+
+lv1 <- ggplot(data = df1, aes(.cooksd, .std.resid)) + geom_point() + 
+  stat_smooth(method ="loess", se = F) +  ggtitle("diagnostic: regular leverage")
+lv2 <- ggplot(data = df2, aes(.cooksd, .std.resid)) + geom_point() + 
+  stat_smooth(method ="loess", se = F) + ggtitle("diagnostic: high leverage")
+lv3 <- ggplot(data = df3, aes(.cooksd, .std.resid)) + geom_point() + 
+  stat_smooth(method ="loess", se = F) + ggtitle("diagnostic: regular leverage")
+lv4 <- ggplot(data = df4, aes(.cooksd, .std.resid)) + geom_point() + 
+  stat_smooth(method ="loess", se = F) + ggtitle("diagnostic: high leverage")
+
+```
+
+```{r, fig.width = 14, fig.height = 9}
+grid.arrange(sc1, lv1, sc2, lv2, nrow = 2)
+```
+
+Leverage of observations (3)
+========================================================
+
+```{r, fig.width = 14, fig.height = 9}
+grid.arrange(sc3,lv3, sc4, lv4, nrow = 2)
+```
