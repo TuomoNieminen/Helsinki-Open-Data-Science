@@ -22,4 +22,4 @@ table(cc$Class)
 plot(cc$V1, cc$V2, col = cc$Class + 3)
 
 # save 
-write.csv(file = "cc.csv", cc)
+write.csv(file = "cc.csv", cc, row.names = F)
