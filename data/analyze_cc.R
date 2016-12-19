@@ -77,7 +77,8 @@ m
 exp(coefficients(m))
 
 
-# 7. model performance and validation: prediction accuracy
+## 7. model performance: prediction
+
 
 # predict the response
 cc$prediction <- predict(m, type = "response")
@@ -88,8 +89,53 @@ head(cc[,c("Class","prediction")])
 by(cc$prediction, cc$fraud, mean)
 
 
-# 8. model performance and validation: cross-validation
+## 8. model performance: confusion matrix
+
+cc$predclass <- ifelse(cc$prediction > 0.5, 1, 0)
+
+table(class = cc$Class, pred = cc$predclass)
+
+
+## 9. model performance: prediction accuracy
+
+
+# prediction accuracy by simply guessing vs our model 
+
+# cost function (how many times we predict the wrong class)
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# guess: predict everything as non-fraud
+prop_incorrect_guesses <- cost(prediction = 0, class = cc$Class)
+prop_incorrect_guesses
+
+accuracy_guess <- 1 - prop_incorrect_guesses
+accuracy_guess * 100
+
+# how did the model perform?
+prop_incorrect_predictions <- cost(prediction = cc$prediction, class = cc$Class)
+accuracy_model <- 1 - prop_incorrect_predictions
+accuracy_model * 100
+
+## 10. model performance: ROC curve
+
+
+library(pROC)
+g <- roc(Class ~ prediction, data = cc)
+plot(g)
+
+
+## 11. model performance: cross-validation  
+
+Is the accuracy still good when predicting on unseen data? 
+
 library(boot)
 
-cost <- function(prediction, class) sum(abs(prediction - class) > 0.5)
+# cost function
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# k-fold cross-validation
 cv <- cv.glm(data = cc, cost = cost, glmfit = m, K = 10)$delta
+
+accuracy <- 1 - cv[1]
+accuracy*100
+

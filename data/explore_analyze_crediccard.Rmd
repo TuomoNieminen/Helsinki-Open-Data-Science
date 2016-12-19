@@ -113,7 +113,7 @@ exp(coefficients(m))
 ```
 
 
-## 7. model performance: prediction accuracy
+## 7. model performance: prediction
 
 ```{r}
 # predict the response
@@ -125,40 +125,58 @@ head(cc[,c("Class","prediction")])
 by(cc$prediction, cc$fraud, mean)
 ```
 
-## 8. model performance: prediction accuracy (2)
+## 8. model performance: confusion matrix
+
+```{r}
+cc$predclass <- ifelse(cc$prediction > 0.5, 1, 0)
+
+table(class = cc$Class, pred = cc$predclass)
+
+```
+
+## 9. model performance: prediction accuracy
 ```{r}
 # prediction accuracy by simply guessing vs our model 
 
 # cost function (how many times we predict the wrong class)
-cost <- function(prediction, class) sum(abs(prediction - class) > 0.5)
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
 
 # guess: predict everything as non-fraud
-incorrect_guesses <- cost(prediction = 0, class = cc$Class)
-incorrect_guesses
+prop_incorrect_guesses <- cost(prediction = 0, class = cc$Class)
+prop_incorrect_guesses
 
-accuracy_guess <- 1 - incorrect_guesses / nrow(cc)
+accuracy_guess <- 1 - prop_incorrect_guesses
 accuracy_guess * 100
 
 # how did the model perform?
-incorrect_predictions <- cost(prediction = cc$prediction, class = cc$Class)
-accuracy_model <- 1 - incorrect_predictions / nrow(cc)
+prop_incorrect_predictions <- cost(prediction = cc$prediction, class = cc$Class)
+accuracy_model <- 1 - prop_incorrect_predictions
 accuracy_model * 100
 ```
 
+## 10. model performance: ROC curve
 
-## 9. model performance: cross-validation
+```{r}
+library(pROC)
+g <- roc(Class ~ prediction, data = cc)
+plot(g)
+```
+
+
+## 11. model performance: cross-validation  
+
+Is the accuracy still good when predicting on unseen data? 
 
 ```{r}
 library(boot)
 
 # cost function
-cost <- function(prediction, class) sum(abs(prediction - class) > 0.5)
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
 
 # k-fold cross-validation
 cv <- cv.glm(data = cc, cost = cost, glmfit = m, K = 10)$delta
 
-accuracy <- 1 - cv[1] / nrow(cc)
+accuracy <- 1 - cv[1]
 accuracy*100
 
 ```
-
