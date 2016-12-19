@@ -123,12 +123,9 @@ $(document).ready(function () {
 </div>
 
 
-<p>Explore and analyze the credit card data.</p>
-<div id="read-the-data" class="section level3">
-<h3>Read the data</h3>
+<p>The original credit card data included over 200K observations. The dataset is heavily unbalanced in terms of examples of frauds and nonfrauds (only a few frauds). This is an analysis of a truncated dataset containing 10K observations. All the frauds are however included.</p>
 <pre class="r"><code>setwd(&quot;C:/Users/Tuomo/Documents/GitHub/Helsinki-Open-Data-Science/data&quot;)
 cc &lt;- read.csv(&quot;cc.csv&quot;)</code></pre>
-</div>
 <div id="exploration" class="section level1">
 <h1>Exploration</h1>
 <p>Dimensions of the data, basic stats of variables, exploratory graphs.</p>
@@ -337,7 +334,7 @@ cv &lt;- cv.glm(data = cc, cost = cost, glmfit = m, K = 10)$delta
 
 accuracy &lt;- 1 - cv[1] / nrow(cc)
 accuracy*100</code></pre>
-<pre><code>## [1] 99.78049</code></pre>
+<pre><code>## [1] 99.78356</code></pre>
 </div>
 </div>
 

@@ -9,9 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Explore and analyze the credit card data.
-
-### Read  the data
+The original credit card data included over 200K observations. The dataset is heavily unbalanced in terms of examples of frauds and nonfrauds (only a few frauds). This is an analysis of a truncated dataset containing 10K observations. All the frauds are however included.
 
 ```{r}
 setwd("C:/Users/Tuomo/Documents/GitHub/Helsinki-Open-Data-Science/data")
