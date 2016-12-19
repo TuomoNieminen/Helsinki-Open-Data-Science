@@ -1,5 +1,7 @@
+# format credit card data for iods course
 # description of the data is here: https://www.kaggle.com/dalpozz/creditcardfraud
 # Please cite: Andrea Dal Pozzolo, Olivier Caelen, Reid A. Johnson and Gianluca Bontempi
+
 creditcard <- read.csv("creditcard.csv", header = T)
 
 # split the data to frauds and nonfrauds
@@ -15,6 +17,7 @@ cc <- rbind(frauds, nonfrauds)
 
 # random order
 cc <- cc[sample(nrow(cc)),]
+rownames(cc) <- 1:nrow(cc)
 
 # distribution of frauds and nonfrauds
 table(cc$Class)

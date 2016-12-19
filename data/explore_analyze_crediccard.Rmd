@@ -1,0 +1,166 @@
+---
+title: "Credic card data (cc) exploration"
+author: "Tuomo Nieminen"
+date: "19 joulukuuta 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Explore and analyze the credit card data.
+
+### Read  the data
+
+```{r}
+setwd("C:/Users/Tuomo/Documents/GitHub/Helsinki-Open-Data-Science/data")
+cc <- read.csv("cc.csv")
+```
+
+
+# Exploration
+
+Dimensions of the data, basic stats of variables, exploratory graphs.
+
+## 1. Structure
+
+```{r}
+
+# dimensions (N x d)
+dim(cc)
+
+# structure
+str(cc)
+
+```
+
+## 2. Summaries
+
+```{r}
+# summaries of transaction amounts and frauds
+summary(cc$Amount)
+```
+
+
+Class == 1 denotes a fraudulent transaction.
+
+```{r}
+table(cc$Class)
+```
+
+```{r}
+# how many zero amount transactions?
+sum(cc$Amount == 0)
+
+# exclude rows where Amount equals zero
+cc <- cc[cc$Amount != 0, ]
+```
+
+## 3. Exploring Amount vs frauds (1)
+
+```{r}
+# recode 'Class' as a factor and save as a column called 'fraud'
+cc$fraud <- factor(cc$Class, levels = c(0,1), labels = c("N","Y"))
+
+# box plot of transaction amounts by fraud/legit on log scale
+library(ggplot2)
+p <- ggplot(cc, aes(x = fraud, y = Amount))
+box <- p + geom_boxplot()
+box + scale_y_log10()
+```
+
+## 4. Exploring Amount vs frauds (2)
+
+```{r}
+# categorize transaction amount
+cc$amount <- cut(cc$Amount, breaks = c(0, 5, 20, 100, 1000, 5000))
+
+# create a function which computes a percentage table
+prc_tbl <- function(x, y) {
+  t1 <- table(x, y)
+  p <- prop.table(t1)
+  p <- addmargins(p)
+  p <- round(p, 4)
+  100*p
+}
+
+# percentage table of amount categories vs fraud/non-fraud
+prc_tbl(cc$amount, cc$fraud)
+```
+
+# Logistic regression modelling
+
+Fitting a logistic regression model with glm(). Interpreting the parameters. Calculating prediction accuracy. k-fold cross validation.
+
+## 5. fitting a logistic regression model
+
+```{r}
+# fit a model
+m <- glm(fraud~Amount+V2+V3+V4, family = binomial(), data = cc)
+
+# summary of the model
+summary(m)
+```
+
+
+## 6. analyzing the model output: coefficients
+
+```{r}
+# print the coefficients
+m
+
+# print exponentiated coefficients
+exp(coefficients(m))
+```
+
+
+## 7. model performance: prediction accuracy
+
+```{r}
+# predict the response
+cc$prediction <- predict(m, type = "response")
+
+head(cc[,c("Class","prediction")])
+
+# average predicted fraud probabilities for frauds and nonfrauds
+by(cc$prediction, cc$fraud, mean)
+```
+
+## 8. model performance: prediction accuracy (2)
+```{r}
+# prediction accuracy by simply guessing vs our model 
+
+# cost function (how many times we predict the wrong class)
+cost <- function(prediction, class) sum(abs(prediction - class) > 0.5)
+
+# guess: predict everything as non-fraud
+incorrect_guesses <- cost(prediction = 0, class = cc$Class)
+incorrect_guesses
+
+accuracy_guess <- 1 - incorrect_guesses / nrow(cc)
+accuracy_guess * 100
+
+# how did the model perform?
+incorrect_predictions <- cost(prediction = cc$prediction, class = cc$Class)
+accuracy_model <- 1 - incorrect_predictions / nrow(cc)
+accuracy_model * 100
+```
+
+
+## 9. model performance: cross-validation
+
+```{r}
+library(boot)
+
+# cost function
+cost <- function(prediction, class) sum(abs(prediction - class) > 0.5)
+
+# k-fold cross-validation
+cv <- cv.glm(data = cc, cost = cost, glmfit = m, K = 10)$delta
+
+accuracy <- 1 - cv[1] / nrow(cc)
+accuracy*100
+
+```
+
