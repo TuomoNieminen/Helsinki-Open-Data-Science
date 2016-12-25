@@ -1,6 +1,6 @@
 ---
-title       : Clustering and classification
-description : K-means clustering, Logistic regression, Discriminant analysis, Cross validation (Training set and test set)
+title       : Logistic regression
+description : Logistic regression
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:759a24476e
 ## Exercise title
