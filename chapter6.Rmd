@@ -1,0 +1,40 @@
+---
+title       : Multivariate statistical modelling
+description : Factor analysis
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
+## Exercise title
+
+UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+test_function("", args = "",incorrect_msg = "")
+test_object("", incorrect_msg = "")
+test_output_contains("", incorrect_msg = "")
+
+test_error()
+success_msg("Good work!")
+```
