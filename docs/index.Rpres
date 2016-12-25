@@ -43,3 +43,5 @@ incremental: false
 ```{r child ="chapter1.md"}
 ```
 
+```{r child ="chapter4.md"}
+```
