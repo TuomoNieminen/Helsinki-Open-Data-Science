@@ -1,0 +1,70 @@
+
+```{r, include = F}
+#knit(input = "chapter4.Rpres", output = "chapter4.md")
+```
+
+Contents
+========================================================
+
+- K-means
+- K-medoids (?)
+- Discriminant analysis  (+ classification)
+- Cross validation: Training set and test set
+- DA biplot (not into details here)
+
+K-means (1)
+==================================================
+
+- Clustering: 
+
+> Find groups within data so that observations within groups are more similar with each other than with observations with other groups 
+
+- K-means is possibly the oldest and used clustering method in many fields of study
+    - Easy to use and relatively fast, often finds a solution
+    - Small change in the dataset can produce very different results
+    
+***
+
+*nice plot here*
+
+K-means (2)
+==================================================
+
+Algorithm
+
+1. Choose the number of clusters you want to have and pick initial cluster centroids.
+2. Calculate distances between centroids and datapoints. 
+3. For all the data points: Assign data point to cluster based on which centroid is closest.
+4. Update centroids: within each cluster, calculate new centroid
+5. Update clusters: Calculate distances between data points and updated centroids. If some other centroid is closer than the cluster centroid where the data point belongs, the data point changes cluster.
+
+Continue updating steps until the centroids or the clusters do not change
+
+K-means (3)
+==================================================
+
+- Distance measure in the algorithm
+- Similarity/dissimilarity measures between data points
+- Calculating centroid: usually mean of the data points of the cluster
+- If distance measure is euclidean distance, the mean as centroid minimizes the objective function of k-means 
+
+K-medoids
+==================================================
+
+Discriminant analysis
+==================================================
+
+Cross Validation
+==================================================
+
+- Split the data into two: training set and test/validation set 
+- Train the statistical model with training set
+- Use test set validate the performace of the model:
+    + Error rate for classification
+    + Mean squared error for example linear regeression
+    + Other error measures
+- IMPORTANT
+
+DA biplot
+==================================================
+
