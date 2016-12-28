@@ -212,7 +212,7 @@ The instructions to do all this were above. You will also need R and R studio.
 
 In this exercise you will create a README file which will include a description of the course and the course project. GitHub repositories typically include a README file to make it easier to understand a project. Instructions for the exercise are below.
 
-1. Create a .RMarkdown file with RStudio (File > New File > R Markdown). R studio prompts for a title. The output or the title will be removed, so they do not matter in this case. Just press Ok.
+1. Create a .RMarkdown file with RStudio (File > New File > R Markdown). R studio prompts for a title. The output of the title will be removed, so it does not matter in this case. Just press Ok.
 
 2. When the new file opens, RStudio has some examples for you in there. They can be useful to look at, but for this exercise we do not need them. Delete everything in the file, including the first rows that define the title, author, date and output. You are left with a blank file.
 
