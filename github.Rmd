@@ -78,7 +78,7 @@ Follow the steps below.
 - Install the software. The installation instructions can be seen [here](https://help.github.com/desktop/guides/getting-started/installing-github-desktop/).
 - (Git and Git Shell come with the Github Desktop installation)
 - Open and sign in into the Github Desktop with the same username and password you used signing into Github.
-- **Is there a need to configure Git as in GitHubs [own instructions](https://help.github.com/desktop/guides/getting-started/configuring-git-for-github-desktop/)?**
+- **KESKEN. Is there a need to configure Git as in [GitHubs own instructions](https://help.github.com/desktop/guides/getting-started/configuring-git-for-github-desktop/)?**
 
 ### Creating a local copy of a repository
 
@@ -198,7 +198,7 @@ After editing the file, you will need to write a commit (and description of the 
 
 # Summary
 
-Perhaps insert a short summary here describing what should have been accomplished by now. (which files should be seen where and which programs installed)
+KESKEN. Perhaps insert a short summary here describing what should have been accomplished by now. (which files should be seen where and which programs installed)
 
 # Exercise
 
