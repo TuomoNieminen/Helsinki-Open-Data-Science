@@ -48,6 +48,7 @@ To enable your own course diary web page do the following. In your **own version
 - If you immidiately see a green checkmark and the text "Your site is published at http..." then no action is necessary and that's the address to your course diary web page.
 - If not: under **Source** select the option **master branch** and click **save**. The green checkmark and the above text should appear with the link to your course diary page.
 - Open the link to your course diary web page. At the end of this course, all your weekly exercises will be seen there.
+- Your course diary web page is at *your_github_username*.github.io/IODS-project
 
 
 **Summary**: You have now created your own GitHub account, forked the course project template repository and enabled a web page which combines your weekly exercises to a single course diary web page. Great! Now let's look at how to work with GitHub from your own computer.
