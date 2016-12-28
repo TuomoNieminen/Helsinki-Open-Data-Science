@@ -87,14 +87,14 @@ Next, you will create a copy of the IODS-project repository -which you already c
 - Click the + -mark at the left corner of GitHub desktop 
 - Choose the 'Clone' tab and choose the IODS-project repository
 - Click on 'Clone IODS-project' and save the folder into your computer in a location of your choosing
-![](instructions/clone.png)
+![](instructions/clone.PNG)
 
 Now when you make changes to the course files on your computer, you can upload the changes to GitHub by *syncing* the changes with Github Desktop, which is what we'll look at next.
 
 ### Syncing files
 
 When you make changes to the (repository) files in your computer, they appear in the Changes at Github Desktop
-![](instructions/changes.png) 
+![](instructions/changes.PNG) 
 
 To push these changes to Github, you will need to first *commit* your changes. In short, you will write a small message that describes the changes you have done. It is useful to make commits often and even on small changes. Commits are at the heart of the version control system: a single commit is a single version of the file.
 
@@ -102,7 +102,7 @@ To push these changes to Github, you will need to first *commit* your changes. I
 - Commits are important: you can revert back to them, or undo them. 
 - Clear messages help you to locate the correct version later
   
-![](instructions/commit.png)
+![](instructions/commit.PNG)
 
 Uploading local changes to your online GitHub repository is done by:
 
@@ -146,7 +146,7 @@ In order to navigate in Git Shell / Terminal, you will find these tips useful:
 
 Example:
     
-![](instructions/git_navigate.png)
+![](instructions/git_navigate.PNG)
 
 ### Operate with Git using Git Shell / Terminal
 
@@ -190,11 +190,11 @@ It is possible to add and/or change files directly at the Github website. Howeve
 
 In your repository, you can open files by simply clicking the file name. After opening a file, on the right you have a edit button, where you can modify the file. You can then directly write to the file, or for example copy and paste the contents of a file from elsewhere to that file.
 
-![](instructions/edit_webpage.png)
+![](instructions/edit_webpage.PNG)
 
 After editing the file, you will need to write a commit (and description of the commit, if you wish) in a box at the bottom of the page. Then you can save the changes to your repository by clicking the 'Commit changes' button.
 
-![](instructions/commit_webpage.png)
+![](instructions/commit_webpage.PNG)
 
 # Summary
 
@@ -225,7 +225,7 @@ In this exercise you will create a README file which will include a description 
     + In GitHub Desktop: Choose the project folder. You can see the file you created in the changes-tab. Write a commit message for the changes, 'commit to the master' and sync. 
     + In Git Shell or Terminal: go to your repository folder in your computer. If your repository is up to date with the Github repository (note: use `git status` and then maybe `git pull`), you can add the new file with `git add README.Rmd`. Then write a commit message for the changes with `git commit -m "commit_message_here"`. Then use the command `git push` to push the changes to Github. 
     + You can add new file directly in the webpage into your repository with 'Create new file' or Upload files'.
-    ![](instructions/add_file_webpage.png)
+    ![](instructions/add_file_webpage.PNG)
     
 6. After a few moments, go to https://github.com/*your_github_username*/IODS-project to see what have changed. 
 
