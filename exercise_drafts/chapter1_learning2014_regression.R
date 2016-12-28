@@ -38,7 +38,6 @@ lrn14$organz_study <- rowSums(lrn14[ , c("ST01","ST09","ST17","ST25")])
 # sum questions "ST04","ST12","ST20","ST28" into "time_managem"
 lrn14$time_managem <- rowSums(lrn14[ , c("ST04","ST12","ST20","ST28")])
 
-
 # 3 Combining variables (2)
 # -------------
 
@@ -144,3 +143,11 @@ m2 <- lm(points ~ attitude + stra, data = learning2014)
 summary(m2)
 
 # 10 model assumptions
+
+m2 <- lm(points ~ attitude + stra, data = learning2014)
+
+# diagnostic plots 
+# 1: Redisuals vs Fitted values (homogenuity of variance)
+# 2: qq-plot of residuals (normality of errors)
+# 5: Residuals vs Leverage (impact of observations)
+plot(m2, which = c(1,2,5))
