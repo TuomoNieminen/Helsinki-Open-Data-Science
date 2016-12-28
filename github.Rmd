@@ -216,7 +216,7 @@ In this exercise you will create a README file which will include a description 
 
 2. When the new file opens, RStudio has some examples for you in there. They can be useful to look at, but for this exercise we do not need them. Delete everything in the file, including the first rows that define the title, author, date and output. You are left with a blank file.
 
-3. Write something about this course in the file. You can use RMarkdown syntax: headers, tables, lists etc. Include a link to your project web page.
+3. Write something about this course in the file. You can use RMarkdown syntax: headers, tables, lists etc. Also include a link to your course diary web page.
 
 4. Save the file in your computer in the IODS-Project folder as 'README.Rmd'.
 (**Advanced** : If you want to include R-code output to the readme document, you can convert the .Rmd to an .md file using the knit() function in the knitr library, e.g knit(input="readme.Rmd, output="README.md").)
