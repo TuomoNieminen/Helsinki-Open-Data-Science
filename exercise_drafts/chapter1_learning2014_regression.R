@@ -66,7 +66,7 @@ learning2014 <- lrn14[, c("gender","Age","attitude", "deep", "stra", "surf", "Po
 str(learning2014)
 
 
-# 4 modifying column names
+# 5 modifying column names
 # -----------------
 
 # print out the column names of the data
@@ -78,7 +78,8 @@ colnames(learning2014)[2] <- "age"
 # change the name of "Points" to "points"
 colnames(learning2014)[7] <- "points"
 
-# 5 Excluding observations
+
+# 6 Excluding observations
 # ---------
 
 # create and print a logical vector
@@ -88,7 +89,7 @@ learning2014$points > 0
 learning2014 <- learning2014[learning2014$points > 0, ]
 
 
-# 6 Exploring the data
+# 7 Exploring the data graphically
 # --------------
 
 # a quick way to see what's going on with scatter plots
@@ -100,7 +101,7 @@ library(GGally)
 ggpairs(learning2014, aes(colour = gender))
 
 
-# 7 Simple regression (1)
+# 8 Simple regression (1)
 # ------------------
 
 # Use the gglot2 library
@@ -124,7 +125,7 @@ p
 p <- p + ggtitle("students attitude and exam points")
 p
 
-# 8. Simple regression (2)
+# 9 Simple regression (2)
 
 # fit a regression model
 m1 <- lm(points ~ attitude, data = learning2014)
@@ -133,7 +134,7 @@ m1 <- lm(points ~ attitude, data = learning2014)
 summary(m1)
 
 
-# 9 multiple regression
+# 10 multiple regression
 
 library(GGally)
 ggpairs(learning2014, aes(col = gender))
@@ -142,7 +143,7 @@ m2 <- lm(points ~ attitude + stra, data = learning2014)
 
 summary(m2)
 
-# 10 model assumptions
+# 11 model assumptions
 
 m2 <- lm(points ~ attitude + stra, data = learning2014)
 
@@ -151,3 +152,13 @@ m2 <- lm(points ~ attitude + stra, data = learning2014)
 # 2: qq-plot of residuals (normality of errors)
 # 5: Residuals vs Leverage (impact of observations)
 plot(m2, which = c(1,2,5))
+
+# 12 predicting
+
+m2 <- lm(points ~ attitude + stra, data = learning2014)
+
+# Create toy new data
+new_data <- data.frame(attitude = c(1,4), stra = c(2,5))
+rownames(new_data) <- c("George","Samantha")
+
+predict(m2, newdata = new_data)
