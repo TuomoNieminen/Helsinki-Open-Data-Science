@@ -1,7 +1,6 @@
 
 
 
-
 Introduction to Open Data Science
 ========================================================
 incremental: true

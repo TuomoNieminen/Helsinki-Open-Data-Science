@@ -1134,6 +1134,122 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
+<section data-transition="none" data-transition-speed="default">
+<h3>Contents</h3>
+<div class="slideContent" >
+<ul>
+<li class="fragment">K-means</li>
+<li class="fragment">K-medoids (?)</li>
+<li class="fragment">Discriminant analysis  (+ classification)</li>
+<li class="fragment">Cross validation: Training set and test set</li>
+<li class="fragment">DA biplot (not into details here)</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
+<h3>K-means (1)</h3>
+<div class="column column1 slideContent" >
+<ul>
+<li class="fragment">Clustering: </li>
+</ul>
+
+<blockquote class="fragment">
+<p>Find groups within data so that observations within groups are more similar with each other than with observations with other groups </p>
+</blockquote>
+
+<ul>
+<li class="fragment">K-means is possibly the oldest and used clustering method in many fields of study
+
+<ul>
+<li class="fragment">Easy to use and relatively fast, often finds a solution</li>
+<li class="fragment">Small change in the dataset can produce very different results</li>
+</ul></li>
+</ul>
+
+
+</div>
+
+<div class="column column2 slideContent" >
+
+
+<p class="fragment"><em>nice plot here</em></p>
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
+<h3>K-means (2)</h3>
+<div class="slideContent" >
+<p>Algorithm</p>
+
+<ol>
+<li class="fragment">Choose the number of clusters you want to have and pick initial cluster centroids.</li>
+<li class="fragment">Calculate distances between centroids and datapoints. </li>
+<li class="fragment">For all the data points: Assign data point to cluster based on which centroid is closest.</li>
+<li class="fragment">Update centroids: within each cluster, calculate new centroid</li>
+<li class="fragment">Update clusters: Calculate distances between data points and updated centroids. If some other centroid is closer than the cluster centroid where the data point belongs, the data point changes cluster.</li>
+</ol>
+
+<p class="fragment">Continue updating steps until the centroids or the clusters do not change</p>
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
+<h3>K-means (3)</h3>
+<div class="slideContent" >
+<ul>
+<li class="fragment">Distance measure in the algorithm</li>
+<li class="fragment">Similarity/dissimilarity measures between data points</li>
+<li class="fragment">Calculating centroid: usually mean of the data points of the cluster</li>
+<li class="fragment">If distance measure is euclidean distance, the mean as centroid minimizes the objective function of k-means </li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
+<h3>K-medoids</h3>
+<div class="slideContent" >
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
+<h3>Discriminant analysis</h3>
+<div class="slideContent" >
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
+<h3>Cross Validation</h3>
+<div class="slideContent" >
+<ul>
+<li class="fragment">Split the data into two: training set and test/validation set </li>
+<li class="fragment">Train the statistical model with training set</li>
+<li class="fragment">Use test set validate the performace of the model:
+
+<ul>
+<li class="fragment">Error rate for classification</li>
+<li class="fragment">Mean squared error for example linear regeression</li>
+<li class="fragment">Other error measures</li>
+</ul></li>
+<li class="fragment">IMPORTANT</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="none" data-transition-speed="default">
+<h3>DA biplot</h3>
+<div class="slideContent" >
+
+</div>
+
+</section>
 
 
   </div>

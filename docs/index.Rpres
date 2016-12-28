@@ -1,5 +1,4 @@
 
-
 ```{r, include = F}
 knitr::opts_chunk$set(echo = F)
 ```
@@ -40,7 +39,7 @@ incremental: false
 - Multivariate statistical modelling  
 
 
-```{r child ="chapter1.md"}
+```{r child ="regression.md"}
 ```
 
 ```{r child ="chapter4.md"}
