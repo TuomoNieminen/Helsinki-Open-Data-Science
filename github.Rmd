@@ -11,70 +11,133 @@ output:
     smooth_scroll: true
 ---
 
-## Github
+# Github
 
-In this course, we will use Github to store your course files and return weekly exercises. [Why use Github?](http://kbroman.org/github_tutorial/pages/why.html) Github is widely used version control that keeps track of your code, so in case of accidents you can always restore the previous situation. With Github, you can access your code from anywhere. The codes are for all to see, so it is open source. In this course, you will learn how to use the basics of Github.
+[Why use Github?](http://kbroman.org/github_tutorial/pages/why.html) Git is a widely used version control software that helps keep track of your files, so that in case of an accident you can always restore a previous version. GitHub helps you host these (version controlled) files on the web, so you can access your files from anywhere and share them with others. 
 
-First, you will need to do a Github account.
+During this course, you will learn the basics of Github. You will use Github to store your course files and return weekly exercises. To get started on using GitHub, follow the steps outlined in this document
+
+## Basics
+
+First, you will need to create a Github account.
 
 - Create an Github account at [https://github.com/](https://github.com/)
 
-During this course, you will do exercises and return them. To help you to get started, we have created a course template for you. The template creates a webpage that contains all your exercises. At the end of this course, all your exercises will be seen there. 
+A group of files belonging to a single project is called a *repository* on GitHub. A repository is like the main folder of a single project on your computer, under which are the files related to the project.
+
+To help you to get started, we have created a GitHub repository which serves as a project template for you during this course. The next step is to copy that template so that you have your own version of it in your GitHub account.
+
+## The course project template
+
+Follow the steps below to get yourself the course project template for weekly exercises and your course diary.
 
 - Get yourself (=Fork) the course project template from https://github.com/TuomoNieminen/IODS-project
-![](instructions/Fork.PNG)
-
+![](instructions/Fork.PNG) by pressing the *Fork* button.
 - After forking the repository you will have the "IODS-project" repository under your own profile https://github.com/*your_github_username*/IODS-project
-- The repository holds the templates to your course diary. There are .Rmd files for every week of the course. You will modify them as the course goes on. 
 
-Github Desktop is a software that makes it easy to use Github. We recommend that you use it. You can also use use Git Shell, but Github Desktop may be a little easier. The instructions for both Github Desktop and Git Shell are below. If you are doing exercises on the university computers, you will need to add the files manually on the Github website. See 'Adding files at Github website' for more details.
+The forked repository holds the templates to your weekly course exercises and your course diary. There are R markdown (.Rmd) files for every week of the course. You will modify them as the course goes on. There is also one index.Rmd file and an index.html file, which combine the weekly exercises to a single publishable course diary web page.
+
+
+## The course diary web page
+
+Any GitHub repository can automatically create a web page if an index.html document is included in the repository. As mentioned, the repository you just forked already includes such a document. 
+
+To enable the web page do the following. In your **own version** of the course project template (i.e. the repository at https://github.com/*your_github_username*/IODS-project):
+
+- Go to **Settings** (topright) and then scoll down to **GitHub Pages**
+- If you see the text "Your site is published at .." then no action is necessary and that's the address to your course diary web page.
+- If not: under **Source** select the option **master branch** and click **save**. The above text should appear with the link to your course diary page.
+
+Follow the link after the text "Your site is published at .." to your course diary web page. At the end of this course, all your weekly exercises will be seen there. 
+
+
+**Summary**: You have now created a GitHub account, copyed the course project template repository and created a web page which combines your weekly exercises to a single course diary web page. Great! Now let's look at how to work with GitHub from your own computer.
+
+
+# Working with Github
+
+The idea of GitHub is to publish, keep track of and store work that you are doing on your local computer. For this you need two things:
+
+1. A local copy of the GitHub repository on your own computer
+2. A way to upload the changes you make locally into your GitHub repository
+
+Github Desktop is a software that makes it easy to use Github. We recommend that you use it. Another option is to use Git Shell, a command line type user interface.  
+
+The instructions for both Github Desktop and Git Shell are below. 
+
+**Note**: The purpose of GitHub Desktop is to make it easier to upload the local changes you make to your project files to GitHub. If you are doing exercises on a university computer, you will not be able to use GitHub Desktop. Instead, you will need to add the files manually on the Github website. This is straight forward. See 'Adding files at the Github website' for more details.
+
+## Option 1: GitHub Desktop  
+
+Downloading the GitHub Desktop software, creating a local copy of you GitHub repository, syncing files between your local and remote (GitHub) copy. 
+
+### Downloading and getting started 
+
+First follow the steps below.
 
 - Download Github Desktop from [https://desktop.github.com/](https://desktop.github.com/). The installation instructions can be seen [here](https://help.github.com/desktop/guides/getting-started/installing-github-desktop/).
-- Git Shell comes with the Github Desktop
-  
-### Github Desktop
-Open and sign in into Github Desktop with the same username and password you used signing into Github. Then copy (or *clone*) the IODS project repository from Github to your computer:
+- (Git and Git Shell come with the Github Desktop)
+- Open and sign in into Github Desktop with the same username and password you used signing into Github.
 
-- On the left corner there is a + -mark. Under 'Clone' you should see the IODS-project repository: click and clone the repo into your computer in a location of your choosing.
+### Creating a local copy of a repository
+
+Next, you will create a copy of the IODS-project repository to your computer. Follow the instructions below:
+
+- Click the + -mark at the left corner of GitHub desktop 
+- Choose the 'Clone' tab and choose the IODS-project repository
+- Click on 'Clone IODS-project' and save the folder into your computer in a location of your choosing
 ![](instructions/clone.png)
 
-Now when you do changes in the course files in your computer, you can sync the changes to Github through Github Desktop. 
+Now when you make changes to the course files on your computer, you can upload the changes to GitHub by *syncing* the changes with Github Desktop, which is what we'll look at next.
 
-### Syncing with Github Desktop
+### Syncing files
 
 When you edit the files in your computer, they appear in the Changes at Github Desktop
 ![](instructions/changes.png) 
 
-To push the changes to Github, you will need to commit your changes. In short, you will write a small message that tells what changes you have done. It is useful to make commits often and even on small changes. 
+To push the changes to Github, you will need to *commit* your changes. In short, you will write a small message that describes the changes you have done. It is useful to make commits often and even on small changes. Commits are at the heart of the version control system: a single commit is a single version of the file.
 
 - Commit messages should be short and descrive. 
-- Commits are really important: you can revert back to them, or undo them. 
-- Clear messages help you to locate code later, if you need to.
+- Commits are important: you can revert back to them, or undo them. 
+- Clear messages help you to locate the correct version later
   
 ![](instructions/commit.png)
 
-- After writing the commit, use the 'Commit to master' button to create the commit. 
-- After the commit you will need to push the changes to Github e.g. use the sync button in the right corner.
+Uploading local changes to your online GitHub repository is done by:
 
-Using the sync will push the changes from your computer to Github. You can use it also to pull the changes from Github. For example, if you do manual changes in the Github webpage or use another computer to commit changes, you will need to use sync to fetch the up-to-date files from Github.
+1. Select a file (or multiple files) you have changed and write a commit message related to those files.
+2. Use the 'Commit to master' button to create the commit. 
+3. Possibly repeat 1 and 2 for some other files you have changed.
+4. Upload (*push*) the changes to Github by using the sync button in the right corner.
 
-After syncing you can go to your Github profile (https://github.com/*your_github_username*/IODS-project) to see the changes there.
+Using the sync button will push (upload) the changes from your computer to Github. The sync buttong will also *pull* (download) possible changes from Github. 
 
-### Git Shell
+**Important**: If you do manual changes in your Github repository (meaning you use the github web page to change your files) or use another computer to upload changes, **always sync first** to fetch the up-to-date files from Github before you start working on the files again.
 
-Git Shell comes with Github Desktop and it can be used to push and pull files from Github. In Mac, you can use the Terminal. You find it either in the Applications, or you can press `Command + Space` and write 'Terminal' in the opening box. For the rest of the instructions, Git Shell instructions apply for the Terminal also. In Windows, you can open Git Shell from the start menu of your computer.
+After syncing you can go to your Github profile (https://github.com/*your_github_username*/IODS-project) to see the changes appear there after a few seconds.
 
-**Note!** If you have already cloned the repository, you can start Git Shell directly from Github Desktop by right-clicking the repository name.
+## Option 2: Git Shell
 
-![](instructions/gitshell_start.png)
+If you can't / don't want to use GitHub Desktop to manage between your local files and your online GitHub version, you can use the *Terminal* or *Git Shell* to 
+
+- create commits
+- push (upload) changes to GitHub 
+- pull (download) changes from GitHub 
+
+In any case you will need the version control software Git, which you can download from [here](https://git-scm.com/downloads). Git also comes installed with GitHub desktop.
+
+Git Shell (which comes installed with GitHub desktop) can be used to push and pull files from Github. In Windows, you can open Git Shell from the start menu of your computer. You can also start Git Shell from Github Desktop by right-clicking the repository name.
+
+In Mac, you can use the Terminal. You find the Terminal either in the Applications, or you can press `Command + Space` and write 'Terminal' in the opening box. For the rest of the instructions, Git Shell instructions apply for the Terminal also. 
+
     
 + If you open Git Shell from the Github Desktop, Git Shell opens in the repository folder in your computer
 + If you open Git Shell from the start menu (Windows) / applications (Mac), you will need to navigate to your repository folder in your computer.
 
 
-#### Navigate with git
+### Navigate with Git Shell / Terminal
 
-- When Git Shell opens, you can see the path where you are in the first line. Git shell usually opens in the "Documents" or "Github" -folder. If all you can see is `~`, then you are in the user home file of your computer.  
+- When Git Shell opens, you can see the path to the current working directory in the first line. Git shell usually opens in the "Documents" or "Github" -folder. If all you can see is `~`, then you are in the user home file of your computer.  
 - You can list all the files that are in the folder that you are in with the command `ls`. If there is not anything in the folder, then nothing is listed.
 - Type `cd ~` to get to the user file. You can use this command anytime. Try `ls` to list all the files that you have in that folder. 
 - The command `cd <foldername>` will get you to the next folder. Try it out and notice how the path changes. Note that you can write the whole path to your Github repository folder at once, if you remember the path.
@@ -84,7 +147,7 @@ Example:
     
 ![](instructions/git_navigate.png)
 
-#### Operate with git
+### Operate with Git using Git Shell / Terminal
 
 You can use Git Shell to add files, create commits, sync the changes or pull files from Github. The commands for these are
 
@@ -102,7 +165,7 @@ The command `git pull` fetches the files from your Github repository. You should
 
 The command `git status` tells the status of your files. For example after modifying the files, you can see which files are changed.
 
-To start the process of sending a changed file to Github, you will need to use `git add "file_name"`. Note that you will need to write the file name after to command.  After specifying which file(s) you want to push to Github, write a commit message about the changes: this can be done with `git commit -m "message_here"`. Message should be about what changes you have done. You can add multiple files and then commit them with one commit or you can add one file and commit it at the time.
+To start the process of sending a changed file to Github, you will need to use `git add "file_name"`. Note that you will need to write the file name after the command.  After specifying which file(s) you want to push to Github, write a commit message about the changes: this can be done with `git commit -m "message_here"`. Message should be about what changes you have done. You can add multiple files and then commit them with one commit or you can add one file and commit it at the time.
 
 Roughly, the order of commands is: 
 
@@ -120,33 +183,41 @@ Roughly, the order of commands is:
 
 You can see the changes you made in your Github profile (https://github.com/*your_github_username*/IODS-project).
 
-## Adding files at Github website
+## Option 3: Adding files at the Github website
 
 It is possible to add and/or change files directly at the Github website. However, we recommend that you use either Github Desktop or Git Shell (or similar software) at this course because adding the files with copy/paste method is not very productive or effective in the long run.
 
-In your repository, you can open files by clicking the file name. After opening a file, on the right you have a edit button, where you can modify the file.
+In your repository, you can open files by simply clicking the file name. After opening a file, on the right you have a edit button, where you can modify the file.
 
 ![](instructions/edit_webpage.png)
 
-After editing the file, you will need to write a commit (and description of the commit, if you want to) in the box below. Push the changes to your repository by clicking the 'Commit changes' button.
+After editing the file, you will need to write a commit (and description of the commit, if you wish) in a box at the bottom of the page. Then you can save the changes to your repository by clicking the 'Commit changes' button.
 
 ![](instructions/commit_webpage.png)
 
-## Github Exercise
+# Exercise
 
-The point of this small exercise is to get you started on using Github. You will need to have Github account, Github Desktop installed and the forked repository under your account. The instructions to do all this were above.
+The point of this small exercise is to get you started on using Github. You will need to have 
 
-1. Create a .RMarkdown file with RStudio (File > New File > R Markdown). The output or the title will be removed, so they do not matter in this case. Just press Ok.
+- A Github account
+- Github Desktop (or simply Git if you prefer to use the Git Shell or Terminal)
+- The (forked) repository IODS-project under your GitHub account and copyed (cloned) locally on your computer.
 
-2. When the new file opens, RStudio has an examples for you in there. They can be useful to look at, but for this exercise we do not need them. Delete everything in the file, including the first rows that define the title, author, date and output. You are left with a blank file.
+The instructions to do all this were above. You will also need R and R studio. 
 
-3. Now write something about this course in the file. You can use RMarkdown syntax: headers, tables, lists etc. 
-**Advanced** : If you want to include R-code output to the readme document, you can convert the .Rmd to an .md file using the knit() function in the knitr library, e.g knit(input="readme.Rmd, output="README.md").
+In this exercise you will create a README file which will include a description of the course and the course project. GitHub repositories typically include a README file to make it easier to understand a project. Instructions for the exercise are below.
+
+1. Create a .RMarkdown file with RStudio (File > New File > R Markdown). R studio prompts for a title. The output or the title will be removed, so they do not matter in this case. Just press Ok.
+
+2. When the new file opens, RStudio has some examples for you in there. They can be useful to look at, but for this exercise we do not need them. Delete everything in the file, including the first rows that define the title, author, date and output. You are left with a blank file.
+
+3. Write something about this course in the file. You can use RMarkdown syntax: headers, tables, lists etc. Include a link to your project web page.
 
 4. Save the file in your computer in the IODS-Project folder as 'README.Rmd'.
+(**Advanced** : If you want to include R-code output to the readme document, you can convert the .Rmd to an .md file using the knit() function in the knitr library, e.g knit(input="readme.Rmd, output="README.md").)
 
-5. Changes to Github
-    + Now in Github Desktop you can see the file you created in the changes-tab. Write a commit message for the changes, 'commit to the master' and sync. 
+5. Upload the Changes to Github
+    + In GitHub Desktop: Choose the project folder. You can see the file you created in the changes-tab. Write a commit message for the changes, 'commit to the master' and sync. 
     + In Git Shell or Terminal: go to your repository folder in your computer. If your repository is up to date with the Github repository (note: use `git status` and then maybe `git pull`), you can add the new file with `git add README.Rmd`. Then write a commit message for the changes with `git commit -m "commit_message_here"`. Then use the command `git push` to push the changes to Github. 
     + You can add new file directly in the webpage into your repository with 'Create new file' or Upload files'.
     ![](instructions/add_file_webpage.png)
