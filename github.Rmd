@@ -87,7 +87,7 @@ Next, you will create a copy of the IODS-project repository -which you already c
 - Click the + -mark at the left corner of GitHub desktop 
 - Choose the 'Clone' tab and choose the IODS-project repository
 - Click on 'Clone IODS-project' and save the folder into your computer in a location of your choosing
-![](instructions/clone.PNG)
+![](instructions/Clone.PNG)
 
 Now when you make changes to the course files on your computer, you can upload the changes to GitHub by *syncing* the changes with Github Desktop, which is what we'll look at next.
 
@@ -104,7 +104,7 @@ To push these changes to Github, you will need to first *commit* your changes. I
   
 ![](instructions/commit.PNG)
 
-Uploading local changes to your online GitHub repository is done by:
+Uploading local changes to your online GitHub repository:
 
 1. Select files you have changed and write a commit message related to those files.
 2. Use the 'Commit to master' button to create the commit. 
@@ -113,9 +113,9 @@ Uploading local changes to your online GitHub repository is done by:
 
 Using the sync button will push (upload) the changes from your computer to Github. The sync buttong will also *pull* (download) possible changes from Github. 
 
-**Important**: It is important that you continue working from the latest version of your files. If you have done manual changes in your Github repository (meaning you use GitHubs  editor to change files) or have used another computer to upload changes, **always sync first** to fetch the up-to-date files from Github before you start working on the files again.
+**Important**: It is important that you continue working from the latest version of your files. If you have done manual changes in your Github repository (meaning you have used GitHubs web editor to change files) or have used another computer to upload changes, **then always sync first** to fetch the up-to-date files from Github before you start working on the files again.
 
-After syncing you can go to your Github profile (https://github.com/*your_github_username*/IODS-project) to see the changes appear there after a few seconds.
+After syncing you can go to your Github profile (github.com/*your_github_username*/IODS-project) to see the changes appear there after a few seconds.
 
 ## Option 2: Git Shell
 
