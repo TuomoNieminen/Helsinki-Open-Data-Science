@@ -53,7 +53,7 @@ lrn14$stra <- rowSums(lrn14[, c("organz_study","time_managem")]) / 8
 # scale "Attitude" (10 questions) to create "attitude"
 lrn14$attitude <- lrn14$Attitude / 10
 
-# 4 Creating an analysis dataset
+# 4 Creating a smaller dataset
 # ----------------
 
 # current dimensions of the data
@@ -89,19 +89,22 @@ learning2014$points > 0
 learning2014 <- learning2014[learning2014$points > 0, ]
 
 
-# 7 Exploring the data graphically
+# 7 Exploring a data frame
 # --------------
 
-# a quick way to see what's going on with scatter plots
-# -1 excludes the first column from the plots (gender)
+# summaries of the variables
+summary(learning2014)
+
+# a quick way to see what's going on with scatter plots.
+# [-1] excludes the first column from the plots (gender)
 pairs(learning2014[-1], col = learning2014$gender)
 
-# more advanced quick plots of the data
+# more advanced plotting of a data frame
 library(GGally)
 ggpairs(learning2014, aes(colour = gender))
 
 
-# 8 Simple regression (1)
+# 8 Scatter plots with ggplot2
 # ------------------
 
 # Use the gglot2 library
@@ -125,7 +128,7 @@ p
 p <- p + ggtitle("students attitude and exam points")
 p
 
-# 9 Simple regression (2)
+# 9 Simple regression
 
 # fit a regression model
 m1 <- lm(points ~ attitude, data = learning2014)
@@ -143,7 +146,7 @@ m2 <- lm(points ~ attitude + stra, data = learning2014)
 
 summary(m2)
 
-# 11 model assumptions
+# 11 Graphical model validation
 
 m2 <- lm(points ~ attitude + stra, data = learning2014)
 
