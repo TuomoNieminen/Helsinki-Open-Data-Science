@@ -134,15 +134,15 @@ In Mac, you can use the Terminal. You find the Terminal either in the Applicatio
 When in Git Shell or Terminal, the first thing to do is to navigate into the folder of you repository. It is good to keep in mind that.
 
 - When Git Shell opens, you can see the path to the current working directory in the first line. 
-- If you open Git Shell from the Github Desktop, Git Shell opens in the repository folder in your computer and you are ready to start creating commits.
+- If you open Git Shell from Github Desktop yGit Shell opens in the repository folder in your computer and you are ready to start creating commits.
 - If you open Git Shell from the start menu (Windows) / applications (Mac), you will need to navigate to your repository folder in your computer.
-- Git shell usually opens in the "Documents" or "Github" -folder. If all you can see is `~`, then you are in the user home file of your computer.  
+- Git Shell usually opens in the "Documents" or "Github" -folder. If all you can see is `~`, then you are in the user home file of your computer.  
 
 In order to navigate in Git Shell / Terminal, you will find these tips useful:  
 
 - You can list all the files that are in the folder that you are in with the command `ls`. If there is not anything in the folder, then nothing is listed.
-- The command `cd <foldername>` will get you to the next folder. Try it out and notice how the path changes. Note that you can write the whole path to your Github repository folder at once, if you remember the path.
-- To get to the previous folder, you can type `cd ..`
+- The command `cd <foldername>` will get you to the next folder. Try it out and notice how the path changes. Note that you can write the whole path to your Github repository folder at once, if you remember the path or you can use the `TAB` button to autocomplete path names.
+- To get to the previous folder, you can type `cd ..` Try moving between folders to see how it works.
 - Type `cd ~` to get to the user file. You can use this command anytime. Try `ls` to list all the files that you have in that folder.
 
 Example:
@@ -201,37 +201,49 @@ After editing the file, you will need to write a commit (and description of the 
 
 KESKEN. Perhaps insert a short summary here describing what should have been accomplished by now. (which files should be seen where and which programs installed)
 
-# Exercise
+At this point you will have a Github account and you have a hunch how to use version control (Github Desktop or Git Shell/Terminal). You have the (forked) repository IODS-project under your GitHub account and copyed (cloned) locally on your computer.
 
-The point of this small exercise is to get you started on using Github. You will need to have 
+You should also install R and RStudio (instructions for those are here(add link)) if you have not done that already. You will need them in the small Github exercise.
 
-- A Github account
-- Github Desktop (or simply Git if you prefer to use the Git Shell or Terminal)
-- The (forked) repository IODS-project under your GitHub account and copyed (cloned) locally on your computer.
+# Small Github Exercise
 
-The instructions to do all this were above. You will also need R and R studio. 
+The point of this small exercise is to get you started on using Github. 
 
-In this exercise you will create a README file which will include a description of the course and the course project. GitHub repositories typically include a README file to make it easier to understand a project. Instructions for the exercise are below.
+In this exercise you will create a README file which will include a description of the course and the course project. GitHub repositories typically include a README file which tells what the project is about or other useful information about the repository. See below how to add a README-file to your IODS-project repository!
 
-1. Create a .RMarkdown file with RStudio (File > New File > R Markdown). R studio prompts for a title. The output of the title will be removed, so it does not matter in this case. Just press Ok.
+1. Create a .RMarkdown file with RStudio (File > New File > R Markdown). RStudio prompts for a title. The output of the title will be removed, so it does not matter in this case. Just press Ok.
 
 2. When the new file opens, RStudio has some examples for you in there. They can be useful to look at, but for this exercise we do not need them. Delete everything in the file, including the first rows that define the title, author, date and output. You are left with a blank file.
 
 3. Write something about this course in the file. You can use RMarkdown syntax: headers, tables, lists etc. Also include a link to your course diary web page.
+(**Advanced** : If you want to include R-code output to the readme document, you can convert the .Rmd to an .md file using the knit() function in the knitr library, e.g knit(input="readme.Rmd, output="README.md").)
 
 4. Save the file in your computer in the IODS-Project folder as 'README.Rmd'.
-(**Advanced** : If you want to include R-code output to the readme document, you can convert the .Rmd to an .md file using the knit() function in the knitr library, e.g knit(input="readme.Rmd, output="README.md").)
 
 5. Upload the Changes to Github
     + In GitHub Desktop: Choose the project folder. You can see the file you created in the changes-tab. Write a commit message for the changes, 'commit to the master' and sync. 
-    + In Git Shell or Terminal: go to your repository folder in your computer. If your repository is up to date with the Github repository (note: use `git status` and then maybe `git pull`), you can add the new file with `git add README.Rmd`. Then write a commit message for the changes with `git commit -m "commit_message_here"`. Then use the command `git push` to push the changes to Github. 
-    + You can add new file directly in the webpage into your repository with 'Create new file' or Upload files'.
+    + In Git Shell or Terminal: go to your repository folder in your computer. If your repository is up to date with the Github repository (note: use `git status` and then maybe `git pull`), you can add the new file with `git add README.Rmd`. Then write a commit message for the changes with `git commit -m "commit_message_here"`. Then use the command `git push` to push the changes to Github. You can use `git status` at any point to see the process.
+    + If you can't use Github Desktop or Git Shell you can add README file directly in the webpage into your repository with 'Create new file' or Upload files'.
     ![](instructions/add_file_webpage.PNG)
     
 6. After a few moments, go to https://github.com/*your_github_username*/IODS-project to see what have changed. 
 
 
 # Useful links
+
+- R: https://www.r-project.org/
+- RStudio: https://www.rstudio.com/
+- RMarkdown: http://rmarkdown.rstudio.com/
+- Github: https://github.com/
+
+- [Basic R cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf)
+- Videos for learning RStudio and RMarkdown (Arho Toikka): https://www.youtube.com/playlist?list=PLjz3inNXiF4_QIEOwhwK0sC0ePO5xufJ8 
+- Github instructions (add link)
+- Datacamp exercises (add link)
+    + If you are signed in at mooc.helsinki.fi, the DataCamp link above will automaticly create a DataCamp account for you and no login is needed.
+    + Your DataCamp username is the same as the email address you used to sign in at the mooc area. DataCamp will email your password for you after you have first visited the site. 
+    + **Please check that you have logged in when going to DataCamp through the mooc area.**
+    
 
 ## RMarkdown
 - [HTML Documents](http://rmarkdown.rstudio.com/html_document_format.html)
@@ -240,3 +252,9 @@ In this exercise you will create a README file which will include a description 
 - [Cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 - [Basic RMarkdown](http://rmarkdown.rstudio.com/authoring_basics.html)
 - [More about RMarkdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#raw_html)
+
+## Useful R-packages
+- [ggplot2](http://ggplot2.org/) [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+- dplyr [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+- [Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
+
