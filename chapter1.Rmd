@@ -14,15 +14,15 @@ description : Simple regression, multiple regression, regression diagnostics
 
 Welcome to chapter1: Regression and model validation. 
 
-The first step of data analysis with R is reading data into R. Which function and function arguments to use to do this depends on the original format of the data. After the correct function has been identified and data read into R, the data will be in R's `data.frame` format. 
+The first step of data analysis with R is reading data into R. Which function and function arguments to use to do this, depends on the original format of the data. 
 
-An $n$ x $d$ data frame has $d$ columns (the variables) and $n$ rows (the observations).
+After the correct function has been identified and data read into R, the data will usually be in R's `data.frame` format. A data frame's dimensions are ($n$,$d$), where $d$ is the number of columns (the variables) and $n$ the number of rows (the observations).
 
 
 *** =instructions
 - read the `lrn14`  to memory with `read.table()`
-- Use `dim()` on the data frame to look at the dimensions of the data. 
-- Look at the structure of the data with `str()`. How many rows and colums does the data have?
+- Use `dim()` on the data frame to look at the dimensions of the data. How many rows and colums does the data have?
+- Look at the structure of the data with `str()`. 
 
 *** =hint
 - hint
@@ -70,81 +70,17 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:967cbc77c9
-## Selecting columns of a data frame
-
-Exercise info here
-
-*** =instructions
-- Access the dlyr library
-- Execute the example codes using the `select()` functions
-- Select the column named "Points" in the `lrn14` data
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-# read the data into memory
-lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
-```
-
-*** =sample_code
-```{r}
-# lrn14 is available
-
-# access the dlyr library
-library(dplyr)
-
-# select the first column by index
-select(lrn14, 1)
-
-# select the first column by name
-select(lrn14, Aa)
-
-# select the column named "Points"
-
-
-
-```
-
-*** =solution
-```{r}
-
-# access the dlyr library
-library(dlyr)
-
-# select the first column by index
-select(lrn14, 1)
-
-# select the first column by name
-select(lrn14, Aa)
-
-# select the column named "Points"
-select(lrn14, Points)
-
-
-```
-
-*** =sct
-```{r}
-
-test_output_contains("dplyr::select(lrn14, Points)", incorrect_msg = "Please select the column named 'Points' from the lrn14 data frame. Do not forget to use the comma.")
-
-test_error()
-success_msg("Well done! Excellent work!")
-
-```
-
 
 --- type:NormalExercise lang:r xp:100 skills:1  key:3efc4528fc
-## Division on steroids
+## Scaling variables
 
-Exercise info here
+A neat thing about R is that may operations are *vectorized*. By this we mean that a single operation can affect all elements of a vector. This is often convenient.
+
+The column "Attitude" in `lrn14` is a sum of 10 questions related to students attitude towards statistics, each measured on the Likert scale (1-5). Here we'll scale the combination variable back to the 1-5 scale.
 
 *** =instructions
-- Execute the example codes to see how vector division works
-- The column "Attitude" in `lrn14` is a sum of 10 questions related to students attitude towards statistics. Use vector division to create a new column "attitude", where each observation of "Attitude" is scaled back to the original scale of the questions.
+- Execute the example codes to see how vectorized division works
+-  Use vector division to create a new column "attitude", where each observation of "Attitude" is scaled back to the original scale of the questions, by dividing it with the number of questions.
 
 *** =hint
 - hint
@@ -197,10 +133,13 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9a390d843f
 ## Combining variables
 
-Exercise info here
+Our data includes many questions that can be thought to measure the same *dimensions*, such as attitude toward statistics. Here we'll combine multiple questions into three combination variables, by averaging the answers to the questions.
+
+We'll use the **dplyr** library, which is a popular library for data wrangling. There is also a [useful cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) made available by RStudio.
 
 *** =instructions
-- Create the combination variables 'deep' and 'surf' as columns in `lrn14`
+- Execute the example codes to create the combination variables 'deep' and 'surf' as columns in `lrn14`
+- Select the columns related to strategic learning from `lrn14`
 - Create the combination variable 'stra' as a column in `lrn14`
 
 *** =hint
@@ -217,64 +156,56 @@ lrn14$attitude <- lrn14$Attitude / 10
 ```{r}
 # lrn14 is available
 
-# questions related to deep learning
+# Access the dplyr library
+library(dplyr)
+
+# questions related to deep, surface and strategic learning
 deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07","D14","D22","D30")
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
+strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 
 # select the columns related to deep learning
 deep_columns <- select(lrn14, one_of(deep_questions))
-
-# create column 'deep' by averaging the 12 questions
+# create column 'deep' by averaging the (12) questions
 lrn14$deep <- rowMeans(deep_columns)
-
-# questions related to surface learning
-surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
 
 # select the columns related to surface learning
 surface_columns <- select(lrn14, one_of(surface_questions))
-
-# create column 'surf' by averaging the 12 questions
+# create column 'surf' by averaging the (12) questions
 lrn14$surf <- rowMeans(surface_columns)
 
-# questions related to strategic learning
-strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 
+# select the columns related to strategic learning
+
+# create column 'stra' by averaging the (8) questions
 
   
 ```
 
 *** =solution
 ```{r}
-# access the dplyr library
+# Access the dplyr library
 library(dplyr)
 
-# questions related to deep learning
+# questions related to deep, surface and strategic learning
 deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07","D14","D22","D30")
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
+strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 
 # select the columns related to deep learning
 deep_columns <- select(lrn14, one_of(deep_questions))
-
-# create column 'deep' by averaging the 12 questions
+# create column 'deep' by averaging the (12) questions
 lrn14$deep <- rowMeans(deep_columns)
-
-# questions related to surface learning
-surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
 
 # select the columns related to surface learning
 surface_columns <- select(lrn14, one_of(surface_questions))
-
-# create column 'surf' by averaing the 12 questions
+# create column 'surf' by averaging the (12) questions
 lrn14$surf <- rowMeans(surface_columns)
-
-# questions related to strategic learning
-strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 
 # select the columns related to strategic learning
 strategic_columns <- select(lrn14, one_of(strategic_questions))
-
-# create column 'stra' by averaging the 8 questions
+# create column 'stra' by averaging the (8) questions
 lrn14$stra <- rowMeans(strategic_columns)
-
-
 
 ```
 
@@ -289,14 +220,14 @@ success_msg("Great work!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1  key:6acf3bcc8b
-## Creating a smaller dataset
+## Selecting columns
 
-Exercise info here
+Often it is convenient to work with only a certain column or a subset of columns of a bigger data frame. There are many ways to select columns of a data frame in R. Here we again use the already familiar `select()` function from the **dplyr** library.
 
 *** =instructions
 - Look at the dimension of `lrn14`
 - Create object `keep_columns`
-- Use `select()` together with `one_of()` to create a new data frame `learning2014` with only the selected columns. See the [data wrangling cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for help
+- Use `select()` (possibly together with `one_of()`) to create a new data frame `learning2014` with only the columns named in `keep_columns`. See the [data wrangling cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for help.
 - Look at the structure of the new dataset
 
 
@@ -364,7 +295,7 @@ success_msg("Great! Very nice work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:b020be3ce5
 ## Modifying column names
 
-Exercise info here
+Sometimes you want to rename your colums. You could do this by creating copies of the columns with new names, but you can also directly get and set the column names of a data frame, using the function `colnames()`.
 
 *** =instructions
 - Print out the column names of `learning2014`
@@ -436,10 +367,13 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:7955b0f30e
 ## Excluding observations
 
-Exercise info here
+Often your data includes outliers or other observations which you wish to remove. Or perhaps you simply wish to work with a subset of your data. 
+
+In the **student2014** data the variable 'Points' denotes the students exam points in a statistics course exam. If the student did not attend an exam, the value of 'Points' will be. We will remove these observations from the data.
 
 *** =instructions
-- Create object `males`by selecting the male students from `learning2014`
+- Access the **dplyr** library
+- As an example, create object `males`by selecting the male students from `learning2014`
 - Override `learning2014` by selecting rows where the 'points' variable is greater than zero.
 
 *** =hint
@@ -456,17 +390,17 @@ lrn14$surf <- rowMeans(lrn14[, surface_questions])
 strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 lrn14$stra <- rowMeans(lrn14[, strategic_questions])
 learning2014 <- lrn14[, c("gender","Age","attitude", "deep", "stra", "surf", "Points")]
-# change the name of the second column
 colnames(learning2014)[2] <- "age"
-# change the name of "Points" to "points"
 colnames(learning2014)[7] <- "points"
 
-library(dplyr)
 ```
 
 *** =sample_code
 ```{r}
-# learning2014 is available, dplyr is available
+# learning2014 is available
+
+# access the dplyr library
+library(dplyr)
 
 # select male students
 males <- filter(learning2014, gender == "M")
@@ -479,7 +413,7 @@ learning2014 <-
 *** =solution
 ```{r}
 
-# acess the dplyr library
+# access the dplyr library
 library(dplyr)
 
 # select male students
@@ -497,6 +431,6 @@ test_object("learning2014", incorrect_msg = "Please exclude the observations fro
 test_output_contains("", incorrect_msg = "")
 
 test_error()
-success_msg("Good work!")
+success_msg("Awsome work!")
 ```
 
