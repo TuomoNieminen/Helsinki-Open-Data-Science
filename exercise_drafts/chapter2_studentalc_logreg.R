@@ -49,8 +49,8 @@ library(dplyr)
 
 # 5 averaging multiple columns
 
-# create an empty data frame
-student_alc <- data.frame(matrix(nrow = nrow(math_por), ncol = 0))
+# first create a new data frame with the common columns
+student_alc <- math_por[, merge_by]
 
 # for each original column name not used for joining the data..
 for(name in notjoined_names) {
