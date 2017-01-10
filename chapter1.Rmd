@@ -2,25 +2,27 @@
 title       : Regression and model validation 
 description : Simple regression, multiple regression, regression diagnostics
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:98c3c2d1f3
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## Welcome!
 
 *** =video_link
 //player.vimeo.com/video/195829801
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:4fc38a823f
-## Formatting data for regression
+--- type:NormalExercise lang:r xp:100 skills:1 
+## Reading data from an URL
 
 Welcome to chapter1: Regression and model validation. 
 
-The first step of data analysis with R is reading data into R. Which function and function arguments to use to do this depends on the original format of the data. After the correct function has been identified and data read into R, the data will be in R's `data.frame` format. An $n$ x $d$ data frame has $d$ columns (the variables) and $n$ rows (the observations).
+The first step of data analysis with R is reading data into R. Which function and function arguments to use to do this depends on the original format of the data. After the correct function has been identified and data read into R, the data will be in R's `data.frame` format. 
 
-For regression analysis, you choose one variable as the response and some other variable(s) as the predictor(s).
+An $n$ x $d$ data frame has $d$ columns (the variables) and $n$ rows (the observations).
 
 
 *** =instructions
-- instruction
+- read the `lrn14`  to memory with `read.table()`
+- Use `dim()` on the data frame to look at the dimensions of the data. 
+- Look at the structure of the data with `str()`. How many rows and colums does the data have?
 
 *** =hint
 - hint
@@ -33,19 +35,455 @@ For regression analysis, you choose one variable as the response and some other 
 *** =sample_code
 ```{r}
 
+# read the data into memory
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+
+# look at the dimensions of the data
+
+
+# look at the structure of the data
+
 
 ```
 
 *** =solution
 ```{r}
 
+# read the data into memory
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+
+# look at the dimensions of the data
+dim(lrn14)
+
+# look at the structure of the data
+str(lrn14)
+
 ```
 
 *** =sct
 ```{r}
 
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
+test_function("dim", args = "x",incorrect_msg = "Please use the function dim() to look at the dimensions of the data")
+test_function("str", args = "object", incorrect_msg = "Please use the function str() to look at the structure of the data")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Selecting columns of a data frame
+
+Exercise info here
+
+*** =instructions
+- Access the dlyr library
+- Execute the example codes using the `select()` functions
+- Select the column named "Points" in the `lrn14` data
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+# read the data into memory
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+```
+
+*** =sample_code
+```{r}
+# lrn14 is available
+
+# access the dlyr library
+library(dlyr)
+
+# select the first column by index
+select(lrn14, 1)
+
+# select the first column by name
+select(lrn14, Aa)
+
+# select the column named "Points"
+
+
+
+```
+
+*** =solution
+```{r}
+
+# access the dlyr library
+library(dlyr)
+
+# select the first column by index
+select(lrn14, 1)
+
+# select the first column by name
+select(lrn14, Aa)
+
+# select the column named "Points"
+select(lrn14, Points)
+
+
+```
+
+*** =sct
+```{r}
+
+test_output_contains("dplyr::select(lrn14, Points)", incorrect_msg = "Please select the column named 'Points' from the lrn14 data frame. Do not forget to use the comma.")
+
+test_error()
+success_msg("Well done! Excellent work!")
+
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 
+## Division on steroids
+
+Exercise info here
+
+*** =instructions
+- Execute the example codes to see how vector division works
+- The column "Attitude" in `lrn14` is a sum of 10 questions related to students attitude towards statistics. Use vector division to create a new column "attitude", where each observation of "Attitude" is scaled back to the original scale of the questions.
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+# read the data into memory
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+```
+
+*** =sample_code
+```{r}
+#lrn14 is available
+
+# divide each number in a vector
+c(1,2,3,4,5) / 2
+
+# divide each number in a column vector
+lrn14$Attitude / 10
+
+# create column 'attitude' by scaling the column "Attitude"
+lrn14$attitude <- 
+  
+
+```
+
+*** =solution
+```{r}
+# divide each number in a vector
+c(1,2,3,4,5) / 2
+
+# divide each number in a longer vector
+lrn14$Attitude / 10
+
+# create column 'attitude' by scaling the column "Attitude"
+lrn14$attitude <- lrn14$Attitude / 10
+
+```
+
+*** =sct
+```{r}
+
+test_object("lrn14$attitude", incorrect_msg = "Please create the column 'attitude in the data frame 'lrn14' be scaling the column 'Attitude'")
+
+test_error()
+success_msg("Good work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Combining variables
+
+Exercise info here
+
+*** =instructions
+- Create the combination variables 'deep' and 'surf' as columns in `lrn14`
+- Create the combination variable 'stra' as a column in `lrn14`
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+# read the data into memory
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+lrn14$attitude <- lrn14$Attitude / 10
+```
+
+*** =sample_code
+```{r}
+# lrn14 is available
+
+# questions related to deep learning
+deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07","D14","D22","D30")
+# select the columns related to deep learning
+deep_columns <- select(lrn14, one_of(deep_questions))
+# create column 'deep' by averaging the 12 questions
+lrn14$deep <- rowMeans(deep_columns)
+
+# questions related to surface learning
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
+# select the columns related to surface learning
+surface_columns <- select(lrn14, one_of(surface_questions))
+# create column 'surf' by averaging the 12 questions
+lrn14$surf <- rowMeans(surface_columns)
+
+# questions related to strategic learning
+strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
+
+
+  
+```
+
+*** =solution
+```{r}
+# access the dplyr library
+library(dplyr)
+
+# questions related to deep learning
+deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07","D14","D22","D30")
+# select the columns related to deep learning
+deep_columns <- select(lrn14, one_of(deep_questions))
+# create column 'deep' by averaging the 12 questions
+lrn14$deep <- rowMeans(deep_columns)
+
+# questions related to surface learning
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
+# select the columns related to surface learning
+surface_columns <- select(lrn14, one_of(surface_questions))
+# create column 'surf' by averaing the 12 questions
+lrn14$surf <- rowMeans(surface_columns)
+
+# questions related to strategic learning
+strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
+# select the columns related to strategic learning
+strategic_columns <- select(lrn14, one_of(strategic_questions))
+# create column 'stra' by averaging the 8 questions
+lrn14$stra <- rowMeans(strategic_columns)
+
+
+
+```
+
+*** =sct
+```{r}
+
+test_object("lrn14$str", incorrect_msg = "Please create the column 'stra' in the data frame 'lrn14' by averaging the strategic questions.")
+
+test_error()
+success_msg("Great work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 
+## Creating a smaller dataset
+
+Exercise info here
+
+*** =instructions
+- Look at the dimension of `lrn14`
+- Create object `keep_columns`
+- Use `select()` together with `one_of()` to create a new data frame `learning2014` with only the selected columns. See the [data wrangling cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for help
+- Look at the structure of the new dataset
+
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+lrn14$attitude <- lrn14$Attitude / 10
+deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07","D14","D22","D30")
+lrn14$deep <- rowMeans(lrn14[, deep_questions])
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
+lrn14$surf <- rowMeans(lrn14[, surface_questions])
+strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
+lrn14$stra <- rowMeans(lrn14[, strategic_questions])
+
+library(dlyr)
+```
+
+*** =sample_code
+```{r}
+# lrn14 is available, dplyr is available
+
+# current dimensions of the data
+dim(lrn14)
+
+# choose a handful of columns to keep
+keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
+
+# select those columns to create a new dataset
+learning2014 <- 
+
+# see the stucture of the new dataset
+
+
+```
+
+*** =solution
+```{r}
+
+# current dimensions of the data
+dim(lrn14)
+
+# choose a handful of columns to keep
+keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
+
+# select those columns to create a new dataset
+learning2014 <- select(lrn14, one_of(keep_columns))
+
+# see the structure of the new dataset
+str(learning2014)
+
+```
+
+*** =sct
+```{r}
+test_object("learning2014", incorrect_msg = "Please use the selected columns to create the learning2014 dataset")
+test_function("str", args = "object", incorrect_msg = "Please use the `str()` function to see the structure of the learnign2014 dataset")
+
+test_error()
+success_msg("Great! Very nice work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Modifying column names
+
+Exercise info here
+
+*** =instructions
+- Print out the column names of `learning2014`
+- Change the name of the second column to 'age'
+- Change the name of 'Points' to 'points'
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+lrn14$attitude <- lrn14$Attitude / 10
+deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07","D14","D22","D30")
+lrn14$deep <- rowMeans(lrn14[, deep_questions])
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
+lrn14$surf <- rowMeans(lrn14[, surface_questions])
+strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
+lrn14$stra <- rowMeans(lrn14[, strategic_questions])
+learning2014 <- lrn14[, c("gender","Age","attitude", "deep", "stra", "surf", "Points")]
+```
+
+*** =sample_code
+```{r}
+# learning2014 is available
+
+# print out the column names of the data
+colnames(learning2014)
+
+# change the name of the second column
+colnames(learning2014)[2] <- "age"
+
+# change the name of "Points" to "points"
+
+
+# print out the new column names of the data
+
+
+```
+
+*** =solution
+```{r}
+
+# print out the column names of the data
+colnames(learning2014)
+
+# change the name of the second column
+colnames(learning2014)[2] <- "age"
+
+# change the name of "Points" to "points"
+colnames(learning2014)[7] <- "points"
+
+# print out the new column names of the data
+colnames(learning2014)
+
+
+```
+
+*** =sct
+```{r}
+
+
+test_output_contains("colnames(learning2014)", incorrect_msg = "Please change the name of the 'Points' column and print out the new column names")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Excluding observations
+
+Exercise info here
+
+*** =instructions
+- Create object `males`by selecting the male students from `learning2014`
+- Override `learning2014` by selecting rows where the 'points' variable is greater than zero.
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+lrn14$attitude <- lrn14$Attitude / 10
+deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07","D14","D22","D30")
+lrn14$deep <- rowMeans(lrn14[, deep_questions])
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
+lrn14$surf <- rowMeans(lrn14[, surface_questions])
+strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
+lrn14$stra <- rowMeans(lrn14[, strategic_questions])
+learning2014 <- lrn14[, c("gender","Age","attitude", "deep", "stra", "surf", "Points")]
+# change the name of the second column
+colnames(learning2014)[2] <- "age"
+# change the name of "Points" to "points"
+colnames(learning2014)[7] <- "points"
+
+library(dplyr)
+```
+
+*** =sample_code
+```{r}
+# learning2014 is available, dplyr is available
+
+# select male students
+males <- filter(learning2014, gender == "M")
+
+# select rows where Points is greater than zero
+learning2014 <- 
+
+```
+
+*** =solution
+```{r}
+
+# acess the dplyr library
+library(dplyr)
+
+# select male students
+males <- filter(learning2014, gender == "M")
+
+# select rows where Points is greater than zero
+learning2014 <- filter(learning2014, Points > 0)
+
+```
+
+*** =sct
+```{r}
+
+test_object("learning2014", incorrect_msg = "Please exclude the observations from learning2014 where points <= 0")
 test_output_contains("", incorrect_msg = "")
 
 test_error()
@@ -53,7 +491,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:537efee431
+--- type:NormalExercise lang:r xp:100 skills:1 
 ## Simple Linear regression
 
 Exercise info here
@@ -90,7 +528,45 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:b48fefcaa3
+
+--- type:NormalExercise lang:r xp:100 skills:1 
+## Simple Linear regression
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+test_function("", args = "",incorrect_msg = "")
+test_object("", incorrect_msg = "")
+test_output_contains("", incorrect_msg = "")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 
 ## Multiple linear regression
 
 Exercise info here
@@ -128,7 +604,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:cc303b6569
+--- type:NormalExercise lang:r xp:100 skills:1 
 ## Polynomial regression
 
 Exercise info here
