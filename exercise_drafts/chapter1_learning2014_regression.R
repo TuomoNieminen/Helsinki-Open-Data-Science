@@ -82,29 +82,13 @@ colnames(learning2014)[7] <- "points"
 # 6 Excluding observations
 # ---------
 
-# create and print a logical vector
+# create and print out a logical vector
 learning2014$points > 0
 
 # choose rows where Points is greater than zero
 learning2014 <- learning2014[learning2014$points > 0, ]
 
-
-# 7 Exploring a data frame
-# --------------
-
-# summaries of the variables
-summary(learning2014)
-
-# a quick way to see what's going on with scatter plots.
-# [-1] excludes the first column from the plots (gender)
-pairs(learning2014[-1], col = learning2014$gender)
-
-# more advanced plotting of a data frame
-library(GGally)
-ggpairs(learning2014, aes(colour = gender))
-
-
-# 8 Scatter plots with ggplot2
+# 7 Scatter plots with ggplot2
 # ------------------
 
 # Use the gglot2 library
@@ -127,6 +111,21 @@ p
 # add a main title
 p <- p + ggtitle("students attitude and exam points")
 p
+
+# 8 Exploring the whole data frame
+# --------------
+
+# summaries of the variables
+summary(learning2014)
+
+# a quick way to see what's going on with scatter plots.
+# [-1] excludes the first column from the plots (gender)
+pairs(learning2014[-1], col = learning2014$gender)
+
+# more advanced plotting of a data frame
+library(GGally)
+ggpairs(learning2014, aes(colour = gender, alpha = 0.5))
+
 
 # 9 Simple regression
 
