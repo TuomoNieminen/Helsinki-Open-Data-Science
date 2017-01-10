@@ -1,9 +1,9 @@
 ---
 title       : Logistic regression
-description : Regression for binary outcomes
+description : Regression for binary outcomes, training and test sets and cross-validation
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
-## Exercise title
+## Exercise 1
 
 UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 

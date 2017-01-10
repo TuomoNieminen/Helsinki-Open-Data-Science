@@ -1,83 +1,9 @@
 ---
-title       : Clustering and classification
-description : K-means clustering, Discriminant analysis, Cross validation (Training set and test set)
+title       : Dimensionality reduction techniques 
+description : Principal component analysis (PCA), Correspondence analysis (CA)
 
---- type:NormalExercise lang:r xp:100 skills:1 key:2180e19ae8
-## K-means
-
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
-success_msg("Good work!")
-```
-
-
-## Discriminant Analysis
-
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
-success_msg("Good work!")
-```
-
-
-## Cross Validation
+--- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
+## Exercise title
 
 UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 

@@ -1,6 +1,6 @@
 ---
 title       : Regression and model validation 
-description : Simple regression, multiple regression, regression diagnostics
+description : Data wrangling, Simple regression, multiple regression, regression diagnostics
 
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1  key:98c3c2d1f3
 ## Welcome!
