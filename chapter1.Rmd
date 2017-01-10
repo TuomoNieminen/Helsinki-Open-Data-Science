@@ -2,14 +2,14 @@
 title       : Regression and model validation 
 description : Simple regression, multiple regression, regression diagnostics
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1  key:98c3c2d1f3
 ## Welcome!
 
 *** =video_link
 //player.vimeo.com/video/195829801
 
 
---- type:NormalExercise lang:r xp:100 skills:1 
+--- type:NormalExercise lang:r xp:100 skills:1  key:6e77718b66
 ## Reading data from an URL
 
 Welcome to chapter1: Regression and model validation. 
@@ -70,7 +70,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:967cbc77c9
 ## Selecting columns of a data frame
 
 Exercise info here
@@ -137,7 +137,7 @@ success_msg("Well done! Excellent work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 
+--- type:NormalExercise lang:r xp:100 skills:1  key:3efc4528fc
 ## Division on steroids
 
 Exercise info here
@@ -194,7 +194,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:9a390d843f
 ## Combining variables
 
 Exercise info here
@@ -278,7 +278,7 @@ success_msg("Great work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 
+--- type:NormalExercise lang:r xp:100 skills:1  key:6acf3bcc8b
 ## Creating a smaller dataset
 
 Exercise info here
@@ -351,7 +351,7 @@ test_error()
 success_msg("Great! Very nice work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:b020be3ce5
 ## Modifying column names
 
 Exercise info here
@@ -423,7 +423,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:7955b0f30e
 ## Excluding observations
 
 Exercise info here
