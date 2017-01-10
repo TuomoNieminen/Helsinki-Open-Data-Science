@@ -61,11 +61,11 @@ The idea of GitHub is to publish, keep track of and store work that you are doin
 1. A local copy of the GitHub repository on your own computer
 2. A way to upload (push) the changes you make locally, into your remote GitHub repository
 
-There are different ways to achieve this. Github Desktop is a software that makes it easy to use Github. We recommend that you use it and present instructions for it below as option 1. Another option is to use Git Shell, a command line type user interface. This second option is also suitable for Linux users. The third option is to manually make changes to the GitHub repository using the repository's editor. The last option we do not recommend unless you can't work on your own computer. See the note below.
+There are different ways to achieve this. Github Desktop is a software that makes it easy to use Github. We recommend that you use it and present instructions for it below as option 1. Another option is to use Git, a command line type user interface. This second option is also suitable for Linux users. The third option is to manually make changes to the GitHub repository using the repository's editor. The last option we do not recommend unless you can't work on your own computer. See the note below.
 
-The instructions for Github Desktop, Git Shell and the GitHub editor are below. 
+The instructions for Github Desktop, Git and the GitHub editor are below. 
 
-**Note**: The purpose of GitHub Desktop and Git Shell is to make it easier to manage and keep in sync your local files and your remote GitHub repository. If you are doing exercises on a university computer, you will not be able to use GitHub Desktop. Instead, you will need to upload the files manually on the Github repository. This is straight forward. See 'Adding files at the Github website' for more details.
+**Note**: The purpose of GitHub Desktop and Git is to make it easier to manage and keep in sync your local files and your remote GitHub repository. If you are doing exercises on a university computer, you will not be able to use GitHub Desktop. Instead, you will need to upload the files manually on the Github repository. This is straight forward. See 'Adding files at the Github website' for more details.
 
 ## Option 1: GitHub Desktop  
 
@@ -77,14 +77,14 @@ Follow the steps below.
 
 - Download Github Desktop from [https://desktop.github.com/](https://desktop.github.com/).  
 - Install the software. The installation instructions can be seen [here](https://help.github.com/desktop/guides/getting-started/installing-github-desktop/).
-- (Git and Git Shell come with the Github Desktop installation)
 - Open and sign in into the Github Desktop with the same username and password you used signing into Github.
 - **KESKEN(?). Is there a need to configure Git as in [GitHubs own instructions](https://help.github.com/desktop/guides/getting-started/configuring-git-for-github-desktop/)?**
 
 ### Creating a local copy of a repository
 
-Next, you will create a copy of the IODS-project repository -which you already cloned earlier - to your computer. Follow the instructions below:
+Next, you will create a copy(clone) of the IODS-project repository -which you already forked earlier - to your computer. To do that in Github Desktop, follow the instructions below. To do that in Git, see Github's instructions [here](https://help.github.com/articles/cloning-a-repository/).
 
+In Github Desktop:
 - Click the + -mark at the left corner of GitHub desktop 
 - Choose the 'Clone' tab and choose the IODS-project repository
 - Click on 'Clone IODS-project' and save the folder into your computer in a location of your choosing
@@ -118,30 +118,29 @@ Using the sync button will push (upload) the changes from your computer to Githu
 
 After syncing you can go to your Github profile (github.com/*your_github_username*/IODS-project) to see the changes appear there after a few seconds.
 
-## Option 2: Git Shell
+## Option 2: Git
 
-If you can't / don't want to use GitHub Desktop to manage between your local files and your remote GitHub version, you can use the *Terminal* or *Git Shell* to create commits, push (upload) changes to GitHub and pull (download) changes from GitHub. 
+If you can't / don't want to use GitHub Desktop to manage between your local files and your remote GitHub version, you can use the *Terminal* or *Git* to create commits, push (upload) changes to GitHub and pull (download) changes from GitHub. 
 
-In any case you will need the version control software Git, which you can download from [here](https://git-scm.com/downloads). Git also comes installed with GitHub desktop.
+In any case you will need the version control software Git, which you can download from [here](https://git-scm.com/downloads). If you want to, you can also use Git Shell, that comes with Github Desktop. These instructions apply for both Git and Git Shell.
 
-Git Shell can be used to push and pull files from Github. In Windows, you can open Git Shell from the start menu of your computer. You can also start Git Shell from Github Desktop by right-clicking the repository name.
+Git can be used to push and pull files from Github. In Windows, you can open Git  from the start menu of your computer. If you are using Git Shell, you can start it from Github Desktop by right-clicking the repository name.
 
-In Mac, you can use the Terminal. You find the Terminal either in the Applications, or you can press `Command + Space` and write 'Terminal' in the opening box. For the rest of the instructions, Git Shell instructions also apply for the Terminal. 
+In Mac, you can use the Terminal. You find the Terminal either in the Applications, or you can press `Command + Space` and write 'Terminal' in the opening box. For the rest of the instructions, Git instructions also apply for the Terminal. 
 
 
-### Navigate with Git Shell / Terminal
+### Navigate with Git / Terminal
 
-When in Git Shell or Terminal, the first thing to do is to navigate into the folder of you repository. It is good to keep in mind that.
+When in Git or Terminal, the first thing to do is to navigate into the folder of you repository. It is good to keep in mind that.
 
-- When Git Shell opens, you can see the path to the current working directory in the first line. 
-- If you open Git Shell from Github Desktop yGit Shell opens in the repository folder in your computer and you are ready to start creating commits.
-- If you open Git Shell from the start menu (Windows) / applications (Mac), you will need to navigate to your repository folder in your computer.
-- Git Shell usually opens in the "Documents" or "Github" -folder. If all you can see is `~`, then you are in the user home file of your computer.  
+- When Git opens, you can see the path to the current working directory in the first line. 
+- When you open Git you will need to navigate to your repository folder in your computer.
+- Git usually opens in the "Documents" or "Github" -folder. If all you can see is `~`, then you are in the user home file of your computer.  
 
-In order to navigate in Git Shell / Terminal, you will find these tips useful:  
+In order to navigate in Git / Terminal, you will find these tips useful:  
 
 - You can list all the files that are in the folder that you are in with the command `ls`. If there is not anything in the folder, then nothing is listed.
-- The command `cd <foldername>` will get you to the next folder. Try it out and notice how the path changes. Note that you can write the whole path to your Github repository folder at once, if you remember the path or you can use the `TAB` button to autocomplete path names.
+- The command `cd <foldername>` will get you to the next folder. Try it out and notice how the path changes. Note that you can write the whole path to your Github repository folder at once, if you remember the path. Tip! You can use the `TAB` button to autocomplete path names.
 - To get to the previous folder, you can type `cd ..` Try moving between folders to see how it works.
 - Type `cd ~` to get to the user file. You can use this command anytime. Try `ls` to list all the files that you have in that folder.
 
@@ -149,9 +148,9 @@ Example:
     
 ![](instructions/git_navigate.PNG)
 
-### Operate with Git using Git Shell / Terminal
+### Operate with Git
 
-You can use Git Shell to add files, create commits, sync the changes or pull files from Github. The commands for these are
+You can use Git to add files, create commits, sync the changes or pull files from Github. The commands for these are
 
 |        |               |
 | ----------------- |---------------------------------------------------- |
@@ -163,13 +162,13 @@ You can use Git Shell to add files, create commits, sync the changes or pull fil
 <br>
 
 
-The command `git pull` fetches the files from your Github repository. You should keep the files in your computer up-to-date with Github and vice versa. To send *or push* the files to Github use `git push`. In Github Desktop pulling and pushing files happens with the sync button, but in Git Shell you have two separate commands. 
+The command `git pull` fetches the files from your Github repository. You should keep the files in your computer up-to-date with Github and vice versa. To send *or push* the files to Github use `git push`. In Github Desktop pulling and pushing files happens with the sync button, but in Git you have two separate commands. 
 
 The command `git status` tells the status of your files. For example after modifying the files, you can see which files are changed.
 
 To start the process of sending a changed file to Github, you will need to use `git add "file_name"`. Note that you will need to write the file name after the command.  After specifying which file(s) you want to push to Github, write a commit message about the changes: this can be done with `git commit -m "message_here"`. Message should be about what changes you have done. You can add multiple files and then commit them with one commit or you can add one file and commit it at the time.
 
-Roughly, the order of commands is: 
+Roughly, the order of command to push files to Github is: 
 
 - (git status) 
 - git pull 
@@ -185,9 +184,13 @@ Roughly, the order of commands is:
 
 You can see the changes you made in your Github profile (https://github.com/*your_github_username*/IODS-project).
 
+## Clone the repository with Git
+
+Cloning the repository in Git, see Github's instructions [here](https://help.github.com/articles/cloning-a-repository/). Note that you will need to navigate into the folder where you want to copy the files. 
+
 ## Option 3: Adding files at the Github website
 
-It is possible to add and/or change files directly at the Github website. However, we recommend that you use either Github Desktop or Git Shell (or similar software) at this course because adding the files with copy/paste method is not very productive or effective in the long run.
+It is possible to add and/or change files directly at the Github website. However, we recommend that you use either Github Desktop or Git (or similar software) at this course because adding the files with copy/paste method is not very productive or effective in the long run.
 
 In your repository, you can open files by simply clicking the file name. After opening a file, on the right you have a edit button, where you can modify the file. You can then directly write to the file, or for example copy and paste the contents of a file from elsewhere to that file.
 
@@ -197,11 +200,7 @@ After editing the file, you will need to write a commit (and description of the 
 
 ![](instructions/commit_webpage.PNG)
 
-# Summary
-
-KESKEN. Perhaps insert a short summary here describing what should have been accomplished by now. (which files should be seen where and which programs installed)
-
-At this point you will have a Github account and you have a hunch how to use version control (Github Desktop or Git Shell/Terminal). You have the (forked) repository IODS-project under your GitHub account and copyed (cloned) locally on your computer.
+**Summary**: At this point you will have a hunch how to use version control (Github Desktop or Git / Terminal). You have the (forked) repository IODS-project under your GitHub account and you have it copyed (cloned) locally on your computer.
 
 You should also install R and RStudio (instructions for those are here(add link)) if you have not done that already. You will need them in the small Github exercise.
 
@@ -222,8 +221,8 @@ In this exercise you will create a README file which will include a description 
 
 5. Upload the Changes to Github
     + In GitHub Desktop: Choose the project folder. You can see the file you created in the changes-tab. Write a commit message for the changes, 'commit to the master' and sync. 
-    + In Git Shell or Terminal: go to your repository folder in your computer. If your repository is up to date with the Github repository (note: use `git status` and then maybe `git pull`), you can add the new file with `git add README.Rmd`. Then write a commit message for the changes with `git commit -m "commit_message_here"`. Then use the command `git push` to push the changes to Github. You can use `git status` at any point to see the process.
-    + If you can't use Github Desktop or Git Shell you can add README file directly in the webpage into your repository with 'Create new file' or Upload files'.
+    + In Git or Terminal: go to your repository folder in your computer. If your repository is up to date with the Github repository (note: use `git status` and then maybe `git pull`), you can add the new file with `git add README.Rmd`. Then write a commit message for the changes with `git commit -m "commit_message_here"`. Then use the command `git push` to push the changes to Github. You can use `git status` at any point to see the process.
+    + If you can't use Github Desktop or Git you can add README file directly in the webpage into your repository with 'Create new file' or Upload files'.
     ![](instructions/add_file_webpage.PNG)
     
 6. After a few moments, go to https://github.com/*your_github_username*/IODS-project to see what have changed. 
@@ -235,6 +234,8 @@ In this exercise you will create a README file which will include a description 
 - RStudio: https://www.rstudio.com/
 - RMarkdown: http://rmarkdown.rstudio.com/
 - Github: https://github.com/
+- Github Desktop: https://desktop.github.com/
+- Git: https://git-scm.com/
 
 - [Basic R cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf)
 - Videos for learning RStudio and RMarkdown (Arho Toikka): https://www.youtube.com/playlist?list=PLjz3inNXiF4_QIEOwhwK0sC0ePO5xufJ8 
