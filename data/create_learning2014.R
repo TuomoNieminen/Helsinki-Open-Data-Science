@@ -11,5 +11,6 @@ learning2014 <- lrn14[, c("gender","Age","attitude", "deep", "stra", "surf", "Po
 colnames(learning2014)[2] <- "age"
 colnames(learning2014)[7] <- "points"
 learning2014 <- learning2014[learning2014$points > 0, ]
-write.table(file = "learning2014.txt", learning2014)
+write.table(learning2014, file = "learning2014.txt", sep = ",", row.names = F)
 
+# learning2014 <- read.table("learning2014.txt", sep = ",", header = T))
