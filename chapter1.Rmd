@@ -20,7 +20,7 @@ After the correct function has been identified and data read into R, the data wi
 
 
 *** =instructions
-- read the `lrn14`  to memory with `read.table()`
+- Read the `lrn14` data frame to memory with `read.table()`
 - Use `dim()` on the data frame to look at the dimensions of the data. How many rows and colums does the data have?
 - Look at the structure of the data with `str()`. 
 
@@ -123,7 +123,7 @@ lrn14$attitude <- lrn14$Attitude / 10
 *** =sct
 ```{r}
 
-test_object("lrn14$attitude", incorrect_msg = "Please create the column 'attitude in the data frame 'lrn14' be scaling the column 'Attitude'")
+test_object("lrn14", incorrect_msg = "Please create the column 'attitude in the data frame 'lrn14' be scaling the column 'Attitude'")
 
 test_error()
 success_msg("Good work!")
@@ -133,11 +133,19 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9a390d843f
 ## Combining variables
 
-Our data includes many questions that can be thought to measure the same *dimensions*, such as attitude toward statistics. Here we'll combine multiple questions into three combination variables, by averaging the answers to the questions.
+Our data includes many questions that can be thought to measure the same *dimension*. Here we'll combine multiple questions into combination variables. Very useful functions for summation with data frames in R are
 
-We'll use the **dplyr** library, which is a popular library for data wrangling. There is also a [useful cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) made available by RStudio.
+function      | description
+------------- | ----------
+`colSums()`   | returns a sum of each column
+`rowSums()`   | returns a sum of each row
+`colMeans()`  | returns the means of each column
+`rowMeans()`  | return the means of each row
+
+We'll also use the `select()` function from the **dplyr** library.
 
 *** =instructions
+- Access the **dplyr** library
 - Execute the example codes to create the combination variables 'deep' and 'surf' as columns in `lrn14`
 - Select the columns related to strategic learning from `lrn14`
 - Create the combination variable 'stra' as a column in `lrn14`
@@ -164,20 +172,17 @@ deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07"
 surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
 strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 
-# select the columns related to deep learning
+# select the columns related to deep learning and create column 'deep' by averagin
 deep_columns <- select(lrn14, one_of(deep_questions))
-# create column 'deep' by averaging the (12) questions
 lrn14$deep <- rowMeans(deep_columns)
 
-# select the columns related to surface learning
+# select the columns related to surface learning and create column 'surf' by averaging
 surface_columns <- select(lrn14, one_of(surface_questions))
-# create column 'surf' by averaging the (12) questions
 lrn14$surf <- rowMeans(surface_columns)
 
 
-# select the columns related to strategic learning
+# select the columns related to strategic learning and create column 'stra' by averaging
 
-# create column 'stra' by averaging the (8) questions
 
   
 ```
@@ -192,19 +197,16 @@ deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07"
 surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
 strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 
-# select the columns related to deep learning
+# select the columns related to deep learning and create column 'deep' by averaging
 deep_columns <- select(lrn14, one_of(deep_questions))
-# create column 'deep' by averaging the (12) questions
 lrn14$deep <- rowMeans(deep_columns)
 
-# select the columns related to surface learning
+# select the columns related to surface learning and create column 'surf' by averaging
 surface_columns <- select(lrn14, one_of(surface_questions))
-# create column 'surf' by averaging the (12) questions
 lrn14$surf <- rowMeans(surface_columns)
 
-# select the columns related to strategic learning
+# select the columns related to strategic learning and create column 'stra' by averaging
 strategic_columns <- select(lrn14, one_of(strategic_questions))
-# create column 'stra' by averaging the (8) questions
 lrn14$stra <- rowMeans(strategic_columns)
 
 ```
@@ -212,7 +214,7 @@ lrn14$stra <- rowMeans(strategic_columns)
 *** =sct
 ```{r}
 
-test_object("lrn14$str", incorrect_msg = "Please create the column 'stra' in the data frame 'lrn14' by averaging the strategic questions.")
+test_object("lrn14", incorrect_msg = "Please do not remove the example codes and create the column 'stra' in the data frame 'lrn14' by averaging the answers to strategic learning questions.")
 
 test_error()
 success_msg("Great work!")
@@ -222,10 +224,13 @@ success_msg("Great work!")
 --- type:NormalExercise lang:r xp:100 skills:1  key:6acf3bcc8b
 ## Selecting columns
 
-Often it is convenient to work with only a certain column or a subset of columns of a bigger data frame. There are many ways to select columns of a data frame in R. Here we again use the already familiar `select()` function from the **dplyr** library.
+Often it is convenient to work with only a certain column or a subset of columns of a bigger data frame. There are many ways to select columns of a data frame in R. 
+
+Here we use the already familiar `select()` function from the **dplyr** library, which is a popular library for *data wrangling*. See also the [data wrangling cheatsheet by RStudio](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf). 
 
 *** =instructions
 - Look at the dimension of `lrn14`
+- Access the **dplyr** library
 - Create object `keep_columns`
 - Use `select()` (possibly together with `one_of()`) to create a new data frame `learning2014` with only the columns named in `keep_columns`. See the [data wrangling cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for help.
 - Look at the structure of the new dataset
@@ -250,10 +255,13 @@ library(dplyr)
 
 *** =sample_code
 ```{r}
-# lrn14 is available, dplyr is available
+# lrn14 is available
 
 # current dimensions of the data
 dim(lrn14)
+
+# access the dplyr library
+library(dplyr)
 
 # choose a handful of columns to keep
 keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
@@ -271,6 +279,9 @@ learning2014 <-
 
 # current dimensions of the data
 dim(lrn14)
+
+# access the dplyr library
+library(dplyr)
 
 # choose a handful of columns to keep
 keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
@@ -358,7 +369,7 @@ colnames(learning2014)
 ```{r}
 
 
-test_output_contains("colnames(learning2014)", incorrect_msg = "Please change the name of the 'Points' column and print out the new column names")
+test_output_contains('c("gender","age","attitude", "deep", "stra", "surf", "points")', incorrect_msg = "Please change the name of the 'Points' column to 'points' and print out the new column names")
 
 test_error()
 success_msg("Good work!")
@@ -428,7 +439,6 @@ learning2014 <- filter(learning2014, points > 0)
 ```{r}
 
 test_object("learning2014", incorrect_msg = "Please exclude the observations from learning2014 where points <= 0")
-test_output_contains("", incorrect_msg = "")
 
 test_error()
 success_msg("Awsome work!")
