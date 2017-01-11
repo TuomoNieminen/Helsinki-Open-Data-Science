@@ -14,3 +14,4 @@ learning2014 <- learning2014[learning2014$points > 0, ]
 write.table(learning2014, file = "learning2014.txt", sep = ",", row.names = F)
 
 # learning2014 <- read.table("learning2014.txt", sep = ",", header = T))
+# learning2014 <- read.table("https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/data/learning2014.txt", sep = ",", header = T)
