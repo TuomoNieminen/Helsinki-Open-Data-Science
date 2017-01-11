@@ -459,7 +459,7 @@ Plots may be created via the convenience function `qplot()` where arguments and 
 
 *** =pre_exercise_code
 ```{r}
-
+read.table("https://assets.datacamp.com/production/course_2218/learning2014.txt", sep = ",", header = T)
 ```
 
 *** =sample_code
