@@ -1,16 +1,18 @@
 ---
 title       : Regression and model validation 
-description : Data wrangling, Simple regression, multiple regression, regression diagnostics
+description : Data wrangling, simple regression, multiple regression, regression diagnostics
 
 
 --- type:NormalExercise lang:r xp:100 skills:1  key:6e77718b66
-## Reading data from an URL
+## Reading data from the web
 
-Welcome to chapter1: Regression and model validation. 
+*Welcome to chapter1*: Regression and model validation. 
 
-The first step of data analysis with R is reading data into R. Which function and function arguments to use to do this, depends on the original format of the data. 
+The first step of data analysis with R is reading data into R. This is done with a function. Which function and function arguments to use to do this, depends on the original format of the data. 
 
-After the correct function has been identified and data read into R, the data will usually be in R's `data.frame` format. A data frame's dimensions are ($n$,$d$), where $d$ is the number of columns (the variables) and $n$ the number of rows (the observations).
+Conveniently in R, the same functions for reading data can usually be used weather the data is saved locally on your computer or is located behind a web URL.
+
+After the correct function has been identified and data read into R, the data will usually be in R's `data.frame` format. A data frame's dimensions are ($n$,$d$), where $n$ is the number of rows (the observations) and $d$ the number of columns (the variables).
 
 
 *** =instructions
@@ -67,6 +69,8 @@ success_msg("Good work!")
 
 --- type:NormalExercise lang:r xp:100 skills:1  key:3efc4528fc
 ## Scaling variables
+
+The next step is [wrangling the data](https://en.wikipedia.org/wiki/Data_wrangling) into a format that is easy to analyze. We will wrangle our data for the next few exercises. 
 
 A neat thing about R is that may operations are *vectorized*. By this we mean that a single operation can affect all elements of a vector. This is often convenient.
 
@@ -127,7 +131,7 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9a390d843f
 ## Combining variables
 
-Our data includes many questions that can be thought to measure the same *dimension*. Here we'll combine multiple questions into combination variables. Very useful functions for summation with data frames in R are
+Our data includes many questions that can be thought to measure the same *dimension*. Here we'll combine multiple questions into combination variables. Useful functions for summation with data frames in R are
 
 function      | description
 ------------- | ----------
@@ -136,7 +140,7 @@ function      | description
 `colMeans()`  | returns the means of each column
 `rowMeans()`  | return the means of each row
 
-We'll also use the `select()` function from the **dplyr** library.
+We'll combine the use of `rowMeans()`with the `select()` function from the **dplyr** library to average the answers of selected questions.
 
 *** =instructions
 - Access the **dplyr** library
@@ -260,7 +264,7 @@ library(dplyr)
 # choose a handful of columns to keep
 keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
 
-# select those columns to create a new dataset
+# select the keep_columns to create a new dataset
 learning2014 <- 
 
 # see the stucture of the new dataset
@@ -280,7 +284,7 @@ library(dplyr)
 # choose a handful of columns to keep
 keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
 
-# select those columns to create a new dataset
+# select the keep_columns to create a new dataset
 learning2014 <- select(lrn14, one_of(keep_columns))
 
 # see the structure of the new dataset
@@ -301,6 +305,8 @@ success_msg("Great! Very nice work!")
 ## Modifying column names
 
 Sometimes you want to rename your colums. You could do this by creating copies of the columns with new names, but you can also directly get and set the column names of a data frame, using the function `colnames()`.
+
+**dplyr** also has a `rename()` function, which you are free to try if you wish. Remember [the cheatseet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
 
 *** =instructions
 - Print out the column names of `learning2014`
@@ -366,19 +372,19 @@ colnames(learning2014)
 test_output_contains('c("gender","age","attitude", "deep", "stra", "surf", "points")', incorrect_msg = "Please change the name of the 'Points' column to 'points' and print out the new column names")
 
 test_error()
-success_msg("Good work!")
+success_msg("Well done!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7955b0f30e
 ## Excluding observations
 
-Often your data includes outliers or other observations which you wish to remove. Or perhaps you simply wish to work with a subset of your data. 
+Often your data includes outliers or other observations which you wish to remove before further analysis. Or perhaps you simply wish to work with some subset of your data. 
 
-In the **student2014** data the variable 'Points' denotes the students exam points in a statistics course exam. If the student did not attend an exam, the value of 'Points' will be. We will remove these observations from the data.
+In the **student2014** data the variable 'points' denotes the students exam points in a statistics course exam. If the student did not attend an exam, the value of 'points' will be zero. We will remove these observations from the data.
 
 *** =instructions
 - Access the **dplyr** library
-- As an example, create object `males`by selecting the male students from `learning2014`
+- As an example, create object `male_students` by selecting the male students from `learning2014`
 - Override `learning2014` by selecting rows where the 'points' variable is greater than zero.
 
 *** =hint
@@ -408,7 +414,7 @@ colnames(learning2014)[7] <- "points"
 library(dplyr)
 
 # select male students
-males <- filter(learning2014, gender == "M")
+male_students <- filter(learning2014, gender == "M")
 
 # select rows where points is greater than zero
 learning2014 <- 
@@ -422,7 +428,7 @@ learning2014 <-
 library(dplyr)
 
 # select male students
-males <- filter(learning2014, gender == "M")
+male_students <- filter(learning2014, gender == "M")
 
 # select rows where Points is greater than zero
 learning2014 <- filter(learning2014, points > 0)
