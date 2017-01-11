@@ -124,7 +124,7 @@ lrn14$attitude <- lrn14$Attitude / 10
 test_object("lrn14", incorrect_msg = "Please create the column 'attitude in the data frame 'lrn14' be scaling the column 'Attitude'")
 
 test_error()
-success_msg("Good work!")
+success_msg("Well done. Excellent wrangling!")
 ```
 
 
@@ -215,7 +215,7 @@ lrn14$stra <- rowMeans(strategic_columns)
 test_object("lrn14", incorrect_msg = "Please do not remove the example codes and create the column 'stra' in the data frame 'lrn14' by averaging the answers to strategic learning questions.")
 
 test_error()
-success_msg("Great work!")
+success_msg("Yes! You are clearly a combination of intelligence and enthusiasm!")
 ```
 
 
@@ -298,7 +298,7 @@ test_object("learning2014", incorrect_msg = "Please use the selected columns to 
 test_function("str", args = "object", incorrect_msg = "Please use the `str()` function to see the structure of the learnign2014 dataset")
 
 test_error()
-success_msg("Great! Very nice work!")
+success_msg("Great work! I choose you!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b020be3ce5
@@ -441,6 +441,6 @@ learning2014 <- filter(learning2014, points > 0)
 test_object("learning2014", incorrect_msg = "Please exclude the observations from learning2014 where points <= 0")
 
 test_error()
-success_msg("Awsome work!")
+success_msg("Awsome!")
 ```
 
