@@ -1,5 +1,5 @@
 ---
-title       : Regression and model validation 
+  title       : Regression and model validation 
 description : Data wrangling, simple regression, multiple regression, regression diagnostics
 
 
@@ -101,7 +101,7 @@ lrn14$Attitude / 10
 
 # create column 'attitude' by scaling the column "Attitude"
 lrn14$attitude <- 
-  
+
 
 ```
 
@@ -182,7 +182,7 @@ lrn14$surf <- rowMeans(surface_columns)
 # select the columns related to strategic learning and create column 'stra' by averaging
 
 
-  
+
 ```
 
 *** =solution
@@ -444,3 +444,79 @@ test_error()
 success_msg("Awsome!")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1
+## Scatter plots with ggplot2
+
+**ggplot2** is a popular library for creating stunning graphics with R. It has some advantages over the basic plotting system in R, mainly consistent use of function arguments and flexible alteration. ggplot2 is an implementation of Leland Wilkinson's *Grammar of Graphics* — a general scheme for data visualization.
+
+Plots may be created via the convenience function `qplot()` where arguments and defaults are meant to be similar to base R's plot() function. More complex plotting capacity is available via `ggplot()` which exposes the user to more explicit elements of the grammar.
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+# Use the gglot2 library
+library(ggplot2)
+
+# initialize plot coordinates
+p <- ggplot(data = learning2014, 
+            aes(x = attitude, y = points, col = gender))
+
+# define the visualization (points)
+p <- p + geom_point()
+
+# draw the plot
+p
+
+# add a regression line
+p <- p + geom_smooth(method = "lm")
+p
+
+# add a main title
+p <- p + ggtitle("students attitude and exam points")
+p
+```
+
+*** =solution
+```{r}
+# Use the gglot2 library
+library(ggplot2)
+
+# initialize plot coordinates
+p <- ggplot(data = learning2014, 
+            aes(x = attitude, y = points, col = gender))
+
+# define the visualization (points)
+p <- p + geom_point()
+
+# draw the plot
+p
+
+# add a regression line
+p <- p + geom_smooth(method = "lm")
+p
+
+# add a main title
+p <- p + ggtitle("students attitude and exam points")
+p
+```
+
+*** =sct
+```{r}
+
+test_function("", args = "",incorrect_msg = "")
+test_object("", incorrect_msg = "")
+test_output_contains("", incorrect_msg = "")
+
+test_error()
+success_msg("Good work!")
+```
