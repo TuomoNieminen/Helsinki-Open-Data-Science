@@ -532,7 +532,7 @@ success_msg("You're a graphical genius!")
 
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:a60db75e33
 ## Exploring a data frame
 
 Often the most interesting feature of your data are the relationships between the variables. If there are only a handful of variables, saved as columns in a data frame, it is possible to visualize all of these relationships neatly in a single plot.
@@ -612,7 +612,7 @@ test_error()
 success_msg("Very nice work! That was a tough one!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:6eeeae4d73
 ## Simple regression
 
 Regression analysis with R is easy once you have your data in a neat data frame. You can simply use the `lm()` function to fit a linear model. The first argument of `lm()` is `formula`, which tells the function what is the target variable and what is the explanatory variable(s). The formula is
@@ -677,7 +677,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:4f88f9dfca
 ## Multiple regression
 
 It is easy to include more than one explanatory variables in your linear model. The argument `formula` of `lm()` defines the explanatory variables as such
@@ -741,7 +741,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:a6c1dfef61
 ## Graphical model validation
 
 R makes it easy to graphically explore the validity of your model assumptions. When you give a linear model object to the `plot()` function, the function automatically assumes you want diagnostic plots and will produce them. 
