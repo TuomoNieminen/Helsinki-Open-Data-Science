@@ -186,7 +186,7 @@ You can see the changes you made in your Github profile (https://github.com/*you
 
 ## Clone the repository with Git
 
-Cloning the repository in Git, see Github's instructions [here](https://help.github.com/articles/cloning-a-repository/). Note that you will need to navigate into the folder where you want to copy the files. 
+Cloning the repository in Git, see Github's instructions [here](https://help.github.com/articles/cloning-a-repository/). Note that you will need to navigate into the folder where you want to copy the files. If username and password are asked, use your Github account credentials.
 
 ## Option 3: Adding files at the Github website
 
