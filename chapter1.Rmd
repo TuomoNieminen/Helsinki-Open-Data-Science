@@ -449,7 +449,7 @@ success_msg("Awsome!")
 
 **ggplot2** is a popular library for creating stunning graphics with R. It has some advantages over the basic plotting system in R, mainly consistent use of function arguments and flexible plot alteration. ggplot2 is an implementation of Leland Wilkinson's *Grammar of Graphics* — a general scheme for data visualization.
 
-In ggplot2, plots may be created via the convenience function `qplot()` where arguments and defaults are meant to be similar to base R's `plot()` function. More complex plotting capacity is available via `ggplot()` which exposes the user to more explicit elements of the grammar.
+In ggplot2, plots may be created via the convenience function `qplot()` where arguments and defaults are meant to be similar to base R's `plot()` function. More complex plotting capacity is available via `ggplot()` which exposes the user to more explicit elements of the grammar. (from [wikipedia](https://en.wikipedia.org/wiki/Ggplot2))
 
 RStudio has a [cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf) for data visualization with ggplot2.
 
@@ -460,7 +460,8 @@ RStudio has a [cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/gg
 - Draw the plot
 - Adjust the plot initialization: Add an aesthetic element to the plot by defining `col = gender` inside `aes()`. Define the visualization type and draw the plot again.
 - add a regression line to the plot
-- Create object `p4` by adding a title to the plot (`p3`): Use `+ ggtitle("<insert title here>")` and give your plot the title "Students attitude versus exam points" and draw the plot.
+- Create object `p4` by adding a title to the plot: Use `+ ggtitle("<insert title here>")` and give your plot the title "Students attitude versus exam points".
+- Draw the plot.
 
 *** =hint
 - hint
@@ -521,7 +522,7 @@ p4
 *** =sct
 ```{r}
 
-test_object("p1", incorrect_msg = "Please adjust the call to `ggplot()` and add the `col = gender` aesthetic element to the plot")
+test_function("ggplot",args = c("data","mapping"), incorrect_msg = "Please adjust the call to `ggplot()` and add the `col = gender` aesthetic element to the plot")
 test_output_contains("p2", incorrect_msg = "Please draw the `p2` scatter plot")
 
 test_object("p4", incorrect_msg = "Please add a main title to the `p3` plot with `ggtitle()`")
