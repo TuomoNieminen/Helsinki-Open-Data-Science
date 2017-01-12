@@ -1,13 +1,18 @@
 
 ```{r, include = F}
-knitr::opts_chunk$set(echo = F)
+knitr::opts_chunk$set(echo = F, comment = NA)
 ```
+<style>
+.small-code pre code {
+  font-size: 1.1em;
+}
+</style>
 
 Introduction to Open Data Science
 ========================================================
-incremental: true
+incremental: false
 autosize: true
-transition: none
+transition: rotate
 
 University of Helsinki, spring 2017
 - prof. Kimmo Vehkalahti with  
@@ -16,6 +21,9 @@ University of Helsinki, spring 2017
 ========================================================
 type: prompt
 
+<div align="center">
+From data wrangling to exploration and modelling
+</div><br>
 ```{r, fig.align = "center", fig.width = 10}
 library(ggplot2); library(ggExtra)
 
