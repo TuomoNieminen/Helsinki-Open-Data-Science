@@ -594,7 +594,7 @@ p
 ```{r}
 
 test_function("pairs", args = c("x" , "col"),incorrect_msg = "Please define the `col` argument inside `pairs()` as instructed")
-test_function("ggpairs()", args = c("data", "mapping"), incorrect_message = "Please use the `aes()` function to define the `mapping` argument of `ggpairs()`. Give `aes()` the arguments `col` and `alpha`")
+test_function("ggpairs", args = c("data", "mapping"), incorrect_message = "Please use the `aes()` function to define the `mapping` argument of `ggpairs()`. Give `aes()` the arguments `col` and `alpha`")
 
 test_student_typed("p", not_typed_msg = "Please draw the plot created with `ggpairs()`")
 
