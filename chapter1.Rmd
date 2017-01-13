@@ -21,7 +21,7 @@ After the correct function has been identified and data read into R, the data wi
 - Look at the structure of the data with `str()`. 
 
 *** =hint
-- for both functions you can pass a data frame as the first (unnamed) argument.
+- For both functions you can pass a data frame as the first (unnamed) argument.
 
 *** =pre_exercise_code
 ```{r}
@@ -72,16 +72,16 @@ success_msg("Good work!")
 
 The next step is [wrangling the data](https://en.wikipedia.org/wiki/Data_wrangling) into a format that is easy to analyze. We will wrangle our data for the next few exercises. 
 
-A neat thing about R is that may operations are *vectorized*. By this we mean that a single operation can affect all elements of a vector. This is often convenient.
+A neat thing about R is that may operations are *vectorized*. It means that a single operation can affect all elements of a vector. This is often convenient.
 
-The column "Attitude" in `lrn14` is a sum of 10 questions related to students attitude towards statistics, each measured on the Likert scale (1-5). Here we'll scale the combination variable back to the 1-5 scale.
+The column "Attitude" in `lrn14` is a sum of 10 questions related to students attitude towards statistics, each measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) (1-5). Here we'll scale the combination variable back to the 1-5 scale.
 
 *** =instructions
 - Execute the example codes to see how vectorized division works
 -  Use vector division to create a new column "attitude", where each observation of "Attitude" is scaled back to the original scale of the questions, by dividing it with the number of questions.
 
 *** =hint
-- assign 'Attitude divided by 10' to the new column 'attitude.
+- Assign 'Attitude divided by 10' to the new column 'attitude.
 
 *** =pre_exercise_code
 ```{r}
@@ -107,6 +107,8 @@ lrn14$attitude <- "change me!"
 
 *** =solution
 ```{r}
+#lrn14 is available
+
 # divide each number in a vector
 c(1,2,3,4,5) / 2
 
