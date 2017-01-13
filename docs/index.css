@@ -2,6 +2,11 @@
   color: #393B3C;
 }
 
+.summary {
+  font-size: 10px;
+  max-height: 50px;
+}
+
 .reveal section h3 {
   padding-bottom: 20px;
   border-bottom: solid 8px;

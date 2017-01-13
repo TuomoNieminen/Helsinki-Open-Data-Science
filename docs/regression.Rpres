@@ -1,12 +1,14 @@
+```{r, include = F}
+knitr::opts_chunk$set(echo = F, comment = NA)
+```
 
 
 ```{r, include = F}
-knitr::opts_chunk$set(echo = F)
-
 # a data set used on some plots
 learning2014 <-  read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/learning2014.txt", sep = "\t", header = TRUE)
 learning2014 <- learning2014[learning2014$points > 0,]
 ```
+
 
 Linear regression and model validation
 ========================================================
@@ -26,6 +28,7 @@ Linear regression models
 type: prompt
 incremental: false
 
+Simple regression
 ```{r}
 library(ggplot2)
 theme_set(theme_grey(base_size = 18))
@@ -35,6 +38,7 @@ p
 
 ***
 
+Multiple regression
 ```{r}
 library(scatterplot3d)
 set.seed(666)
@@ -52,7 +56,7 @@ What is a statistical model?
 
 A statistical model: 
 - Embodies a set of assumptions and describes the generation of a sample from a population
-- The model represents the data generating process
+- Represents the data generating process
 - The uncertainty related to a sample of data is described using probability distributions
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
@@ -67,6 +71,18 @@ There are many applications for linear models such as
 - Prediction or forecasting
 - Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$
 
+Assumptions of linear regression models
+========================================================
+
+In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
+
+$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
+- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
+- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
+
+<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
 Simple regression
 ========================================================
@@ -88,27 +104,6 @@ qplot(x, y) + geom_smooth(method = "lm", se = F) + theme(
   axis.text = element_blank())
 ```
 
-Assumptions of linear regression models
-========================================================
-
-In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
-
-$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
-
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
-- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
-- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
-
-<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
-
-Structure of a linear model
-========================================================
-In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
-
-- $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
-- $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
-- $\beta$ quantifies the relationship between $\boldsymbol{y}$ and  $\boldsymbol{x}$.
-- $\boldsymbol{\epsilon}$ describes the errors of the model
 
 Multiple regression
 ========================================================
@@ -132,6 +127,15 @@ p <- scatterplot3d(x = x1, y = x2, z = y, grid = T, box = F, mar = c(3,3,3,3), t
 p$plane3d(lm(y~x1+x2))
 ```
 
+Structure of a linear model
+========================================================
+In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
+
+- $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
+- $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
+- $\beta$ quantifies the relationship between $\boldsymbol{y}$ and  $\boldsymbol{x}$.
+- $\boldsymbol{\epsilon}$ describes the errors (or the uncertainty) of the model
+
 
 Finding the model
 ========================================================
@@ -139,7 +143,7 @@ The best model is found by minimizing the prediction errors that the model would
 
 - $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions
 - $\hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals
-- The best model is found by minimizing the sum of squared residuals
+- The model is found by minimizing the sum of squared residuals
 
 ***
 
@@ -163,15 +167,28 @@ Interpreting the parameters
 ========================================================
 When the model is $$\boldsymbol{y} = \alpha + \beta_1 \boldsymbol{x}_1 + \beta_2 \boldsymbol{x}_2 + \boldsymbol{\epsilon}$$
 
-- The main interest is to estimate the $\beta$ parameters
-- Interpretation of $\hat{\beta_1} = 2$: 
+- The main interest is to estimate the $\boldsymbol{\beta}$ parameters
+- Interpretation of an estimate $\hat{\beta_1} = 2$: 
   - When $x_1$ increases by one unit, the average change in $y$ is 2 units, given that the other variables (here $x_2$) do not change.
 
+R linear model summary()
+========================================================
+class: small-code
+
+<small>
+See for example [this blog post](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit) related to intepreting p-values and regression coefficients of a linear model summary.
+</small>
+
+```{r}
+some_variable <- rnorm(30)
+Y <- 2*some_variable + rnorm(30, sd = 3)
+summary(lm(Y ~ some_variable))
+```
 
 Advanced example: Polynomial terms
 ========================================================
 
-The linearity assumption isn's as restrictive as one could imagine.  
+The linearity assumption isn't as restrictive as one could imagine.  
 
 It is possible to add polynomial terms to the model if the effect of a variable is non-linear
 
@@ -275,7 +292,8 @@ Leverage of observations (1)
 Leverage measures how much impact a single observation has on the model. 
 
 - Residuals vs leverage plot can help identify which observations have an unusually high impact.
-- The next two slides show four examples 
+- The next two slides show four examples.  
+- Each row of two plots defines a *data - model validation* pair.
 
 Leverage of observations (2)
 ========================================================
