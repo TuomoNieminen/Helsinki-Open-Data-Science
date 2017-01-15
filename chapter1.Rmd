@@ -74,11 +74,11 @@ The next step is [wrangling the data](https://en.wikipedia.org/wiki/Data_wrangli
 
 A neat thing about R is that may operations are *vectorized*. It means that a single operation can affect all elements of a vector. This is often convenient.
 
-The column "Attitude" in `lrn14` is a sum of 10 questions related to students attitude towards statistics, each measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) (1-5). Here we'll scale the combination variable back to the 1-5 scale.
+The column `Attitude` in `lrn14` is a sum of 10 questions related to students attitude towards statistics, each measured on the [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) (1-5). Here we'll scale the combination variable back to the 1-5 scale.
 
 *** =instructions
 - Execute the example codes to see how vectorized division works
--  Use vector division to create a new column "attitude", where each observation of "Attitude" is scaled back to the original scale of the questions, by dividing it with the number of questions.
+- Use vector division to create a new column `attitude` in the `lrn14` data frame, where each observation of `Attitude` is scaled back to the original scale of the questions, by dividing it with the number of questions.
 
 *** =hint
 - Assign 'Attitude divided by 10' to the new column 'attitude.
@@ -96,12 +96,14 @@ lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt
 # divide each number in a vector
 c(1,2,3,4,5) / 2
 
-# divide each number in a column vector
+# print the "Attitude" column vector of the lrn14 data
+lrn14$Attitude
+
+# divide each number in the column vector
 lrn14$Attitude / 10
 
 # create column 'attitude' by scaling the column "Attitude"
 lrn14$attitude <- "change me!"
-
 
 ```
 
@@ -112,10 +114,13 @@ lrn14$attitude <- "change me!"
 # divide each number in a vector
 c(1,2,3,4,5) / 2
 
-# divide each number in a longer vector
+# print the "Attitude" column vector of the lrn14 data
+lrn14$Attitude
+
+# divide each number in the column vector
 lrn14$Attitude / 10
 
-# create column 'attitude' by scaling the column "Attitude"
+# create column "attitude" by scaling the column "Attitude"
 lrn14$attitude <- lrn14$Attitude / 10
 
 ```
@@ -123,7 +128,7 @@ lrn14$attitude <- lrn14$Attitude / 10
 *** =sct
 ```{r}
 
-test_object("lrn14", incorrect_msg = "Please create the column 'attitude in the data frame 'lrn14' be scaling the column 'Attitude'")
+test_object("lrn14", incorrect_msg = "Please create the column 'attitude in the data frame 'lrn14' by scaling the column 'Attitude'")
 
 test_error()
 success_msg("Well done. Excellent wrangling!")
@@ -142,7 +147,7 @@ function      | description
 `colMeans(df)`| returns the mean of each column in `df`
 `rowMeans(df)`| return the mean of each row in `df`
 
-We'll combine the use of `rowMeans()`with the `select()` function from the **dplyr** library to average the answers of selected questions.
+We'll combine the use of `rowMeans()`with the `select()` function from the **dplyr** library to average the answers of selected questions. See how it is done from the example codes.
 
 *** =instructions
 - Access the **dplyr** library
@@ -151,7 +156,7 @@ We'll combine the use of `rowMeans()`with the `select()` function from the **dpl
 - Create the combination variable 'stra' as a column in `lrn14`
 
 *** =hint
-- Use the object `strategic_questions` for selecting the correct columns.
+- Columns related to strategic learning are in the object `strategic_questions`. Use it for selecting the correct columns.
 - Use the function `rowMeans()` identically to the examples
 
 *** =pre_exercise_code
@@ -173,7 +178,7 @@ deep_questions <- c("D03", "D11", "D19", "D27", "D07", "D14", "D22", "D30","D07"
 surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13","SU21","SU29","SU08","SU16","SU24","SU32")
 strategic_questions <- c("ST01","ST09","ST17","ST25","ST04","ST12","ST20","ST28")
 
-# select the columns related to deep learning and create column 'deep' by averagin
+# select the columns related to deep learning and create column 'deep' by averaging
 deep_columns <- select(lrn14, one_of(deep_questions))
 lrn14$deep <- rowMeans(deep_columns)
 
@@ -181,16 +186,16 @@ lrn14$deep <- rowMeans(deep_columns)
 surface_columns <- select(lrn14, one_of(surface_questions))
 lrn14$surf <- rowMeans(surface_columns)
 
-
 # select the columns related to strategic learning and create column 'stra' by averaging
 strategic_columns <- "change me!"
-
 
 
 ```
 
 *** =solution
 ```{r}
+# lrn14 is available
+
 # Access the dplyr library
 library(dplyr)
 
@@ -226,7 +231,7 @@ success_msg("Yes! You are clearly a combination of intelligence and enthusiasm!"
 --- type:NormalExercise lang:r xp:100 skills:1  key:6acf3bcc8b
 ## Selecting columns
 
-Often it is convenient to work with only a certain column or a subset of columns of a bigger data frame. There are many ways to select columns of a data frame in R and you are already familiar with one of them: `select()` from **dplyr***.
+Often it is convenient to work with only a certain column or a subset of columns of a bigger data frame. There are many ways to select columns of data frame in R and you saw one of them in the previous exercise: `select()` from **dplyr***.
 
 **dplyr** is a popular library for *data wrangling*. There is also a convenient [data wrangling cheatsheet by RStudio](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) to help you get started. 
 
@@ -263,7 +268,7 @@ library(dplyr)
 # choose a handful of columns to keep
 keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
 
-# select the keep_columns to create a new dataset
+# select the 'keep_columns' to create a new dataset
 learning2014 <- "change me!"
 
 # see the stucture of the new dataset
@@ -273,6 +278,7 @@ learning2014 <- "change me!"
 
 *** =solution
 ```{r}
+# lrn14 is available
 
 # access the dplyr library
 library(dplyr)
@@ -280,7 +286,7 @@ library(dplyr)
 # choose a handful of columns to keep
 keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
 
-# select the keep_columns to create a new dataset
+# select the 'keep_columns' to create a new dataset
 learning2014 <- select(lrn14, one_of(keep_columns))
 
 # see the structure of the new dataset
@@ -302,12 +308,13 @@ success_msg("Great work! I choose you!")
 
 Sometimes you want to rename your colums. You could do this by creating copies of the columns with new names, but you can also directly get and set the column names of a data frame, using the function `colnames()`.
 
-The **dplyr** library has a `rename()` function, which can also be used. Remember [the cheatseet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
+The **dplyr** library has a `rename()` function, which can also be used. Remember [the cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
 
 *** =instructions
 - Print out the column names of `learning2014`
 - Change the name of the second column to 'age'
 - Change the name of 'Points' to 'points'
+- Print out the column names again to see the changes
 
 *** =hint
 - You can use `colnames()` similarily to the example. Which index matches the column 'Points'?
@@ -345,6 +352,7 @@ colnames(learning2014)[2] <- "age"
 
 *** =solution
 ```{r}
+# learning2014 is available
 
 # print out the column names of the data
 colnames(learning2014)
@@ -357,7 +365,6 @@ colnames(learning2014)[7] <- "points"
 
 # print out the new column names of the data
 colnames(learning2014)
-
 
 ```
 
@@ -376,12 +383,13 @@ success_msg("Well done!")
 
 Often your data includes outliers or other observations which you wish to remove before further analysis. Or perhaps you simply wish to work with some subset of your data. 
 
-In the **student2014** data the variable 'points' denotes the students exam points in a statistics course exam. If the student did not attend an exam, the value of 'points' will be zero. We will remove these observations from the data.
+In the **learning2014** data the variable 'points' denotes the students exam points in a statistics course exam. If the student did not attend an exam, the value of 'points' will be zero. We will remove these observations from the data.
 
 *** =instructions
 - Access the **dplyr** library
 - As an example, create object `male_students` by selecting the male students from `learning2014`
-- Override `learning2014` and select rows where the 'points' variable is greater than zero.
+- Override `learning2014` and select rows where the 'points' variable is greater than zero. 
+- If you do not remember how logical comparison works in R, see the 'Logical comparison' exercise from the course 'R short and sweet'.
 
 *** =hint
 - The "greater than" logical operator is `>`
@@ -419,6 +427,7 @@ learning2014 <-
 
 *** =solution
 ```{r}
+# learning2014 is available
 
 # access the dplyr library
 library(dplyr)
@@ -437,13 +446,13 @@ learning2014 <- filter(learning2014, points > 0)
 test_object("learning2014", incorrect_msg = "Please exclude the observations from learning2014 where points <= 0")
 
 test_error()
-success_msg("Awsome!")
+success_msg("Awesome!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7b821b76a2
 ## Visualizations with ggplot2
 
-**ggplot2** is a popular library for creating stunning graphics with R. It has some advantages over the basic plotting system in R, mainly consistent use of function arguments and flexible plot alteration. ggplot2 is an implementation of Leland Wilkinson's *Grammar of Graphics* — a general scheme for data visualization.
+[**ggplot2**](http://ggplot2.org/) is a popular library for creating stunning graphics with R. It has some advantages over the basic plotting system in R, mainly consistent use of function arguments and flexible plot alteration. ggplot2 is an implementation of Leland Wilkinson's *Grammar of Graphics* — a general scheme for data visualization.
 
 In ggplot2, plots may be created via the convenience function `qplot()` where arguments and defaults are meant to be similar to base R's `plot()` function. More complex plotting capacity is available via `ggplot()`, which exposes the user to more explicit elements of the grammar. (from [wikipedia](https://en.wikipedia.org/wiki/Ggplot2))
 
@@ -452,15 +461,17 @@ RStudio has a [cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/gg
 *** =instructions
 - Access the **ggplot2** library
 - Initialize the plot with data and aesthetic mappings
-- Define the visualisation type (as points) and draw the plot
 - Adjust the plot initialization: Add an aesthetic element to the plot by defining `col = gender` inside `aes()`. 
-- Define the visualization type (as points) and draw the plot again
-- Add a regression line to the plot
-- Use `ggtitle("<insert title here>")` and give your plot the title "Student's attitude versus exam points"
-- Draw the plot
+- Define the visualization type (points)
+- Draw the plot to see how it looks at this point
+- *Add* a regression line to the plot
+- *Add* the title "Student's attitude versus exam points" with `ggtitle("<insert title here>")` to the plot with regression line
+- Draw the plot again to see the changes
 
 *** =hint
-- Use `+` to add to the plot
+- Use `+` to add the title to the plot
+- The plot with regression line is saved in the object `p3`
+- You can draw the plot by typing the object name where the plot is saved
 
 *** =pre_exercise_code
 ```{r}
@@ -494,10 +505,12 @@ p4 <- "change me!"
 
 *** =solution
 ```{r}
+# learning2014 is available
+
 # Use the gglot2 library
 library(ggplot2)
 
-# initialize the plot with data and aesthetic mapping
+# initialize plot with data and aesthetic mapping
 p1 <- ggplot(learning2014, aes(x = attitude, y = points, col = gender))
 
 # define the visualization type (points)
@@ -510,7 +523,7 @@ p2
 p3 <- p2 + geom_smooth(method = "lm")
 
 # add a main title and draw the plot
-p4 <- p3 + ggtitle("students attitude and exam points")
+p4 <- p3 + ggtitle("Student's attitude versus exam points")
 p4
 
 ```
@@ -522,7 +535,7 @@ test_function("ggplot",args = c("data","mapping"), incorrect_msg = "Please adjus
 
 test_function("ggtitle", args = "label", incorrect_msg = "Please use the `ggtitle()` function as instructed")
 
-test_student_typed("p4",not_typed_msg = "Please type `p4` to draw the final plot object")
+test_student_typed("p4", not_typed_msg = "Please type `p4` to draw the final plot object")
 
 test_error()
 success_msg("You're a graphical genius!")
@@ -538,10 +551,14 @@ Base R offers a fast plotting function `pairs()`, which draws all possible scatt
 
 *** =instructions
 - Draw a scatter matrix of the variables in learning2014 (other than gender)
-- Adjust the code: Add the argument `col` to the `pairs()` function, defining the colour with the 'gender' variable in learning2014. Draw the plot again.
-- Access the **ggpot2** and **GGally** libraries and create the plot `p` with `ggpairs()`. Draw the plot.
-- Adjust the code: adjust the argument `mapping` of `ggpairs()`. define `col = gender` inside `aes()`. Draw the plot again.
-- Adjust the code: add another aesthetic element using `aes()` and define `alpha = 0.3`. Draw the plot again.
+- Adjust the code: Add the argument `col` to the `pairs()` function, defining the colour with the 'gender' variable in learning2014. 
+- Draw the plot again to see the changes.
+- Access the **ggpot2** and **GGally** libraries and create the plot `p` with `ggpairs()`. 
+- Draw the plot. Note that the function is a bit slow.
+- Adjust the argument `mapping` of `ggpairs()` by defining `col = gender` inside `aes()`. 
+- Draw the plot again.
+- Adjust the code a little more: add another aesthetic element `alpha = 0.3` inside `aes()`.
+- See the difference between the plots?
 
 *** =hint
 - You can use `$` to access a column of a data frame.
@@ -575,6 +592,7 @@ p <- ggpairs(learning2014, mapping = aes(), lower = list(combo = wrap("facethist
 
 *** =solution
 ```{r}
+# learning2014 is available
 
 # draw a scatter plot matrix of the variables in learning2014.
 # [-1] excludes the first column (gender)
@@ -596,7 +614,8 @@ p
 ```{r}
 
 test_function("pairs", args = c("x" , "col"),incorrect_msg = "Please define the `col` argument inside `pairs()` as instructed")
-test_function("ggpairs", args = c("data", "mapping"), incorrect_message = "Please use the `aes()` function to define the `mapping` argument of `ggpairs()`. Give `aes()` the arguments `col` and `alpha`")
+
+test_function("ggpairs", args = c("data", "mapping"), incorrect_message = "Please use the `aes()` function to define the `mapping` argument of `ggpairs()`. Give `aes()` the arguments `col` and `alpha`.")
 
 test_student_typed("p", not_typed_msg = "Please draw the plot created with `ggpairs()`")
 
@@ -608,16 +627,16 @@ success_msg("Very nice work! That was a tough one!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:6eeeae4d73
 ## Simple regression
 
-Regression analysis with R is easy once you have your data in a neat data frame. You can simply use the `lm()` function to fit a linear model. The first argument of `lm()` is `formula`, which defines the target variable and the explanatory variable(s). 
+[Regression analysis](https://en.wikipedia.org/wiki/Regression_analysis) with R is easy once you have your data in a neat data frame. You can simply use the `lm()` function to fit a linear model. The first argument of `lm()` is a `formula`, which defines the target variable and the explanatory variable(s). 
 
 The formula should be `y ~ x`, where `y` is the target variable and `x` the explanatory variable. The second argument of `lm()` is `data`, which should be a data frame where `y` and `x` are columns. 
 
-The output of `lm()` is a linear model object, which can be saved for later use. The generic function `summary()` can then be used to print out a summary of the model.
+The output of `lm()` is a linear model object, which can be saved for later use. The generic function `summary()` can be used to print out a summary of the model.
 
 *** =instructions
 - Create a scatter plot of 'points' versus 'attitude'.
 - Fit a regression model where 'points' is the target and 'attitude' is the explanatory variable
-- Print out a summary of the linear model object
+- Print out the summary of the linear model object
 
 *** =hint
 - Replace `1` with the name of the explanatory variable in the formula inside `lm()`
@@ -674,7 +693,7 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:4f88f9dfca
 ## Multiple regression
 
-It is easy to include more than one explanatory variables in your linear model. This is done by simply defining more explanatory variables with the `formula` argument of `lm()`, as below
+When there are more than one explanatory variables in the linear model, it is called multiple regression. In R, it is easy to include more than one explanatory variables in your linear model. This is done by simply defining more explanatory variables with the `formula` argument of `lm()`, as below
 
 ```
 y ~ x1 + x2 + ..
@@ -684,12 +703,13 @@ Here `y` is again the target variable and `x1, x2, ..` are the explanatory varia
 
 *** =instructions
 - Draw a plot matrix of the learning2014 data with `ggpairs()`
-- Fit a regression model where `points` is the target variable and both `attitude` and `stra` are the explanatory variables. Print out a summary of the model
+- Fit a regression model where `points` is the target variable and both `attitude` and `stra` are the explanatory variables. 
+- Print out a summary of the model.
 - Adjust the code: Add one more explanatory variable to the model. Based on the plot matrix, choose the variable with the third highest (absolute) correlation with the target variable and use that as the third variable. 
 - Print out a summary of the new model.
 
 *** =hint
-- The variable with the third highest absolute correlation with 'points' is 'surf'.
+- The variable with the third highest absolute correlation with `points` is `surf`.
 
 *** =pre_exercise_code
 ```{r}
@@ -715,6 +735,8 @@ my_model2 <- lm(points ~ attitude + stra, data = learning2014)
 
 *** =solution
 ```{r}
+# learning2014, GGally, ggplot2 are avaiable
+
 # create an plot matrix with ggpairs()
 ggpairs(learning2014, lower = list(combo = wrap("facethist", bins = 20)))
 
@@ -739,9 +761,9 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:a6c1dfef61
 ## Graphical model validation
 
-R makes it easy to graphically explore the validity of your model assumptions. If you give a linear model object as the first argument to the `plot()` function, the function automatically assumes you want diagnostic plots and will produce them. 
+R makes it easy to graphically explore the validity of your model assumptions. If you give a linear model object as the first argument to the `plot()` function, the function automatically assumes you want diagnostic plots and will produce them. You can check the help page of plotting an lm object by typing `?plot.lm` or `help(plot.lm)` to the R console. 
 
-You can then use the argument `which` to choose which plots you want. `which` must be an integer vector corresponding to the following list of plots:
+In the plot function you can then use the argument `which` to choose which plots you want. `which` must be an integer vector corresponding to the following list of plots:
 
 which | graphic                                 | relates to
 ----- | --------------------------------------- | --------
