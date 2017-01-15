@@ -1,21 +1,32 @@
 
 
 
-Contents
+Chapter 4: Clustering and classification
 ========================================================
+incremental: false
+
+Classification:
+- Identify in which (sub-)group the observation belongs
+
+Clustering: 
+
+- Find groups within data so that observations within groups are more similar with each other than with observations with other groups
+
+
+Chapter 4: Clustering and classification
+========================================================
+incremental: false
 
 - K-means
 - K-medoids (?)
-- Discriminant analysis  (+ classification)
+- Linear discriminant analysis  (+ classification)
 - Cross validation: Training set and test set
 - DA biplot (not into details here)
 
 K-means (1)
 ==================================================
-
-- Clustering: 
-
-> Find groups within data so that observations within groups are more similar with each other than with observations with other groups 
+incremental: false
+autosize: true
 
 - K-means is possibly the oldest and used clustering method in many fields of study
     - Easy to use and relatively fast, often finds a solution
@@ -27,6 +38,7 @@ K-means (1)
 
 K-means (2)
 ==================================================
+incremental: false
 
 Algorithm
 
@@ -40,6 +52,7 @@ Continue updating steps until the centroids or the clusters do not change
 
 K-means (3)
 ==================================================
+incremental: false
 
 - Distance measure in the algorithm
 - Similarity/dissimilarity measures between data points
@@ -48,9 +61,23 @@ K-means (3)
 
 K-medoids
 ==================================================
+incremental: false
 
-Discriminant analysis
+Linear discriminant analysis(1)
 ==================================================
+
+Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. LDA is a probabilistic model that forms a class conditional distribution of the data for each of the classes.
+
+[Bayes' rule](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to predict in what class the observation belongs to.
+
+The probability of the observations being in a certain class can be written $P(y=k|X$ where X denotes the data and there are k number of classes. 
+ 
+http://scikit-learn.org/stable/modules/lda_qda.html 
+
+Linear discriminant analysis(2)
+==================================================
+
+The conditional distribution of the data can be written as $P(X|y=k)$ where X means the data and k denotes the kth class. The conditional probability is modelled by using multivariate Gaussian distribution
 
 Cross Validation
 ==================================================
