@@ -1,0 +1,16 @@
+---
+title: "Get started with Git and Github Desktop"
+output:
+  html_document:
+    theme: flatly
+    highlight: pygments
+    toc: true
+    number_sections: false
+    toc_depth: 4
+    toc_float: true
+    smooth_scroll: true
+---
+  
+```{r child = "github.Rmd"}
+```
+

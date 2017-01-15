@@ -1,16 +1,3 @@
----
-title: "Get started with Git and Github Desktop"
-output:
-  html_document:
-    theme: flatly
-    highlight: pygments
-    toc: true
-    number_sections: false
-    toc_depth: 4
-    toc_float: true
-    smooth_scroll: true
----
-
 # Github
 
 [Why use Github?](http://kbroman.org/github_tutorial/pages/why.html) Git is a widely used version control software that helps keep track of your files, so that in case of an accident you can always restore a previous version. GitHub helps you host these (version controlled) files on the web, so you can access your files from anywhere and share them with others. 
