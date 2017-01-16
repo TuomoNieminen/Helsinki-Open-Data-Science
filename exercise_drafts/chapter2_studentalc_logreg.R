@@ -1,89 +1,96 @@
-# merge two datasets
-# ----------------
 
-# 1 load two datasets
+# 1 loading more datasets
 
 # meta: 
 browseURL("https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION")
 
 # read the math class questionaire data
-math <- read.table("student-mat.csv",sep=";",header=TRUE)
+math <- read.table("../datasets/student-mat.csv",sep=";",header=TRUE)
 
 # look at the column names
 colnames(math)
 
 # read the portuguese class questionaire data
-por <- read.table("student-por.csv",sep=";",header=TRUE)
+por <- read.table("../datasets/student-por.csv",sep=";",header=TRUE)
 
 # look at the column names
 colnames(por)
 
-# 2 merge the two datasets
+# 2 joining two datasets
 
 # common columns to merge the datasets by
-merge_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 
-# merge the two datasets by selected common variables
-math_por <- merge(math, por, by = merge_by, suffixes = c(".math", ".por"))
+# join the two datasets by selected common variables
+library(dplyr)
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 
 # see the new column names
 colnames(math_por)
 
 
-# 3 structure of the new dataset
+# 3 glimpse at the joined dataset
+library(dlyr)
 
-# number of students
-nrow(math_por) # 382 students
-
-# structure of the new data
-str(math_por) 
+# glimpse at the new data
+glimpse(math_por) 
 
 
-# average the rest of the columns
-# --------------------------------
+# 4 Transforming by looping
 
-# 4 preparation
-
-# which columns in the dataset were not used for merging the data
-notjoined_columns <- colnames(math)[!colnames(math) %in% merge_by]
+# which columns in the datasets were not used for joining the data
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
 # create a new data frame with the common columns
-alcohol <- math_por[, merge_by]
-
-# 5 averaging multiple columns
+alc <- select(math_por, one_of(join_by))
 
 # access the dplyr library
 library(dplyr)
 
-# for each original column name not used for merging the data..
+# average/combine the rest of the columns
 for(column_name in notjoined_columns) {
   
-  # first select two columns whose name starts with column_name
   df <- select(math_por, starts_with(column_name))
   
-  # if the columns are of numeric type..
-  if(is.numeric(df[, 1])) {
-    # take the average of the two columns
-    alcohol[column_name] <- (df[, 1] + df[, 2]) /2
-    
+  if(is.numeric(select(df, 1))) {
+    alc[column_name] <- rowMeans(df)
   } else {
-    # else simply use the first common column
-    alcohol[column_name] <- df[, 1]
-    }
+    alc[column_name] <- select(df, 1)
+  }
 }
 
+# 5 Binarizing a variable
+library(dplyr)
+library(ggplot2)
 
-colnames(alcohol)
+# glimpse at the data
+glimpse(alc)
 
-# 6 structure of the averaged data
+# combine weekday and weekend alcohol use into alc_use
+alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
-# stucture
-str(alcohol)
+# draw a histogram
+qplot(alc_use, data = alc, bins = 10)
 
-# summaries
-summary(alcohol)
+# transform alc_use into a binary variable high_use
+alc$high_use <- alc$alc_use > 2
 
-# 7 create a binary variable
-alcohol$alcohol_use <- alcohol$
+# draw a bar plot
+qplot(high_use, data = alc)
+
+# exploring relationships with cross tables
+addmargins(table(alc$sex, alc$high_use))
+
+xtabs(!high_use ~ sex + age, data = alc)
+
+xtabs(!high_use ~ sex + age, data = alc)
 
 # Logistic regression
+# -------------------
+
+# 6 fitting a logistic regression model
+m1 <- glm(high_use ~ sex + age, data = alc, family = "binomial")
+
+summary(m1)
+
+# 7
