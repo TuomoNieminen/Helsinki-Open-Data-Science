@@ -765,14 +765,14 @@ R makes it easy to graphically explore the validity of your model assumptions. I
 
 In the plot function you can then use the argument `which` to choose which plots you want. `which` must be an integer vector corresponding to the following list of plots:
 
-which | graphic                                 | relates to
------ | --------------------------------------- | --------
-1     | Residuals vs Fitted values              | homogenuity of variance
-2     | Normal QQ-plot                          | normality of errors
-3     | Standardized residuals vs Fitted values | homogenuity of variance
-4     | Cook's distances                        | impact of observations(?)
-5     | Residuals vs Leverage                   | impact of observations
-6     | Cook's distance vs Leverage             |
+which | graphic                                 
+----- | --------
+1     | Residuals vs Fitted values 
+2     | Normal QQ-plot
+3     | Standardized residuals vs Fitted values
+4     | Cook's distances
+5     | Residuals vs Leverage 
+6     | Cook's distance vs Leverage 
 
 <br>
 We will focus on plots 1, 2 and 5: Residuals vs Fitted values, Normal QQ-plot and Residuals vs Leverage.
