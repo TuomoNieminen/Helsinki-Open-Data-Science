@@ -6,10 +6,7 @@
 
 Linear regression and model validation
 ========================================================
-type: sub-section
-incremental: true
-autosize: true
-transition: none
+css:index.css
 
 For IODS by Tuomo Nieminen
 
@@ -236,10 +233,9 @@ Leverage of observations (2)
 
 
 
+![plot of chunk unnamed-chunk-14](regression-figure/unnamed-chunk-14-1.png)
 
+Leverage of observations (3)
+========================================================
 
-
-
-```
-Error in library(broom) : there is no package called 'broom'
-```
+![plot of chunk unnamed-chunk-15](regression-figure/unnamed-chunk-15-1.png)

@@ -12,10 +12,7 @@ learning2014 <- learning2014[learning2014$points > 0,]
 
 Linear regression and model validation
 ========================================================
-type: sub-section
-incremental: true
-autosize: true
-transition: none
+css:index.css
 
 For IODS by Tuomo Nieminen
 
@@ -258,8 +255,8 @@ y2 <- x + x*rnorm(40)
 lm1 <- lm(y1~x)
 lm2 <- lm(y2~x)
 
-p1 <- autoplot(lm1, which = 2, smooth.linetype = "blank") + ggtitle("Reasonable")
-p2 <- autoplot(lm2, which = 2, smooth.linetype = "blank") + ggtitle("Questionable")
+p1 <- autoplot(lm1, which = 2, size = 3, smooth.linetype = "blank") + ggtitle("Reasonable")
+p2 <- autoplot(lm2, which = 2, size = 3, smooth.linetype = "blank") + ggtitle("Questionable")
 p1 + p2
 ```
 
@@ -279,14 +276,15 @@ This can be explored with a simple scatter plot of residuals versus model predic
 library(gridExtra)
 
 set.seed(444)
-x <- rnorm(40, mean = 2)
-y1 <- x + rnorm(40)
-y2 <- sort(x) + sapply((1:40)/10, function(s) rnorm(n = 1, sd = s))
+n <- 100
+x <- abs(rnorm(n, sd = 1.5))
+y1 <- x + rnorm(n)
+y2 <- sort(x) + sapply(sort(x), function(s) rnorm(n = 1, sd = s))
 lm1 <- lm(y1~x)
 lm2 <- lm(y2~sort(x))
 
-p1 <- ggplot(fortify(lm1), aes(.fitted, .resid)) + geom_point() + ggtitle("Reasonable")
-p2 <- ggplot(fortify(lm2), aes(.fitted, .resid)) + geom_point() + ggtitle("Questionable")
+p1 <- ggplot(fortify(lm1), aes(.fitted, .resid)) + geom_point(size = 3) + ggtitle("Reasonable") + ylim(c(-5,5))
+p2 <- ggplot(fortify(lm2), aes(.fitted, .resid)) + geom_point(size = 3) + ggtitle("Questionable") + ylim(c(-5,5))
 grid.arrange(p1,p2, ncol = 1)
 ```
 
@@ -332,18 +330,30 @@ y4 <- c(y1[-which.max(x4)], min(y1))
 df4 <- augment(lm(y4 ~ x4))
 
 # plots
-sc1 <- qplot(x1,y1) + geom_smooth(method = "lm", se = F) + ggtitle("data: regular errors")
-sc2 <- qplot(x2,y2) + geom_smooth(method = "lm", se = F) + ggtitle("data: regular errors with an outlier")
-sc3 <- qplot(x3,y3) + geom_smooth(method = "lm", se = F) + ggtitle("data: high error with an outlier at the mean")
-sc4 <- qplot(x4,y4) + geom_smooth(method = "lm", se = F) + ggtitle("data: high error with an outlier")
+size <- 3
 
-lv1 <- ggplot(data = df1, aes(.cooksd, .std.resid)) + geom_point() + 
+my_plot <- function(x, y, size = 3) {
+  df <- cbind(x = x, y = y)
+  p <- ggplot(df, aes(x = x, y = y))
+  p <- p + geom_point(size = size)
+  p + geom_smooth(method = "lm", se =F)
+}
+
+sc1 <- my_plot(x1, y1) + ggtitle("data: regular errors")
+
+sc2 <- my_plot(x2,y3) + ggtitle("data: regular errors with an outlier")
+
+sc3 <- my_plot(x3,y3) + ggtitle("data: high error with an outlier at the mean")
+
+sc4 <- my_plot(x4,y4) + ggtitle("data: high error with an outlier")
+
+lv1 <- ggplot(data = df1, aes(.cooksd, .std.resid)) + geom_point(size = size) + 
   ggtitle("diagnostic: regular leverage")
-lv2 <- ggplot(data = df2, aes(.cooksd, .std.resid)) + geom_point() + 
+lv2 <- ggplot(data = df2, aes(.cooksd, .std.resid)) + geom_point(size = size) + 
   ggtitle("diagnostic: high leverage")
-lv3 <- ggplot(data = df3, aes(.cooksd, .std.resid)) + geom_point() + 
+lv3 <- ggplot(data = df3, aes(.cooksd, .std.resid)) + geom_point(size = size) + 
   ggtitle("diagnostic: regular leverage")
-lv4 <- ggplot(data = df4, aes(.cooksd, .std.resid)) + geom_point() + 
+lv4 <- ggplot(data = df4, aes(.cooksd, .std.resid)) + geom_point(size = size) + 
   ggtitle("diagnostic: high leverage")
 
 ```

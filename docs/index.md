@@ -1,10 +1,6 @@
 
 
-<style>
-.small-code pre code {
-  font-size: 1.1em;
-}
-</style>
+
 
 Introduction to Open Data Science
 ========================================================
@@ -45,9 +41,9 @@ incremental: false
 
 Linear regression and model validation
 ========================================================
-type: sub-section
 
-Tuomo Nieminen
+
+For IODS by Tuomo Nieminen
 
 <br>
 <br>
@@ -90,18 +86,6 @@ There are many applications for linear models such as
 - Prediction or forecasting
 - Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$
 
-Assumptions of linear regression models
-========================================================
-
-In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
-
-$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
-
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
-- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
-- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
-
-<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
 Simple regression
 ========================================================
@@ -130,9 +114,23 @@ R:
 ***
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
+
+Assumptions of linear regression models
+========================================================
+
+In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
+
+$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
+- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
+- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
+
+<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
+
 Structure of a linear model
 ========================================================
-In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
+In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$
 
 - $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
 - $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
@@ -165,7 +163,7 @@ R linear model summary()
 class: small-code
 
 <small>
-See for example [this blog post](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit) related to intepreting p-values and regression coefficients of a linear model summary.
+For a quick rundown, see the 'Calling summary' section of [this blog post](http://blog.yhat.com/posts/r-lm-summary.html) or read about coefficients and p-values [here](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit)
 </small>
 
 
@@ -281,21 +279,32 @@ Leverage of observations (3)
 
 
 
-Contents
+Chapter 4: Clustering and classification
 ========================================================
+incremental: false
+
+Classification:
+- Identify in which (sub-)group the observation belongs
+
+Clustering: 
+
+- Find groups within data so that observations within groups are more similar with each other than with observations with other groups
+
+
+Chapter 4: Clustering and classification
+========================================================
+incremental: false
 
 - K-means
 - K-medoids (?)
-- Discriminant analysis  (+ classification)
+- Linear discriminant analysis  (+ classification)
 - Cross validation: Training set and test set
 - DA biplot (not into details here)
 
 K-means (1)
 ==================================================
-
-- Clustering: 
-
-> Find groups within data so that observations within groups are more similar with each other than with observations with other groups 
+incremental: false
+autosize: true
 
 - K-means is possibly the oldest and used clustering method in many fields of study
     - Easy to use and relatively fast, often finds a solution
@@ -307,6 +316,7 @@ K-means (1)
 
 K-means (2)
 ==================================================
+incremental: false
 
 Algorithm
 
@@ -320,6 +330,7 @@ Continue updating steps until the centroids or the clusters do not change
 
 K-means (3)
 ==================================================
+incremental: false
 
 - Distance measure in the algorithm
 - Similarity/dissimilarity measures between data points
@@ -328,9 +339,23 @@ K-means (3)
 
 K-medoids
 ==================================================
+incremental: false
 
-Discriminant analysis
+Linear discriminant analysis(1)
 ==================================================
+
+Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. LDA is a probabilistic model that forms a class conditional distribution of the data for each of the classes.
+
+[Bayes' rule](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to predict in what class the observation belongs to.
+
+The probability of the observations being in a certain class can be written $P(y=k|X$ where X denotes the data and there are k number of classes. 
+ 
+http://scikit-learn.org/stable/modules/lda_qda.html 
+
+Linear discriminant analysis(2)
+==================================================
+
+The conditional distribution of the data can be written as $P(X|y=k)$ where X means the data and k denotes the kth class. The conditional probability is modelled by using multivariate Gaussian distribution
 
 Cross Validation
 ==================================================
