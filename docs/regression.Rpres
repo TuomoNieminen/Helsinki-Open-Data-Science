@@ -13,8 +13,11 @@ learning2014 <- learning2014[learning2014$points > 0,]
 Linear regression and model validation
 ========================================================
 type: sub-section
+incremental: true
+autosize: true
+transition: none
 
-Tuomo Nieminen
+For IODS by Tuomo Nieminen
 
 <br>
 <br>
@@ -71,18 +74,6 @@ There are many applications for linear models such as
 - Prediction or forecasting
 - Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$
 
-Assumptions of linear regression models
-========================================================
-
-In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
-
-$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
-
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
-- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
-- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
-
-<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
 Simple regression
 ========================================================
@@ -127,9 +118,23 @@ p <- scatterplot3d(x = x1, y = x2, z = y, grid = T, box = F, mar = c(3,3,3,3), t
 p$plane3d(lm(y~x1+x2))
 ```
 
+
+Assumptions of linear regression models
+========================================================
+
+In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
+
+$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
+- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
+- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
+
+<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
+
 Structure of a linear model
 ========================================================
-In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
+In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$
 
 - $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
 - $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
@@ -176,7 +181,7 @@ R linear model summary()
 class: small-code
 
 <small>
-See for example [this blog post](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit) related to intepreting p-values and regression coefficients of a linear model summary.
+For a quick rundown, see the 'Calling summary' section of [this blog post](http://blog.yhat.com/posts/r-lm-summary.html) or read about coefficients and p-values [here](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit)
 </small>
 
 ```{r}
@@ -216,7 +221,7 @@ type: prompt
 ```{r, fig.align = "center", fig.width = 14, fig.height = 8}
 library(ggfortify)
 lm_fit <- lm(attitude~points, data = learning2014)
-autoplot(lm_fit, which = c(1,2,5))
+autoplot(lm_fit, which = c(1,2,5), smooth.linetype = "blank")
 ```
 
 
@@ -253,8 +258,8 @@ y2 <- x + x*rnorm(40)
 lm1 <- lm(y1~x)
 lm2 <- lm(y2~x)
 
-p1 <- autoplot(lm1, which = 2) + ggtitle("Good")
-p2 <- autoplot(lm2, which = 2) + ggtitle("Bad")
+p1 <- autoplot(lm1, which = 2, smooth.linetype = "blank") + ggtitle("Reasonable")
+p2 <- autoplot(lm2, which = 2, smooth.linetype = "blank") + ggtitle("Questionable")
 p1 + p2
 ```
 
@@ -280,8 +285,8 @@ y2 <- sort(x) + sapply((1:40)/10, function(s) rnorm(n = 1, sd = s))
 lm1 <- lm(y1~x)
 lm2 <- lm(y2~sort(x))
 
-p1 <- ggplot(fortify(lm1), aes(.fitted, .resid)) + geom_point() + ggtitle("Good") + geom_smooth(method = "loess", se = F)
-p2 <- ggplot(fortify(lm2), aes(.fitted, .resid)) + geom_point() + ggtitle("Bad") + geom_smooth(method = "loess", se = F)
+p1 <- ggplot(fortify(lm1), aes(.fitted, .resid)) + geom_point() + ggtitle("Reasonable")
+p2 <- ggplot(fortify(lm2), aes(.fitted, .resid)) + geom_point() + ggtitle("Questionable")
 grid.arrange(p1,p2, ncol = 1)
 ```
 
@@ -333,13 +338,13 @@ sc3 <- qplot(x3,y3) + geom_smooth(method = "lm", se = F) + ggtitle("data: high e
 sc4 <- qplot(x4,y4) + geom_smooth(method = "lm", se = F) + ggtitle("data: high error with an outlier")
 
 lv1 <- ggplot(data = df1, aes(.cooksd, .std.resid)) + geom_point() + 
-  stat_smooth(method ="loess", se = F) +  ggtitle("diagnostic: regular leverage")
+  ggtitle("diagnostic: regular leverage")
 lv2 <- ggplot(data = df2, aes(.cooksd, .std.resid)) + geom_point() + 
-  stat_smooth(method ="loess", se = F) + ggtitle("diagnostic: high leverage")
+  ggtitle("diagnostic: high leverage")
 lv3 <- ggplot(data = df3, aes(.cooksd, .std.resid)) + geom_point() + 
-  stat_smooth(method ="loess", se = F) + ggtitle("diagnostic: regular leverage")
+  ggtitle("diagnostic: regular leverage")
 lv4 <- ggplot(data = df4, aes(.cooksd, .std.resid)) + geom_point() + 
-  stat_smooth(method ="loess", se = F) + ggtitle("diagnostic: high leverage")
+  ggtitle("diagnostic: high leverage")
 
 ```
 

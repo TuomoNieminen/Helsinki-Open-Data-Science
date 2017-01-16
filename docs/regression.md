@@ -7,8 +7,11 @@
 Linear regression and model validation
 ========================================================
 type: sub-section
+incremental: true
+autosize: true
+transition: none
 
-Tuomo Nieminen
+For IODS by Tuomo Nieminen
 
 <br>
 <br>
@@ -23,12 +26,12 @@ type: prompt
 incremental: false
 
 Simple regression
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](regression-figure/unnamed-chunk-3-1.png)
 
 ***
 
 Multiple regression
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](regression-figure/unnamed-chunk-4-1.png)
 
 
 What is a statistical model?
@@ -51,18 +54,6 @@ There are many applications for linear models such as
 - Prediction or forecasting
 - Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$
 
-Assumptions of linear regression models
-========================================================
-
-In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
-
-$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
-
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
-- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
-- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
-
-<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
 Simple regression
 ========================================================
@@ -75,7 +66,7 @@ R:
 ```lm(y ~ x)```  
 
 ***
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-5](regression-figure/unnamed-chunk-5-1.png)
 
 
 Multiple regression
@@ -89,11 +80,25 @@ R:
 ```lm(y ~ x1 + x2)```  
 
 ***
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-6](regression-figure/unnamed-chunk-6-1.png)
+
+
+Assumptions of linear regression models
+========================================================
+
+In linear regression, it is assumed that the relationship between the target variable $\boldsymbol{y}$ and the parameters ($\alpha$, $\boldsymbol{\beta}$) is *linear*:
+
+$$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
+- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
+- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
+
+<!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
 Structure of a linear model
 ========================================================
-In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$:
+In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$
 
 - $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
 - $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
@@ -111,7 +116,7 @@ The best model is found by minimizing the prediction errors that the model would
 
 ***
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-7](regression-figure/unnamed-chunk-7-1.png)
 
 Interpreting the parameters
 ========================================================
@@ -126,7 +131,7 @@ R linear model summary()
 class: small-code
 
 <small>
-See for example [this blog post](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit) related to intepreting p-values and regression coefficients of a linear model summary.
+For a quick rundown, see the 'Calling summary' section of [this blog post](http://blog.yhat.com/posts/r-lm-summary.html) or read about coefficients and p-values [here](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit)
 </small>
 
 
@@ -165,14 +170,14 @@ R:
 
 ***
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-9](regression-figure/unnamed-chunk-9-1.png)
 
 
 Model validation
 ========================================================
 type: prompt
 
-<img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+<img src="regression-figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
 
 
 Model assumptions
@@ -200,7 +205,7 @@ Normality of the errors (QQ-plot)
 
 QQ-plot of the residuals provides a method to explore the assumption that the errors of the model are normally distributed
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-11](regression-figure/unnamed-chunk-11-1.png)
 
 
 Constant variance of errors
@@ -214,7 +219,7 @@ This can be explored with a simple scatter plot of residuals versus model predic
 
 ***
 
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-12](regression-figure/unnamed-chunk-12-1.png)
 
 
 Leverage of observations (1)
@@ -231,9 +236,10 @@ Leverage of observations (2)
 
 
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)
 
-Leverage of observations (3)
-========================================================
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
+
+
+```
+Error in library(broom) : there is no package called 'broom'
+```

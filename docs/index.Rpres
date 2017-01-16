@@ -2,11 +2,7 @@
 ```{r, include = F}
 knitr::opts_chunk$set(echo = F, comment = NA)
 ```
-<style>
-.small-code pre code {
-  font-size: 1.1em;
-}
-</style>
+
 
 Introduction to Open Data Science
 ========================================================
