@@ -15,7 +15,7 @@ For IODS by Tuomo Nieminen
 <br>
 <br>
 
-The code for this presentation is  [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/regression.Rpres)
+Powered by RMarkdown. The code for this presentation is  [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/regression.Rpres).
 
 Linear regression models
 ========================================================
@@ -126,6 +126,7 @@ When the model is $$\boldsymbol{y} = \alpha + \beta_1 \boldsymbol{x}_1 + \beta_2
 R linear model summary()
 ========================================================
 class: small-code
+incremental: false
 
 <small>
 For a quick rundown, see the 'Calling summary' section of [this blog post](http://blog.yhat.com/posts/r-lm-summary.html) or read about coefficients and p-values [here](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit)
@@ -155,6 +156,7 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 
 Advanced example: Polynomial terms
 ========================================================
+incremental: false
 
 The linearity assumption isn't as restrictive as one could imagine.  
 
