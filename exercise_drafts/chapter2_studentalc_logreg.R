@@ -79,9 +79,6 @@ alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 ## draw a histogram of alcohol use
 qplot(alc_use, data = alc, bins = 10, main = "Student alcohol consumption")
 
-## draw a histogram of student grades
-qplot(G3, data = alc, bins = 10, main = "Student final grades")
-
 # 6 Binarizing a variable
 
 # transform alc_use into a binary (T, F) variable high_use
@@ -99,15 +96,44 @@ library(descr)
 
 crosstab(alc$sex, alc$high_use, prop.c = T, prop.r = T)
 
-crosstab(alc$age, alc$high_use, prop.c = T, prop.r = T)
+crosstab(alc$failures, alc$high_use, prop.c = T, prop.r = T)
+
+# 8 comparisons with box plots
+library(ggplot2)
+p <- ggplot(alc, aes(x = high_use, y = absences))
+p + geom_boxplot() 
 
 # Logistic regression
 # -------------------
 
-# 8 fitting a logistic regression model
-m1 <- glm(high_use ~ sex + age + G3, data = alc, family = binomial)
+## 9 fitting a logistic regression model
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = binomial)
 
+# print out a summary of the model
 summary(m1)
 
-# 7
+## print out the coefficients
+m1
 
+## print out the exponentiated coefficients
+exp(coefficients(m1))
+
+## 10 model performance: prediction accuracy
+
+# predict the response
+alc$prediction <- predict(m1, type = "response")
+
+head(select(alc, high_use, prediction))
+
+## 11 model performance: cross-validation
+
+
+# cost function
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# k-fold cross-validation
+library(boot)
+cv <- cv.glm(data = alc, cost = cost, glmfit = m1, K = 10)
+
+# print out the average number of wrong predictions in the cross validation
+cv$delta[1]

@@ -1,9 +1,8 @@
 # Data wrangling
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, comment = NA)
 ```
-
 
 ## 1 loading more datasets
 
@@ -25,6 +24,7 @@ por <- read.table("../datasets/student-por.csv",sep=";",header=TRUE)
 colnames(por)
 
 ```
+
 ## 2 joining two datasets
 ```{r}
 
@@ -52,10 +52,10 @@ library(dplyr)
 glimpse(math_por) 
 
 ```
+
 ## 4 Transforming by looping
 
 ```{r}
-
 
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 
@@ -96,10 +96,6 @@ alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 ## draw a histogram of alcohol use
 qplot(alc_use, data = alc, bins = 10, main = "Student alcohol consumption")
 
-## draw a histogram of student grades
-qplot(G3, data = alc, bins = 10, main = "Student final grades")
-
-
 
 ```
 
@@ -123,19 +119,65 @@ library(descr)
 
 crosstab(alc$sex, alc$high_use, prop.c = T, prop.r = T)
 
-crosstab(alc$age, alc$high_use, prop.c = T, prop.r = T)
-
 ```
-## Analysis: Logistic regression
 
-## 8 fitting a logistic regression model
+## 8 exploring relationships with box plots
 
 ```{r}
 
+library(ggplot2)
+p <- ggplot(alc, aes(x = high_use, y = absences))
+p + geom_boxplot() 
 
-m1 <- glm(high_use ~ sex + age + G3, data = alc, family = binomial)
+```
 
+# Analysis: Logistic regression
+
+## 9 fitting a logistic regression model
+
+```{r}
+
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = binomial)
+
+# print out a summary of the model
 summary(m1)
 
+## print out the coefficients
+m1
+
+## print out the exponentiated coefficients
+exp(coefficients(m1))
+
+```
+
+## 10 model performance: prediction accuracy
+
+```{r}
+# predict the response
+alc$prediction <- predict(m1, type = "response")
+
+# first six values
+head(select(alc, high_use, prediction))
+
+# function to compute the proportion of wrong predictions
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# compute the average number of wrong predictions
+cost(alc$high_use, alc$prediction)
+```
+
+## 11 model performance: cross-validation
+
+```{r}
+
+# cost function
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# k-fold cross-validation
+library(boot)
+cv <- cv.glm(data = alc, cost = cost, glmfit = m1, K = 10)
+
+# print out the average number of wrong predictions in the cross validation
+cv$delta[1]
 
 ```
