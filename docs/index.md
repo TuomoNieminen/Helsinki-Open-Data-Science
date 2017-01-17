@@ -9,7 +9,7 @@ autosize: true
 transition: rotate
 
 University of Helsinki, spring 2017
-- prof. Kimmo Vehkalahti with  
+- Adunct professor Kimmo Vehkalahti with  
 - Tuomo Nieminen and Emma Kämäräinen  
 
 ========================================================
@@ -41,7 +41,7 @@ incremental: false
 
 Linear regression and model validation
 ========================================================
-
+css: index.css
 
 For IODS by Tuomo Nieminen
 
@@ -58,12 +58,12 @@ type: prompt
 incremental: false
 
 Simple regression
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](regression-figure/unnamed-chunk-3-1.png)
 
 ***
 
 Multiple regression
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](regression-figure/unnamed-chunk-4-1.png)
 
 
 What is a statistical model?
@@ -98,7 +98,7 @@ R:
 ```lm(y ~ x)```  
 
 ***
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-5](regression-figure/unnamed-chunk-5-1.png)
 
 
 Multiple regression
@@ -112,7 +112,7 @@ R:
 ```lm(y ~ x1 + x2)```  
 
 ***
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-6](regression-figure/unnamed-chunk-6-1.png)
 
 
 Assumptions of linear regression models
@@ -148,7 +148,7 @@ The best model is found by minimizing the prediction errors that the model would
 
 ***
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-7](regression-figure/unnamed-chunk-7-1.png)
 
 Interpreting the parameters
 ========================================================
@@ -202,14 +202,14 @@ R:
 
 ***
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-9](regression-figure/unnamed-chunk-9-1.png)
 
 
 Model validation
 ========================================================
 type: prompt
 
-<img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+<img src="regression-figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
 
 
 Model assumptions
@@ -237,7 +237,7 @@ Normality of the errors (QQ-plot)
 
 QQ-plot of the residuals provides a method to explore the assumption that the errors of the model are normally distributed
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-11](regression-figure/unnamed-chunk-11-1.png)
 
 
 Constant variance of errors
@@ -251,7 +251,7 @@ This can be explored with a simple scatter plot of residuals versus model predic
 
 ***
 
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-12](regression-figure/unnamed-chunk-12-1.png)
 
 
 Leverage of observations (1)
@@ -268,12 +268,12 @@ Leverage of observations (2)
 
 
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-14](regression-figure/unnamed-chunk-14-1.png)
 
 Leverage of observations (3)
 ========================================================
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
+![plot of chunk unnamed-chunk-15](regression-figure/unnamed-chunk-15-1.png)
 
 
 

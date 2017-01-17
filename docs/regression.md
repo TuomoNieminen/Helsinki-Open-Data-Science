@@ -6,7 +6,7 @@
 
 Linear regression and model validation
 ========================================================
-css:index.css
+css: index.css
 
 For IODS by Tuomo Nieminen
 
