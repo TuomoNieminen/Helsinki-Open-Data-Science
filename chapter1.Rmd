@@ -6,7 +6,7 @@ description : Data wrangling, simple regression, multiple regression, regression
 --- type:NormalExercise lang:r xp:100 skills:1  key:6e77718b66
 ## Reading data from the web
 
-*Welcome to chapter1*: Regression and model validation. 
+Welcome to **Helsinki Open Data Science**: Regression and model validation. 
 
 The first step of data analysis with R is reading data into R. This is done with a function. Which function and function arguments to use to do this, depends on the original format of the data. 
 
@@ -690,6 +690,13 @@ test_error()
 success_msg("Good work!")
 ```
 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Linear models video
+
+*** =video_link
+//player.vimeo.com/video/199820260
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:4f88f9dfca
 ## Multiple regression
 
@@ -735,7 +742,7 @@ my_model2 <- lm(points ~ attitude + stra, data = learning2014)
 
 *** =solution
 ```{r}
-# learning2014, GGally, ggplot2 are avaiable
+# learning2014, GGally, ggplot2 are available
 
 # create an plot matrix with ggpairs()
 ggpairs(learning2014, lower = list(combo = wrap("facethist", bins = 20)))
@@ -821,3 +828,10 @@ test_function("plot", args = c("x", "which"),incorrect_msg = "Please use `plot()
 test_error()
 success_msg("Great job!")
 ```
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Model validation video
+
+*** =video_link
+//player.vimeo.com/video/199820384
+
