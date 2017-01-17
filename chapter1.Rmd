@@ -690,7 +690,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
 ## Linear models video
 
 *** =video_link
@@ -829,7 +829,7 @@ test_error()
 success_msg("Great job!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:65c0249d0f
 ## Model validation video
 
 *** =video_link
