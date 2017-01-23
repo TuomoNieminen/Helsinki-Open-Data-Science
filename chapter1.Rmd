@@ -786,7 +786,8 @@ We will focus on plots 1, 2 and 5: Residuals vs Fitted values, Normal QQ-plot an
 
 *** =instructions
 - Create the linear model object `my_model2`
-- Produce the following diagnostic plots: Residuals vs Fitted values, Normal QQ-plot and Residuals vs Leverage using the argument `which`. 
+- Produce the following diagnostic plots using the `plot()` function: Residuals vs Fitted values, Normal QQ-plot and Residuals vs Leverage using the argument `which`. 
+- Before the call to the `plot()` function, add the following: `par(mfrow = c(2,2))`. This will place the following 4 graphics to the same plot. Execute the code again to see the affect.
 
 *** =hint
 - You can combine integers to an integer vector with `c()`. For example: `c(1,2,3)`.
@@ -824,6 +825,8 @@ plot(my_model2, which = c(1,2,5))
 ```{r}
 
 test_function("plot", args = c("x", "which"),incorrect_msg = "Please use `plot()` on the linear model object and choose the diagnostic plot 1,2 and 5 with the argument `which`. Remember that `c()` can be used to create vectors.")
+
+test_function("par", args = "mfrow", incorrect_msg = "Please use the par function as instructed")
 
 test_error()
 success_msg("Great job!")
