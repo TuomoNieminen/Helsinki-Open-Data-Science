@@ -138,7 +138,7 @@ success_msg("Well done. Excellent wrangling!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9a390d843f
 ## Combining variables
 
-Our data includes many questions that can be thought to measure the same *dimension*. Here we'll combine multiple questions into combination variables. Useful functions for summation with data frames in R are
+Our data includes many questions that can be thought to measure the same *dimension*. You can read more about the data and the variables [here](http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-meta.txt). Here we'll combine multiple questions into combination variables. Useful functions for summation with data frames in R are
 
 function      | description
 ------------- | ----------
