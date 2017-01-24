@@ -839,7 +839,7 @@ success_msg("Great job!")
 *** =video_link
 //player.vimeo.com/video/199820384
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:2f5c9d30c7
 
 ## Making predictions
 
