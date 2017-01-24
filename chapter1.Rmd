@@ -691,7 +691,7 @@ success_msg("Good work!")
 ```
 
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
-## Linear models video
+## Video: Linear models
 
 *** =video_link
 //player.vimeo.com/video/199820260
@@ -834,14 +834,14 @@ success_msg("Great job!")
 ```
 
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:65c0249d0f
-## Model validation video
+## Video: Model validation
 
 *** =video_link
 //player.vimeo.com/video/199820384
 
---- type:NormalExercise lang:r xp:100 skills:1 key:d44ed46dc6
+--- type:NormalExercise lang:r xp:100 skills:1
 
-## Making predictions based on the model
+## Making predictions
 
 Okey, so let's assume that we have a linear model which seems to fit our standards. What can we do with it?
 
