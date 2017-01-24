@@ -839,3 +839,94 @@ success_msg("Great job!")
 *** =video_link
 //player.vimeo.com/video/199820384
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:d44ed46dc6
+
+## Making predictions based on the model
+
+Okey, so let's assume that we have a linear model which seems to fit our standards. What can we do with it?
+
+The model quantifies the relationship between the explanatory variable(s) and the dependent variable. The model can also be used for predicting the dependent variable based on new observations of the explanatory variable(s). 
+
+In R, predicting can be done using the `predict()` function. (see `?predict`). The first argument of predict is a model object and the argument `newdata` (a data.frame) can be used to make predictions based on new observations. One or more columns of `newdata` should have the same name as the explanatory variables in the model object.
+
+
+*** =instructions
+- Create object `m` and print out a summary of the model
+- Create object `new_attitudes`
+- Adjust the code: Create a new data frame with a column named 'attitude' holding the new attitudes defined in `new_attitudes`
+- Print out the new data frame
+- `predict()` the new student's exam points based on their attitudes, using the `newdata` argument
+
+*** =hint
+- Type `attitude = new_attitudes` inside the `data.frame()` function.
+- Give the `new_data` data.frame as the `newdata` argument for `predict()`
+
+
+*** =pre_exercise_code
+```{r}
+learning2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt", sep = ",", header = T)
+```
+
+
+*** =sample_code
+```{r}
+# learning2014 is available
+
+# Create model object m
+m <- lm(points ~ attitude, data = learning2014)
+
+# print out a summary of the model
+
+
+# New observations
+new_attitudes <- c("Mia" = 3.8, "Mike"= 4.4, "Riikka" = 2.2, "Pekka" = 2.9)
+new_data <- data.frame(attitude = "change me!")
+
+# Print out the new data
+
+
+# Predict the new students exam points based on attitude
+predict(m, newdata = "change me!")
+
+
+```
+
+*** =solution
+```{r}
+## learning2014 is available
+
+# Create model object object m
+m <- lm(points ~ attitude, data = learning2014)
+
+# print out a summary of the model
+summary(m)
+
+# new observations
+new_attitudes <- c("Mia" = 3.8, "Mike"= 4.4, "Riikka" = 2.2, "Pekka" = 2.9)
+new_data <- data.frame(attitude = new_attitudes)
+
+# print out the new data
+new_data
+
+# predict the students exam points based on attitude
+predict(m, newdata = new_data)
+
+
+
+```
+
+*** =sct
+```{r}
+
+test_function("summary", args = "object")
+test_object("new_data")
+test_output_contains("new_data", incorrect_msg = "Please print out the new data")
+test_function("predict", args=c("object", "newdata"))
+
+# test error
+test_error()
+
+# Final message the student will see upon completing the exercise
+success_msg("Awsome work! That completes the regression chapter.")
+
+```
