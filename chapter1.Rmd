@@ -691,7 +691,7 @@ success_msg("Good work!")
 ```
 
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
-## Video: Linear models
+## Video: Linear regression
 
 *** =video_link
 //player.vimeo.com/video/199820260
