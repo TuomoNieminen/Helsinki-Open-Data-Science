@@ -42,6 +42,7 @@ incremental: false
 Linear regression and model validation
 ========================================================
 css: index.css
+type: sub-section
 
 For IODS by Tuomo Nieminen
 
@@ -329,19 +330,19 @@ If the target variable Y is binary, taking only the values 0 or 1 with probabili
 
 $$E[Y] = p$$
 
-- The goal in logistic regression is to define a linear model for the probability of success (Y = 1) $p$.
+- The goal in logistic regression is to define a linear model for the probability of success $p$.
 - The problem is that $p$ only takes on values between 0 and 1
 
-Luckily, there is a trick
+Luckily, there is a trick!
 
 
 The logit function
 ========================================================
 incremental: false
 
-We can apply the *logit function* to the expected value of Y ($p$).
+We can apply the *logit function* to the expected value of Y, $p$.
 
-$$log\frac{p}{1 - p} \in [- \infty, \infty]$$
+$$log\left( \frac{p}{1 - p} \right) \in [- \infty, \infty]$$
 
 - After the transformation, the possible values are all the real numbers.
 
@@ -349,11 +350,11 @@ $$log\frac{p}{1 - p} \in [- \infty, \infty]$$
 
 ![plot of chunk unnamed-chunk-4](logistic_regression-figure/unnamed-chunk-4-1.png)
 
-That's odds
+That's odds?
 ========================================================
 One reason to use the logit transformation is that is has a nice interpretation.
 
-- The part $p/1-p$ of the logit transformation are called the odds: the ratio of successes to failures
+- The part $p/ (1-p)$ of the transformation are called the odds: the ratio of successes to failures
 - Higher odds corresponds to a higher probability of success
 
 ***
@@ -365,10 +366,11 @@ Odds ratio
 ========================================================
 The ratio of two odds is called the odds ratio.
 
+insert explanations here
 
 Intepreting the parameters of logistic regression
 ========================================================
-Example of how to intepret the parameters of logistic regression as odds ratios
+Example of how to intepret the parameters of logistic regression as odds ratios here
 
 
 Cross-validation
@@ -415,100 +417,3 @@ Below is an example of 4-fold cross-validation
 The data is divided into subsets K times, so that eventually all the data has been used for both training and testing.  
 
 <small>*Picture from https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png*</small>
-
-
-
-
-
-Chapter 4: Clustering and classification
-========================================================
-incremental: false
-
-Classification:
-- Identify in which (sub-)group the observation belongs
-
-Clustering: 
-
-- Find groups within data so that observations within groups are more similar with each other than with observations with other groups
-
-
-Chapter 4: Clustering and classification
-========================================================
-incremental: false
-
-- K-means
-- K-medoids (?)
-- Linear discriminant analysis  (+ classification)
-- Cross validation: Training set and test set
-- DA biplot (not into details here)
-
-K-means (1)
-==================================================
-incremental: false
-autosize: true
-
-- K-means is possibly the oldest and used clustering method in many fields of study
-    - Easy to use and relatively fast, often finds a solution
-    - Small change in the dataset can produce very different results
-    
-***
-
-*nice plot here*
-
-K-means (2)
-==================================================
-incremental: false
-
-Algorithm
-
-1. Choose the number of clusters you want to have and pick initial cluster centroids.
-2. Calculate distances between centroids and datapoints. 
-3. For all the data points: Assign data point to cluster based on which centroid is closest.
-4. Update centroids: within each cluster, calculate new centroid
-5. Update clusters: Calculate distances between data points and updated centroids. If some other centroid is closer than the cluster centroid where the data point belongs, the data point changes cluster.
-
-Continue updating steps until the centroids or the clusters do not change
-
-K-means (3)
-==================================================
-incremental: false
-
-- Distance measure in the algorithm
-- Similarity/dissimilarity measures between data points
-- Calculating centroid: usually mean of the data points of the cluster
-- If distance measure is euclidean distance, the mean as centroid minimizes the objective function of k-means 
-
-K-medoids
-==================================================
-incremental: false
-
-Linear discriminant analysis(1)
-==================================================
-
-Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. LDA is a probabilistic model that forms a class conditional distribution of the data for each of the classes.
-
-[Bayes' rule](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to predict in what class the observation belongs to.
-
-The probability of the observations being in a certain class can be written $P(y=k|X$ where X denotes the data and there are k number of classes. 
- 
-http://scikit-learn.org/stable/modules/lda_qda.html 
-
-Linear discriminant analysis(2)
-==================================================
-
-The conditional distribution of the data can be written as $P(X|y=k)$ where X means the data and k denotes the kth class. The conditional probability is modelled by using multivariate Gaussian distribution
-
-Cross Validation
-==================================================
-
-- Split the data into two: training set and test/validation set 
-- Train the statistical model with training set
-- Use test set validate the performace of the model:
-    + Error rate for classification
-    + Mean squared error for example linear regeression
-    + Other error measures
-- IMPORTANT
-
-DA biplot
-==================================================
-

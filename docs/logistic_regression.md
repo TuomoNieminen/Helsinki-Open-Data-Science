@@ -49,19 +49,19 @@ If the target variable Y is binary, taking only the values 0 or 1 with probabili
 
 $$E[Y] = p$$
 
-- The goal in logistic regression is to define a linear model for the probability of success (Y = 1) $p$.
+- The goal in logistic regression is to define a linear model for the probability of success $p$.
 - The problem is that $p$ only takes on values between 0 and 1
 
-Luckily, there is a trick
+Luckily, there is a trick!
 
 
 The logit function
 ========================================================
 incremental: false
 
-We can apply the *logit function* to the expected value of Y ($p$).
+We can apply the *logit function* to the expected value of Y, $p$.
 
-$$log\frac{p}{1 - p} \in [- \infty, \infty]$$
+$$log\left( \frac{p}{1 - p} \right) \in [- \infty, \infty]$$
 
 - After the transformation, the possible values are all the real numbers.
 
@@ -69,11 +69,11 @@ $$log\frac{p}{1 - p} \in [- \infty, \infty]$$
 
 ![plot of chunk unnamed-chunk-4](logistic_regression-figure/unnamed-chunk-4-1.png)
 
-That's odds
+That's odds?
 ========================================================
 One reason to use the logit transformation is that is has a nice interpretation.
 
-- The part $p/1-p$ of the logit transformation are called the odds: the ratio of successes to failures
+- The part $p/ (1-p)$ of the transformation are called the odds: the ratio of successes to failures
 - Higher odds corresponds to a higher probability of success
 
 ***
@@ -85,10 +85,11 @@ Odds ratio
 ========================================================
 The ratio of two odds is called the odds ratio.
 
+insert explanations here
 
 Intepreting the parameters of logistic regression
 ========================================================
-Example of how to intepret the parameters of logistic regression as odds ratios
+Example of how to intepret the parameters of logistic regression as odds ratios here
 
 
 Cross-validation
