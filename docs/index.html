@@ -849,8 +849,8 @@ From data wrangling to exploration and modelling
 </div>
 
 </section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Linear regression and model validation</h3>
+<section data-state="sub-section" data-transition="default" data-transition-speed="default">
+<h2>Linear regression and model validation</h2>
 <div class="slideContent" >
 <p>For IODS by Tuomo Nieminen</p>
 
@@ -1236,11 +1236,11 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <p>\[ E[Y] = p \]</p>
 
 <ul>
-<li>The goal in logistic regression is to define a linear model for the probability of success (Y = 1) \( p \).</li>
+<li>The goal in logistic regression is to define a linear model for the probability of success \( p \).</li>
 <li>The problem is that \( p \) only takes on values between 0 and 1</li>
 </ul>
 
-<p>Luckily, there is a trick</p>
+<p>Luckily, there is a trick!</p>
 
 </div>
 
@@ -1248,9 +1248,9 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <section data-transition="default" data-transition-speed="default">
 <h3>The logit function</h3>
 <div class="column column1 slideContent" >
-<p>We can apply the <em>logit function</em> to the expected value of Y (\( p \)).</p>
+<p>We can apply the <em>logit function</em> to the expected value of Y, \( p \).</p>
 
-<p>\[ log\frac{p}{1 - p} \in [- \infty, \infty] \]</p>
+<p>\[ log\left( \frac{p}{1 - p} \right) \in [- \infty, \infty] \]</p>
 
 <ul>
 <li>After the transformation, the possible values are all the real numbers.</li>
@@ -1268,12 +1268,12 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>That&#x27;s odds</h3>
+<h3>That&#x27;s odds?</h3>
 <div class="column column1 slideContent" >
 <p>One reason to use the logit transformation is that is has a nice interpretation.</p>
 
 <ul>
-<li>The part \( p/1-p \) of the logit transformation are called the odds: the ratio of successes to failures</li>
+<li>The part \( p/ (1-p) \) of the transformation are called the odds: the ratio of successes to failures</li>
 <li>Higher odds corresponds to a higher probability of success</li>
 </ul>
 
@@ -1293,13 +1293,15 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <div class="slideContent" >
 <p>The ratio of two odds is called the odds ratio.</p>
 
+<p>insert explanations here</p>
+
 </div>
 
 </section>
 <section data-transition="default" data-transition-speed="default">
 <h3>Intepreting the parameters of logistic regression</h3>
 <div class="slideContent" >
-<p>Example of how to intepret the parameters of logistic regression as odds ratios</p>
+<p>Example of how to intepret the parameters of logistic regression as odds ratios here</p>
 
 </div>
 
@@ -1359,147 +1361,6 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <p>The data is divided into subsets K times, so that eventually all the data has been used for both training and testing.  </p>
 
 <p><small><em>Picture from <a href="https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png">https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png</a></em></small></p>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Chapter 4: Clustering and classification</h3>
-<div class="slideContent" >
-<p>Classification:</p>
-
-<ul>
-<li>Identify in which (sub-)group the observation belongs</li>
-</ul>
-
-<p>Clustering: </p>
-
-<ul>
-<li>Find groups within data so that observations within groups are more similar with each other than with observations with other groups</li>
-</ul>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Chapter 4: Clustering and classification</h3>
-<div class="slideContent" >
-<ul>
-<li>K-means</li>
-<li>K-medoids (?)</li>
-<li>Linear discriminant analysis  (+ classification)</li>
-<li>Cross validation: Training set and test set</li>
-<li>DA biplot (not into details here)</li>
-</ul>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>K-means (1)</h3>
-<div class="column column1 slideContent" >
-<ul>
-<li>K-means is possibly the oldest and used clustering method in many fields of study
-
-<ul>
-<li>Easy to use and relatively fast, often finds a solution</li>
-<li>Small change in the dataset can produce very different results</li>
-</ul></li>
-</ul>
-
-
-</div>
-
-<div class="column column2 slideContent" >
-
-
-<p><em>nice plot here</em></p>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>K-means (2)</h3>
-<div class="slideContent" >
-<p>Algorithm</p>
-
-<ol>
-<li>Choose the number of clusters you want to have and pick initial cluster centroids.</li>
-<li>Calculate distances between centroids and datapoints. </li>
-<li>For all the data points: Assign data point to cluster based on which centroid is closest.</li>
-<li>Update centroids: within each cluster, calculate new centroid</li>
-<li>Update clusters: Calculate distances between data points and updated centroids. If some other centroid is closer than the cluster centroid where the data point belongs, the data point changes cluster.</li>
-</ol>
-
-<p>Continue updating steps until the centroids or the clusters do not change</p>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>K-means (3)</h3>
-<div class="slideContent" >
-<ul>
-<li>Distance measure in the algorithm</li>
-<li>Similarity/dissimilarity measures between data points</li>
-<li>Calculating centroid: usually mean of the data points of the cluster</li>
-<li>If distance measure is euclidean distance, the mean as centroid minimizes the objective function of k-means </li>
-</ul>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>K-medoids</h3>
-<div class="slideContent" >
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Linear discriminant analysis(1)</h3>
-<div class="slideContent" >
-<p>Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. LDA is a probabilistic model that forms a class conditional distribution of the data for each of the classes.</p>
-
-<p><a href="https://en.wikipedia.org/wiki/Bayes&#x27;_theorem">Bayes&#39; rule</a> is used to predict in what class the observation belongs to.</p>
-
-<p>The probability of the observations being in a certain class can be written \( P(y=k|X \) where X denotes the data and there are k number of classes. </p>
-
-<p><a href="http://scikit-learn.org/stable/modules/lda_qda.html">http://scikit-learn.org/stable/modules/lda_qda.html</a> </p>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Linear discriminant analysis(2)</h3>
-<div class="slideContent" >
-<p>The conditional distribution of the data can be written as \( P(X|y=k) \) where X means the data and k denotes the kth class. The conditional probability is modelled by using multivariate Gaussian distribution</p>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Cross Validation</h3>
-<div class="slideContent" >
-<ul>
-<li>Split the data into two: training set and test/validation set </li>
-<li>Train the statistical model with training set</li>
-<li>Use test set validate the performace of the model:
-
-<ul>
-<li>Error rate for classification</li>
-<li>Mean squared error for example linear regeression</li>
-<li>Other error measures</li>
-</ul></li>
-<li>IMPORTANT</li>
-</ul>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>DA biplot</h3>
-<div class="slideContent" >
 
 </div>
 
