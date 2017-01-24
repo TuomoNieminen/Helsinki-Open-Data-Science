@@ -46,5 +46,8 @@ incremental: false
 ```{r child ="regression.md"}
 ```
 
+```{r child = "logistic_regression.md"}
+```
+
 ```{r child ="chapter4.md"}
 ```

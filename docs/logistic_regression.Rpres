@@ -125,3 +125,44 @@ Example of how to intepret the parameters of logistic regression as odds ratios
 Cross-validation
 ========================================================
 type: prompt
+
+
+![](https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png)
+<small>*Picture from https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png*</small>
+
+
+Train and test sets
+========================================================
+
+A statistical model can usually be used to make predictions. An intuitive way of comparing different models is to test their predictive power on unseed data.
+
+- The available data can be split into train and test sets
+- Only the training set is used to find the model
+- The test set is then used to make predictions and evaluate the model
+
+<img src="logistic_regression-figure/train_test.png" height = 200></img>
+
+Cross-validation
+========================================================
+Cross-validation is a powerful general technique for assessing how the results of a statistical analysis will generalize to an independent data set.  
+
+- Mainly used in settings where one wants to estimate how accurately a predictive model will perform in practice
+
+One round of cross-validation involves 
+
+- Partitioning a sample of data into complementary subsets
+- Performing the analysis on one subset (the training set, large)
+- Validating the analysis on the other subset (the testing set, small). 
+
+
+K-fold cross-validation
+========================================================
+
+Below is an example of 4-fold cross-validation 
+
+
+![](https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png)
+
+The data is divided into subsets K times, so that eventually all the data has been used for both training and testing.  
+
+<small>*Picture from https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png*</small>
