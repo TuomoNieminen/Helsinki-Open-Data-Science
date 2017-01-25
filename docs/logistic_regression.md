@@ -3,6 +3,7 @@
 Logistic regression and cross-validation
 ========================================================
 css: index.css
+type: sub-section
 
 For IODS by Tuomo Nieminen
 
@@ -74,6 +75,7 @@ That's odds?
 One reason to use the logit transformation is that is has a nice interpretation.
 
 - The part $p/ (1-p)$ of the transformation are called the odds: the ratio of successes to failures
+- The value of odds ranges from zero to infinity
 - Higher odds corresponds to a higher probability of success
 
 ***
@@ -81,13 +83,52 @@ One reason to use the logit transformation is that is has a nice interpretation.
 ![plot of chunk unnamed-chunk-5](logistic_regression-figure/unnamed-chunk-5-1.png)
 
 
-Odds ratio
+Odds ratio example (1)
+========================================================
+
+- *E = "exposed"*
+- *E_ = "not exposed"*
+- *O = "event"*
+- *O_ = "no event"*
+
+
+```
+    E E_  n
+O  10 15 25
+O_ 16  4 20
+n  26 19 45
+```
+
+
+***
+
+- $P(O \mid E) = 10 / 25 = 0.4$
+- $P(O \mid E_) = 15 / 25  = 0.6$
+- $P(O_ \mid E) = 16 / 20 = 0.8$
+- $P(O_ \mid E_) = 4 / 20 = 0.2$  
+
+Odds ratio example (2)
 ========================================================
 The ratio of two odds is called the odds ratio.
 
-insert explanations here
+- $Odds(O \mid E) = P(O \mid E) / P(O_ \mid E) = 0.4 / 0.8 = 0.5$
+- $Odds(O \mid E_) = P(O \mid E_) / P(O_ \mid E_) = 0.6 / 0.2 = 3$
 
-Intepreting the parameters of logistic regression
+Odds ratio of events between exposed and not exposed: 
+
+$$\frac{$Odds(O \mid E)}{Odds(O \mid E_)} = \frac{0.5}{3} = 1 / 6$$
+
+
+
+```
+    E E_  n
+O  10 15 25
+O_ 16  4 20
+n  26 19 45
+```
+
+
+Interpreting the parameters of logistic regression
 ========================================================
 Example of how to intepret the parameters of logistic regression as odds ratios here
 

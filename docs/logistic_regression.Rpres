@@ -101,6 +101,7 @@ That's odds?
 One reason to use the logit transformation is that is has a nice interpretation.
 
 - The part $p/ (1-p)$ of the transformation are called the odds: the ratio of successes to failures
+- The value of odds ranges from zero to infinity
 - Higher odds corresponds to a higher probability of success
 
 ***
@@ -113,13 +114,52 @@ ggplot(df, aes(x = p, y = odds)) + geom_line(col = "blue", size = 1.1) + ggtitle
 ```
 
 
-Odds ratio
+Odds ratio example (1)
+========================================================
+
+- *E = "exposed"*
+- *E_ = "not exposed"*
+- *O = "event"*
+- *O_ = "no event"*
+
+```{r}
+E <- c("O" = 10, "O_" = 16)
+E_ <- c("O" = 15, "O_" = 4)
+d <- data.frame(E, E_)
+d$n <- rowSums(d)
+rbind(d, "n" = colSums(d))
+```
+
+
+***
+
+- $P(O \mid E) = 10 / 25 = 0.4$
+- $P(O \mid E_) = 15 / 25  = 0.6$
+- $P(O_ \mid E) = 16 / 20 = 0.8$
+- $P(O_ \mid E_) = 4 / 20 = 0.2$  
+
+Odds ratio example (2)
 ========================================================
 The ratio of two odds is called the odds ratio.
 
-insert explanations here
+- $Odds(O \mid E) = P(O \mid E) / P(O_ \mid E) = 0.4 / 0.8 = 0.5$
+- $Odds(O \mid E_) = P(O \mid E_) / P(O_ \mid E_) = 0.6 / 0.2 = 3$
 
-Intepreting the parameters of logistic regression
+Odds ratio of events between exposed and not exposed: 
+
+$$\frac{$Odds(O \mid E)}{Odds(O \mid E_)} = \frac{0.5}{3} = 1 / 6$$
+
+
+```{r}
+E <- c("O" = 10, "O_" = 16)
+E_ <- c("O" = 15, "O_" = 4)
+d <- data.frame(E, E_)
+d$n <- rowSums(d)
+rbind(d, "n" = colSums(d))
+```
+
+
+Interpreting the parameters of logistic regression
 ========================================================
 Example of how to intepret the parameters of logistic regression as odds ratios here
 
