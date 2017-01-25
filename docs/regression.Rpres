@@ -22,7 +22,7 @@ For IODS by Tuomo Nieminen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/regression.Rpres).
+Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/regression.Rpres)
 
 Linear regression models
 ========================================================
@@ -145,7 +145,7 @@ Finding the model
 The best model is found by minimizing the prediction errors that the model would make
 
 - $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions
-- $\hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals
+- $\boldsymbol{\hat{\epsilon}} = \hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals
 - The model is found by minimizing the sum of squared residuals
 
 ***
@@ -180,7 +180,7 @@ class: small-code
 incremental: false
 
 <small>
-For a quick rundown, see the 'Calling summary' section of [this blog post](http://blog.yhat.com/posts/r-lm-summary.html) or read about coefficients and p-values [here](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit)
+For a quick rundown of interpreting R's regression summary, see the 'Calling summary' section of [this blog post](http://blog.yhat.com/posts/r-lm-summary.html) or read about coefficients and p-values [here](http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit)
 </small>
 
 ```{r}
