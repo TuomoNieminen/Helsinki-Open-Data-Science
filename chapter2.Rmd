@@ -31,10 +31,10 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 *** =sct
 ```{r}
 
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
 success_msg("Good work!")
 ```
