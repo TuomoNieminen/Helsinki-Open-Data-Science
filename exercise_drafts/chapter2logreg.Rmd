@@ -12,13 +12,13 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, comment = NA)
 ##browseURL("https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION")
 
 ## read the math class questionaire data
-math <- read.table("../datasets/student-mat.csv",sep=";",header=TRUE)
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
 
 ## look at the column names
 colnames(math)
 
 ## read the portuguese class questionaire data
-por <- read.table("../datasets/student-por.csv",sep=";",header=TRUE)
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
 
 ## look at the column names
 colnames(por)
@@ -26,6 +26,15 @@ colnames(por)
 ```
 
 ## 2 joining two datasets
+```{r}
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+```
+
+
 ```{r}
 
 ## common columns to merge the datasets by
@@ -44,6 +53,20 @@ colnames(math_por)
 ## 3 glimpse at the joined dataset
 
 ```{r}
+library(dplyr)
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+## common columns to merge the datasets by
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+## join the two datasets by selected common variables
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+
+```
+
+
+```{r}
 
 ## access the dplyr library
 library(dplyr)
@@ -53,7 +76,21 @@ glimpse(math_por)
 
 ```
 
+
 ## 4 Transforming by looping
+
+```{r}
+library(dplyr)
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+## common columns to merge the datasets by
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+## join the two datasets by selected common variables
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+
+```
 
 ```{r}
 
@@ -68,7 +105,7 @@ alc <- select(math_por, one_of(join_by))
 ## access the dplyr library
 library(dplyr)
 
-## average/combine the rest of the columns
+## average / combine the rest of the columns
 for(column_name in notjoined_columns) {
   
   df <- select(math_por, starts_with(column_name))
@@ -84,7 +121,40 @@ for(column_name in notjoined_columns) {
 colnames(alc)
 ```
 
-## 5 Mutating and exploring
+## Mutating and exploring
+
+```{r}
+library(dplyr)
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+## common columns to merge the datasets by
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+## join the two datasets by selected common variables
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+
+## which columns in the datasets were not used for joining the data
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
+
+## create a new data frame with the common columns
+alc <- select(math_por, one_of(join_by))
+
+## average / combine the rest of the columns
+for(column_name in notjoined_columns) {
+  
+  df <- select(math_por, starts_with(column_name))
+  
+  if(is.numeric(select(df, 1))) {
+    alc[column_name] <- rowMeans(df)
+  } else {
+    alc[column_name] <- select(df, 1)
+  }
+}
+
+```
+
+
 ```{r}
 
 library(dplyr)
@@ -101,17 +171,53 @@ qplot(alc_use, data = alc, bins = 10, main = "Student alcohol consumption")
 
 ## 6 Binarizing a variable
 ```{r}
+library(dplyr)
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+## common columns to merge the datasets by
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+## join the two datasets by selected common variables
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+
+## which columns in the datasets were not used for joining the data
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
+
+## create a new data frame with the common columns
+alc <- select(math_por, one_of(join_by))
+
+## average / combine the rest of the columns
+for(column_name in notjoined_columns) {
+  
+  df <- select(math_por, starts_with(column_name))
+  
+  if(is.numeric(select(df, 1))) {
+    alc[column_name] <- rowMeans(df)
+  } else {
+    alc[column_name] <- select(df, 1)
+  }
+}
+## combine weekday and weekend alcohol use into alc_use
+alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
+
+```
+
+
+```{r}
 ## transform alc_use into a binary (T, F) variable high_use
 alc$high_use <- alc$alc_use > 2
 
 ## draw a bar plot
 qplot(high_use, data = alc)
 
-# save the data
-# write.table(file = "../datasets/alc.txt", alc, sep = ",", row.names = F)
 ```
 
 ## 7 exploring relationships with cross tables
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
 ```{r}
 
 
@@ -122,6 +228,9 @@ crosstab(alc$sex, alc$high_use, prop.c = T, prop.r = T)
 ```
 
 ## 8 exploring relationships with box plots
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
 
 ```{r}
 
@@ -134,6 +243,9 @@ p + geom_boxplot()
 # Analysis: Logistic regression
 
 ## 9 fitting a logistic regression model
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
 
 ```{r}
 
@@ -151,6 +263,9 @@ exp(coefficients(m1))
 ```
 
 ## 10 model performance: prediction accuracy
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
 
 ```{r}
 # predict the response
@@ -167,6 +282,10 @@ cost(alc$high_use, alc$prediction)
 ```
 
 ## 11 model performance: cross-validation
+
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
 
 ```{r}
 

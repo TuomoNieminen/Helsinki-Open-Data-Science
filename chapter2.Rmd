@@ -1,11 +1,11 @@
 ---
 title       : Logistic regression
-description : Regression for binary outcomes, training and test sets and cross-validation
+description : Regression for binary outcomes, training and testing a (predictive) model, cross-validation
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
-## Exercise 1
+## Two more datasets
 
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
+[meta](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION)
 
 *** =instructions
 - instruction
@@ -20,11 +20,175 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 
 *** =sample_code
 ```{r}
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
 
+## look at the column names
+colnames(math)
+
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+
+## look at the column names
+colnames(por)
 ```
 
 *** =solution
 ```{r}
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+
+## look at the column names
+colnames(math)
+
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+
+## look at the column names
+colnames(por)
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Joining two datasets
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+## read the math class questionaire data
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+
+## read the portuguese class questionaire data
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+```
+
+*** =sample_code
+```{r}
+## common columns to merge the datasets by
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+
+## access the dplyr library
+library(dplyr)
+
+## join the two datasets by selected common variables
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+
+## see the new column names
+colnames(math_por)
+```
+
+*** =solution
+```{r}
+## common columns to merge the datasets by
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+
+## access the dplyr library
+library(dplyr)
+
+## join the two datasets by selected common variables
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+
+## see the new column names
+colnames(math_por)
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "", incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Transforming by looping
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+```
+
+*** =sample_code
+```{r}
+# dplyr, math_por, join_by are available
+
+# which columns in the datasets were not used for joining the data
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
+
+# create a new data frame with only the common columns
+alc <- select(math_por, one_of(join_by))
+
+# average / combine the rest of the columns with a for loop
+for(column_name in notjoined_columns) {
+  
+  df <- select(math_por, starts_with(column_name))
+  
+  # take the average of two numeric columns
+  if(is.numeric(select(df, 1))) {
+    alc[column_name] <- rowMeans(df)
+  } else { # or use the first one of two (factor) columns
+    alc[column_name] <- select(df, 1)
+  }
+}
+colnames(alc)
+```
+
+*** =solution
+```{r}
+# dplyr, math_por, join_by are available
+
+# columns that were not used for joining the data
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
+
+# create a new data frame with only the common columns
+alc <- select(math_por, one_of(join_by))
+
+## average / combine the rest of the columns
+for(column_name in notjoined_columns) {
+  
+  df <- select(math_por, starts_with(column_name))
+  
+  # take the average of two numeric columns
+  if(is.numeric(select(df, 1))) {
+    alc[column_name] <- rowMeans(df)
+  } else { # or use the first one of two (factor) columns
+    alc[column_name] <- select(df, 1)
+  }
+}
+colnames(alc)
 
 ```
 
@@ -38,3 +202,391 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 # test_error()
 success_msg("Good work!")
 ```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Mutations
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
+math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
+alc <- select(math_por, one_of(join_by))
+
+for(column_name in notjoined_columns) {
+  df <- select(math_por, starts_with(column_name))
+  if(is.numeric(select(df, 1))) {
+    alc[column_name] <- rowMeans(df)
+  } else {
+    alc[column_name] <- select(df, 1)
+  }
+}
+```
+
+*** =sample_code
+```{r}
+
+# combine weekday and weekend alcohol use into alc_use
+alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
+
+# draw a bar plot of alc_use
+ggplot(data = alc, aes(alc_use, fill = sex)) + geom_bar()
+
+# transform alc_use into a binary variable high_use
+alc <- mutate(alc, high_use = alc_use > 2)
+
+# draw a bar plot
+ggplot(data = alc, aes(high_use)) + geom_bar()
+
+```
+
+*** =solution
+```{r}
+# combine weekday and weekend alcohol use into alc_use
+alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
+
+# draw a bar plot of alc_use
+ggplot(data = alc, aes(alc_use, fill = sex)) + geom_bar()
+
+# transform alc_use into a binary variable high_use
+alc <- mutate(alc, high_use = alc_use > 2)
+
+# draw a bar plot
+ggplot(data = alc, aes(high_use)) + geom_bar()
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## glimpse() at the data
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+# alc is available
+
+# access tidyverse libraries
+library(tidyverse)
+
+# glimpse at the new data
+glimpse(math_por) 
+
+# draw a bar plot of each variable (ignore the warning)
+gather(alc) %>% ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_bar()
+
+
+```
+
+*** =solution
+```{r}
+
+## access the dplyr library
+library(dplyr)
+
+## glimpse at the new data
+glimpse(math_por) 
+
+# draw a bar plot of each variable (ignore the warning)
+gather(alc) %>% ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_bar()
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Summarising by group
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+# alc is available 
+
+alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))
+
+
+```
+
+*** =solution
+```{r}
+# alc is available 
+
+alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Box plots by groups
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+library(ggplot2)
+p <- ggplot(alc, aes(x = high_use, y = absences))
+p + geom_boxplot() 
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+p <- ggplot(alc, aes(x = high_use, y = absences))
+p + geom_boxplot() 
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Fitting a logistic regression model
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
+# print out a summary of the model
+summary(m1)
+
+## print out the coefficients
+m1
+
+## print out the exponentiated coefficients
+exp(coefficients(m1))
+```
+
+*** =solution
+```{r}
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
+# print out a summary of the model
+summary(m1)
+
+## print out the coefficients
+m1
+
+## print out the exponentiated coefficients
+exp(coefficients(m1))
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Model performance: prediction accuracy
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
+# predict the response
+alc$prediction <- predict(m1, type = "response")
+
+# first six values
+head(select(alc, high_use, prediction))
+
+# function to compute the proportion of wrong predictions
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# compute the average number of wrong predictions
+cost(alc$high_use, alc$prediction)
+```
+
+*** =solution
+```{r}
+# predict the response
+alc$prediction <- predict(m1, type = "response")
+
+# first six values
+head(select(alc, high_use, prediction))
+
+# function to compute the proportion of wrong predictions
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# compute the average number of wrong predictions
+cost(alc$high_use, alc$prediction)
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Model performance: cross-validation
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+# cost function
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# k-fold cross-validation
+library(boot)
+cv <- cv.glm(data = alc, cost = cost, glmfit = m1, K = 10)
+
+# print out the average number of wrong predictions in the cross validation
+cv$delta[1]
+```
+
+*** =solution
+```{r}
+# cost function
+cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+
+# k-fold cross-validation
+library(boot)
+cv <- cv.glm(data = alc, cost = cost, glmfit = m1, K = 10)
+
+# print out the average number of wrong predictions in the cross validation
+cv$delta[1]
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
