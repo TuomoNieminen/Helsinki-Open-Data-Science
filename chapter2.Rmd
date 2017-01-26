@@ -20,7 +20,7 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 
 *** =sample_code
 ```{r}
-# Please do not interact here!
+
 ```
 
 *** =solution
