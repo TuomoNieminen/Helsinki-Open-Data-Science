@@ -59,7 +59,7 @@ colnames(por)
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:af9b851a1c
 ## Joining two datasets
 
 Exercise info here
@@ -121,7 +121,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:fe19bbaae6
 ## Transforming by looping
 
 Exercise info here
@@ -204,7 +204,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
 ## Mutations
 
 Exercise info here
@@ -279,7 +279,7 @@ ggplot(data = alc, aes(high_use)) + geom_bar()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:9a2ce9f8c0
 ## glimpse() at the data
 
 Exercise info here
@@ -336,7 +336,7 @@ gather(alc) %>% ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_b
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:d0884e6c11
 ## Summarising by group
 
 Exercise info here
@@ -380,7 +380,7 @@ alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3)
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
 ## Box plots by groups
 
 Exercise info here
@@ -422,7 +422,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
 ## Fitting a logistic regression model
 
 Exercise info here
@@ -477,7 +477,7 @@ exp(coefficients(m1))
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
 ## Model performance: prediction accuracy
 
 Exercise info here
@@ -537,7 +537,7 @@ cost(alc$high_use, alc$prediction)
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
 ## Model performance: cross-validation
 
 Exercise info here
