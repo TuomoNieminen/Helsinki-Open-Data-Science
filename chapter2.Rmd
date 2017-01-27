@@ -384,7 +384,7 @@ test_error()
 success_msg("Very nice work! You're really getting the hang of it :)")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:6f326bbb98
 ## So many plots
 
 I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we draw all of them!
@@ -457,7 +457,7 @@ test_function("options", eval = F, args = "warn", incorrect_msg = "Please use th
 success_msg("Great job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:0f61649b52
 ## The Pipe: Summarising by group
 
 The pipe operator, `%>%`, takes the result of the left-hand side and uses it as the first argument of the function on the right-hand side. For example:
@@ -525,7 +525,7 @@ success_msg("Very nice work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
 ## Box plots by groups
 
 Exercise info here
