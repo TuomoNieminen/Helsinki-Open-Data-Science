@@ -5,10 +5,22 @@ description : Regression for binary outcomes, training and testing a (predictive
 --- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
 ## Two more datasets
 
-[meta](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION)
+Welcome to the *Logistic regression* chapter.
+
+During the next exercises, we will be combining, wrangling and analysing two new data sets retrieved from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets.html), a great source of open data. The data are from two identical questionaires related to secondary school student alcohol comsumption in Portugal. Read about the data and the variables [here](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION).
+
+The original research question might have been how alcohold consumption affects school performance, but here we will turn that question backwards and ask if we can learn to identify students who consume high amounts of alchohol using background variables and school performance. We will use logistic regression for this task. 
+
+But first, as always, let's get our hands on the data!
 
 *** =instructions
-- instruction
+- R offers the convenient `paste()` function to combine and create chracters. Let's try it!
+- Create and print out the object `url_por' 
+- Adjust the code: Make `url_math` into a valid web adress by separating with "/".
+- Read the math class questionaire data into memory from the address defined in `url_math`.
+- Create object `url_por` similarily to `url_math`, using the 'url' object.
+- Read the portuguese class questionaire data into memory from the address defined in `url_por`.
+- Print out the names of the columns in both data sets.
 
 *** =hint
 - hint
@@ -20,52 +32,87 @@ description : Regression for binary outcomes, training and testing a (predictive
 
 *** =sample_code
 ```{r}
-## read the math class questionaire data
-math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
 
-## look at the column names
+# create address for math class data using 'url' 
+url_math <- paste(url, "student-mat.csv", sep = "_change me!_")
+
+# print out the url
+url_math
+
+# read the math class questionaire data into memory
+math <- read.table(url_math, sep = ";" , header=TRUE)
+
+# create address for portuguese class data using 'url' 
+url_por <- paste("change me", "student-por.csv", sep =" change me too! ")
+
+## read the portuguese class questionaire data into memory
+por <- read.table(url_por, sep = ";", header = TRUE)
+
+## look at the column names of both data
 colnames(math)
 
-## read the portuguese class questionaire data
-por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
 
-## look at the column names
-colnames(por)
 ```
 
 *** =solution
 ```{r}
-## read the math class questionaire data
-math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+# data url
+url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
 
-## look at the column names
+# create address for math class data using 'url' 
+url_math <- paste(url, "student-mat.csv", sep = "/")
+
+# print out math_url
+url_math
+
+# read the math class questionaire data into memory
+math <- read.table(url_math, sep = ";" , header=TRUE)
+
+# create address for portuguese class data using 'url'
+url_por <- paste(url, "student-por.csv", sep ="/")
+
+## read the portuguese class questionaire data into memory
+por <- read.table(url_por, sep = ";", header = TRUE)
+
+## look at the column names of both data
 colnames(math)
-
-## read the portuguese class questionaire data
-por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
-
-## look at the column names
 colnames(por)
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
+test_object("url_math", incorrect_msg = "Make the necessary changes to store a valid web address in the `url_math` object")
+test_object("math", incorrect_msg = "Use `url_math` to load data and store the data in the `math` object.")
+
+test_object("url_por", incorrect_msg = "Make the necessary changes to store a valid web address in the `url_por` object")
+test_object("por", incorrect_msg = "Use `url_por` to load data and store the data in the `por` object.")
+
+test_output_contains("colnames(math)", times = 2, incorrect_msg = "Please print out the column names of both data sets")
 # 
-# test_error()
-success_msg("Good work!")
+
+test_error()
+success_msg("Nice work! That was a tough warmup!")
+
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1
 ## Joining two datasets
 
-Exercise info here
+In our two data sets there are multiple students who have answered both questionaires. Unfortunately we do not have a single identification number or similar to identify these students. However we can use a bunch of background questions together to identify the students.
+
+Combining two data sets is easy with R if the data sets have a single mutual identifier column or a combination of mutual columns which together can be used as identifiers. Here we'll use `inner.join()` from the dplyr library, which joins two data sets together by keeping only the rows that appear in both data sets (according to the identifier).
+
+So here, we'll only keep the students who answered the same questionaire in both math and portuguese classes.
 
 *** =instructions
-- instruction
+- Create object `join_by` and access the dplyr library
+- Adjust the code: use `inner_join()` to join the two data sets by the variables defined in `join_by`
+- Print out the column names of the joined data set
+- Adjust the code: add the argument 'suffix' to `inner_join()` and give it the vector of characters: ".math" and ".por".
+- Print out the column names of the joined data set again
+- Use the `glimpse()` function from 'dplyr' to look at the joined data. Which data types are present?
 
 *** =hint
 - hint
@@ -77,57 +124,85 @@ math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/cours
 
 ## read the portuguese class questionaire data
 por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+
 ```
 
 *** =sample_code
 ```{r}
-## common columns to merge the datasets by
+# math and por are available
+
+# common columns to use as identifiers
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 
-## access the dplyr library
+# access the dplyr library
 library(dplyr)
 
-## join the two datasets by selected common variables
-math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
+# join the two datasets by the selected identifiers
+math_por <- inner_join(math, por, by = "change me!")
 
-## see the new column names
-colnames(math_por)
+# see the new column names and glimpse at the data
+
+
 ```
 
 *** =solution
 ```{r}
-## common columns to merge the datasets by
+# math and por are available
+
+# common columns to use as identifiers
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 
 ## access the dplyr library
 library(dplyr)
 
-## join the two datasets by selected common variables
+# join the two datasets by the selected identifiers
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 
-## see the new column names
+## see the new column names and glimpse at the data
 colnames(math_por)
+glimpse(math_por)
+
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "", incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("inner_join", args = c("x","y","by", "suffix"), incorrect_msg = "Please define the 'by' and 'suffix' arguments of `inner_join()` as instructed.")
+test_object("math_por", incorrect_msg = "Please use `inner_join()` as instructed to create the object 'math_por'")
+
+test_output_contains("colnames(math_por)", incorrect_msg = "Please print out the column names of the joined data")
+test_function("glimpse", incorrect_msg = "Please use `glimpse()` on `math_por` to look at the data.")
+
+test_error()
+success_msg("Awsomeland! Imagine the endless possibilities of joining various data sets!")
+
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1
 ## Transforming by looping
 
-Exercise info here
+We now have a data set which in addition to the background variables used for joining, contains two (possibly different) answers to the same questions. We'll use some advanced programming to combine these 'duplicate' questions by either taking the rounded average value of the two answers or by simply choosing the first answer.
+
+We'll do this by using a combination of a `for-loop` and an `if-else` structure to handle all numerical and factor variables differently. 
+
+The `if()` function takes a single logical condition as an argument and only performs an action if the condition is true. `if()` can be combined with `else`, which then handles the cases where the condition is false.
+
+```
+if(condition) {
+   do something
+} else {
+   do something else
+}
+
+```
 
 *** =instructions
-- instruction
+- Create the object `notjoined_columns`
+- Adjust the code: Create the data.frame `alc` by selecting only the columns in `math_por` which were used for joining the two questinaires. The names of those columns are available in the `join_by` object.
+- Execute the for loop and then take a `glimpse()` at the 'alc' data.frame. The factor type variables should look strange at this point.
+- Adjust the code inside the `for-loop`: if the first of the two selected columns is not numeric, add the first column to the `alc` data.frame.
+-  Execute the `for-loop` and `glimpse()` at the new data again.
 
 *** =hint
 - hint
@@ -145,25 +220,28 @@ math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 ```{r}
 # dplyr, math_por, join_by are available
 
-# which columns in the datasets were not used for joining the data
+# the columns in the datasets which were not used for joining the data
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
-# create a new data frame with only the common columns
-alc <- select(math_por, one_of(join_by))
+# create a new data frame with only the joined columns
+alc <- select(math_por, one_of("change me!"))
 
-# average / combine the rest of the columns with a for loop
+# combine the 'duplicate' columns and add them to the 'alc' data frame
 for(column_name in notjoined_columns) {
-  
-  df <- select(math_por, starts_with(column_name))
-  
-  # take the average of two numeric columns
-  if(is.numeric(select(df, 1))) {
-    alc[column_name] <- rowMeans(df)
-  } else { # or use the first one of two (factor) columns
-    alc[column_name] <- select(df, 1)
+  # select the two columns with the same original name
+  two_columns <- select(math_por, starts_with(column_name))
+  first_column <- select(two_columns, 1)[[1]]
+
+    # if the first column is numeric, take a rounded average
+  if(is.numeric(first_column)) {
+    alc[column_name] <- round(rowMeans(two_columns))
+  } else { # else just use the first column
+    alc[column_name] <- "change me!"
   }
 }
-colnames(alc)
+
+# glimpse at the new combined data
+
 ```
 
 *** =solution
@@ -173,33 +251,36 @@ colnames(alc)
 # columns that were not used for joining the data
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
-# create a new data frame with only the common columns
+# create a new data frame with only the joined columns
 alc <- select(math_por, one_of(join_by))
 
-## average / combine the rest of the columns
+# combine the 'duplicate' columns and add them to the 'alc' data frame
 for(column_name in notjoined_columns) {
-  
-  df <- select(math_por, starts_with(column_name))
-  
-  # take the average of two numeric columns
-  if(is.numeric(select(df, 1))) {
-    alc[column_name] <- rowMeans(df)
-  } else { # or use the first one of two (factor) columns
-    alc[column_name] <- select(df, 1)
+  # select the two columns with the same original name
+  two_columns <- select(math_por, starts_with(column_name))
+  first_column <- select(two_columns, 1)[[1]]
+
+    # if the first column is numeric, take a rounded average
+  if(is.numeric(first_column)) {
+    alc[column_name] <- round(rowMeans(two_columns))
+  } else { # else just use the first column
+    alc[column_name] <- first_column
   }
 }
-colnames(alc)
+
+# glimpse at the new combined data
+glimpse(alc)
 
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
+test_function("one_of", args = "vars", incorrect_msg = "Please use the `one_of()` function inside `select()` to create the `alc` data.frame.")
+test_object("alc", incorrect_msg = "Please follow the instructions to modify the `alc` data frame.")
+test_function("glimpse", args = "x", incorrect_msg = "Please use `glimpse()` to look at the `alc` data.frame")
+ 
+test_error()
 success_msg("Good work!")
 ```
 
@@ -207,10 +288,19 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1
 ## Mutations
 
-Exercise info here
+Mutating the data means adding new variables which are mutations of the existing ones. The `mutate()` function is from the 'dplyr' package. From now on, instead of simply loading the 'dplyr' package, we'll instead load 'tidyverse', which includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
+
+The first argument of the basic tidyverse functions is almost always 'data' and they also have other consistent features which makes them work well together.
+
 
 *** =instructions
-- instruction
+- Access the 'tidyverse' functions
+- Mutate `alc` by creating  column `alc_use`
+- Draw a bar plot of `alc_use`.
+- Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
+- Mutate alc by creating logical column `high_use`, which is true if `alc_use` is greater than 2.
+- Draw a bar plot of `high_use` using `ggplot()` and `geom_bar()`.
+- Add (`+`) this element to the latter plot: `facet_wrap("sex")` and draw the plot again
 
 *** =hint
 - hint
@@ -227,34 +317,48 @@ notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 alc <- select(math_por, one_of(join_by))
 
 for(column_name in notjoined_columns) {
-  df <- select(math_por, starts_with(column_name))
-  if(is.numeric(select(df, 1))) {
-    alc[column_name] <- rowMeans(df)
-  } else {
-    alc[column_name] <- select(df, 1)
+  # select the two columns with the same original name
+  two_columns <- select(math_por, starts_with(column_name))
+  first_column <- select(two_columns, 1)[[1]]
+
+    # if the first column is numeric, take a rounded average
+  if(is.numeric(first_column)) {
+    alc[column_name] <- round(rowMeans(two_columns))
+  } else { # else just use the first column
+    alc[column_name] <- first_column
   }
 }
 ```
 
 *** =sample_code
 ```{r}
+# alc is available
 
-# combine weekday and weekend alcohol use into alc_use
+# access the tidyverse functions (including dplyr and ggplot2)
+library(tidyverse)
+
+# mutate weekday and weekend alcohol use into alc_use
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
 # draw a bar plot of alc_use
-ggplot(data = alc, aes(alc_use, fill = sex)) + geom_bar()
+ggplot(data = alc, aes(alc_use)) + geom_bar()
 
-# transform alc_use into a binary variable high_use
-alc <- mutate(alc, high_use = alc_use > 2)
+# mutate alc_use into a binary variable high_use
+alc <- mutate(alc, high_use = 5 > 2)
 
-# draw a bar plot
-ggplot(data = alc, aes(high_use)) + geom_bar()
+# draw a bar plot of high_use
+ggplot(data = alc)
+
 
 ```
 
 *** =solution
 ```{r}
+# alc is available
+
+# access the tidyverse functions (including dplyr and ggplot2)
+library(tidyverse)
+
 # combine weekday and weekend alcohol use into alc_use
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
@@ -264,28 +368,115 @@ ggplot(data = alc, aes(alc_use, fill = sex)) + geom_bar()
 # transform alc_use into a binary variable high_use
 alc <- mutate(alc, high_use = alc_use > 2)
 
-# draw a bar plot
-ggplot(data = alc, aes(high_use)) + geom_bar()
+# draw a bar plot of high_use
+ggplot(data = alc, aes(high_use)) + facet_wrap("sex") + geom_bar()
+
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("facet_wrap", args = "facets",incorrect_msg = "")
+test_object("alc", incorrect_msg = "Please mutate alc by creating a logical column 'high_use'.")
+test_function("facet_wrap", args = "facets",incorrect_msg = "Please add the `facet_wrap('sex')` element to the latter bar plot.")
+
+test_error()
+success_msg("Very nice work! You're really getting the hang of it :)")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1
-## glimpse() at the data
+## So many plots
 
-Exercise info here
+I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we draw all of them!
+
+We'll introduce another new tidyverse toy, the pipe `%>%. The pipe operator takes the result of the left-hand side and uses it as the first argument in the function on the right-hand side. Since the first argument of the tidyverse functions is 'data' this allows for some cool chaining of commands.
+
+We'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
 
 *** =instructions
-- instruction
+- Take a glimpse at the `alc` data
+- Take a glimpse at the `alc` data after applying the `gather()` function on it. What does gather do?
+- Draw a bar plot of each variable in the `alc` data
+- See the help page of the `options()` function and search for information about the 'warn' argument there. Set the value of the argument so that warnings are never displayed.
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(tidyverse)
+```
+
+*** =sample_code
+```{r}
+# alc and tidyverse are available
+
+# glimpse at the alc data
+
+
+# ignore warnings
+
+
+# use gather() to gather columns into key value pairs 
+glimpse(gather(alc))
+
+# draw a bar plot of each variable
+gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar()
+
+
+```
+
+*** =solution
+```{r}
+
+# alc and tidyverse are available
+
+# glimpse atlibrary("devtools")
+install_github("datacamp/testwhat") the alc data
+glimpse(alc) 
+
+# ignore all warnings
+options(warn = -1)
+
+# use gather() to gather columns into key value pairs 
+glimpse(gather(alc))
+
+# draw a bar plot of each variable
+gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar()
+
+
+```
+
+*** =sct
+```{r}
+
+test_function("options", eval = F, args = "warn", incorrect_msg = "Please use the `options()` function to modify whether warnings are displayed.")
+
+# test_error()
+success_msg("Great job!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## The Pipe: Summarising by group
+
+The pipe operator, `%>%`, takes the result of the left-hand side and uses it as the first argument of the function on the right-hand side. For example:
+
+```
+1:10 %>% mean()
+[1] 5.5
+
+```
+The pipe is most commonly used to chain functions which perform operations on a data.frame. The first argument of the tidyverse functions is almost always 'data', which makes chaining the functions with pipe easy. This is great fun, so let's try it! 
+
+Utilizing the pipe, we'll apply the functions `group_by()` and `summarise()`. The first one splits the data to groups accoring to a grouping variable, and the latter can be combined with any single value summary function (such as `mean()`, `min()`, `max()`, `sd()`, ..) to summarize the data. 
+
+
+*** =instructions
+- Access the tidyverse
+- Execute the sample code to see the counts of males and females in the data
+- Adjust the code: inside `summary()` use `mean()` on the variable `G3`, which is the (average) final grade. Execute the code again.
+- Adust the code: After sex, add 'high_use' as another grouping variable and execute the code again.
 
 *** =hint
 - hint
@@ -299,86 +490,36 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 ```{r}
 # alc is available
 
-# access tidyverse libraries
+# access the tidyverse
+
+
+# produce summary statistics by group
+alc %>% group_by(sex) %>% summarise(count = n(), mean_grade = "change me!")
+
+
+```
+
+*** =solution
+```{r}
+# alc is available
+
+# access the tidyverse
 library(tidyverse)
 
-# glimpse at the new data
-glimpse(math_por) 
+# produce summary statistics by group
+alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))
 
-# draw a bar plot of each variable (ignore the warning)
-gather(alc) %>% ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_bar()
-
-
-```
-
-*** =solution
-```{r}
-
-## access the dplyr library
-library(dplyr)
-
-## glimpse at the new data
-glimpse(math_por) 
-
-# draw a bar plot of each variable (ignore the warning)
-gather(alc) %>% ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_bar()
 
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_output_contains("alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))", incorrect_msg = "Please make the requested changes to the arguments of the `group_by()` and `summarise()` functions.")
+ test_error()
+success_msg("Very nice work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
-## Summarising by group
-
-Exercise info here
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
-```
-
-*** =sample_code
-```{r}
-# alc is available 
-
-alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))
-
-
-```
-
-*** =solution
-```{r}
-# alc is available 
-
-alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))
-
-```
-
-*** =sct
-```{r}
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
-```
 
 --- type:NormalExercise lang:r xp:100 skills:1
 ## Box plots by groups
