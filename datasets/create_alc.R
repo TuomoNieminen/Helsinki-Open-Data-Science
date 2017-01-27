@@ -8,23 +8,26 @@ join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","M
 ## join the two datasets by selected common variables
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 
-## which columns in the datasets were not used for joining the data
+# the columns in the datasets which were not used for joining the data
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
-## create a new data frame with the common columns
-alc <- select(math_por, one_of(join_by))
+# create a new data frame with only the joined columns
+alc <- select(math_por, one_of("change me!"))
 
-## average / combine the rest of the columns
+# combine the 'duplicate' columns and add them to the 'alc' data frame
 for(column_name in notjoined_columns) {
+  # select the two columns with the same original name
+  two_columns <- select(math_por, starts_with(column_name))
+  first_column <- select(two_columns, 1)[[1]]
   
-  df <- select(math_por, starts_with(column_name))
-  
-  if(is.numeric(select(df, 1))) {
-    alc[column_name] <- rowMeans(df)
-  } else {
-    alc[column_name] <- select(df, 1)
+  # if the first column is numeric, take a rounded average
+  if(is.numeric(first_column)) {
+    alc[column_name] <- round(rowMeans(two_columns))
+  } else { # else just use the first column
+    alc[column_name] <- first_column
   }
 }
+
 ## combine weekday and weekend alcohol use into alc_use
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
