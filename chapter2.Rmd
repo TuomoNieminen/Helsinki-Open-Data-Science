@@ -97,7 +97,7 @@ success_msg("Nice work! That was a tough warmup!")
 
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:af9b851a1c
 ## Joining two datasets
 
 In our two data sets there are multiple students who have answered both questionaires. Unfortunately we do not have a single identification number or similar to identify these students. However we can use a bunch of background questions together to identify the students.
@@ -179,7 +179,7 @@ success_msg("Awsomeland! Imagine the endless possibilities of joining various da
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:fe19bbaae6
 ## Transforming by looping
 
 We now have a data set which in addition to the background variables used for joining, contains two (possibly different) answers to the same questions. We'll use some advanced programming to combine these 'duplicate' questions by either taking the rounded average value of the two answers or by simply choosing the first answer.
@@ -285,7 +285,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
 ## Mutations
 
 Mutating the data means adding new variables which are mutations of the existing ones. The `mutate()` function is from the 'dplyr' package. From now on, instead of simply loading the 'dplyr' package, we'll instead load 'tidyverse', which includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
@@ -470,6 +470,10 @@ The pipe operator, `%>%`, takes the result of the left-hand side and uses it as 
 The pipe is most commonly used to chain functions which perform operations on a data.frame. The first argument of the tidyverse functions is almost always 'data', which makes chaining the functions with pipe easy. This is great fun, so let's try it! 
 
 Utilizing the pipe, we'll apply the functions `group_by()` and `summarise()`. The first one splits the data to groups accoring to a grouping variable, and the latter can be combined with any single value summary function (such as `mean()`, `min()`, `max()`, `sd()`, ..) to summarize the data. 
+=======
+--- type:NormalExercise lang:r xp:100 skills:1 key:d0884e6c11
+## Summarising by group
+>>>>>>> origin/development
 
 
 *** =instructions
@@ -563,7 +567,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
 ## Fitting a logistic regression model
 
 Exercise info here
@@ -618,7 +622,7 @@ exp(coefficients(m1))
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
 ## Model performance: prediction accuracy
 
 Exercise info here
@@ -678,7 +682,7 @@ cost(alc$high_use, alc$prediction)
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
 ## Model performance: cross-validation
 
 Exercise info here
