@@ -296,9 +296,9 @@ The tidyverse functions have a lot of similarities. The first argument of the ti
 - Mutate `alc` by creating  column `alc_use`
 - Draw a bar plot of `alc_use`.
 - Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
-- Mutate alc by creating logical column `high_use`, which is true if `alc_use` is greater than 2.
-- Draw a bar plot of `high_use` using `ggplot()` and `geom_bar()`.
-- Add (`+`) this element to the latter plot: `facet_wrap("sex")` and draw the plot again
+- Mutate `alc` by creating a new logical variable `high_use`, which is true if `alc_use` is greater than 2 (replace `Inf`).
+- Draw a bar plot of `high_use`.
+- Add this element to the latter plot using `+`: `facet_wrap("sex")`. Draw the plot again
 
 *** =hint
 - hint
@@ -337,17 +337,21 @@ library(ggplot2)
 # access the 'tidyverse' packages dplyr and ggplot2
 library(dplyr); library(ggplot2)
 
-# mutate weekday and weekend alcohol use into alc_use
+# combine weekday and weekend alcohol use into 'alc_use'
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
-# draw a bar plot of alc_use
-ggplot(data = alc, aes(alc_use)) + geom_bar()
+# initialize a  plot of 'alc_use'
+g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
 
-# mutate alc_use into a binary variable high_use
-alc <- mutate(alc, high_use = 5 > 2)
+# define the plot as a bar plot and draw it
+g1 + geom_bar()
 
-# draw a bar plot of high_use
-ggplot(data = alc)
+# transform alc_use into a binary variable 'high_use'
+alc <- mutate(alc, high_use = Inf > 2)
+
+# initialize a plot of 'high_use'
+g2 <- ggplot(data = alc, aes(high_use))
+
 
 
 ```
@@ -359,24 +363,30 @@ ggplot(data = alc)
 # access the 'tidyverse' packages dplyr and ggplot2
 library(dplyr); library(ggplot2)
 
-# combine weekday and weekend alcohol use into alc_use
+# combine weekday and weekend alcohol use into 'alc_use'
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
-# draw a bar plot of alc_use
-ggplot(data = alc, aes(alc_use, fill = sex)) + geom_bar()
+# initialize a  plot of 'alc_use'
+g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
 
-# transform alc_use into a binary variable high_use
+# define the plot as a bar plot and draw it
+g1 + geom_bar()
+
+# transform alc_use into a binary variable 'high_use'
 alc <- mutate(alc, high_use = alc_use > 2)
 
-# draw a bar plot of high_use
-ggplot(data = alc, aes(high_use)) + facet_wrap("sex") + geom_bar()
+# initialize a plot of 'high_use'
+g2 <- ggplot(data = alc, aes(high_use))
+
+# draw a bar plot for each sex
+g2 + facet_grid("sex") + geom_bar()
+
 
 ```
 
 *** =sct
 ```{r}
 
-test_function("facet_wrap", args = "facets",incorrect_msg = "")
 test_object("alc", incorrect_msg = "Please mutate alc by creating a logical column 'high_use'.")
 test_function("facet_wrap", args = "facets",incorrect_msg = "Please add the `facet_wrap('sex')` element to the latter bar plot.")
 
@@ -432,14 +442,13 @@ gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_b
 
 # alc and tidyverse are available
 
-# glimpse atlibrary("devtools")
-install_github("datacamp/testwhat") the alc data
+# glimpse at the alc data
 glimpse(alc) 
 
 # use options() to ignore warnings
 options(warn = -1)
 
-# use gather() to gather columns into key value pairs 
+# gather() gathers all columns into key-value pairs 
 glimpse(gather(alc))
 
 # draw a bar plot of each variable
@@ -469,7 +478,7 @@ The pipe operator, `%>%`, takes the result of the left-hand side and uses it as 
 ```
 The pipe is most commonly used to chain functions which perform operations on a data.frame. Chaining operations with the pipe is great fun, so let's try it! 
 
-Utilizing the pipe, we'll apply the functions `group_by()` and `summarise()` on our data. The first one splits the data to groups according to a grouping variable, and the latter can be combined with any single value summary function (such as `mean()`, `min()`, `max()`, `sd()`, ..) to summarize the data. 
+Utilizing the pipe, we'll apply the functions `group_by()` and `summarise()` on our data. The first one splits the data to groups according to a grouping variable (a factor for example), and the latter can be combined with any summary function such as `mean()`, `min()`, `max()`, `sd()`, ... to summarize the data. 
 
 *** =instructions
 - Access the tidyverse libraries dplyr and ggplot2
@@ -523,10 +532,20 @@ success_msg("Very nice work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
 ## Box plots by groups
 
-Exercise info here
+Box plots are an excellent way of displaying and comparing distributions of variables. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers (the dots) of a variable. 
+
+The whiskers extending from the box can be computed by several techniques. The default (in base R and ggplot) is to extend them to reach to a data point that is no more than 1.5*IQR away from the box, where IQR is the inter quartile range defined as  
+
+`IQR = 75th percentile - 25th percentile`  
+
+Values outside the whiskers can be considered as outliers, unusually distant observations. For more information on IQR, see <a target="_blank" href ="https://en.wikipedia.org/wiki/Interquartile_range"> wikipedia</a>
 
 *** =instructions
-- instruction
+- Initialize and draw a box plot of student grades ('G3'), grouped by 'high_use'.
+- Add an aesthetix element to the plot by defining `col = sex` inside `aes()`
+- Add the element `ylab("grade")` to the plot.
+- Define a similar (box) plot of the variable 'absences' again grouped by 'high_use' and the aesthetic `col=sex`.
+- Add a main title to the last plot with `ggtitle("title here")`. Insert the title "Student absences by alcohol consumption and sex".
 
 *** =hint
 - hint
@@ -539,26 +558,48 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 *** =sample_code
 ```{r}
 library(ggplot2)
-p <- ggplot(alc, aes(x = high_use, y = absences))
-p + geom_boxplot() 
+
+# initialize a plot of 'high_use' and 'G3'
+g1 <- ggplot(alc, aes(x = high_use, y = G3))
+
+# define the plot as a boxplot and draw it
+g1 + geom_boxplot()
+
+# initialise a plot of high_use and 'absences'
+
+
+# define the plot as a boxplot and draw it
+
+
 ```
 
 *** =solution
 ```{r}
 library(ggplot2)
-p <- ggplot(alc, aes(x = high_use, y = absences))
-p + geom_boxplot() 
+
+# initialize a plot of 'high_use' and 'G3'
+g1 <- ggplot(alc, aes(x = high_use, y = G3, col = sex))
+
+# define the plot as a boxplot and draw it
+g1 + geom_boxplot() + ylab("grade")
+
+# initialise a plot of high_use and 'absences'
+g2 <- ggplot(alc, aes(x = high_use, y = absences, col = sex))
+
+# define the plot as a boxplot and draw it
+g2 + geom_boxplot()
+
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("ylab", args = "label",incorrect_msg = "Please define the aesthetic element col = sex to the first box plot and then adjust the label of the y axis with `ylab()`")
+
+test_function("ggtitle", args = "label", incorrect_msg = "Please define box plots of the 'absences' variable with the appropriate grouping and then adjust the main title with `ggtitle()` as instructed")
+
+test_error()
+success_msg("Great work!")
 ```
 
 
