@@ -287,13 +287,12 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
 ## Mutations
 
-Mutating the data means adding new variables which are mutations of the existing ones. The `mutate()` function is from the 'dplyr' package. From now on, instead of simply loading the 'dplyr' package, we'll instead load 'tidyverse', which includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
+Mutating the data means adding new variables which are mutations of the existing ones. The `mutate()` function is from the 'dplyr' package. On your personal computer, instead of accessing the 'dplyr' package, you can instead install and access 'tidyverse', which includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
 
-The first argument of the basic tidyverse functions is almost always 'data' and they also have other consistent features which makes them work well together.
+The tidyverse functions have a lot of similarities. The first argument of the tidyverse functions is usually 'data' and they also have other consistent features which makes them work well together.
 
 
 *** =instructions
-- Access the 'tidyverse' functions
 - Mutate `alc` by creating  column `alc_use`
 - Draw a bar plot of `alc_use`.
 - Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
@@ -327,14 +326,16 @@ for(column_name in notjoined_columns) {
     alc[column_name] <- first_column
   }
 }
+
+library(ggplot2)
 ```
 
 *** =sample_code
 ```{r}
 # alc is available
 
-# access the tidyverse functions (including dplyr and ggplot2)
-library(tidyverse)
+# access the 'tidyverse' packages dplyr and ggplot2
+library(dplyr); library(ggplot2)
 
 # mutate weekday and weekend alcohol use into alc_use
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
@@ -355,8 +356,8 @@ ggplot(data = alc)
 ```{r}
 # alc is available
 
-# access the tidyverse functions (including dplyr and ggplot2)
-library(tidyverse)
+# access the 'tidyverse' packages dplyr and ggplot2
+library(dplyr); library(ggplot2)
 
 # combine weekday and weekend alcohol use into alc_use
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
@@ -386,13 +387,14 @@ success_msg("Very nice work! You're really getting the hang of it :)")
 --- type:NormalExercise lang:r xp:100 skills:1 key:6f326bbb98
 ## So many plots
 
-I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we draw all of them!
+I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we draw all of them! You'll also meet another new tidyverse toy, the pipe-operator: `%>%. 
 
-We'll introduce another new tidyverse toy, the pipe `%>%. The pipe operator takes the result of the left-hand side and uses it as the first argument in the function on the right-hand side. Since the first argument of the tidyverse functions is 'data' this allows for some cool chaining of commands.
+The pipe (`%>%`) takes the result produced on it's left side and uses it as the first argument in the function on it's right side. Since the first argument of the tidyverse functions is usually 'data', this allows for some cool chaining of commands.
 
 We'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
 
 *** =instructions
+- Access the 'tidyverse' libraries tidyr and ggplot2
 - Take a glimpse at the `alc` data
 - Take a glimpse at the `alc` data after applying the `gather()` function on it. What does gather do?
 - Draw a bar plot of each variable in the `alc` data
@@ -404,17 +406,16 @@ We'll look at `%>%` more closely in the next exercise. But now, let's draw some 
 *** =pre_exercise_code
 ```{r}
 alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
-library(tidyverse)
 ```
 
 *** =sample_code
 ```{r}
-# alc and tidyverse are available
+# alc is available
 
-# glimpse at the alc data
+# access the 'tidyverse' libraries tidyr and ggplot2
+library(tidyr); library(ggplot2)
 
-
-# ignore warnings
+# use options() to ignore warnings
 
 
 # use gather() to gather columns into key value pairs 
@@ -435,7 +436,7 @@ gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_b
 install_github("datacamp/testwhat") the alc data
 glimpse(alc) 
 
-# ignore all warnings
+# use options() to ignore warnings
 options(warn = -1)
 
 # use gather() to gather columns into key value pairs 
@@ -466,19 +467,14 @@ The pipe operator, `%>%`, takes the result of the left-hand side and uses it as 
 [1] 5.5
 
 ```
-The pipe is most commonly used to chain functions which perform operations on a data.frame. The first argument of the tidyverse functions is almost always 'data', which makes chaining the functions with pipe easy. This is great fun, so let's try it! 
+The pipe is most commonly used to chain functions which perform operations on a data.frame. Chaining operations with the pipe is great fun, so let's try it! 
 
-Utilizing the pipe, we'll apply the functions `group_by()` and `summarise()`. The first one splits the data to groups accoring to a grouping variable, and the latter can be combined with any single value summary function (such as `mean()`, `min()`, `max()`, `sd()`, ..) to summarize the data. 
-=======
---- type:NormalExercise lang:r xp:100 skills:1 key:d0884e6c11
-## Summarising by group
->>>>>>> origin/development
-
+Utilizing the pipe, we'll apply the functions `group_by()` and `summarise()` on our data. The first one splits the data to groups according to a grouping variable, and the latter can be combined with any single value summary function (such as `mean()`, `min()`, `max()`, `sd()`, ..) to summarize the data. 
 
 *** =instructions
-- Access the tidyverse
+- Access the tidyverse libraries dplyr and ggplot2
 - Execute the sample code to see the counts of males and females in the data
-- Adjust the code: inside `summary()` use `mean()` on the variable `G3`, which is the (average) final grade. Execute the code again.
+- Adjust the code: inside `summary()` define 'mean_grade' by using `mean()` on the variable `G3`, which is the average final grade of math and portuguese. Execute the code again.
 - Adust the code: After sex, add 'high_use' as another grouping variable and execute the code again.
 
 *** =hint
@@ -493,8 +489,8 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 ```{r}
 # alc is available
 
-# access the tidyverse
-
+# access the tidyverse libraries dplyr and ggplot2
+library(dplyr); library(ggplot2)
 
 # produce summary statistics by group
 alc %>% group_by(sex) %>% summarise(count = n(), mean_grade = "change me!")
@@ -506,8 +502,8 @@ alc %>% group_by(sex) %>% summarise(count = n(), mean_grade = "change me!")
 ```{r}
 # alc is available
 
-# access the tidyverse
-library(tidyverse)
+# access the tidyverse libraries dplyr and ggplot2
+library(dplyr); library(ggplot2)
 
 # produce summary statistics by group
 alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))
