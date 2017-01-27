@@ -90,7 +90,6 @@ test_object("url_por", incorrect_msg = "Make the necessary changes to store a va
 test_object("por", incorrect_msg = "Use `url_por` to load data and store the data in the `por` object.")
 
 test_output_contains("colnames(math)", times = 2, incorrect_msg = "Please print out the column names of both data sets")
-# 
 
 test_error()
 success_msg("Nice work! That was a tough warmup!")
@@ -308,6 +307,7 @@ The tidyverse functions have a lot of similarities. The first argument of the ti
 library(dplyr)
 math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
 por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 
@@ -376,10 +376,10 @@ g1 + geom_bar()
 alc <- mutate(alc, high_use = alc_use > 2)
 
 # initialize a plot of 'high_use'
-g2 <- ggplot(data = alc, aes(high_use))
+g2 <- ggplot(alc, aes(high_use))
 
 # draw a bar plot for each sex
-g2 + facet_grid("sex") + geom_bar()
+g2 + facet_wrap("sex") + geom_bar()
 
 
 ```
@@ -422,8 +422,8 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 ```{r}
 # alc is available
 
-# access the 'tidyverse' libraries tidyr and ggplot2
-library(tidyr); library(ggplot2)
+# access the 'tidyverse' libraries tidyr, dplyr, ggplot2
+library(tidyr); library(dplyr); library(ggplot2)
 
 # use options() to ignore warnings
 
@@ -587,7 +587,7 @@ g1 + geom_boxplot() + ylab("grade")
 g2 <- ggplot(alc, aes(x = high_use, y = absences, col = sex))
 
 # define the plot as a boxplot and draw it
-g2 + geom_boxplot()
+g2 + geom_boxplot() + ggtitle("Student absences by alcohol consumption and sex")
 
 ```
 
@@ -676,7 +676,9 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 
 *** =sample_code
 ```{r}
+# alc is available
 
+# fit the model
 m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 
 # predict the response
@@ -694,6 +696,11 @@ cost(alc$high_use, alc$prediction)
 
 *** =solution
 ```{r}
+# alc is available
+
+# fit the model
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
 # predict the response
 alc$prediction <- predict(m1, type = "response")
 
@@ -736,6 +743,11 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 
 *** =sample_code
 ```{r}
+# alc is available
+
+# fit the model
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
 # cost function
 cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
 
@@ -749,6 +761,11 @@ cv$delta[1]
 
 *** =solution
 ```{r}
+# alc is available
+
+# fit the model
+m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
 # cost function
 cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
 
