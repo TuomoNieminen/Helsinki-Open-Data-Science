@@ -276,7 +276,6 @@ glimpse(alc)
 *** =sct
 ```{r}
 
-test_function("one_of", args = "vars", incorrect_msg = "Please use the `one_of()` function inside `select()` to create the `alc` data.frame.")
 test_object("alc", incorrect_msg = "Please follow the instructions to modify the `alc` data frame.")
 test_function("glimpse", args = "x", incorrect_msg = "Please use `glimpse()` to look at the `alc` data.frame")
  
