@@ -404,7 +404,7 @@ The pipe (`%>%`) takes the result produced on it's left side and uses it as the 
 We'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
 
 *** =instructions
-- Access the 'tidyverse' libraries tidyr and ggplot2
+- Access the tidyverse libraries tidyr, dplyr and ggplot2
 - Take a glimpse at the `alc` data
 - Take a glimpse at the `alc` data after applying the `gather()` function on it. What does gather do?
 - Draw a bar plot of each variable in the `alc` data
@@ -422,7 +422,7 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 ```{r}
 # alc is available
 
-# access the 'tidyverse' libraries tidyr, dplyr, ggplot2
+# access the tidyverse libraries tidyr, dplyr, ggplot2
 library(tidyr); library(dplyr); library(ggplot2)
 
 # use options() to ignore warnings
@@ -439,8 +439,10 @@ gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_b
 
 *** =solution
 ```{r}
+# alc is available
 
-# alc and tidyverse are available
+# access the tidyverse libraries tidyr, dplyr, ggplot2
+library(tidyr); library(dplyr); library(ggplot2)
 
 # glimpse at the alc data
 glimpse(alc) 
@@ -672,11 +674,12 @@ Exercise info here
 *** =pre_exercise_code
 ```{r}
 alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
 ```
 
 *** =sample_code
 ```{r}
-# alc is available
+# alc, dplyr are available
 
 # fit the model
 m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
@@ -696,7 +699,7 @@ cost(alc$high_use, alc$prediction)
 
 *** =solution
 ```{r}
-# alc is available
+# alc, dplyr are available
 
 # fit the model
 m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
