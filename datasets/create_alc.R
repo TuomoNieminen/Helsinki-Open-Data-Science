@@ -12,7 +12,7 @@ math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
 # create a new data frame with only the joined columns
-alc <- select(math_por, one_of("change me!"))
+alc <- select(math_por, one_of(join_by))
 
 # combine the 'duplicate' columns and add them to the 'alc' data frame
 for(column_name in notjoined_columns) {
