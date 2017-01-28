@@ -599,70 +599,16 @@ success_msg("Great work!")
 
 We will now use logistic regression to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
 
+Logistic regression is a classification method because it can be used to classify individuals into one of two groups. Thereore it is a binary classificator.
+
 
 *** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
-```
-
-*** =sample_code
-```{r}
-# alc is available 
-
-# find the model with glm()
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
-
-# print out a summary of the model
-summary(m)
-
-## print out the coefficients
-m
-
-## print out the exponentiated coefficients
-exp(coefficients(m))
-```
-
-*** =solution
-```{r}
-# alc is available
-
-# find the model with glm()
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
-
-# print out a summary of the model
-summary(m)
-
-## print out the coefficients
-m
-
-## print out the exponentiated coefficients
-exp(coefficients(m))
-```
-
-*** =sct
-```{r}
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
-## Model performance: prediction accuracy
-
-Exercise info here
-
-*** =instructions
-- instruction
+- Use `glm()` to fit a logistic regression model with 'high_use' as the target variable and 'failures' and 'absences' as the predictors.
+- Print out a summary of the model
+- Add another explanatory variable to the model: sex. Repeat the above.
+- Compute the odds ratios related to the predictors by exponentiating their coefficients. Save the results to the object `OR`.
+- Use `confint` on the model object `m` to extract confidence intervals for the coefficients. Then exponentiate the values with `exp()`. Save the result to the object `CI`.
+- Combine and print out the odds ratios and the confidence intervals
 
 *** =hint
 - hint
@@ -675,19 +621,100 @@ library(dplyr)
 
 *** =sample_code
 ```{r}
+# alc, dlyr are available 
+
+# find the model with glm()
+m <- glm(high_use ~ failures + absences, data = alc, family = "binomial")
+
+# print out a summary of the model
+
+
+# compute odds ratios
+OR <- coef(m) %>% exp
+
+# compute confidence intervals
+CI <- "change me!"
+
+# print out the odds ratios and the CI's
+cbind(OR, CI)
+
+```
+
+*** =solution
+```{r}
+# alc is available
+
+# find the model with glm()
+m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
+
+# print out a summary of the model
+summary(m)
+
+# compute odds ratios
+OR <- coef(m) %>% exp
+
+# compute confidence intervals
+CI <- confint(m) %>% exp
+
+# print out the odds ratios and the CI's
+cbind(OR, CI)
+
+```
+
+*** =sct
+```{r}
+
+test_object("m", incorrect_msg = "Please add another exaplanatory variable 'sex' to the model. Do not add or adjust the code before the call to `glm()`")
+
+test_object("OR")
+test_object("CI", incorrect_msg = "Please define the object `CI` as instructed. Use the `exp()` function on the confidence intervals of the coefficients.")
+
+test_output_contains("cbind(OR, CI)", incorrect_msg = "")
+ 
+test_error()
+success_msg("Great work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
+## Model performance: prediction accuracy (1)
+
+When you have a linear model, you can make predictions. A very basic question is of course, how well does our model actually predict the response variable. Let's take a look!
+
+*** =instructions
+- Fit the logistig regression model with `glm()`
+- Create object `probabilities` by using `predict()` on the model object.
+- Mutate the alc data: add a column 'probability' with the predicted probabilities.
+- Mutate the data again: add a column 'prediction' which is true if value of 'probability' is greater than 0.5
+- Use `table()` to create a cross table of the columns 'high_use' versus 'prediction' in `alc`
+
+*** =hint
+- Remember to use the [data wrangling cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) by RStudio
+- The `$` sign can be used to access columns of a data.frame
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
+```
+
+*** =sample_code
+```{r}
 # alc, dplyr are available
 
 # fit the model
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 
-# using the model, predict() the probability of the target variable
-alc <- mutate(alc, probability = predict(m, type = "response"))
+# predict() the probability of high_use
+probabilities <- predict(m, type = "response")
 
-# Use the probabilities to make a class prediction
-alc <- mutate(alc, prediction = probability > 0.5)
+# mutate alc and add the predicted probabilities
+alc <- "change me!"
+
+# Use the probabilities to make a prediction of high_use
+alc <- mutate(alc, prediction = Inf > 0.5)
 
 # tabulate the target variable versus the predictions
-table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% addmargins
+table(high_use = alc$high_use, prediction = "change me!")
 
 ```
 
@@ -696,16 +723,19 @@ table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% a
 # alc, dplyr are available
 
 # fit the model
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 
-# using the model, predict() the probability of the target variable
-alc <- mutate(alc, probability = predict(m, type = "response"))
+# predict() the probability of high_use
+probabilities <- predict(m, type = "response")
 
-# Use the probabilities to make a class prediction
+# mutate alc and add the predicted probabilities
+alc <- mutate(alc, probability = probabilities)
+
+# use the probabilities to make a prediction of high_use
 alc <- mutate(alc, prediction = probability > 0.5)
 
 # tabulate the target variable versus the predictions
-table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% addmargins
+table(high_use = alc$high_use, prediction = alc$prediction)
 
 
 
@@ -714,21 +744,191 @@ table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% a
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
+test_object("probabilities", incorrect_msg = "Please do not make changes to the code before the call to the `glm()` function")
+test_object("alc", incorrect_msg = "Please mutate the alc data with two new columns as instructed")
+test_output_contains("table(high_use = alc$high_use, prediction = alc$prediction)", incorrect_msg = "Please create a cross tabulation of 'high_use' versus the predictions")
 # 
-# test_error()
-success_msg("Good work!")
+test_error()
+success_msg("Good job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:a0712f2a78
-## The ROC curve
+--- type:NormalExercise lang:r xp:100 skills:1
+## Model performance: prediction accuracy (2)
 
 Exercise info here
 
 *** =instructions
-- instruction
+- Initialize the ggplot object and define 'probability' as the x axis and 'high_use' as the y axis.
+- Use `geom_point()` and draw the plot.
+- Add the aesthetic element `col = prediction` and draw the plot again.
+- Use `table()` to create a cross table of 'high_use' versus 'prediction'
+- Adjust the code: Use `%>%` to apply the `prop.table()` function on the output of `table()`
+- Adjust the code: Use `%>%` to apply the `addmargins()` function on the output of `prop.table()`
+
+
+*** =hint
+- The pipe (` %>% `) operator assings the output of the function on it's left side to the function on it's right side. The idea is to chain the three commands `table`, `prop.table` and `addmargins` (in that order)
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
+```
+
+*** =sample_code
+```{r}
+# alc is available
+
+# access dplyr and ggplot2
+library(dplyr); library(ggplot2)
+
+# initialize a plot
+g <- ggplot(alc, aes(x = "change me!", y = "change me!"))
+
+# define the geom as points and draw the plot
+
+
+# tabulate the target variable versus the predictions
+table(high_use = alc$high_use, prediction = alc$prediction)
+
+
+
+```
+
+*** =solution
+```{r}
+# alc is available
+
+# access dplyr and ggplot2
+library(dplyr); library(ggplot2)
+
+# initialize a plot
+g <- ggplot(alc, aes(x = probability, y = high_use, col = prediction))
+
+# define the geom as points and draw the plot
+g + geom_point()
+
+# tabulate the target variable versus the predictions
+table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% addmargins
+
+```
+
+*** =sct
+```{r}
+
+test_function("ggplot", args = "mapping",incorrect_msg = "Please use `ggplot()` and define the aesthetic elements 'x', 'y' and 'col' as requested.")
+test_output_contains("table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% addmargins", incorrect_msg = "Please chain the three commands 'table', 'prop.table' and 'addmargins' together in that order.")
+# 
+# test_error()
+success_msg("Very well done! You are a master Piper already!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## The prediction cutoff
+
+As you saw, our model can produce the predicted probabilities of the target variable 'high_use' and those probabilities can then be used to make an actual prediction. 
+
+It makes intuitive sense to label and individual as a "high user" when the predicted probability of that is greater than 0.5. Notice that 
+
+- using a treshold of 0 would predict everyone as a high user
+- using a treshold of 1 would predict no one as a high user.
+
+Just to convince ourselves that 0.5 is a good choice, let's try out a bunch of tresholds and see how accurately we would predict with each one. 
+
+*** =instructions
+- Define the function `get_accuracy()`.
+- Create object `treshold` and print it out.
+- Change the 'by' argument of `seq()` to 0.01. Create and print out `treshold` again.
+- Create object `accuracy` by applying the `get_accuracy()` function on every value of `treshold`.
+- Draw a plot with treshold values of the x axis and accuracy values on the y axis.
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+# alc is available
+
+# computes the average number of correct predictions (accuracy)
+get_accuracy <- function(treshold, data = alc) {
+  predictions <- data$probability > treshold
+  n_correct <- sum(predictions == data$high_use) 
+  n_correct / nrow(data)
+}
+
+# a sequence of tresholds to try
+treshold <- seq(0, 1, by = 0.1)
+
+# print out the tresholds
+
+
+# compute the accuracy for each treshold
+accuracy <- sapply(treshold, get_accuracy)
+
+# print out the accuracies
+
+
+# combine into a data frame and plot
+df <- data.frame(treshold, accuracy)
+ggplot(df, aes(x = "replace me", y = "and me!")) + geom_line()
+
+
+```
+
+*** =solution
+```{r}
+# alc is available
+
+# computes the average number of correct predictions (accuracy)
+get_accuracy <- function(treshold, data = alc) {
+  predictions <- data$probability > treshold
+  n_correct <- sum(predictions == data$high_use) 
+  n_correct / nrow(data)
+}
+
+# a sequence of tresholds to try
+treshold <- seq(0, 1, by = 0.01)
+
+# print out the tresholds
+treshold
+
+# compute the accuracy for each treshold
+accuracy <- sapply(treshold, get_accuracy)
+
+# print out the accuracies
+accuracy
+
+# combine into a data frame and plot
+df <- data.frame(treshold, accuracy)
+ggplot(df, aes(x = treshold, y = accuracy)) + geom_line()
+
+
+```
+
+*** =sct
+```{r}
+
+test_function("seq", args = c("from", "to", "by"),incorrect_msg = "Please adjust the 'by' argument of `seq()`. Do not change the other arguments.")
+test_function("ggplot", args = "mapping", incorrect_msg = "Please use `ggplot()` to define the x and y aesthetic elements as instructed")
+
+# test_error()
+success_msg("Good work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a0712f2a78
+## The ROC curve
+
+Perhaps skip the ROC curve?
+
+*** =instructions
+-execute the code
 
 *** =hint
 - hint
@@ -810,30 +1010,29 @@ alc <- mutate(alc, probability = predict(m, type = "response"))
 
 *** =sample_code
 ```{r}
-# m and alc with prediction probabilities are available
+# m and alc are available
 
-# loss function
-loss_func <- function(class, probability) mean(abs(class - probability) > 0.5)
+# define a loss function
+loss_func <- function(class, prob) mean(abs(class - prob) > 0.5)
 
-# average number of wrong predictions in the (training) data
+# compute average number of wrong predictions in the (training) data
 loss_func(alc$high_use, alc$probability)
 
 # K-fold cross-validation
 library(boot)
 cv <- cv.glm(data = alc, cost = cost_func, glmfit = m, K = 10)
-
 # average number of wrong predictions in the cross validation
 cv$delta[1]
 ```
 
 *** =solution
 ```{r}
-# m and alc with prediction probabilities are available
+# m and alc are available
 
-# loss function
+# define a loss function
 loss_func <- function(class, probability) mean(abs(class - probability) > 0.5)
 
-# average number of wrong predictions in the (training) data
+# compute the average number of wrong predictions in the (training) data
 loss_func(alc$high_use, alc$probability)
 
 # K-fold cross-validation
