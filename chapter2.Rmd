@@ -846,7 +846,7 @@ Just to convince ourselves that 0.5 is a good choice, let's try out a bunch of t
 - Create object `treshold` and print it out.
 - Change the 'by' argument of `seq()` to 0.01. Create and print out `treshold` again.
 - Create object `accuracy` by applying the `get_accuracy()` function on every value of `treshold`.
-- Draw a plot with treshold values of the x axis and accuracy values on the y axis.
+- Access ggplot2 and draw the plot. Add the argument `geom = "line"` to `qplot()` and draw the plot again.
 
 *** =hint
 - hint
@@ -885,10 +885,9 @@ accuracy <- sapply(treshold, get_accuracy)
 # print out the accuracies
 
 
-# combine into a data frame and plot
-df <- data.frame(treshold, accuracy)
-ggplot(df, aes(x = "replace me", y = "and me!")) + geom_line()
-
+# plot
+library(ggplot2)
+qplot(treshold, accuracy)
 
 ```
 
@@ -915,9 +914,9 @@ accuracy <- sapply(treshold, get_accuracy)
 # print out the accuracies
 accuracy
 
-# combine into a data frame and plot
-df <- data.frame(treshold, accuracy)
-ggplot(df, aes(x = treshold, y = accuracy)) + geom_line()
+# plot
+library(ggpplot2)
+qplot(treshold, accuracy, geom = "line")
 
 
 ```
@@ -926,7 +925,8 @@ ggplot(df, aes(x = treshold, y = accuracy)) + geom_line()
 ```{r}
 
 test_function("seq", args = c("from", "to", "by"),incorrect_msg = "Please adjust the 'by' argument of `seq()`. Do not change the other arguments.")
-test_function("ggplot", args = "mapping", incorrect_msg = "Please use `ggplot()` to define the x and y aesthetic elements as instructed")
+
+test_function("qplot", args = c("x", "y", "geom"), incorrect_msg = "Please use `qplot()` to draw a line plot with treshold in the x axis and accuracy on the y axis")
 
 # test_error()
 success_msg("Good work!")
