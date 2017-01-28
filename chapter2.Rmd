@@ -666,7 +666,7 @@ exp(coefficients(m))
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
 ## Model performance: prediction accuracy
 
 Exercise info here
@@ -732,7 +732,7 @@ table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% a
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:a0712f2a78
 ## The ROC curve
 
 Exercise info here
@@ -795,7 +795,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
 ## Model performance: cross-validation
 
 Exercise info here
