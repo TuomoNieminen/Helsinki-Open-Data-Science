@@ -534,7 +534,7 @@ success_msg("Very nice work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
 ## Box plots by groups
 
-Box plots are an excellent way of displaying and comparing distributions of variables. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers (the dots) of a variable. 
+Box plots are an excellent way of displaying and comparing distributions. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers (the dots) of a variable. 
 
 The whiskers extending from the box can be computed by several techniques. The default (in base R and ggplot) is to extend them to reach to a data point that is no more than 1.5*IQR away from the box, where IQR is the inter quartile range defined as  
 
@@ -606,7 +606,7 @@ success_msg("Great work!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
-## Fitting a logistic regression model
+## Learning a logistic regression model
 
 Exercise info here
 
@@ -623,30 +623,36 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 
 *** =sample_code
 ```{r}
-m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# alc is available 
+
+# find the model with glm()
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 
 # print out a summary of the model
-summary(m1)
+summary(m)
 
 ## print out the coefficients
-m1
+m
 
 ## print out the exponentiated coefficients
-exp(coefficients(m1))
+exp(coefficients(m))
 ```
 
 *** =solution
 ```{r}
-m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# alc is available
+
+# find the model with glm()
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 
 # print out a summary of the model
-summary(m1)
+summary(m)
 
 ## print out the coefficients
-m1
+m
 
 ## print out the exponentiated coefficients
-exp(coefficients(m1))
+exp(coefficients(m))
 ```
 
 *** =sct
@@ -660,7 +666,7 @@ exp(coefficients(m1))
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Model performance: prediction accuracy
 
 Exercise info here
@@ -682,19 +688,17 @@ library(dplyr)
 # alc, dplyr are available
 
 # fit the model
-m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 
-# predict the response
-alc$prediction <- predict(m1, type = "response")
+# using the model, predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
 
-# first six values
-head(select(alc, high_use, prediction))
+# Use the probabilities to make a class prediction
+alc <- mutate(alc, prediction = probability > 0.5)
 
-# function to compute the proportion of wrong predictions
-cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+# tabulate the target variable versus the predictions
+table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% addmargins
 
-# compute the average number of wrong predictions
-cost(alc$high_use, alc$prediction)
 ```
 
 *** =solution
@@ -702,19 +706,19 @@ cost(alc$high_use, alc$prediction)
 # alc, dplyr are available
 
 # fit the model
-m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 
-# predict the response
-alc$prediction <- predict(m1, type = "response")
+# using the model, predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
 
-# first six values
-head(select(alc, high_use, prediction))
+# Use the probabilities to make a class prediction
+alc <- mutate(alc, prediction = probability > 0.5)
 
-# function to compute the proportion of wrong predictions
-cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+# tabulate the target variable versus the predictions
+table(high_use = alc$high_use, prediction = alc$prediction) %>% prop.table %>% addmargins
 
-# compute the average number of wrong predictions
-cost(alc$high_use, alc$prediction)
+
+
 ```
 
 *** =sct
@@ -728,8 +732,8 @@ cost(alc$high_use, alc$prediction)
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
-## Model performance: cross-validation
+--- type:NormalExercise lang:r xp:100 skills:1
+## The ROC curve
 
 Exercise info here
 
@@ -746,20 +750,21 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 
 *** =sample_code
 ```{r}
+
 # alc is available
 
 # fit the model
-m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 
-# cost function
-cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+# using the model, predict() the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
 
-# k-fold cross-validation
-library(boot)
-cv <- cv.glm(data = alc, cost = cost, glmfit = m1, K = 10)
+# draw a roc curve and and compute the area under the curve (auc)
+library(pROC)
+r <- roc(high_use ~ probability, data = alc)
+plot(r)
 
-# print out the average number of wrong predictions in the cross validation
-cv$delta[1]
 ```
 
 *** =solution
@@ -767,16 +772,83 @@ cv$delta[1]
 # alc is available
 
 # fit the model
-m1 <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 
-# cost function
-cost <- function(class, prediction) mean(abs(class - prediction) > 0.5)
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
 
-# k-fold cross-validation
+# draw a roc curve and and compute the area under the curve (auc)
+library(pROC)
+r <- roc(high_use ~ probability, data = alc)
+plot(r)
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Model performance: cross-validation
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+```
+
+*** =sample_code
+```{r}
+# m and alc with prediction probabilities are available
+
+# loss function
+loss_func <- function(class, probability) mean(abs(class - probability) > 0.5)
+
+# average number of wrong predictions in the (training) data
+loss_func(alc$high_use, alc$probability)
+
+# K-fold cross-validation
 library(boot)
-cv <- cv.glm(data = alc, cost = cost, glmfit = m1, K = 10)
+cv <- cv.glm(data = alc, cost = cost_func, glmfit = m, K = 10)
 
-# print out the average number of wrong predictions in the cross validation
+# average number of wrong predictions in the cross validation
+cv$delta[1]
+```
+
+*** =solution
+```{r}
+# m and alc with prediction probabilities are available
+
+# loss function
+loss_func <- function(class, probability) mean(abs(class - probability) > 0.5)
+
+# average number of wrong predictions in the (training) data
+loss_func(alc$high_use, alc$probability)
+
+# K-fold cross-validation
+library(boot)
+cv <- cv.glm(data = alc, cost = loss_func, glmfit = m, K = 10)
+
+# average number of wrong predictions in the cross validation
 cv$delta[1]
 ```
 
