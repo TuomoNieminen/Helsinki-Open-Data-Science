@@ -773,6 +773,11 @@ Exercise info here
 ```{r}
 alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
 ```
 
 *** =sample_code
@@ -849,6 +854,12 @@ Just to convince ourselves that 0.5 is a good choice, let's try out a bunch of t
 *** =pre_exercise_code
 ```{r}
 alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
 ```
 
 *** =sample_code
@@ -937,6 +948,11 @@ Perhaps skip the ROC curve?
 ```{r}
 alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
 ```
 
 *** =sample_code
@@ -1006,6 +1022,7 @@ library(dplyr)
 m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 # predict() the probability of the target variable
 alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
 ```
 
 *** =sample_code
