@@ -92,7 +92,7 @@ success_msg("Nice work! That was a tough warm-up!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:af9b851a1c
-## Joining two datasets
+## Joining 2 datasets
 
 There are multiple students who have answered both questionaires in our two datasets. Unfortunately we do not have a single identification variable to identify these students. However, we can use a bunch of background questions together for identification.
 
@@ -173,14 +173,16 @@ success_msg("Awsomeland! Imagine the possibilities of joining various data sets!
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:fe19bbaae6
-## Transforming by looping
+## The if-else structure
 
-You now have a data set which -- in addition to the background variables used for joining -- contains two (possibly different) answers to the same questions for each student. To fix this, you'll use programming to combine these 'duplicated' questions by either 
+You now have a data set which - in addition to the background variables used for joining - contains two possibly different answers to the same questions for each student. To fix this, you'll use programming to combine these 'duplicated' questions by either 
 
-- taking the rounded average value of the two answers (for numeric variables)
-- simply choosing the first answer (for factor variables).
+- taking the rounded average (**if** the two variables are numeric)
+- simply choosing the first answer (**else**).
 
-You'll do this by using a combination of a `for-loop` and an `if-else` structure. The `if()` function takes a single logical condition as an argument and performs an action only if the condition is true. `if()` can then be combined with `else`, which handles the cases where the condition is false.
+You'll do this by using a combination of a `for-loop` and an `if-else` structure. 
+
+The `if()` function takes a single logical condition as an argument and performs an action only if the condition is true. `if()` can then be combined with `else`, which handles the cases where the condition is false.
 
 ```
 if(condition) {
@@ -193,9 +195,10 @@ if(condition) {
 *** =instructions
 - Create the object `notjoined_columns`
 - Adjust the code: Create the data.frame `alc` by selecting only the columns in `math_por` which were used for joining the two questinaires. The names of those columns are available in the `join_by` object.
-- Execute the for loop and then take a `glimpse()` at the 'alc' data.frame. The factor type variables should look strange at this point.
-- Adjust the code inside the `for-loop`: if the first of the two selected columns is not numeric, add the first column to the `alc` data.frame.
--  Execute the `for-loop` and `glimpse()` at the new data again.
+- Execute the `for`-loop.
+- Take a `glimpse()` at the `alc` data.frame. The factor type variables should look strange at this point.
+- Adjust the code inside the `for`-loop: if the first of the two selected columns is not numeric, simply add the first column to the `alc` data.frame.
+-  Execute the modified `for`-loop and `glimpse()` at the new data again.
 
 *** =hint
 - hint
@@ -280,13 +283,13 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
 ## Mutations
 
-Mutating the data means adding new variables, which are mutations of the existing ones. The `mutate()` function is from the 'dplyr' package. On your personal computer, instead of accessing the 'dplyr' package, you can install and access the 'tidyverse' package. The tidyverse includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
+Mutating a data.frame means adding new variables as mutations of the existing ones. The `mutate()` function is from the 'dplyr' package which is part of the 'tidyverse' packages. The tidyverse includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
 
 The tidyverse functions have a lot of similarities. For example, the first argument of the tidyverse functions is usually 'data'. They also have other consistent features which makes them work well together and easy to use.
 
 *** =instructions
-- Mutate `alc` by creating the new column `alc_use` by averaging weekday and weekend alcohold consumption.
-- Mutate `alc` by creating a new logical variable `high_use`, which is true if `alc_use` is greater than 2 (adjust the code and replace `Inf`).
+- Mutate `alc` by creating the new column `alc_use` by averaging weekday and weekend alcohol consumption.
+- Adjust the code: Mutate `alc` by creating a new column `high_use`, which is true if `alc_use` is greater than 2 and false otherwise (replace `Inf`).
 - Draw a bar plot of `alc_use`.
 - Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
 - Draw a bar plot of `high_use`.
@@ -332,11 +335,13 @@ library(dplyr); library(ggplot2)
 
 # combine weekday and weekend alcohol use into 'alc_use'
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
-# transform alc_use into a binary variable 'high_use'
+
+# define a new logical variable 'high_use'
 alc <- mutate(alc, high_use = Inf > 2)
 
-# initialize a  plot of 'alc_use'
+# initialize a plot of alcohol use
 g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
+
 # define the plot as a bar plot and draw it
 g1 + geom_bar()
 
@@ -356,11 +361,13 @@ library(dplyr); library(ggplot2)
 
 # combine weekday and weekend alcohol use into 'alc_use'
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
-# transform alc_use into a binary variable 'high_use'
+
+# define a new logical variable 'high_use'
 alc <- mutate(alc, high_use = alc_use > 2)
 
-# initialize a  plot of 'alc_use'
+# initialize a plot of alcohol use
 g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
+
 # define the plot as a bar plot and draw it
 g1 + geom_bar()
 
@@ -385,11 +392,13 @@ success_msg("Very nice work! You're really getting the hang of it :)")
 --- type:NormalExercise lang:r xp:100 skills:1 key:6f326bbb98
 ## So many plots
 
-I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we visualize all of them! You'll also meet another new tidyverse toy, the pipe-operator: `%>%. 
+I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we visualize all of them! 
+
+You'll also meet another new tidyverse toy, the pipe-operator: `%>%. 
 
 The pipe (`%>%`) takes the result produced on it's left side and uses it as the first argument in the function on it's right side. Since the first argument of the tidyverse functions is usually 'data', this allows for some cool chaining of commands.
 
-You'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
+We'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
 
 *** =instructions
 - Access the tidyverse libraries tidyr, dplyr and ggplot2
@@ -469,16 +478,16 @@ The pipe operator, `%>%`, takes the result of the left-hand side and uses it as 
 
 The pipe is most commonly used to chain functions which perform operations on a data.frame. Chaining operations with the pipe is great fun, so let's try it! 
 
-Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example), and the latter can be combined with any summary function such as `mean()`, `min()`, `max()` or `sd()` to summarize the data. 
+Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example). The latter can be combined with any summary function such as `mean()`, `min()`, `max()` or `sd()` to summarize the data. 
 
 *** =instructions
 - Access the tidyverse libraries dplyr and ggplot2
 - Execute the sample code to see the counts of males and females in the data
-- Adjust the code: inside `summary()` define 'mean_grade' by using `mean()` on the variable `G3`, which is the average final grade of math and portuguese. Execute the code again.
-- Adust the code: After sex, add 'high_use' as another grouping variable and execute the code again.
+- Adjust the code: inside `summarise()`, after the definition of 'count', define 'mean_grade' by using `mean()` on the variable `G3`.
+- Adust the code: After 'sex', add 'high_use' as another grouping variable. Execute the code again.
 
 *** =hint
-- hint
+- Rememebr to separate arguments inside functions with a comma
 
 *** =pre_exercise_code
 ```{r}
@@ -493,7 +502,7 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 library(dplyr); library(ggplot2)
 
 # produce summary statistics by group
-alc %>% group_by(sex) %>% summarise(count = n(), mean_grade = "change me!")
+alc %>% group_by(sex) %>% summarise(count = n())
 
 
 ```
@@ -535,7 +544,7 @@ Values outside the whiskers can be considered as outliers, unusually distant obs
 - Initialize and draw a box plot of student grades ('G3'), grouped by 'high_use'.
 - Add an aesthetix element to the plot by defining `col = sex` inside `aes()`
 - Add the element `ylab("grade")` to the plot.
-- Define a similar (box) plot of the variable 'absences' again grouped by 'high_use' and the aesthetic `col=sex`.
+- Define a similar (box) plot of the variable 'absences' again grouped by 'high_use' and the aesthetic `col = sex`.
 - Add a main title to the last plot with `ggtitle("title here")`. Insert the title "Student absences by alcohol consumption and sex".
 
 *** =hint
@@ -599,15 +608,14 @@ success_msg("Great work!")
 
 We will now use logistic regression to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
 
-Logistic regression is a classification method because it can be used to classify individuals into one of two groups. Thereore it is a binary classificator.
-
+Because logistic regression can be used to classify observations into one of two groups (by giving the group probability) it is a binary classification method. You will meet more classification methods in the next chapter.
 
 *** =instructions
 - Use `glm()` to fit a logistic regression model with 'high_use' as the target variable and 'failures' and 'absences' as the predictors.
 - Print out a summary of the model
-- Add another explanatory variable to the model: sex. Repeat the above.
+- Add another explanatory variable to the model: 'sex'. Repeat the above.
 - Compute the odds ratios related to the predictors by exponentiating their coefficients. Save the results to the object `OR`.
-- Use `confint` on the model object `m` to extract confidence intervals for the coefficients. Then exponentiate the values with `exp()`. Save the result to the object `CI`.
+- Use `confint` on the model object `m` to extract confidence intervals for the coefficients. Then exponentiate the values with `exp()` to get confidence intervals for the odds rations. Save the results to the object `CI`.
 - Combine and print out the odds ratios and the confidence intervals
 
 *** =hint
@@ -633,7 +641,7 @@ m <- glm(high_use ~ failures + absences, data = alc, family = "binomial")
 OR <- coef(m) %>% exp
 
 # compute confidence intervals
-CI <- "change me!"
+
 
 # print out the odds ratios and the CI's
 cbind(OR, CI)
@@ -681,11 +689,11 @@ success_msg("Great work!")
 When you have a linear model, you can make predictions. A very basic question is of course, how well does our model actually predict the response variable. Let's take a look!
 
 *** =instructions
-- Fit the logistig regression model with `glm()`
+- Fit the logistig regression model with `glm()`.
 - Create object `probabilities` by using `predict()` on the model object.
 - Mutate the alc data: add a column 'probability' with the predicted probabilities.
-- Mutate the data again: add a column 'prediction' which is true if value of 'probability' is greater than 0.5
-- Use `table()` to create a cross table of the columns 'high_use' versus 'prediction' in `alc`
+- Mutate the data again: add a column 'prediction' which is true if value of 'probability' is greater than 0.5.
+- Use `table()` to create a cross table of the columns 'high_use' versus 'prediction' in `alc`.
 
 *** =hint
 - Remember to use the [data wrangling cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) by RStudio
@@ -755,11 +763,12 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:ac0db676b7
 ## Model performance: prediction accuracy (2)
 
-Exercise info here
+Let's continue to explore the accuracy of the predictions of our model.
+
 
 *** =instructions
 - Initialize the ggplot object and define 'probability' as the x axis and 'high_use' as the y axis.
-- Use `geom_point()` and draw the plot.
+- Use `geom_point()` to draw the plot.
 - Add the aesthetic element `col = prediction` and draw the plot again.
 - Use `table()` to create a cross table of 'high_use' versus 'prediction'
 - Adjust the code: Use `%>%` to apply the `prop.table()` function on the output of `table()`
@@ -832,21 +841,21 @@ success_msg("Very well done! You are a master Piper already!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:4f8947a0fd
 ## The prediction cutoff
 
-As you saw, our model can produce the predicted probabilities of the target variable 'high_use' and those probabilities can then be used to make an actual prediction. 
+As you saw, the logistic regression model can produce prediction probabilities for the target variable 'high_use'. Those probabilities can then be used to make an actual prediction. 
 
-It makes intuitive sense to label and individual as a "high user" when the predicted probability of that is greater than 0.5. Notice that 
+It probably makes intuitive sense to label and individual as a "high user" when the predicted probability is greater than 0.5. Notice that instead of the treshold 0.5  
 
 - using a treshold of 0 would predict everyone as a high user
 - using a treshold of 1 would predict no one as a high user.
 
-Just to convince ourselves that 0.5 is a good choice, let's try out a bunch of tresholds and see how accurately we would predict with each one. 
+Just to convince ourselves that 0.5 is a good choice and that our model makes sense, let's try out a bunch of tresholds and see how accurately the model would predict with each one. 
 
 *** =instructions
 - Define the function `get_accuracy()`.
-- Create object `treshold` and print it out.
-- Change the 'by' argument of `seq()` to 0.01. Create and print out `treshold` again.
-- Create object `accuracy` by applying the `get_accuracy()` function on every value of `treshold`.
-- Access ggplot2 and draw the plot. Add the argument `geom = "line"` to `qplot()` and draw the plot again.
+- Create object `tresholds` and print it out.
+- Change the 'by' argument of `seq()` to 0.01. Create and print out `tresholds` again.
+- Create object `accuracy` by applying the `get_accuracy()` function on every value of `tresholds`.
+- Access ggplot2 and draw the plot. Add the argument `geom = "line"` and draw the plot again.
 
 *** =hint
 - hint
@@ -874,20 +883,20 @@ get_accuracy <- function(treshold, data = alc) {
 }
 
 # a sequence of tresholds to try
-treshold <- seq(0, 1, by = 0.1)
+tresholds <- seq(0, 1, by = 0.1)
 
 # print out the tresholds
 
 
 # compute the accuracy for each treshold
-accuracy <- sapply(treshold, get_accuracy)
+accuracy <- sapply(tresholds, get_accuracy)
 
 # print out the accuracies
 
 
 # plot
 library(ggplot2)
-qplot(treshold, accuracy)
+qplot(tresholds, accuracy)
 
 ```
 
@@ -903,20 +912,20 @@ get_accuracy <- function(treshold, data = alc) {
 }
 
 # a sequence of tresholds to try
-treshold <- seq(0, 1, by = 0.01)
+tresholds <- seq(0, 1, by = 0.01)
 
 # print out the tresholds
-treshold
+tresholds
 
 # compute the accuracy for each treshold
-accuracy <- sapply(treshold, get_accuracy)
+accuracy <- sapply(tresholds, get_accuracy)
 
 # print out the accuracies
 accuracy
 
 # plot
 library(ggplot2)
-qplot(treshold, accuracy, geom = "line")
+qplot(tresholds, accuracy, geom = "line")
 
 
 ```
@@ -926,7 +935,7 @@ qplot(treshold, accuracy, geom = "line")
 
 test_function("seq", args = c("from", "to", "by"),incorrect_msg = "Please adjust the 'by' argument of `seq()`. Do not change the other arguments.")
 
-test_function("qplot", args = c("x", "y", "geom"), incorrect_msg = "Please use `qplot()` to draw a line plot with treshold in the x axis and accuracy on the y axis")
+test_function("qplot", args = c("x", "y", "geom"), incorrect_msg = "Please use `qplot()` to draw a **line** plot with `tresholds` in the x axis and `accuracy` on the y axis")
 
 # test_error()
 success_msg("Good work!")
@@ -1005,7 +1014,7 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
 ## Cross-validation
 
-Exercise info here
+Kesken
 
 *** =instructions
 - instruction
@@ -1023,11 +1032,12 @@ m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
 # predict() the probability of the target variable
 alc <- mutate(alc, probability = predict(m, type = "response"))
 alc <- mutate(alc, prediction = probability > 0.5)
+
 ```
 
 *** =sample_code
 ```{r}
-# m and alc are available
+# m and alc with predictions are available
 
 # define a loss function
 loss_func <- function(class, prob) mean(abs(class - prob) > 0.5)
@@ -1038,13 +1048,15 @@ loss_func(alc$high_use, alc$probability)
 # K-fold cross-validation
 library(boot)
 cv <- cv.glm(data = alc, cost = cost_func, glmfit = m, K = 10)
+
 # average number of wrong predictions in the cross validation
 cv$delta[1]
+
 ```
 
 *** =solution
 ```{r}
-# m and alc are available
+# m and alc with predictions are available
 
 # define a loss function
 loss_func <- function(class, probability) mean(abs(class - probability) > 0.5)
@@ -1058,6 +1070,7 @@ cv <- cv.glm(data = alc, cost = loss_func, glmfit = m, K = 10)
 
 # average number of wrong predictions in the cross validation
 cv$delta[1]
+
 ```
 
 *** =sct
