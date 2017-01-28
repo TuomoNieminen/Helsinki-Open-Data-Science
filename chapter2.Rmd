@@ -7,19 +7,18 @@ description : Regression for binary outcomes, training and testing a (predictive
 
 Welcome to the *Logistic regression* chapter.
 
-During the next exercises, we will be combining, wrangling and analysing two new data sets retrieved from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets.html), a great source of open data. The data are from two identical questionaires related to secondary school student alcohol comsumption in Portugal. Read about the data and the variables [here](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION).
+During the next exercises, we will be combining, wrangling and analysing two new data sets retrieved from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets.html), a great source for open data. 
 
-The original research question might have been how alcohold consumption affects school performance, but here we will turn that question backwards and ask if we can learn to identify students who consume high amounts of alchohol using background variables and school performance. We will use logistic regression for this task. 
+The data are from two identical questionaires related to secondary school student alcohol comsumption in Portugal. Read about the data and the variables [here](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION).
 
-But first, as always, let's get our hands on the data!
+R offers the convenient `paste()` function which makes it easy to combine characters. Let's utilize it to get our hands on the data!
 
 *** =instructions
-- R offers the convenient `paste()` function to combine and create chracters. Let's try it!
-- Create and print out the object `url_por' 
-- Adjust the code: Make `url_math` into a valid web adress by separating with "/".
-- Read the math class questionaire data into memory from the address defined in `url_math`.
-- Create object `url_por` similarily to `url_math`, using the 'url' object.
-- Read the portuguese class questionaire data into memory from the address defined in `url_por`.
+- Create and print out the object `url_math' 
+- Adjust the code: Make `url_math` into a valid web address.
+- Create object `math` by reading the math class questionaire data from the web address defined in `url_math`.
+- Create object `url_por` similarily to `url_math`, using the `url` object.
+- Create object `por` by reading the portuguese class questionaire data from the web address defined in `url_por`.
 - Print out the names of the columns in both data sets.
 
 *** =hint
@@ -27,24 +26,22 @@ But first, as always, let's get our hands on the data!
 
 *** =pre_exercise_code
 ```{r}
-
+url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
 ```
 
 *** =sample_code
 ```{r}
 url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
 
-# create address for math class data using 'url' 
-url_math <- paste(url, "student-mat.csv", sep = "_change me!_")
-
-# print out the url
+# web address for math class data
+url_math <- paste(url, "student-mat.csv", sep = " !!!CHANGE ME!!! ")
 url_math
 
 # read the math class questionaire data into memory
 math <- read.table(url_math, sep = ";" , header=TRUE)
 
-# create address for portuguese class data using 'url' 
-url_por <- paste("change me", "student-por.csv", sep =" change me too! ")
+# web address for portuguese class data
+url_por <- paste("replace me!", "student-por.csv", sep ="/")
 
 ## read the portuguese class questionaire data into memory
 por <- read.table(url_por, sep = ";", header = TRUE)
@@ -57,19 +54,16 @@ colnames(math)
 
 *** =solution
 ```{r}
-# data url
 url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
 
-# create address for math class data using 'url' 
+# web address for math class data
 url_math <- paste(url, "student-mat.csv", sep = "/")
-
-# print out math_url
 url_math
 
 # read the math class questionaire data into memory
 math <- read.table(url_math, sep = ";" , header=TRUE)
 
-# create address for portuguese class data using 'url'
+# web address for portuguese class data
 url_por <- paste(url, "student-por.csv", sep ="/")
 
 ## read the portuguese class questionaire data into memory
@@ -78,6 +72,7 @@ por <- read.table(url_por, sep = ";", header = TRUE)
 ## look at the column names of both data
 colnames(math)
 colnames(por)
+
 ```
 
 *** =sct
@@ -92,25 +87,24 @@ test_object("por", incorrect_msg = "Use `url_por` to load data and store the dat
 test_output_contains("colnames(math)", times = 2, incorrect_msg = "Please print out the column names of both data sets")
 
 test_error()
-success_msg("Nice work! That was a tough warmup!")
+success_msg("Nice work! That was a tough warm-up!")
 
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:af9b851a1c
 ## Joining two datasets
 
-In our two data sets there are multiple students who have answered both questionaires. Unfortunately we do not have a single identification number or similar to identify these students. However we can use a bunch of background questions together to identify the students.
+There are multiple students who have answered both questionaires in our two datasets. Unfortunately we do not have a single identification variable to identify these students. However, we can use a bunch of background questions together for identification.
 
-Combining two data sets is easy with R if the data sets have a single mutual identifier column or a combination of mutual columns which together can be used as identifiers. Here we'll use `inner.join()` from the dplyr library, which joins two data sets together by keeping only the rows that appear in both data sets (according to the identifier).
+Combining two data sets is easy if the data have a mutual identifier column or if a combination of mutual columns can be used as identifiers. 
 
-So here, we'll only keep the students who answered the same questionaire in both math and portuguese classes.
+Here we'll use `inner.join()` function from the dplyr library to combine the data (remember the [dplyr cheatsheet!](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)). This means that we'll only keep the students who answered the questionaire in both math and portuguese classes.
 
 *** =instructions
-- Create object `join_by` and access the dplyr library
-- Adjust the code: use `inner_join()` to join the two data sets by the variables defined in `join_by`
-- Print out the column names of the joined data set
-- Adjust the code: add the argument 'suffix' to `inner_join()` and give it the vector of characters: ".math" and ".por".
-- Print out the column names of the joined data set again
+- Access the dplyr library and create object `join_by`.
+- Adjust the code: define the argument `by` of `inner_join()` to join the `math` and `por` data frames by the columns defined in `join_by`.
+- Print out the column names of the joined data set.
+- Adjust the code: add the argument 'suffix' to `inner_join()` and give it the vector of two  characters: ".math" and ".por". Do the `inner_join()` again and print out the new column names again.
 - Use the `glimpse()` function from 'dplyr' to look at the joined data. Which data types are present?
 
 *** =hint
@@ -130,11 +124,11 @@ por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 ```{r}
 # math and por are available
 
-# common columns to use as identifiers
-join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
-
 # access the dplyr library
 library(dplyr)
+
+# common columns to use as identifiers
+join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 
 # join the two datasets by the selected identifiers
 math_por <- inner_join(math, por, by = "change me!")
@@ -148,11 +142,11 @@ math_por <- inner_join(math, por, by = "change me!")
 ```{r}
 # math and por are available
 
+# access the dplyr library
+library(dplyr)
+
 # common columns to use as identifiers
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
-
-## access the dplyr library
-library(dplyr)
 
 # join the two datasets by the selected identifiers
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
@@ -173,7 +167,7 @@ test_output_contains("colnames(math_por)", incorrect_msg = "Please print out the
 test_function("glimpse", incorrect_msg = "Please use `glimpse()` on `math_por` to look at the data.")
 
 test_error()
-success_msg("Awsomeland! Imagine the endless possibilities of joining various data sets!")
+success_msg("Awsomeland! Imagine the possibilities of joining various data sets!")
 
 ```
 
@@ -181,11 +175,12 @@ success_msg("Awsomeland! Imagine the endless possibilities of joining various da
 --- type:NormalExercise lang:r xp:100 skills:1 key:fe19bbaae6
 ## Transforming by looping
 
-We now have a data set which in addition to the background variables used for joining, contains two (possibly different) answers to the same questions. We'll use some advanced programming to combine these 'duplicate' questions by either taking the rounded average value of the two answers or by simply choosing the first answer.
+You now have a data set which -- in addition to the background variables used for joining -- contains two (possibly different) answers to the same questions for each student. To fix this, you'll use programming to combine these 'duplicated' questions by either 
 
-We'll do this by using a combination of a `for-loop` and an `if-else` structure to handle all numerical and factor variables differently. 
+- taking the rounded average value of the two answers (for numeric variables)
+- simply choosing the first answer (for factor variables).
 
-The `if()` function takes a single logical condition as an argument and only performs an action if the condition is true. `if()` can be combined with `else`, which then handles the cases where the condition is false.
+You'll do this by using a combination of a `for-loop` and an `if-else` structure. The `if()` function takes a single logical condition as an argument and performs an action only if the condition is true. `if()` can then be combined with `else`, which handles the cases where the condition is false.
 
 ```
 if(condition) {
@@ -286,18 +281,17 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
 ## Mutations
 
-Mutating the data means adding new variables which are mutations of the existing ones. The `mutate()` function is from the 'dplyr' package. On your personal computer, instead of accessing the 'dplyr' package, you can instead install and access 'tidyverse', which includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
+Mutating the data means adding new variables, which are mutations of the existing ones. The `mutate()` function is from the 'dplyr' package. On your personal computer, instead of accessing the 'dplyr' package, you can install and access the 'tidyverse' package. The tidyverse includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
 
-The tidyverse functions have a lot of similarities. The first argument of the tidyverse functions is usually 'data' and they also have other consistent features which makes them work well together.
-
+The tidyverse functions have a lot of similarities. For example, the first argument of the tidyverse functions is usually 'data'. They also have other consistent features which makes them work well together and easy to use.
 
 *** =instructions
-- Mutate `alc` by creating  column `alc_use`
+- Mutate `alc` by creating the new column `alc_use` by averaging weekday and weekend alcohold consumption.
 - Draw a bar plot of `alc_use`.
 - Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
-- Mutate `alc` by creating a new logical variable `high_use`, which is true if `alc_use` is greater than 2 (replace `Inf`).
+- Mutate `alc` by creating a new logical variable `high_use`, which is true if `alc_use` is greater than 2 (adjust the code and replace `Inf`).
 - Draw a bar plot of `high_use`.
-- Add this element to the latter plot using `+`: `facet_wrap("sex")`. Draw the plot again
+- Add this element to the latter plot (using `+`): `facet_wrap("sex")`. Draw the plot again.
 
 *** =hint
 - hint
@@ -397,18 +391,19 @@ success_msg("Very nice work! You're really getting the hang of it :)")
 --- type:NormalExercise lang:r xp:100 skills:1 key:6f326bbb98
 ## So many plots
 
-I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we draw all of them! You'll also meet another new tidyverse toy, the pipe-operator: `%>%. 
+I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we visualize all of them! You'll also meet another new tidyverse toy, the pipe-operator: `%>%. 
 
 The pipe (`%>%`) takes the result produced on it's left side and uses it as the first argument in the function on it's right side. Since the first argument of the tidyverse functions is usually 'data', this allows for some cool chaining of commands.
 
-We'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
+You'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
 
 *** =instructions
 - Access the tidyverse libraries tidyr, dplyr and ggplot2
 - Take a glimpse at the `alc` data
 - Take a glimpse at the `alc` data after applying the `gather()` function on it. What does gather do?
 - Draw a bar plot of each variable in the `alc` data
-- See the help page of the `options()` function and search for information about the 'warn' argument there. Set the value of the argument so that warnings are never displayed.
+- See the help page of the `options()` function and search for information about the 'warn' argument. Set the value of the argument so that warnings are never displayed.
+- Draw the plots again.
 
 *** =hint
 - hint
@@ -469,7 +464,7 @@ success_msg("Great job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0f61649b52
-## The Pipe: Summarising by group
+## The Pipe: summarising by group
 
 The pipe operator, `%>%`, takes the result of the left-hand side and uses it as the first argument of the function on the right-hand side. For example:
 
@@ -480,7 +475,7 @@ The pipe operator, `%>%`, takes the result of the left-hand side and uses it as 
 ```
 The pipe is most commonly used to chain functions which perform operations on a data.frame. Chaining operations with the pipe is great fun, so let's try it! 
 
-Utilizing the pipe, we'll apply the functions `group_by()` and `summarise()` on our data. The first one splits the data to groups according to a grouping variable (a factor for example), and the latter can be combined with any summary function such as `mean()`, `min()`, `max()`, `sd()`, ... to summarize the data. 
+Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example), and the latter can be combined with any summary function such as `mean()`, `min()`, `max()` or `sd()` to summarize the data. 
 
 *** =instructions
 - Access the tidyverse libraries dplyr and ggplot2
@@ -534,7 +529,7 @@ success_msg("Very nice work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
 ## Box plots by groups
 
-Box plots are an excellent way of displaying and comparing distributions. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers (the dots) of a variable. 
+Box plots are an excellent way of displaying and comparing distributions. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers of a variable. 
 
 The whiskers extending from the box can be computed by several techniques. The default (in base R and ggplot) is to extend them to reach to a data point that is no more than 1.5*IQR away from the box, where IQR is the inter quartile range defined as  
 
@@ -608,7 +603,8 @@ success_msg("Great work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
 ## Learning a logistic regression model
 
-Exercise info here
+We will now use logistic regression to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
+
 
 *** =instructions
 - instruction
