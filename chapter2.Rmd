@@ -915,7 +915,7 @@ accuracy <- sapply(treshold, get_accuracy)
 accuracy
 
 # plot
-library(ggpplot2)
+library(ggplot2)
 qplot(treshold, accuracy, geom = "line")
 
 
