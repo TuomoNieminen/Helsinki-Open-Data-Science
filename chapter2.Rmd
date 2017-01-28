@@ -1014,10 +1014,19 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
 ## Cross-validation
 
-Kesken
+Cross-validation is a method of testing a predictive model on unseen data. In K-fold cross-validation, the data is split into K parts of equal size. Each part then takes turns acting as the test set, as the other parts are used to train (fit, learn) the model.
+
+A natural measure of performance in binary classification is the average number of correctly predicted classes. Note that the interpretation of this number depends on the class distribution: If your data has for example 100 observations where only one is of class TRUE and other 99 are FALSE, then simply predicting every observation blindly as FALSE will give 99% accuracy.
+
 
 *** =instructions
-- instruction
+- Define the loss function
+- Execute the call to the loss function with `prob = 0`. What kind of a prediction does this equal to? What is the interpretation of the resulting proportion?
+- Execute the call to the loss function with `prob = 1`. What kind of a prediction does this equal to? What is the interpretation of the resulting proportion?
+- Execute the call to the loss function by giving it the prediction probabilities in `alc` (the column 'probability'). What is the interpretation of the resulting proportion?
+- Perform leave-one-out cross-validation by using K equal to the number of observations in K-fold cross-validation. Print out the average number of wrong predictions
+- Adjust the code: Perform 10-fold cross validation. Print out the average number of wrong predictions.
+
 
 *** =hint
 - hint
@@ -1025,7 +1034,6 @@ Kesken
 *** =pre_exercise_code
 ```{r}
 alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
-
 library(dplyr)
 # fit the model
 m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
@@ -1039,15 +1047,18 @@ alc <- mutate(alc, prediction = probability > 0.5)
 ```{r}
 # m and alc with predictions are available
 
-# define a loss function
-loss_func <- function(class, prob) mean(abs(class - prob) > 0.5)
+# define a loss function (average prediction error)
+loss_func <- function(class, prob) {
+  n_wrong <- abs(class - prob) > 0.5
+  mean(n_wrong)
+}
 
-# compute average number of wrong predictions in the (training) data
-loss_func(alc$high_use, alc$probability)
+# compute the average number of wrong predictions in the (training) data
+loss_func(class = alc$high_use, prob = 0)
 
 # K-fold cross-validation
 library(boot)
-cv <- cv.glm(data = alc, cost = cost_func, glmfit = m, K = 10)
+cv <- cv.glm(data = alc, cost = loss_func, glmfit = m, K = nrow(alc))
 
 # average number of wrong predictions in the cross validation
 cv$delta[1]
@@ -1058,11 +1069,14 @@ cv$delta[1]
 ```{r}
 # m and alc with predictions are available
 
-# define a loss function
-loss_func <- function(class, probability) mean(abs(class - probability) > 0.5)
+# define a loss function (average prediction error)
+loss_func <- function(class, prob) {
+  n_wrong <- abs(class - prob) > 0.5
+  mean(n_wrong)
+}
 
 # compute the average number of wrong predictions in the (training) data
-loss_func(alc$high_use, alc$probability)
+loss_func(class = alc$high_use, prob = alc$probability)
 
 # K-fold cross-validation
 library(boot)
@@ -1075,12 +1089,12 @@ cv$delta[1]
 
 *** =sct
 ```{r}
+test_object("loss_func", incorrec_msg = "Please do not change the definition of `loss_func()`")
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
+test_function("loss_func", args = c("class", "prob",incorrect_msg = "Please adjust the `prob` argument of `loss_func` as instructed. Do not change the `class` argument."))
+test_function("cv.glm", args = c("data", "cost", "glmfit", "K"), incorrect_msg = "Please adjust the argument K of `cv.glm()` as instructed and do not adjust the other arguments.")
+
+test_error()
 success_msg("Good work!")
 ```
 
