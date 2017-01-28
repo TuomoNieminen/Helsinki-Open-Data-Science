@@ -3,7 +3,7 @@ title       : Logistic regression
 description : Regression for binary outcomes, training and testing a (predictive) model, cross-validation
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
-## Two more datasets
+## More datasets
 
 Welcome to the *Logistic regression* chapter.
 
@@ -188,7 +188,6 @@ if(condition) {
 } else {
    do something else
 }
-
 ```
 
 *** =instructions
@@ -287,9 +286,9 @@ The tidyverse functions have a lot of similarities. For example, the first argum
 
 *** =instructions
 - Mutate `alc` by creating the new column `alc_use` by averaging weekday and weekend alcohold consumption.
+- Mutate `alc` by creating a new logical variable `high_use`, which is true if `alc_use` is greater than 2 (adjust the code and replace `Inf`).
 - Draw a bar plot of `alc_use`.
 - Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
-- Mutate `alc` by creating a new logical variable `high_use`, which is true if `alc_use` is greater than 2 (adjust the code and replace `Inf`).
 - Draw a bar plot of `high_use`.
 - Add this element to the latter plot (using `+`): `facet_wrap("sex")`. Draw the plot again.
 
@@ -333,19 +332,17 @@ library(dplyr); library(ggplot2)
 
 # combine weekday and weekend alcohol use into 'alc_use'
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
-
-# initialize a  plot of 'alc_use'
-g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
-
-# define the plot as a bar plot and draw it
-g1 + geom_bar()
-
 # transform alc_use into a binary variable 'high_use'
 alc <- mutate(alc, high_use = Inf > 2)
 
+# initialize a  plot of 'alc_use'
+g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
+# define the plot as a bar plot and draw it
+g1 + geom_bar()
+
 # initialize a plot of 'high_use'
 g2 <- ggplot(data = alc, aes(high_use))
-
+# define the plot as a bar plot and draw it
 
 
 ```
@@ -359,19 +356,16 @@ library(dplyr); library(ggplot2)
 
 # combine weekday and weekend alcohol use into 'alc_use'
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
-
-# initialize a  plot of 'alc_use'
-g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
-
-# define the plot as a bar plot and draw it
-g1 + geom_bar()
-
 # transform alc_use into a binary variable 'high_use'
 alc <- mutate(alc, high_use = alc_use > 2)
 
+# initialize a  plot of 'alc_use'
+g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
+# define the plot as a bar plot and draw it
+g1 + geom_bar()
+
 # initialize a plot of 'high_use'
 g2 <- ggplot(alc, aes(high_use))
-
 # draw a bar plot for each sex
 g2 + facet_wrap("sex") + geom_bar()
 
@@ -464,15 +458,15 @@ success_msg("Great job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0f61649b52
-## The Pipe: summarising by group
+## The pipe: summarising by group
 
 The pipe operator, `%>%`, takes the result of the left-hand side and uses it as the first argument of the function on the right-hand side. For example:
 
 ```
 1:10 %>% mean()
 [1] 5.5
-
 ```
+
 The pipe is most commonly used to chain functions which perform operations on a data.frame. Chaining operations with the pipe is great fun, so let's try it! 
 
 Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example), and the latter can be combined with any summary function such as `mean()`, `min()`, `max()` or `sd()` to summarize the data. 
@@ -793,7 +787,7 @@ success_msg("Good work!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
-## Model performance: cross-validation
+## Cross-validation
 
 Exercise info here
 
