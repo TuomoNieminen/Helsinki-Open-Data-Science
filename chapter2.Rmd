@@ -752,7 +752,7 @@ test_error()
 success_msg("Good job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:ac0db676b7
 ## Model performance: prediction accuracy (2)
 
 Exercise info here
@@ -829,7 +829,7 @@ success_msg("Very well done! You are a master Piper already!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:4f8947a0fd
 ## The prediction cutoff
 
 As you saw, our model can produce the predicted probabilities of the target variable 'high_use' and those probabilities can then be used to make an actual prediction. 
