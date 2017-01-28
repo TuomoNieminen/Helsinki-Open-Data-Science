@@ -1089,7 +1089,7 @@ cv$delta[1]
 
 *** =sct
 ```{r}
-test_object("loss_func", incorrec_msg = "Please do not change the definition of `loss_func()`")
+test_object("loss_func", incorrect_msg = "Please do not change the definition of `loss_func()`")
 
 test_function("loss_func", args = c("class", "prob",incorrect_msg = "Please adjust the `prob` argument of `loss_func` as instructed. Do not change the `class` argument."))
 test_function("cv.glm", args = c("data", "cost", "glmfit", "K"), incorrect_msg = "Please adjust the argument K of `cv.glm()` as instructed and do not adjust the other arguments.")
