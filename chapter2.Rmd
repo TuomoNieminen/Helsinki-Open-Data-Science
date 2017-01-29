@@ -14,7 +14,7 @@ The data are from two identical questionaires related to secondary school studen
 R offers the convenient `paste()` function which makes it easy to combine characters. Let's utilize it to get our hands on the data!
 
 *** =instructions
-- Create and print out the object `url_math' 
+- Create and print out the object `url_math` 
 - Adjust the code: Make `url_math` into a valid web address.
 - Create object `math` by reading the math class questionaire data from the web address defined in `url_math`.
 - Create object `url_por` similarily to `url_math`, using the `url` object.
@@ -22,7 +22,7 @@ R offers the convenient `paste()` function which makes it easy to combine charac
 - Print out the names of the columns in both data sets.
 
 *** =hint
-- hint
+- You can see the `paste()` functions help page with `?paste` or `help(paste)`
 
 *** =pre_exercise_code
 ```{r}
@@ -102,13 +102,16 @@ Here we'll use `inner.join()` function from the dplyr library to combine the dat
 
 *** =instructions
 - Access the dplyr library and create object `join_by`.
-- Adjust the code: define the argument `by` of `inner_join()` to join the `math` and `por` data frames by the columns defined in `join_by`.
+- Adjust the code: define the argument `by` in the `inner_join()` function to join the `math` and `por` data frames. Use the columns defined in `join_by`.
 - Print out the column names of the joined data set.
-- Adjust the code: add the argument 'suffix' to `inner_join()` and give it the vector of two  characters: ".math" and ".por". Do the `inner_join()` again and print out the new column names again.
-- Use the `glimpse()` function from 'dplyr' to look at the joined data. Which data types are present?
+- Adjust the code again: add the argument `suffix` to `inner_join()` and give it a vector of two  strings: ".math" and ".por". 
+- Join the datasets again and print out the new column names.
+- Use the `glimpse()` function (from dplyr) to look at the joined data. Which data types are present?
 
 *** =hint
-- hint
+- You can create a vector with `c()`
+- Comma separates values in a vector
+- Remember to use quotes when creating string or character objects
 
 *** =pre_exercise_code
 ```{r}
@@ -151,7 +154,7 @@ join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","M
 # join the two datasets by the selected identifiers
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 
-## see the new column names and glimpse at the data
+# see the new column names and glimpse at the data
 colnames(math_por)
 glimpse(math_por)
 
@@ -193,15 +196,19 @@ if(condition) {
 ```
 
 *** =instructions
+- Adjust the code: Create the data frame `alc` by selecting only the columns in `math_por` which were used for joining the two questinaires. The names of those columns are available in the `join_by` object.
 - Create the object `notjoined_columns`
-- Adjust the code: Create the data.frame `alc` by selecting only the columns in `math_por` which were used for joining the two questinaires. The names of those columns are available in the `join_by` object.
-- Execute the `for`-loop.
-- Take a `glimpse()` at the `alc` data.frame. The factor type variables should look strange at this point.
-- Adjust the code inside the `for`-loop: if the first of the two selected columns is not numeric, simply add the first column to the `alc` data.frame.
--  Execute the modified `for`-loop and `glimpse()` at the new data again.
+- Execute the `for`-loop (don't mind the "change me!").
+- Take a `glimpse()` at the `alc` data frame. The factor type variables should look strange at this point.
+- Adjust the code inside the `for`-loops `else` part: if the first of the two selected columns is not numeric, then add the first column to the `alc` data frame. 
+- Execute the modified `for`-loop and `glimpse()` at the new data again.
 
 *** =hint
-- hint
+- Use `first_column` in exchange for the "change me!"
+- **For loop**: For every column name in the `notjoined_columns` the for-loop selects the (two) columns with the same name. It saves the columns into `two_columns`.
+- Then it chooses the first column of `two_columns` and saves it as `first_column`.
+- **If-else**: If the first column is numeric, then it takes the rounded average of the columns with the same name. The rounded average vector is added to the `alc` data frame. 
+- If the first column is not numeric (else-part), it adds the `first_column` to the `alc` data frame.
 
 *** =pre_exercise_code
 ```{r}
@@ -216,27 +223,31 @@ math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 ```{r}
 # dplyr, math_por, join_by are available
 
-# the columns in the datasets which were not used for joining the data
-notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
-
 # create a new data frame with only the joined columns
 alc <- select(math_por, one_of("change me!"))
+
+# the columns in the datasets which were not used for joining the data
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
 # combine the 'duplicate' columns and add them to the 'alc' data frame
 for(column_name in notjoined_columns) {
   # select the two columns with the same original name
   two_columns <- select(math_por, starts_with(column_name))
+  # select the first column of the two columns
   first_column <- select(two_columns, 1)[[1]]
 
-    # if the first column is numeric, take a rounded average
+  # if the first column is numeric, then 
   if(is.numeric(first_column)) {
+    # take a rounded average of the two columns
     alc[column_name] <- round(rowMeans(two_columns))
-  } else { # else just use the first column
+  } else { # else if it's not  
+    # use the first column
     alc[column_name] <- "change me!"
   }
 }
 
 # glimpse at the new combined data
+
 
 ```
 
@@ -244,22 +255,25 @@ for(column_name in notjoined_columns) {
 ```{r}
 # dplyr, math_por, join_by are available
 
-# columns that were not used for joining the data
-notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
-
 # create a new data frame with only the joined columns
 alc <- select(math_por, one_of(join_by))
+
+# columns that were not used for joining the data
+notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
 # combine the 'duplicate' columns and add them to the 'alc' data frame
 for(column_name in notjoined_columns) {
   # select the two columns with the same original name
   two_columns <- select(math_por, starts_with(column_name))
+  # select the first column of the two columns
   first_column <- select(two_columns, 1)[[1]]
 
-    # if the first column is numeric, take a rounded average
+  # if the first column is numeric, then 
   if(is.numeric(first_column)) {
+    # take a rounded average of the two columns
     alc[column_name] <- round(rowMeans(two_columns))
-  } else { # else just use the first column
+  } else { # else if it's not  
+    # use the first column
     alc[column_name] <- first_column
   }
 }
@@ -276,20 +290,20 @@ test_object("alc", incorrect_msg = "Please follow the instructions to modify the
 test_function("glimpse", args = "x", incorrect_msg = "Please use `glimpse()` to look at the `alc` data.frame")
  
 test_error()
-success_msg("Good work!")
+success_msg("This was tough one! Good work!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
 ## Mutations
 
-Mutating a data.frame means adding new variables as mutations of the existing ones. The `mutate()` function is from the 'dplyr' package which is part of the 'tidyverse' packages. The tidyverse includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
+Mutating a data frame means adding new variables as mutations of the existing ones. The `mutate()` function is from the 'dplyr' package which is part of the 'tidyverse' packages. The tidyverse includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
 
-The tidyverse functions have a lot of similarities. For example, the first argument of the tidyverse functions is usually 'data'. They also have other consistent features which makes them work well together and easy to use.
+The tidyverse functions have a lot of similarities. For example, the first argument of the tidyverse functions is usually `data`. They also have other consistent features which makes them work well together and easy to use.
 
 *** =instructions
 - Mutate `alc` by creating the new column `alc_use` by averaging weekday and weekend alcohol consumption.
-- Adjust the code: Mutate `alc` by creating a new column `high_use`, which is true if `alc_use` is greater than 2 and false otherwise (replace `Inf`).
+- Adjust the code: Mutate `alc` by creating a new column `high_use`, which is true if `alc_use` is greater than 2 and false otherwise.
 - Draw a bar plot of `alc_use`.
 - Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
 - Draw a bar plot of `high_use`.
@@ -337,16 +351,17 @@ library(dplyr); library(ggplot2)
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
 # define a new logical variable 'high_use'
-alc <- mutate(alc, high_use = Inf > 2)
+alc <- mutate(alc, high_use = "change me!" > 2)
 
 # initialize a plot of alcohol use
-g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
+g1 <- ggplot(data = alc, aes(alc_use))
 
 # define the plot as a bar plot and draw it
 g1 + geom_bar()
 
 # initialize a plot of 'high_use'
 g2 <- ggplot(data = alc, aes(high_use))
+
 # define the plot as a bar plot and draw it
 
 
@@ -394,9 +409,9 @@ success_msg("Very nice work! You're really getting the hang of it :)")
 
 I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we visualize all of them! 
 
-You'll also meet another new tidyverse toy, the pipe-operator: `%>%. 
+You'll also meet another new tidyverse toy, the pipe-operator: `%>%`. 
 
-The pipe (`%>%`) takes the result produced on it's left side and uses it as the first argument in the function on it's right side. Since the first argument of the tidyverse functions is usually 'data', this allows for some cool chaining of commands.
+The pipe (`%>%`) takes the result produced on it's left side and uses it as the first argument in the function on it's right side. Since the first argument of the tidyverse functions is usually `data`, this allows for some cool chaining of commands.
 
 We'll look at `%>%` more closely in the next exercise. But now, let's draw some plots.
 
@@ -405,11 +420,12 @@ We'll look at `%>%` more closely in the next exercise. But now, let's draw some 
 - Take a glimpse at the `alc` data
 - Take a glimpse at the `alc` data after applying the `gather()` function on it. What does gather do?
 - Draw a bar plot of each variable in the `alc` data
-- See the help page of the `options()` function and search for information about the 'warn' argument. Set the value of the argument so that warnings are never displayed.
+- See the help page of the `options()` function and search for information about the `warn` argument. Set the value of the argument so that warnings are never displayed.
 - Draw the plots again.
 
 *** =hint
-- hint
+- Remember that you can use functions inside functions (here: use `gather()` inside `glimpse()`).
+- `options()` has a lot of functionality, so you might have to search a bit to find the `warn` argument.
 
 *** =pre_exercise_code
 ```{r}
@@ -423,7 +439,7 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 # access the tidyverse libraries tidyr, dplyr, ggplot2
 library(tidyr); library(dplyr); library(ggplot2)
 
-# use options() to ignore warnings
+# glimpse at the alc data
 
 
 # use gather() to gather columns into key value pairs 
@@ -431,6 +447,8 @@ glimpse(gather(alc))
 
 # draw a bar plot of each variable
 gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar()
+
+# use options() to ignore warnings
 
 
 ```
@@ -445,15 +463,14 @@ library(tidyr); library(dplyr); library(ggplot2)
 # glimpse at the alc data
 glimpse(alc) 
 
-# use options() to ignore warnings
-options(warn = -1)
-
 # gather() gathers all columns into key-value pairs 
 glimpse(gather(alc))
 
 # draw a bar plot of each variable
 gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar()
 
+# use options() to ignore warnings
+options(warn = -1)
 
 ```
 
@@ -463,7 +480,7 @@ gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_b
 test_function("options", eval = F, args = "warn", incorrect_msg = "Please use the `options()` function to modify whether warnings are displayed.")
 
 # test_error()
-success_msg("Great job!")
+success_msg("Great job! The `options()`-function can be useful when you have plots (for example in your webpage) and you don't want the various messages from R packages or warnings from functions to show up in there.")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0f61649b52
@@ -476,18 +493,19 @@ The pipe operator, `%>%`, takes the result of the left-hand side and uses it as 
 [1] 5.5
 ```
 
-The pipe is most commonly used to chain functions which perform operations on a data.frame. Chaining operations with the pipe is great fun, so let's try it! 
+The pipe is most commonly used to chain functions which perform operations on a data frame. Chaining operations with the pipe is great fun, so let's try it! 
 
 Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example). The latter can be combined with any summary function such as `mean()`, `min()`, `max()` or `sd()` to summarize the data. 
 
 *** =instructions
 - Access the tidyverse libraries dplyr and ggplot2
 - Execute the sample code to see the counts of males and females in the data
-- Adjust the code: inside `summarise()`, after the definition of 'count', define 'mean_grade' by using `mean()` on the variable `G3`.
-- Adust the code: After 'sex', add 'high_use' as another grouping variable. Execute the code again.
+- Adjust the code to calculate average of the grades of the students. Inside `summarise()`, after the definition of `count`, define `mean_grade` by using `mean()` on the variable `G3`.
+- Adust the code: After `sex`, add `high_use` as another grouping variable. Note that `group_by` works also with multiple objects. Execute the code again.
 
 *** =hint
-- Rememebr to separate arguments inside functions with a comma
+- Rememebr to separate arguments inside functions with a comma. Here the first argument of `summarise` is `count`, and the second one is `mean_grade`.
+- Hint for grouping: `group_by(var1, var2)`
 
 *** =pre_exercise_code
 ```{r}
@@ -525,30 +543,32 @@ alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3)
 
 test_output_contains("alc %>% group_by(sex, high_use) %>% summarise(count = n(), mean_grade = mean(G3))", incorrect_msg = "Please make the requested changes to the arguments of the `group_by()` and `summarise()` functions.")
  test_error()
-success_msg("Very nice work!")
+success_msg("Ooh so handy! Very nice work!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
 ## Box plots by groups
 
-Box plots are an excellent way of displaying and comparing distributions. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers of a variable. 
+[Box plots](https://en.wikipedia.org/wiki/Box_plot) are an excellent way of displaying and comparing distributions. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers of a variable. 
 
 The whiskers extending from the box can be computed by several techniques. The default (in base R and ggplot) is to extend them to reach to a data point that is no more than 1.5*IQR away from the box, where IQR is the inter quartile range defined as  
 
 `IQR = 75th percentile - 25th percentile`  
 
-Values outside the whiskers can be considered as outliers, unusually distant observations. For more information on IQR, see <a target="_blank" href ="https://en.wikipedia.org/wiki/Interquartile_range"> wikipedia</a>
+Values outside the whiskers can be considered as outliers, unusually distant observations. For more information on IQR, see <a target="_blank" href ="https://en.wikipedia.org/wiki/Interquartile_range"> wikipedia</a>.
 
 *** =instructions
-- Initialize and draw a box plot of student grades ('G3'), grouped by 'high_use'.
+- Initialize and draw a box plot of student grades (`G3`), grouped by `high_use`.
 - Add an aesthetix element to the plot by defining `col = sex` inside `aes()`
 - Add the element `ylab("grade")` to the plot.
-- Define a similar (box) plot of the variable 'absences' again grouped by 'high_use' and the aesthetic `col = sex`.
-- Add a main title to the last plot with `ggtitle("title here")`. Insert the title "Student absences by alcohol consumption and sex".
+- Define a similar (box) plot of the variable `absences` grouped by `high_use` and the aesthetic `col = sex`.
+- Add a main title to the last plot with `ggtitle("title here")`. Use "Student absences by alcohol consumption and sex" as a title.
+- Does the high use of alcohol have an effect on the absences?
 
 *** =hint
-- hint
+- In ggplot, you can add stuff to the initialized plot with `+` mark, e.g. `ylab("text here")`. Some goes for titles. 
+- Make sure that the title is exactly the same as in the instructions (capital letters and spaces and everything). 
 
 *** =pre_exercise_code
 ```{r}
@@ -559,13 +579,13 @@ alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 ```{r}
 library(ggplot2)
 
-# initialize a plot of 'high_use' and 'G3'
+# initialize a plot of high_use and G3
 g1 <- ggplot(alc, aes(x = high_use, y = G3))
 
 # define the plot as a boxplot and draw it
 g1 + geom_boxplot()
 
-# initialise a plot of high_use and 'absences'
+# initialise a plot of high_use and absences
 
 
 # define the plot as a boxplot and draw it
@@ -577,13 +597,13 @@ g1 + geom_boxplot()
 ```{r}
 library(ggplot2)
 
-# initialize a plot of 'high_use' and 'G3'
+# initialize a plot of high_use and G3
 g1 <- ggplot(alc, aes(x = high_use, y = G3, col = sex))
 
 # define the plot as a boxplot and draw it
 g1 + geom_boxplot() + ylab("grade")
 
-# initialise a plot of high_use and 'absences'
+# initialise a plot of high_use and absences
 g2 <- ggplot(alc, aes(x = high_use, y = absences, col = sex))
 
 # define the plot as a boxplot and draw it
@@ -606,20 +626,23 @@ success_msg("Great work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
 ## Learning a logistic regression model
 
-We will now use logistic regression to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
+We will now use [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression) to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
 
 Because logistic regression can be used to classify observations into one of two groups (by giving the group probability) it is a binary classification method. You will meet more classification methods in the next chapter.
 
 *** =instructions
-- Use `glm()` to fit a logistic regression model with 'high_use' as the target variable and 'failures' and 'absences' as the predictors.
+- Use `glm()` to fit a logistic regression model with `high_use` as the target variable and `failures` and `absences` as the predictors.
 - Print out a summary of the model
 - Add another explanatory variable to the model: 'sex'. Repeat the above.
-- Compute the odds ratios related to the predictors by exponentiating their coefficients. Save the results to the object `OR`.
-- Use `confint` on the model object `m` to extract confidence intervals for the coefficients. Then exponentiate the values with `exp()` to get confidence intervals for the odds rations. Save the results to the object `CI`.
-- Combine and print out the odds ratios and the confidence intervals
+- Compute the odds ratios related to the predictors by exponentiating their coefficients. Save the results to the object `OR`. Note how the exponentiating is done with the pipe operator.
+- Use `confint()` on the model object `m` to calculate the confidence intervals for the coefficients. Then exponentiate the values with `exp()` to get confidence intervals for the odds rations. Save the results to the object `CI`.
+- Combine and print out the odds ratios and the confidence intervals. Which predictor has the widest interval?
 
 *** =hint
-- hint
+- You can get the confidence intervals with the `confint(*model_object*)` function.
+- The logistic regression model is saved in the object `m`.
+- `coef(m) %>% exp` is the same as `exp( coef(m) )`
+- You get the odds ratios by exponentiating the logistic regression coefficients.
 
 *** =pre_exercise_code
 ```{r}
@@ -629,7 +652,7 @@ library(dplyr)
 
 *** =sample_code
 ```{r}
-# alc, dlyr are available 
+# alc and dlyr are available 
 
 # find the model with glm()
 m <- glm(high_use ~ failures + absences, data = alc, family = "binomial")
@@ -650,7 +673,7 @@ cbind(OR, CI)
 
 *** =solution
 ```{r}
-# alc is available
+# alc and dlyr are available 
 
 # find the model with glm()
 m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
@@ -689,7 +712,7 @@ success_msg("Great work!")
 When you have a linear model, you can make predictions. A very basic question is of course, how well does our model actually predict the response variable. Let's take a look!
 
 *** =instructions
-- Fit the logistig regression model with `glm()`.
+- Fit the logistic regression model with `glm()`.
 - Create object `probabilities` by using `predict()` on the model object.
 - Mutate the alc data: add a column 'probability' with the predicted probabilities.
 - Mutate the data again: add a column 'prediction' which is true if value of 'probability' is greater than 0.5.
@@ -767,7 +790,7 @@ Let's continue to explore the accuracy of the predictions of our model.
 
 
 *** =instructions
-- Initialize the ggplot object and define 'probability' as the x axis and 'high_use' as the y axis.
+- Initialize the ggplot object and define `probability` as the x axis and `high_use` as the y axis.
 - Use `geom_point()` to draw the plot.
 - Add the aesthetic element `col = prediction` and draw the plot again.
 - Use `table()` to create a cross table of 'high_use' versus 'prediction'
@@ -851,14 +874,18 @@ It probably makes intuitive sense to label and individual as a "high user" when 
 Just to convince ourselves that 0.5 is a good choice and that our model makes sense, let's try out a bunch of tresholds and see how accurately the model would predict with each one. 
 
 *** =instructions
-- Define the function `get_accuracy()`.
-- Create object `tresholds` and print it out.
-- Change the 'by' argument of `seq()` to 0.01. Create and print out `tresholds` again.
+- Define the function `get_accuracy()`. Note that you will need to select the whole function before executing it.
+- Create object `tresholds` and print it out. 
+- Change the `by` argument of `seq()` to 0.01. Create and print out `tresholds` again. At this point, can you guess what the function `seq()` does?
 - Create object `accuracy` by applying the `get_accuracy()` function on every value of `tresholds`.
 - Access ggplot2 and draw the plot. Add the argument `geom = "line"` and draw the plot again.
+- Which treshold value gives the best accuracy? 
 
 *** =hint
-- hint
+- The help page of `seq()` can be useful.
+- Print the object by typing its name
+- `sapply()` applies a function (here `get_accuracy()` that we made in the beginning of this exercise) to every value of a vector (here  the vector `tresholds`).
+- `geom = "line"` is an argument of the function `qplot`. It's different from the `qqplot()`-function, where you add stuff with `+` mark. See `?qplot`.
 
 *** =pre_exercise_code
 ```{r}
@@ -1014,22 +1041,25 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
 ## Cross-validation
 
-Cross-validation is a method of testing a predictive model on unseen data. In K-fold cross-validation, the data is split into K parts of equal size. Each part then takes turns acting as the test set, as the other parts are used to train (fit, learn) the model.
+[Cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is a method of testing a predictive model on unseen data. In K-fold cross-validation, the data is split into K parts of equal size. Each part then takes turns acting as the test set, as the other parts are used to train (fit, learn) the model.
 
 A natural measure of performance in binary classification is the average number of correctly predicted classes. Note that the interpretation of this number depends on the class distribution: If your data has for example 100 observations where only one is of class TRUE and other 99 are FALSE, then simply predicting every observation blindly as FALSE will give 99% accuracy.
 
 
 *** =instructions
-- Define the loss function
+- Define the loss function `loss_func`
 - Execute the call to the loss function with `prob = 0`. What kind of a prediction does this equal to? What is the interpretation of the resulting proportion?
-- Execute the call to the loss function with `prob = 1`. What kind of a prediction does this equal to? What is the interpretation of the resulting proportion?
-- Execute the call to the loss function by giving it the prediction probabilities in `alc` (the column 'probability'). What is the interpretation of the resulting proportion?
-- Perform leave-one-out cross-validation by using K equal to the number of observations in K-fold cross-validation. Print out the average number of wrong predictions
+- Adjust the code: change the `prob` argument in the loss function to `prob = 1`. What kind of a prediction does this equal to? What is the interpretation of the resulting proportion?
+- Adjust the code again:  change the `prob` argument by giving it the prediction probabilities in `alc` (the column `probability`). What is the interpretation of the resulting proportion?
+- Perform leave-one-out cross-validation. Use the number of observations in `alc` as K in K-fold cross-validation (`nrow(alc)` returns the observation count of `alc`).
+- Print out the average number of wrong predictions. The `cv.glm` function counts the number for you and the value is stored in `delta`. See `?cv.glm` for more information.
 - Adjust the code: Perform 10-fold cross validation. Print out the average number of wrong predictions.
 
 
 *** =hint
-- hint
+- Select the whole code of `loss_func` to execute it.
+- You can access the `probability` column in `alc` by using the $-mark.
+- The `K` argument in `cv.glm` tells how many folds you will have.
 
 *** =pre_exercise_code
 ```{r}
@@ -1045,7 +1075,7 @@ alc <- mutate(alc, prediction = probability > 0.5)
 
 *** =sample_code
 ```{r}
-# m and alc with predictions are available
+# the logistic regression model m and dataset alc with predictions are available
 
 # define a loss function (average prediction error)
 loss_func <- function(class, prob) {
@@ -1067,7 +1097,7 @@ cv$delta[1]
 
 *** =solution
 ```{r}
-# m and alc with predictions are available
+# the logistic regression model m and dataset alc with predictions are available
 
 # define a loss function (average prediction error)
 loss_func <- function(class, prob) {
