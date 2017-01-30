@@ -1,8 +1,8 @@
 library(dplyr)
 ## read the math class questionaire data
-math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+math <- read.table("student-mat.csv",sep=";",header=TRUE)
 ## read the portuguese class questionaire data
-por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+por <- read.table("student-por.csv",sep=";",header=TRUE)
 ## common columns to merge the datasets by
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 ## join the two datasets by selected common variables
@@ -34,7 +34,6 @@ alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 ## transform alc_use into a binary (T, F) variable high_use
 alc <- mutate(alc, high_use = alc_use > 2)
 
-path <- "../datasets/alc.txt"
-write.table(file = path, alc, sep = ",", row.names = F)
+write.table(file = "alc.txt", alc, sep = ",", row.names = F)
 
-# str(read.table(path, sep=",", header = T))
+# str(read.table("alc.txt", sep=",", header = T))
