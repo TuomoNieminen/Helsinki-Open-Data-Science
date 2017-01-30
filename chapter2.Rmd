@@ -14,10 +14,10 @@ The data are from two identical questionaires related to secondary school studen
 R offers the convenient `paste()` function which makes it easy to combine characters. Let's utilize it to get our hands on the data!
 
 *** =instructions
-- Create and print out the object `url_math` 
-- Adjust the code: Make `url_math` into a valid web address.
+- Create and print out the object `url_math`.
 - Create object `math` by reading the math class questionaire data from the web address defined in `url_math`.
-- Create object `url_por` similarily to `url_math`, using the `url` object.
+- Create and print out `url_por`.
+- Adjust the code: similarily to `url_math`, make `url_por` into a valid web address using `past()` and the `url` object.
 - Create object `por` by reading the portuguese class questionaire data from the web address defined in `url_por`.
 - Print out the names of the columns in both data sets.
 
@@ -34,14 +34,15 @@ url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datas
 url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
 
 # web address for math class data
-url_math <- paste(url, "student-mat.csv", sep = " !!!CHANGE ME!!! ")
+url_math <- paste(url, "student-mat.csv", sep = "/")
 url_math
 
 # read the math class questionaire data into memory
 math <- read.table(url_math, sep = ";" , header=TRUE)
 
 # web address for portuguese class data
-url_por <- paste("replace me!", "student-por.csv", sep ="/")
+url_por <- paste("replace me!", "student-por.csv", sep =" change me! ")
+
 
 ## read the portuguese class questionaire data into memory
 por <- read.table(url_por, sep = ";", header = TRUE)
@@ -65,6 +66,7 @@ math <- read.table(url_math, sep = ";" , header=TRUE)
 
 # web address for portuguese class data
 url_por <- paste(url, "student-por.csv", sep ="/")
+url_por
 
 ## read the portuguese class questionaire data into memory
 por <- read.table(url_por, sep = ";", header = TRUE)
@@ -78,10 +80,11 @@ colnames(por)
 *** =sct
 ```{r}
 
-test_object("url_math", incorrect_msg = "Make the necessary changes to store a valid web address in the `url_math` object")
+test_object("url_math", incorrect_msg = "Please store a valid web address in the `url_math` object")
 test_object("math", incorrect_msg = "Use `url_math` to load data and store the data in the `math` object.")
 
 test_object("url_por", incorrect_msg = "Make the necessary changes to store a valid web address in the `url_por` object")
+test_output_contains("url_por", "Please print out the object `url_por`")
 test_object("por", incorrect_msg = "Use `url_por` to load data and store the data in the `por` object.")
 
 test_output_contains("colnames(math)", times = 2, incorrect_msg = "Please print out the column names of both data sets")
@@ -109,8 +112,7 @@ Here we'll use `inner.join()` function from the dplyr library to combine the dat
 - Use the `glimpse()` function (from dplyr) to look at the joined data. Which data types are present?
 
 *** =hint
-- You can create a vector with `c()`
-- Comma separates values in a vector
+- You can create a vector with `c()`. Comma separates values.
 - Remember to use quotes when creating string or character objects
 
 *** =pre_exercise_code
@@ -136,7 +138,10 @@ join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","M
 # join the two datasets by the selected identifiers
 math_por <- inner_join(math, por, by = "change me!")
 
-# see the new column names and glimpse at the data
+# see the new column names
+
+
+# glimpse at the data
 
 
 ```
@@ -154,8 +159,10 @@ join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","M
 # join the two datasets by the selected identifiers
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 
-# see the new column names and glimpse at the data
+# see the new column names
 colnames(math_por)
+
+# glimpse at the data
 glimpse(math_por)
 
 ```
@@ -178,14 +185,14 @@ success_msg("Awsomeland! Imagine the possibilities of joining various data sets!
 --- type:NormalExercise lang:r xp:100 skills:1 key:fe19bbaae6
 ## The if-else structure
 
-You now have a data set which - in addition to the background variables used for joining - contains two possibly different answers to the same questions for each student. To fix this, you'll use programming to combine these 'duplicated' questions by either 
+The `math_por` data frame now contains - in addition to the background variables used for joining `por` and `math` - two possibly different answers to the same questions for each student. To fix this, you'll use programming to combine these 'duplicated' answers by either: 
 
 - taking the rounded average (**if** the two variables are numeric)
 - simply choosing the first answer (**else**).
 
-You'll do this by using a combination of a `for-loop` and an `if-else` structure. 
+You'll do this by using a combination of a `for`-loop and an `if`-`else` structure. 
 
-The `if()` function takes a single logical condition as an argument and performs an action only if the condition is true. `if()` can then be combined with `else`, which handles the cases where the condition is false.
+The `if()` function takes a single logical condition as an argument and performs an action only if that condition is true. `if` can then be combined with `else`, which handles the cases where the condition is false.
 
 ```
 if(condition) {
@@ -197,18 +204,15 @@ if(condition) {
 
 *** =instructions
 - Adjust the code: Create the data frame `alc` by selecting only the columns in `math_por` which were used for joining the two questinaires. The names of those columns are available in the `join_by` object.
-- Create the object `notjoined_columns`
+- Create the object `notjoined_columns` and print it out.
 - Execute the `for`-loop (don't mind the "change me!").
 - Take a `glimpse()` at the `alc` data frame. The factor type variables should look strange at this point.
-- Adjust the code inside the `for`-loops `else` part: if the first of the two selected columns is not numeric, then add the first column to the `alc` data frame. 
+- Adjust the code inside the `for`-loop: if the first of the two selected columns is not numeric, add the first column to the `alc` data frame. 
 - Execute the modified `for`-loop and `glimpse()` at the new data again.
 
 *** =hint
-- Use `first_column` in exchange for the "change me!"
-- **For loop**: For every column name in the `notjoined_columns` the for-loop selects the (two) columns with the same name. It saves the columns into `two_columns`.
-- Then it chooses the first column of `two_columns` and saves it as `first_column`.
-- **If-else**: If the first column is numeric, then it takes the rounded average of the columns with the same name. The rounded average vector is added to the `alc` data frame. 
-- If the first column is not numeric (else-part), it adds the `first_column` to the `alc` data frame.
+- Inside the for-loop, use `first_column` in exchange for the "change me!".
+
 
 *** =pre_exercise_code
 ```{r}
@@ -229,19 +233,23 @@ alc <- select(math_por, one_of("change me!"))
 # the columns in the datasets which were not used for joining the data
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
-# combine the 'duplicate' columns and add them to the 'alc' data frame
+# print out the colums not used for joining
+
+
+# for every column name not used for joining...
 for(column_name in notjoined_columns) {
-  # select the two columns with the same original name
+  # select two columns from 'math_por' with the same original name
   two_columns <- select(math_por, starts_with(column_name))
-  # select the first column of the two columns
+  # select the first column vector of those two columns
   first_column <- select(two_columns, 1)[[1]]
 
-  # if the first column is numeric, then 
+  # if that first column vector is numeric...
   if(is.numeric(first_column)) {
-    # take a rounded average of the two columns
+    # take a rounded average of each row of the two columns and
+    # add the resulting vector to the alc data frame
     alc[column_name] <- round(rowMeans(two_columns))
-  } else { # else if it's not  
-    # use the first column
+  } else { # else if it's not numeric...
+    # add the fist column to the alc data frame
     alc[column_name] <- "change me!"
   }
 }
@@ -261,19 +269,23 @@ alc <- select(math_por, one_of(join_by))
 # columns that were not used for joining the data
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
-# combine the 'duplicate' columns and add them to the 'alc' data frame
+# print out the colums not used for joining
+
+
+# for every column name not used for joining...
 for(column_name in notjoined_columns) {
-  # select the two columns with the same original name
+  # select two columns from 'math_por' with the same original name
   two_columns <- select(math_por, starts_with(column_name))
-  # select the first column of the two columns
+  # select the first column vector of those two columns
   first_column <- select(two_columns, 1)[[1]]
 
-  # if the first column is numeric, then 
+  # if that first column  vector is numeric...
   if(is.numeric(first_column)) {
-    # take a rounded average of the two columns
+    # take a rounded average of each row of the two columns and
+    # add the resulting vector to the alc data frame
     alc[column_name] <- round(rowMeans(two_columns))
-  } else { # else if it's not  
-    # use the first column
+  } else { # else if it's not numeric...
+    # add the fist column to the alc data frame
     alc[column_name] <- first_column
   }
 }
@@ -286,11 +298,12 @@ glimpse(alc)
 *** =sct
 ```{r}
 
-test_object("alc", incorrect_msg = "Please follow the instructions to modify the `alc` data frame.")
+test_output_contains("notjoined_columns", incorrect_msg = "Please print out the names of the columns not used for joining the math and por questionaires.")
+test_object("alc", incorrect_msg = "Please follow the instructions to modify the `alc` data frame via for for-loop")
 test_function("glimpse", args = "x", incorrect_msg = "Please use `glimpse()` to look at the `alc` data.frame")
  
 test_error()
-success_msg("This was tough one! Good work!")
+success_msg("Phew! This was tough one. Excellent work!")
 ```
 
 
@@ -323,20 +336,15 @@ math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 alc <- select(math_por, one_of(join_by))
-
 for(column_name in notjoined_columns) {
-  # select the two columns with the same original name
   two_columns <- select(math_por, starts_with(column_name))
   first_column <- select(two_columns, 1)[[1]]
-
-    # if the first column is numeric, take a rounded average
   if(is.numeric(first_column)) {
     alc[column_name] <- round(rowMeans(two_columns))
-  } else { # else just use the first column
+  } else {
     alc[column_name] <- first_column
   }
 }
-
 library(ggplot2)
 ```
 
@@ -418,14 +426,11 @@ We'll look at `%>%` more closely in the next exercise. But now, let's draw some 
 *** =instructions
 - Access the tidyverse libraries tidyr, dplyr and ggplot2
 - Take a glimpse at the `alc` data
-- Take a glimpse at the `alc` data after applying the `gather()` function on it. What does gather do?
-- Draw a bar plot of each variable in the `alc` data
-- See the help page of the `options()` function and search for information about the `warn` argument. Set the value of the argument so that warnings are never displayed.
-- Draw the plots again.
+- Apply the `gather()` function on `alc` and take a glimpse at the resulting data directly after, utilizing the pipe (`%>%`). What does gather do?
+- Draw a plot of each variable in the `alc` data by first gathering the values into key-value pairs and then visualizing them with ggplot. Define the plots as bar plots by adding the element `geom_bar()`, (using `+`).
 
 *** =hint
-- Remember that you can use functions inside functions (here: use `gather()` inside `glimpse()`).
-- `options()` has a lot of functionality, so you might have to search a bit to find the `warn` argument.
+- Add the code `+ geom_bar()` to the line where the plots are drawn.
 
 *** =pre_exercise_code
 ```{r}
@@ -442,13 +447,11 @@ library(tidyr); library(dplyr); library(ggplot2)
 # glimpse at the alc data
 
 
-# use gather() to gather columns into key value pairs 
-glimpse(gather(alc))
+# use gather() to gather columns into key value pairs and then glimpse() at the resulting data
+gather(alc) %>% glimpse
 
 # draw a bar plot of each variable
-gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar()
-
-# use options() to ignore warnings
+gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free")
 
 
 ```
@@ -463,24 +466,22 @@ library(tidyr); library(dplyr); library(ggplot2)
 # glimpse at the alc data
 glimpse(alc) 
 
-# gather() gathers all columns into key-value pairs 
-glimpse(gather(alc))
+# use gather() to gather columns into key value pairs and then glimpse() at the resulting data
+gather(alc) %>% glimpse
 
 # draw a bar plot of each variable
 gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar()
 
-# use options() to ignore warnings
-options(warn = -1)
 
 ```
 
 *** =sct
 ```{r}
 
-test_function("options", eval = F, args = "warn", incorrect_msg = "Please use the `options()` function to modify whether warnings are displayed.")
+test_function("geom_bar", not_called_msg = "Please use `geom_bar()` to define the plots as bar plots..")
 
-# test_error()
-success_msg("Great job! The `options()`-function can be useful when you have plots (for example in your webpage) and you don't want the various messages from R packages or warnings from functions to show up in there.")
+test_error()
+success_msg("Great job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0f61649b52
@@ -493,19 +494,21 @@ The pipe operator, `%>%`, takes the result of the left-hand side and uses it as 
 [1] 5.5
 ```
 
+If the 'target' function (here mean) will only use the result as an argument, the parenthesis can be dropped. 
+
 The pipe is most commonly used to chain functions which perform operations on a data frame. Chaining operations with the pipe is great fun, so let's try it! 
 
-Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example). The latter can be combined with any summary function such as `mean()`, `min()`, `max()` or `sd()` to summarize the data. 
+Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example). The latter can be combined with any summary function such as `mean()`, `min()`, `max()` to summarize the data. 
 
 *** =instructions
 - Access the tidyverse libraries dplyr and ggplot2
 - Execute the sample code to see the counts of males and females in the data
-- Adjust the code to calculate average of the grades of the students. Inside `summarise()`, after the definition of `count`, define `mean_grade` by using `mean()` on the variable `G3`.
-- Adust the code: After `sex`, add `high_use` as another grouping variable. Note that `group_by` works also with multiple objects. Execute the code again.
+- Adjust the code to calculate means of the grades of the students: inside `summarise()`, after the definition of `count`, define `mean_grade` by using `mean()` on the variable `G3`.
+- Adjust the code: After `sex`, add `high_use` as another grouping variable. Execute the code again.
 
 *** =hint
-- Rememebr to separate arguments inside functions with a comma. Here the first argument of `summarise` is `count`, and the second one is `mean_grade`.
-- Hint for grouping: `group_by(var1, var2)`
+- Remember to separate inputs inside functions with a comma. Here the first input of `summarise` is `count`, and the second one should be  `mean_grade`.
+- Also separate the grouping variables with a comma.
 
 *** =pre_exercise_code
 ```{r}
@@ -628,21 +631,91 @@ success_msg("Great work!")
 
 We will now use [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression) to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
 
-Because logistic regression can be used to classify observations into one of two groups (by giving the group probability) it is a binary classification method. You will meet more classification methods in the next chapter.
+Because logistic regression can be used to classify observations into one of two groups (by giving the group probability) it is a [binary classification](https://en.wikipedia.org/wiki/Binary_classification) method. You will meet more classification methods in the next chapter.
 
 *** =instructions
 - Use `glm()` to fit a logistic regression model with `high_use` as the target variable and `failures` and `absences` as the predictors.
 - Print out a summary of the model
 - Add another explanatory variable to the model: 'sex'. Repeat the above.
-- Compute the odds ratios related to the predictors by exponentiating their coefficients. Save the results to the object `OR`. Note how the exponentiating is done with the pipe operator.
-- Use `confint()` on the model object `m` to calculate the confidence intervals for the coefficients. Then exponentiate the values with `exp()` to get confidence intervals for the odds rations. Save the results to the object `CI`.
-- Combine and print out the odds ratios and the confidence intervals. Which predictor has the widest interval?
+- Use `coef()` on the model object to print out the coefficients of the model
+
+
 
 *** =hint
-- You can get the confidence intervals with the `confint(*model_object*)` function.
+- Use the `summary()` function to print out a summary.
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
+```
+
+*** =sample_code
+```{r}
+# alc is available 
+
+# find the model with glm()
+m <- glm(high_use ~ failures + absences, data = alc, family = "binomial")
+
+# print out a summary of the model
+
+
+# print out the coefficients of the model
+
+
+```
+
+*** =solution
+```{r}
+# alc is available 
+
+# find the model with glm()
+m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
+
+# print out a summary of the model
+summary(m)
+
+# print out the coefficients of the model
+coef(m)
+
+
+```
+
+*** =sct
+```{r}
+
+test_object("m", incorrect_msg = "Please add another exaplanatory variable 'sex' to the model. Do not add or adjust the code before the call to `glm()`")
+
+test_output_contains("summary(m)", incorrect_msg = "Please print out a summary of the model")
+
+test_function("coef", args = "object", incorrect_msg = "Please use `coef()` on the model object `m` to print out the coefficients.")
+ 
+test_error()
+success_msg("Great work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## From coefficients to odds ratios
+
+From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function leads back to odds:
+
+$$\exp \left( log\left( \frac{p}{1 - p} \right) \right) = \frac{p}{1 - p}.$$
+
+For this reason, the exponents of the coefficients of a logistic regression model can be interpret as odds ratios between a unit change (vs no change) in the corresponding explanatory variable. 
+
+
+*** =instructions
+- Use `glm()` to fit a logistic regression model.
+- Use `coef()` on the model object to extract the coefficients of the model. Then apply the `exp` function on the coefficients.
+- Create object `oR` by assigning the exponentiated model coeffifients (=odds ratios) to it.
+- Use `confint()` on the model object to compute (profile likelihood) confidence intervals for the coefficients. Exponentiate the values and assign the results to the object `CI`.
+- Combine and print out the odds ratios and their confidence intervals. Which predictor has the widest interval? Does any of the intervals contain 1 and why would that matter?
+
+*** =hint
+- You can get the confidence intervals with `confint(*model_object*)`
 - The logistic regression model is saved in the object `m`.
 - `coef(m) %>% exp` is the same as `exp( coef(m) )`
-- You get the odds ratios by exponentiating the logistic regression coefficients.
+- You get odds ratios by exponentiating the logistic regression coefficients.
 
 *** =pre_exercise_code
 ```{r}
@@ -655,18 +728,15 @@ library(dplyr)
 # alc and dlyr are available 
 
 # find the model with glm()
-m <- glm(high_use ~ failures + absences, data = alc, family = "binomial")
-
-# print out a summary of the model
-
+m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 
 # compute odds ratios
-OR <- coef(m) %>% exp
+coef(m) %>% exp
 
 # compute confidence intervals
 
 
-# print out the odds ratios and the CI's
+# print out the odds ratios with their confidence intervals
 cbind(OR, CI)
 
 ```
@@ -678,49 +748,49 @@ cbind(OR, CI)
 # find the model with glm()
 m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 
-# print out a summary of the model
-summary(m)
-
 # compute odds ratios
-OR <- coef(m) %>% exp
+coef(m) %>% exp
 
 # compute confidence intervals
-CI <- confint(m) %>% exp
 
-# print out the odds ratios and the CI's
+
+# print out the odds ratios with their confidence intervals
 cbind(OR, CI)
 
 ```
 
 *** =sct
 ```{r}
+test_object("m", incorrect_msg = "Please do not adjust the code before finding the model with `glm()`")
 
-test_object("m", incorrect_msg = "Please add another exaplanatory variable 'sex' to the model. Do not add or adjust the code before the call to `glm()`")
+test_object("OR", incorrect_msg = "Please create the object `OR` by assigning the computed odds ratios to it.")
 
-test_object("OR")
-test_object("CI", incorrect_msg = "Please define the object `CI` as instructed. Use the `exp()` function on the confidence intervals of the coefficients.")
+test_object("CI", incorrect_msg = "Please create the object `CI` as instructed. Use the `exp()` function on the confidence intervals of the coefficients.")
 
-test_output_contains("cbind(OR, CI)", incorrect_msg = "")
- 
 test_error()
-success_msg("Great work!")
+success_msg("Very nice work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
-## Model performance: prediction accuracy (1)
 
-When you have a linear model, you can make predictions. A very basic question is of course, how well does our model actually predict the response variable. Let's take a look!
+--- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
+## Binary predictions (1)
+
+When you have a linear model, you can make predictions. A very basic question is, of course, how well does our model actually predict the target variable. Let's take a look!
+
+The `precict()` function can be used to make predictions with a model object. If `predict()` is not given any new data, it will use the data used for finding (fitting, leaning, training) the model to make predictions.  
+
+In the case of a binary response variable, the 'type' argument of `predict()` can be used to get the predictions as probabilities (instead of log of odds, the default).
 
 *** =instructions
 - Fit the logistic regression model with `glm()`.
 - Create object `probabilities` by using `predict()` on the model object.
 - Mutate the alc data: add a column 'probability' with the predicted probabilities.
-- Mutate the data again: add a column 'prediction' which is true if value of 'probability' is greater than 0.5.
+- Mutate the data again: add a column 'prediction' which is true if the value of 'probability' is greater than 0.5.
 - Use `table()` to create a cross table of the columns 'high_use' versus 'prediction' in `alc`.
 
 *** =hint
 - Remember to use the [data wrangling cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) by RStudio
-- The `$` sign can be used to access columns of a data.frame
+- The `$` sign can be used to access columns of a data frame
 
 *** =pre_exercise_code
 ```{r}
@@ -784,9 +854,9 @@ success_msg("Good job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ac0db676b7
-## Model performance: prediction accuracy (2)
+## Binary predictions (2)
 
-Let's continue to explore the accuracy of the predictions of our model.
+Let's continue to explore the predictions of our model.
 
 
 *** =instructions
@@ -861,205 +931,24 @@ success_msg("Very well done! You are a master Piper already!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:4f8947a0fd
-## The prediction cutoff
-
-As you saw, the logistic regression model can produce prediction probabilities for the target variable 'high_use'. Those probabilities can then be used to make an actual prediction. 
-
-It probably makes intuitive sense to label and individual as a "high user" when the predicted probability is greater than 0.5. Notice that instead of the treshold 0.5  
-
-- using a treshold of 0 would predict everyone as a high user
-- using a treshold of 1 would predict no one as a high user.
-
-Just to convince ourselves that 0.5 is a good choice and that our model makes sense, let's try out a bunch of tresholds and see how accurately the model would predict with each one. 
-
-*** =instructions
-- Define the function `get_accuracy()`. Note that you will need to select the whole function before executing it.
-- Create object `tresholds` and print it out. 
-- Change the `by` argument of `seq()` to 0.01. Create and print out `tresholds` again. At this point, can you guess what the function `seq()` does?
-- Create object `accuracy` by applying the `get_accuracy()` function on every value of `tresholds`.
-- Access ggplot2 and draw the plot. Add the argument `geom = "line"` and draw the plot again.
-- Which treshold value gives the best accuracy? 
-
-*** =hint
-- The help page of `seq()` can be useful.
-- Print the object by typing its name
-- `sapply()` applies a function (here `get_accuracy()` that we made in the beginning of this exercise) to every value of a vector (here  the vector `tresholds`).
-- `geom = "line"` is an argument of the function `qplot`. It's different from the `qqplot()`-function, where you add stuff with `+` mark. See `?qplot`.
-
-*** =pre_exercise_code
-```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
-library(dplyr)
-# fit the model
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
-# predict() the probability of the target variable
-alc <- mutate(alc, probability = predict(m, type = "response"))
-alc <- mutate(alc, prediction = probability > 0.5)
-```
-
-*** =sample_code
-```{r}
-# alc is available
-
-# computes the average number of correct predictions (accuracy)
-get_accuracy <- function(treshold, data = alc) {
-  predictions <- data$probability > treshold
-  n_correct <- sum(predictions == data$high_use) 
-  n_correct / nrow(data)
-}
-
-# a sequence of tresholds to try
-tresholds <- seq(0, 1, by = 0.1)
-
-# print out the tresholds
-
-
-# compute the accuracy for each treshold
-accuracy <- sapply(tresholds, get_accuracy)
-
-# print out the accuracies
-
-
-# plot
-library(ggplot2)
-qplot(tresholds, accuracy)
-
-```
-
-*** =solution
-```{r}
-# alc is available
-
-# computes the average number of correct predictions (accuracy)
-get_accuracy <- function(treshold, data = alc) {
-  predictions <- data$probability > treshold
-  n_correct <- sum(predictions == data$high_use) 
-  n_correct / nrow(data)
-}
-
-# a sequence of tresholds to try
-tresholds <- seq(0, 1, by = 0.01)
-
-# print out the tresholds
-tresholds
-
-# compute the accuracy for each treshold
-accuracy <- sapply(tresholds, get_accuracy)
-
-# print out the accuracies
-accuracy
-
-# plot
-library(ggplot2)
-qplot(tresholds, accuracy, geom = "line")
-
-
-```
-
-*** =sct
-```{r}
-
-test_function("seq", args = c("from", "to", "by"),incorrect_msg = "Please adjust the 'by' argument of `seq()`. Do not change the other arguments.")
-
-test_function("qplot", args = c("x", "y", "geom"), incorrect_msg = "Please use `qplot()` to draw a **line** plot with `tresholds` in the x axis and `accuracy` on the y axis")
-
-# test_error()
-success_msg("Good work!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:a0712f2a78
-## The ROC curve
-
-Perhaps skip the ROC curve?
-
-*** =instructions
--execute the code
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
-library(dplyr)
-# fit the model
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
-# predict() the probability of the target variable
-alc <- mutate(alc, probability = predict(m, type = "response"))
-alc <- mutate(alc, prediction = probability > 0.5)
-```
-
-*** =sample_code
-```{r}
-
-# alc and dplyr are available
-
-# fit the model
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
-
-# using the model, predict() the target variable
-alc <- mutate(alc, probability = predict(m, type = "response"))
-alc <- mutate(alc, prediction = probability > 0.5)
-
-# draw a roc curve and and compute the area under the curve (auc)
-library(pROC)
-r <- roc(high_use ~ probability, data = alc)
-plot(r)
-
-```
-
-*** =solution
-```{r}
-# alc  and dplyr are available
-
-# fit the model
-m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
-
-# predict() the probability of the target variable
-alc <- mutate(alc, probability = predict(m, type = "response"))
-
-# draw a roc curve and and compute the area under the curve (auc)
-library(pROC)
-r <- roc(high_use ~ probability, data = alc)
-plot(r)
-```
-
-*** =sct
-```{r}
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
-```
-
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
-## Cross-validation
+## Accuracy and loss functions
 
-[Cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is a method of testing a predictive model on unseen data. In K-fold cross-validation, the data is split into K parts of equal size. Each part then takes turns acting as the test set, as the other parts are used to train (fit, learn) the model.
+A simple measure of performance in binary classification is accuracy: the average number of correctly classified observations. 
 
-A natural measure of performance in binary classification is the average number of correctly predicted classes. Note that the interpretation of this number depends on the class distribution: If your data has for example 100 observations where only one is of class TRUE and other 99 are FALSE, then simply predicting every observation blindly as FALSE will give 99% accuracy.
+Classification methods such as logistic regression aim to (approximately) minimize the incorrectly classified observations. The mean of incorrectly classified observations can be thought of as a penalty (loss) function for the classifier. Less penalty = good.
 
+Since we know how to make predictions with our model, we can also compute the average number of incorrect predictions.
 
 *** =instructions
 - Define the loss function `loss_func`
-- Execute the call to the loss function with `prob = 0`. What kind of a prediction does this equal to? What is the interpretation of the resulting proportion?
+- Execute the call to the loss function with `prob = 0`, meaning you define the probability of `high_use` as zero for each individual. What is the interpretation of the resulting proportion?
 - Adjust the code: change the `prob` argument in the loss function to `prob = 1`. What kind of a prediction does this equal to? What is the interpretation of the resulting proportion?
 - Adjust the code again:  change the `prob` argument by giving it the prediction probabilities in `alc` (the column `probability`). What is the interpretation of the resulting proportion?
-- Perform leave-one-out cross-validation. Use the number of observations in `alc` as K in K-fold cross-validation (`nrow(alc)` returns the observation count of `alc`).
-- Print out the average number of wrong predictions. The `cv.glm` function counts the number for you and the value is stored in `delta`. See `?cv.glm` for more information.
-- Adjust the code: Perform 10-fold cross validation. Print out the average number of wrong predictions.
-
 
 *** =hint
 - Select the whole code of `loss_func` to execute it.
 - You can access the `probability` column in `alc` by using the $-mark.
-- The `K` argument in `cv.glm` tells how many folds you will have.
 
 *** =pre_exercise_code
 ```{r}
@@ -1077,7 +966,7 @@ alc <- mutate(alc, prediction = probability > 0.5)
 ```{r}
 # the logistic regression model m and dataset alc with predictions are available
 
-# define a loss function (average prediction error)
+# define a loss function (mean prediction error)
 loss_func <- function(class, prob) {
   n_wrong <- abs(class - prob) > 0.5
   mean(n_wrong)
@@ -1124,9 +1013,91 @@ test_object("loss_func", incorrect_msg = "Please do not change the definition of
 test_function("loss_func", args = c("class", "prob"), 
               incorrect_msg = "Please adjust the `prob` argument of `loss_func` as instructed. Do not change the `class` argument.")
 
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Cross-validation 
+
+[Cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is a method of testing a predictive model on unseen data. In cross-validation, the value of a penalty function (mean prediction error) is computed on data not used for finding the model. 
+
+Cross-validation gives a good estimate of the actual predictive power of the model. It can also be used to compare different models or classification methods.
+
+
+*** =instructions
+- Define the loss function `loss_func`
+- Compute the mean prediction error for the training data: The `high_use` column in `alc` is the target and the `probability` column has the predictions.
+- Perform leave-one-out cross-validation and print out the mean prediction error for the testing data. (`nrow(alc)` gives the observation count in `alc` and using `K = nrow(alc)` defines the leave-one-out method). The `cv.glm` function computes the error and stores it in `delta`. See `?cv.glm` for more information.
+- Adjust the code: Perform 10-fold cross validation. Print out the mean prediction error for the testing data
+
+*** =hint
+- The `K` argument in `cv.glm` tells how many folds you will have.
+
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
+```
+
+*** =sample_code
+```{r}
+# the logistic regression model m and dataset alc with predictions are available
+
+# define a loss function (average prediction error)
+loss_func <- function(class, prob) {
+  n_wrong <- abs(class - prob) > 0.5
+  mean(n_wrong)
+}
+
+# compute the average number of wrong predictions in the (training) data
+
+
+# K-fold cross-validation
+library(boot)
+cv <- cv.glm(data = alc, cost = loss_func, glmfit = m, K = nrow(alc))
+
+# average number of wrong predictions in the cross validation
+cv$delta[1]
+```
+
+*** =solution
+```{r}
+# the logistic regression model m and dataset alc with predictions are available
+
+# define a loss function (average prediction error)
+loss_func <- function(class, prob) {
+  n_wrong <- abs(class - prob) > 0.5
+  mean(n_wrong)
+}
+
+# compute the average number of wrong predictions in the (training) data
+loss_func(class = alc$high_use, prob = alc$probability)
+
+# K-fold cross-validation
+library(boot)
+cv <- cv.glm(data = alc, cost = loss_func, glmfit = m, K = 10)
+
+# average number of wrong predictions in the cross validation
+cv$delta[1]
+```
+
+*** =sct
+```{r}
+
+test_object("loss_func", incorrect_msg = "Please do not change the definition of `loss_func()`")
+
+test_output_contains("loss_func(alc$high_use, alc$probability) ", incorrect_msg = "Please compute and print out the mean prediction error for the training data. You can use the `loss_func()` function")
+
 test_function("cv.glm", args = c("data", "cost", "glmfit", "K"), 
               incorrect_msg = "Please adjust the argument K of `cv.glm()` as instructed and do not adjust the other arguments.")
 
 test_error()
-success_msg("Good work!")
+success_msg("Awsome job! That concludes the logistic regression chapter.")
 ```
