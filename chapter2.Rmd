@@ -2,7 +2,7 @@
 title       : Logistic regression
 description : Regression for binary outcomes, training and testing a (predictive) model, cross-validation
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
 ## More datasets
 
 Welcome to the *Logistic regression* chapter.
@@ -105,7 +105,7 @@ success_msg("Nice work! That was a tough warm-up!")
 
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:af9b851a1c
 ## Joining 2 datasets
 
 There are multiple students who have answered both questionaires in our two datasets. Unfortunately we do not have a single identification variable to identify these students. However, we can use a bunch of background questions together for identification.
@@ -193,7 +193,7 @@ success_msg("Awsomeland! Imagine the possibilities of joining various data sets!
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:fe19bbaae6
 ## The if-else structure
 
 The `math_por` data frame now contains - in addition to the background variables used for joining `por` and `math` - two possibly different answers to the same questions for each student. To fix this, you'll use programming to combine these 'duplicated' answers by either: 
@@ -327,7 +327,7 @@ success_msg("Phew! This was tough one. Excellent work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
 ## Mutations
 
 Mutating a data frame means adding new variables as mutations of the existing ones. The `mutate()` function is from the 'dplyr' package which is part of the 'tidyverse' packages. The tidyverse includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
@@ -434,7 +434,7 @@ test_error()
 success_msg("Very nice work! You're really getting the hang of it :)")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:6f326bbb98
 ## So many plots
 
 I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we visualize all of them! 
@@ -506,7 +506,7 @@ test_error()
 success_msg("Great job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:0f61649b52
 ## The pipe: summarising by group
 
 The pipe operator, `%>%`, takes the result of the left-hand side and uses it as the first argument of the function on the right-hand side. For example:
@@ -576,7 +576,7 @@ success_msg("Ooh so handy! Very nice work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
 ## Box plots by groups
 
 [Box plots](https://en.wikipedia.org/wiki/Box_plot) are an excellent way of displaying and comparing distributions. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers of a variable. 
@@ -651,7 +651,7 @@ success_msg("Great work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
 ## Learning a logistic regression model
 
 We will now use [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression) to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
@@ -719,7 +719,7 @@ test_error()
 success_msg("Great work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:bf36a9b331
 ## From coefficients to odds ratios
 
 From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function to the modelled values gives the odds:
@@ -796,7 +796,7 @@ success_msg("Very nice work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
 ## Binary predictions (1)
 
 When you have a linear model, you can make predictions. A very basic question is, of course, how well does our model actually predict the target variable. Let's take a look!
@@ -876,7 +876,7 @@ test_error()
 success_msg("Good job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:ac0db676b7
 ## Binary predictions (2)
 
 Let's continue to explore the predictions of our model.
@@ -954,7 +954,7 @@ success_msg("Very well done! You are a master Piper already!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
 ## Accuracy and loss functions
 
 A simple measure of performance in binary classification is accuracy: the average number of correctly classified observations. 
@@ -1028,7 +1028,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:9344688783
 ## Cross-validation 
 
 [Cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is a method of testing a predictive model on unseen data. In cross-validation, the value of a penalty (loss) function (mean prediction error) is computed on data not used for finding the model. Low value = good.
