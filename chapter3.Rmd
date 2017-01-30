@@ -2,8 +2,8 @@
 title       : Clustering and classification
 description : K-means clustering, Discriminant analysis
 
---- type:NormalExercise lang:r xp:100 skills:1 key:2180e19ae8
-## Exercise 1
+--- type:NormalExercise lang:r xp:100 skills:1
+## Exercise title
 
 UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 
@@ -31,84 +31,10 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 *** =sct
 ```{r}
 
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
-success_msg("Good work!")
-```
-
-
-## Discriminant Analysis
-
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
-success_msg("Good work!")
-```
-
-
-## Cross Validation
-
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
-
-test_error()
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
 success_msg("Good work!")
 ```
