@@ -707,7 +707,7 @@ test_error()
 success_msg("Great work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:bf36a9b331
 ## From coefficients to odds ratios
 
 From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function leads back to odds:
@@ -1018,7 +1018,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:9344688783
 ## Cross-validation 
 
 [Cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is a method of testing a predictive model on unseen data. In cross-validation, the value of a penalty function (mean prediction error) is computed on data not used for finding the model. 
