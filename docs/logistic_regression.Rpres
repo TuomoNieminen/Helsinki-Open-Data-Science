@@ -67,24 +67,48 @@ So, linear regression is a model for the (conditional) expected value of Y.
 Regression for binary outcomes
 ========================================================
 
-If the target variable Y is binary, taking only the values 0 or 1 with probability $p$, then
+If the target variable $Y$ is *binary*, taking only the values 0 ("failure") or 1 ("success"), with probability $p$, then
 
 $$E[Y] = p$$
 
 - The goal in logistic regression is to define a linear model for the probability of success $p$.
 - The problem is that $p$ only takes on values between 0 and 1
+- A possible predictor can take on any value. There is no way to use multiplication and addition to restrict the values to a range of 0 and 1.
 
-Luckily, there is a trick!
+Odds
+========================================================
+
+$p/ (1-p)$ are called the odds: the ratio of successes to failures
+
+- Odds are an alternative way of expressing probabilities
+- Higher odds corresponds to a higher probability of success
+- The value of odds ranges from zero to infinity
+
+***
+
+```{r}
+options(warn = -1)
+p <- seq(0,0.96, by=0.001)
+odds <- p / (1-p)
+library(ggplot2)
+q <- qplot(p, odds, ylim = c(0, 6), geom = "line")
+q <- q + ggtitle("Odds for p = 2/3")
+q <- q + geom_vline(xintercept = 2/3, col = "blue", alpha = 0.3)
+q <- q + geom_hline(yintercept = 2, col = "blue", alpha = 0.3)
+q
+```
+*Odds of 2 to 1: the probability of success is twice as likely as the probability of failure when p = 2/3.*
 
 
 The logit function
 ========================================================
 incremental: false
 
-We can apply the *logit function* to the expected value of Y, $p$.
+To transform $p$ into an unrestricted scale, we can apply the *logit function* to the expected value of Y, $p$.
 
 $$log\left( \frac{p}{1 - p} \right) \in [- \infty, \infty]$$
 
+- The logit function is the (natural) logarithm of odds.
 - After the transformation, the possible values are all the real numbers.
 
 ***
@@ -96,35 +120,28 @@ curve(logit, xname = "p", col = "blue", lwd = 2, main = "logit of p",
 abline(h = 0, lty = 2, col = "grey70")
 ```
 
-That's odds?
+Odds ratio
 ========================================================
-One reason to use the logit transformation is that is has a nice interpretation.
 
-- The part $p/ (1-p)$ of the transformation are called the odds: the ratio of successes to failures
-- The value of odds ranges from zero to infinity
-- Higher odds corresponds to a higher probability of success
+The ratio of two odds is called the odds ratio. It can be computed by following these steps:
 
-***
+1. Compute the odds of 'success' ($Y = 1$) for individuals who have the property $X$. 
+2. Compute the odds of 'success' ($Y = 1$) for individuals who do not have property $X$.
+3. Divide the odds from step 1 by the odds from step 2 to obtain the odds ratio (OR).
 
-```{r}
-p <- seq(0,0.96,by=0.01)
-df <- data.frame(p = p, odds = p / (1-p))
-library(ggplot2)
-ggplot(df, aes(x = p, y = odds)) + geom_line(col = "blue", size = 1.1) + ggtitle("Odds and probability")
-```
-
+- Odds ratio can be used to quantify the relationship between $X$ and $Y$. - Odds higher than 1 means that $X$ is positively associated with 'success'.
 
 Odds ratio example (1)
 ========================================================
 
-- *E = "exposed"*
-- *E_ = "not exposed"*
-- *O = "event"*
-- *O_ = "no event"*
+- *E = "has E"*
+- *E_ = "doesn't have E"*
+- *1 = "success"*
+- *0 = "failure"*
 
 ```{r}
-E <- c("O" = 10, "O_" = 16)
-E_ <- c("O" = 15, "O_" = 4)
+E <- c("1" = 10, "0" = 16)
+E_ <- c("1" = 15, "0" = 4)
 d <- data.frame(E, E_)
 d$n <- rowSums(d)
 rbind(d, "n" = colSums(d))
@@ -133,21 +150,21 @@ rbind(d, "n" = colSums(d))
 
 ***
 
-- $P(O \mid E) = 10 / 25 = 0.4$
-- $P(O \mid E_) = 15 / 25  = 0.6$
-- $P(O_ \mid E) = 16 / 20 = 0.8$
-- $P(O_ \mid E_) = 4 / 20 = 0.2$  
+- $P(Y = 1 \mid E) = 10 / 25 = 0.4$
+- $P(Y = 1 \mid E_) = 15 / 25  = 0.6$
+- $P(Y = 0 \mid E) = 16 / 20 = 0.8$
+- $P(Y = 0 \mid E_) = 4 / 20 = 0.2$  
 
 Odds ratio example (2)
 ========================================================
-The ratio of two odds is called the odds ratio.
+Odds is the ratio of successes to failures:
 
-- $Odds(O \mid E) = P(O \mid E) / P(O_ \mid E) = 0.4 / 0.8 = 0.5$
-- $Odds(O \mid E_) = P(O \mid E_) / P(O_ \mid E_) = 0.6 / 0.2 = 3$
+- $Odds(Y \mid E) = P(Y = 1 \mid E) / P(Y = 0 \mid E) = 0.4 / 0.8 = 0.5$
+- $Odds(Y \mid E_) = P(Y = 1 \mid E_) / P(Y = 0 \mid E_) = 0.6 / 0.2 = 3$
 
-Odds ratio of events between exposed and not exposed: 
+Odds ratio is the ratio of two odds:
 
-$$\frac{$Odds(O \mid E)}{Odds(O \mid E_)} = \frac{0.5}{3} = 1 / 6$$
+$$\frac{$Odds(Y \mid E)}{Odds(Y \mid E_)} = \frac{0.5}{3} = 1 / 6$$
 
 
 ```{r}
@@ -176,11 +193,11 @@ type: prompt
 Train and test sets
 ========================================================
 
-A statistical model can usually be used to make predictions. An intuitive way of comparing different models is to test their predictive power on unseed data.
+A statistical model can be used to make predictions. An intuitive way of comparing different models is to test their predictive power on unseed data.
 
-- The available data can be split into train and test sets
-- Only the training set is used to find the model
-- The test set is then used to make predictions and evaluate the model
+- The available data can be split into training and testing data
+- Only the training data is used to find the model
+- The testing data is then used to make predictions and evaluate the model
 
 <img src="logistic_regression-figure/train_test.png" height = 200></img>
 
