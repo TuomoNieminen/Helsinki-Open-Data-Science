@@ -1,0 +1,177 @@
+# Logistic Regression
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:4f8947a0fd
+## The prediction cutoff
+
+As you saw, the logistic regression model can produce prediction probabilities for the target variable 'high_use'. Those probabilities can then be used to make an actual prediction. 
+
+It probably makes intuitive sense to label and individual as a "high user" when the predicted probability is greater than 0.5. Notice that instead of the treshold 0.5  
+
+- using a treshold of 0 would predict everyone as a high user
+- using a treshold of 1 would predict no one as a high user.
+
+Just to convince ourselves that 0.5 is a good choice and that our model makes sense, let's try out a bunch of tresholds and see how accurately the model would predict with each one. 
+
+*** =instructions
+- Define the function `get_accuracy()`. Note that you will need to select the whole function before executing it.
+- Create object `tresholds` and print it out. 
+- Change the `by` argument of `seq()` to 0.01. Create and print out `tresholds` again. At this point, can you guess what the function `seq()` does?
+- Create object `accuracy` by applying the `get_accuracy()` function on every value of `tresholds`.
+- Access ggplot2 and draw the plot. Add the argument `geom = "line"` and draw the plot again.
+- Which treshold value gives the best accuracy? 
+
+*** =hint
+- The help page of `seq()` can be useful.
+- Print the object by typing its name
+- `sapply()` applies a function (here `get_accuracy()` that we made in the beginning of this exercise) to every value of a vector (here  the vector `tresholds`).
+- `geom = "line"` is an argument of the function `qplot`. It's different from the `qqplot()`-function, where you add stuff with `+` mark. See `?qplot`.
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
+```
+
+*** =sample_code
+```{r}
+# alc is available
+
+# computes the average number of correct predictions (accuracy)
+get_accuracy <- function(treshold, data = alc) {
+  predictions <- data$probability > treshold
+  n_correct <- sum(predictions == data$high_use) 
+  n_correct / nrow(data)
+}
+
+# a sequence of tresholds to try
+tresholds <- seq(0, 1, by = 0.1)
+
+# print out the tresholds
+
+
+# compute the accuracy for each treshold
+accuracy <- sapply(tresholds, get_accuracy)
+
+# print out the accuracies
+
+
+# plot
+library(ggplot2)
+qplot(tresholds, accuracy)
+
+```
+
+*** =solution
+```{r}
+# alc is available
+
+# computes the average number of correct predictions (accuracy)
+get_accuracy <- function(treshold, data = alc) {
+  predictions <- data$probability > treshold
+  n_correct <- sum(predictions == data$high_use) 
+  n_correct / nrow(data)
+}
+
+# a sequence of tresholds to try
+tresholds <- seq(0, 1, by = 0.01)
+
+# print out the tresholds
+tresholds
+
+# compute the accuracy for each treshold
+accuracy <- sapply(tresholds, get_accuracy)
+
+# print out the accuracies
+accuracy
+
+# plot
+library(ggplot2)
+qplot(tresholds, accuracy, geom = "line")
+
+
+```
+
+*** =sct
+```{r}
+
+test_function("seq", args = c("from", "to", "by"),incorrect_msg = "Please adjust the 'by' argument of `seq()`. Do not change the other arguments.")
+
+test_function("qplot", args = c("x", "y", "geom"), incorrect_msg = "Please use `qplot()` to draw a **line** plot with `tresholds` in the x axis and `accuracy` on the y axis")
+
+# test_error()
+success_msg("Good work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a0712f2a78
+## The ROC curve
+
+Perhaps skip the ROC curve?
+
+*** =instructions
+-execute the code
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+library(dplyr)
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
+```
+
+*** =sample_code
+```{r}
+
+# alc and dplyr are available
+
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
+# using the model, predict() the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+alc <- mutate(alc, prediction = probability > 0.5)
+
+# draw a roc curve and and compute the area under the curve (auc)
+library(pROC)
+r <- roc(high_use ~ probability, data = alc)
+plot(r)
+
+```
+
+*** =solution
+```{r}
+# alc  and dplyr are available
+
+# fit the model
+m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
+
+# predict() the probability of the target variable
+alc <- mutate(alc, probability = predict(m, type = "response"))
+
+# draw a roc curve and and compute the area under the curve (auc)
+library(pROC)
+r <- roc(high_use ~ probability, data = alc)
+plot(r)
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
