@@ -142,7 +142,7 @@ n  26 19 45
 
 Interpreting the parameters of logistic regression
 ========================================================
-Example of how to intepret the parameters of logistic regression as odds ratios here
+Example of how to interpret the parameters of logistic regression as odds ratios here
 
 
 Cross-validation
