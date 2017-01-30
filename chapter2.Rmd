@@ -2,7 +2,7 @@
 title       : Logistic regression
 description : Regression for binary outcomes, training and testing a (predictive) model, cross-validation
 
---- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
+--- type:NormalExercise lang:r xp:100 skills:1
 ## More datasets
 
 Welcome to the *Logistic regression* chapter.
@@ -105,7 +105,7 @@ success_msg("Nice work! That was a tough warm-up!")
 
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:af9b851a1c
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Joining 2 datasets
 
 There are multiple students who have answered both questionaires in our two datasets. Unfortunately we do not have a single identification variable to identify these students. However, we can use a bunch of background questions together for identification.
@@ -193,7 +193,7 @@ success_msg("Awsomeland! Imagine the possibilities of joining various data sets!
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:fe19bbaae6
+--- type:NormalExercise lang:r xp:100 skills:1
 ## The if-else structure
 
 The `math_por` data frame now contains - in addition to the background variables used for joining `por` and `math` - two possibly different answers to the same questions for each student. To fix this, you'll use programming to combine these 'duplicated' answers by either: 
@@ -214,6 +214,7 @@ if(condition) {
 ```
 
 *** =instructions
+- Print out the column names of `math_por`
 - Adjust the code: Create the data frame `alc` by selecting only the columns in `math_por` which were used for joining the two questinaires. The names of those columns are available in the `join_by` object.
 - Create the object `notjoined_columns` and print it out.
 - Execute the `for`-loop (don't mind the "change me!").
@@ -238,6 +239,9 @@ math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 ```{r}
 # dplyr, math_por, join_by are available
 
+# print out the column names of 'math_por'
+
+
 # create a new data frame with only the joined columns
 alc <- select(math_por, one_of("change me!"))
 
@@ -260,7 +264,7 @@ for(column_name in notjoined_columns) {
     # add the resulting vector to the alc data frame
     alc[column_name] <- round(rowMeans(two_columns))
   } else { # else if it's not numeric...
-    # add the fist column to the alc data frame
+    # add the fist column vector to the alc data frame
     alc[column_name] <- "change me!"
   }
 }
@@ -273,6 +277,9 @@ for(column_name in notjoined_columns) {
 *** =solution
 ```{r}
 # dplyr, math_por, join_by are available
+
+# print out the column names of 'math_por'
+colnames(math_por)
 
 # create a new data frame with only the joined columns
 alc <- select(math_por, one_of(join_by))
@@ -296,7 +303,7 @@ for(column_name in notjoined_columns) {
     # add the resulting vector to the alc data frame
     alc[column_name] <- round(rowMeans(two_columns))
   } else { # else if it's not numeric...
-    # add the fist column to the alc data frame
+    # add the fist column vector to the alc data frame
     alc[column_name] <- first_column
   }
 }
@@ -320,7 +327,7 @@ success_msg("Phew! This was tough one. Excellent work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:ba34cfe7bd
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Mutations
 
 Mutating a data frame means adding new variables as mutations of the existing ones. The `mutate()` function is from the 'dplyr' package which is part of the 'tidyverse' packages. The tidyverse includes several packages that work well together, such as 'dplyr' and 'ggplot2'.
@@ -329,14 +336,15 @@ The tidyverse functions have a lot of similarities. For example, the first argum
 
 *** =instructions
 - Mutate `alc` by creating the new column `alc_use` by averaging weekday and weekend alcohol consumption.
-- Adjust the code: Mutate `alc` by creating a new column `high_use`, which is true if `alc_use` is greater than 2 and false otherwise.
 - Draw a bar plot of `alc_use`.
 - Define a new asthetic element to the bar plot of `alc_use` by defining `fill = sex`. Draw the plot again.
-- Draw a bar plot of `high_use`.
-- Add this element to the latter plot (using `+`): `facet_wrap("sex")`. Draw the plot again.
+- Adjust the code: Mutate `alc` by creating a new column `high_use`, which is true if `alc_use` is greater than 2 and false otherwise.
+- Initialize a ggplot object with `high_use` on the x-axis and then draw a bar plot.
+- Add this element to the latter plot (using `+`): `facet_wrap("sex")`.
 
 *** =hint
-- hint
+- Use the `>` operator to test if the values of a vector are greater than some value.
+- Add the argument `aes(x = high_use)` to the `ggplot()` function to initialize a plot with `high_use` on the x-axis.
 
 *** =pre_exercise_code
 ```{r}
@@ -368,22 +376,22 @@ library(ggplot2)
 # access the 'tidyverse' packages dplyr and ggplot2
 library(dplyr); library(ggplot2)
 
-# combine weekday and weekend alcohol use into 'alc_use'
+# define a new column alc_use by combining weekday and weekend alcohol use
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
-# define a new logical variable 'high_use'
-alc <- mutate(alc, high_use = "change me!" > 2)
-
 # initialize a plot of alcohol use
-g1 <- ggplot(data = alc, aes(alc_use))
+g1 <- ggplot(data = alc, aes(x = alc_use))
 
 # define the plot as a bar plot and draw it
 g1 + geom_bar()
 
-# initialize a plot of 'high_use'
-g2 <- ggplot(data = alc, aes(high_use))
+# define a new logical column 'high_use'
+alc <- mutate(alc, high_use = "change me!" > 2)
 
-# define the plot as a bar plot and draw it
+# initialize a plot of 'high_use'
+g2 <- ggplot(data = alc)
+
+# draw a bar plot of high_use by sex
 
 
 ```
@@ -395,21 +403,22 @@ g2 <- ggplot(data = alc, aes(high_use))
 # access the 'tidyverse' packages dplyr and ggplot2
 library(dplyr); library(ggplot2)
 
-# combine weekday and weekend alcohol use into 'alc_use'
+# define a new column alc_use by combining weekday and weekend alcohol use
 alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
 
-# define a new logical variable 'high_use'
-alc <- mutate(alc, high_use = alc_use > 2)
-
 # initialize a plot of alcohol use
-g1 <- ggplot(data = alc, aes(alc_use, fill = sex))
+g1 <- ggplot(data = alc, aes(x = alc_use, fill = sex))
 
 # define the plot as a bar plot and draw it
 g1 + geom_bar()
 
+# define a new logical column 'high_use'
+alc <- mutate(alc, high_use = alc_use > 2)
+
 # initialize a plot of 'high_use'
 g2 <- ggplot(alc, aes(high_use))
-# draw a bar plot for each sex
+
+# draw a bar plot of high_use by sex
 g2 + facet_wrap("sex") + geom_bar()
 
 
@@ -419,13 +428,13 @@ g2 + facet_wrap("sex") + geom_bar()
 ```{r}
 
 test_object("alc", incorrect_msg = "Please mutate alc by creating a logical column 'high_use'.")
-test_function("facet_wrap", args = "facets",incorrect_msg = "Please add the `facet_wrap('sex')` element to the latter bar plot.")
+test_function("facet_wrap", args = "facets",incorrect_msg = "Please add the `facet_wrap('sex')` element to the bar plot of 'high_use'.")
 
 test_error()
 success_msg("Very nice work! You're really getting the hang of it :)")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:6f326bbb98
+--- type:NormalExercise lang:r xp:100 skills:1
 ## So many plots
 
 I imagine you're curious to find out how the distributions of some of the other variables in the data look like. Well, why don't we visualize all of them! 
@@ -439,7 +448,7 @@ We'll look at `%>%` more closely in the next exercise. But now, let's draw some 
 *** =instructions
 - Access the tidyverse libraries tidyr, dplyr and ggplot2
 - Take a glimpse at the `alc` data
-- Apply the `gather()` function on `alc` and take a glimpse at the resulting data directly after, utilizing the pipe (`%>%`). What does gather do?
+- Apply the `gather()` function on `alc` and then take a glimpse at the resulting data directly after, utilizing the pipe (`%>%`). What does gather do?
 - Draw a plot of each variable in the `alc` data by first gathering the values into key-value pairs and then visualizing them with ggplot. Define the plots as bar plots by adding the element `geom_bar()`, (using `+`).
 
 *** =hint
@@ -460,7 +469,7 @@ library(tidyr); library(dplyr); library(ggplot2)
 # glimpse at the alc data
 
 
-# use gather() to gather columns into key value pairs and then glimpse() at the resulting data
+# use gather() to gather columns into key-value pairs and then glimpse() at the resulting data
 gather(alc) %>% glimpse
 
 # draw a bar plot of each variable
@@ -479,7 +488,7 @@ library(tidyr); library(dplyr); library(ggplot2)
 # glimpse at the alc data
 glimpse(alc) 
 
-# use gather() to gather columns into key value pairs and then glimpse() at the resulting data
+# use gather() to gather columns into key-value pairs and then glimpse() at the resulting data
 gather(alc) %>% glimpse
 
 # draw a bar plot of each variable
@@ -497,19 +506,23 @@ test_error()
 success_msg("Great job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:0f61649b52
+--- type:NormalExercise lang:r xp:100 skills:1
 ## The pipe: summarising by group
 
 The pipe operator, `%>%`, takes the result of the left-hand side and uses it as the first argument of the function on the right-hand side. For example:
 
 ```
-1:10 %>% mean()
-[1] 5.5
+1:10 %>% mean() # 5.5
 ```
 
-If the 'target' function (here mean) will only use the result as an argument, the parenthesis can be dropped. 
+The parenthesis of the 'target' function (here mean) can be dropped unless one wants to specify more arguments for it.
 
-The pipe is most commonly used to chain functions which perform operations on a data frame. Chaining operations with the pipe is great fun, so let's try it! 
+```
+1:10 %>% mean # 5.5
+```
+
+
+Chaining operations with the pipe is great fun, so let's try it! 
 
 Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on your data. The first one splits the data to groups according to a grouping variable (a factor, for example). The latter can be combined with any summary function such as `mean()`, `min()`, `max()` to summarize the data. 
 
@@ -563,7 +576,7 @@ success_msg("Ooh so handy! Very nice work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:e11583db2a
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Box plots by groups
 
 [Box plots](https://en.wikipedia.org/wiki/Box_plot) are an excellent way of displaying and comparing distributions. A box plot visualizes the 25th, 50th and 75th percentiles (the box), the typical range (the whiskers) and the outliers of a variable. 
@@ -575,15 +588,14 @@ The whiskers extending from the box can be computed by several techniques. The d
 Values outside the whiskers can be considered as outliers, unusually distant observations. For more information on IQR, see <a target="_blank" href ="https://en.wikipedia.org/wiki/Interquartile_range"> wikipedia</a>.
 
 *** =instructions
-- Initialize and draw a box plot of student grades (`G3`), grouped by `high_use`.
+- Initialize and plot of student grades (`G3`), with `high_use` grouping the grade distributions on the x-axis. Draw the plot as a box plot.
 - Add an aesthetix element to the plot by defining `col = sex` inside `aes()`
-- Add the element `ylab("grade")` to the plot.
-- Define a similar (box) plot of the variable `absences` grouped by `high_use` and the aesthetic `col = sex`.
+- Define a similar (box) plot of the variable `absences` grouped by `high_use` on the x-asis and the aesthetic `col = sex`.
 - Add a main title to the last plot with `ggtitle("title here")`. Use "Student absences by alcohol consumption and sex" as a title.
-- Does the high use of alcohol have an effect on the absences?
+- Does high use of alcohol have a connection to school absences?
 
 *** =hint
-- In ggplot, you can add stuff to the initialized plot with `+` mark, e.g. `ylab("text here")`. Some goes for titles. 
+- In ggplot, you can add stuff to the initialized plot with the `+` operator, e.g. `+ ylab("text here")`. Same goes for titles. 
 - Make sure that the title is exactly the same as in the instructions (capital letters and spaces and everything). 
 
 *** =pre_exercise_code
@@ -599,7 +611,7 @@ library(ggplot2)
 g1 <- ggplot(alc, aes(x = high_use, y = G3))
 
 # define the plot as a boxplot and draw it
-g1 + geom_boxplot()
+g1 + geom_boxplot() + ylab("grade")
 
 # initialise a plot of high_use and absences
 
@@ -639,7 +651,7 @@ success_msg("Great work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Learning a logistic regression model
 
 We will now use [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression) to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
@@ -649,7 +661,7 @@ Because logistic regression can be used to classify observations into one of two
 *** =instructions
 - Use `glm()` to fit a logistic regression model with `high_use` as the target variable and `failures` and `absences` as the predictors.
 - Print out a summary of the model
-- Add another explanatory variable to the model: 'sex'. Repeat the above.
+- Add another explanatory variable to the model after absences: 'sex'. Repeat the above.
 - Use `coef()` on the model object to print out the coefficients of the model
 
 
@@ -707,10 +719,10 @@ test_error()
 success_msg("Great work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:bf36a9b331
+--- type:NormalExercise lang:r xp:100 skills:1
 ## From coefficients to odds ratios
 
-From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function leads back to odds:
+From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function to the modelled values gives the odds:
 
 $$\exp \left( log\left( \frac{p}{1 - p} \right) \right) = \frac{p}{1 - p}.$$
 
@@ -719,8 +731,7 @@ For this reason, the exponents of the coefficients of a logistic regression mode
 
 *** =instructions
 - Use `glm()` to fit a logistic regression model.
-- Use `coef()` on the model object to extract the coefficients of the model. Then apply the `exp` function on the coefficients.
-- Create object `oR` by assigning the exponentiated model coeffifients (=odds ratios) to it.
+- Creat the object `OR`: Use `coef()` on the model object to extract the coefficients of the model and then apply the `exp` function on the coefficients.
 - Use `confint()` on the model object to compute (profile likelihood) confidence intervals for the coefficients. Exponentiate the values and assign the results to the object `CI`.
 - Combine and print out the odds ratios and their confidence intervals. Which predictor has the widest interval? Does any of the intervals contain 1 and why would that matter?
 
@@ -744,7 +755,7 @@ library(dplyr)
 m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 
 # compute odds ratios (OR)
-coef(m) %>% exp
+OR <- coef(m) %>% exp
 
 # compute confidence intervals (CI)
 
@@ -785,7 +796,7 @@ success_msg("Very nice work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:206f9255e9
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Binary predictions (1)
 
 When you have a linear model, you can make predictions. A very basic question is, of course, how well does our model actually predict the target variable. Let's take a look!
@@ -799,7 +810,7 @@ In the case of a binary response variable, the 'type' argument of `predict()` ca
 - Create object `probabilities` by using `predict()` on the model object.
 - Mutate the alc data: add a column 'probability' with the predicted probabilities.
 - Mutate the data again: add a column 'prediction' which is true if the value of 'probability' is greater than 0.5.
-- Use `table()` to create a cross table of the columns 'high_use' versus 'prediction' in `alc`.
+- Use `table()` to create a cross table of the columns 'high_use' versus 'prediction' in `alc`. This is sometimes called a 'confusion matrix`.
 
 *** =hint
 - Remember to use the [data wrangling cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) by RStudio
@@ -821,11 +832,11 @@ m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 # predict() the probability of high_use
 probabilities <- predict(m, type = "response")
 
-# mutate alc and add the predicted probabilities
-alc <- "change me!"
+# add the predicted probabilities to 'alc'
+alc <- mutate(alc, probability = probabilities)
 
-# Use the probabilities to make a prediction of high_use
-alc <- mutate(alc, prediction = Inf > 0.5)
+# use the probabilities to make a prediction of high_use
+alc <- mutate(alc, prediction = "change me!")
 
 # tabulate the target variable versus the predictions
 table(high_use = alc$high_use, prediction = "change me!")
@@ -842,7 +853,7 @@ m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 # predict() the probability of high_use
 probabilities <- predict(m, type = "response")
 
-# mutate alc and add the predicted probabilities
+# add the predicted probabilities to 'alc'
 alc <- mutate(alc, probability = probabilities)
 
 # use the probabilities to make a prediction of high_use
@@ -852,7 +863,6 @@ alc <- mutate(alc, prediction = probability > 0.5)
 table(high_use = alc$high_use, prediction = alc$prediction)
 
 
-
 ```
 
 *** =sct
@@ -860,13 +870,13 @@ table(high_use = alc$high_use, prediction = alc$prediction)
 
 test_object("probabilities", incorrect_msg = "Please do not make changes to the code before the call to the `glm()` function")
 test_object("alc", incorrect_msg = "Please mutate the alc data with two new columns as instructed")
-test_output_contains("table(high_use = alc$high_use, prediction = alc$prediction)", incorrect_msg = "Please create a cross tabulation of 'high_use' versus the predictions")
-# 
+test_output_contains("table(high_use = alc$high_use, prediction = alc$prediction)", incorrect_msg = "Please create a cross tabulation of 'high_use' versus the 'prediction'")
+
 test_error()
 success_msg("Good job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:ac0db676b7
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Binary predictions (2)
 
 Let's continue to explore the predictions of our model.
@@ -902,7 +912,7 @@ alc <- mutate(alc, prediction = probability > 0.5)
 # access dplyr and ggplot2
 library(dplyr); library(ggplot2)
 
-# initialize a plot
+# initialize a plot of 'high_use' versus 'probability' in 'alc'
 g <- ggplot(alc, aes(x = "change me!", y = "change me!"))
 
 # define the geom as points and draw the plot
@@ -922,7 +932,7 @@ table(high_use = alc$high_use, prediction = alc$prediction)
 # access dplyr and ggplot2
 library(dplyr); library(ggplot2)
 
-# initialize a plot
+# initialize a plot of 'high_use' versus 'probability' in 'alc'
 g <- ggplot(alc, aes(x = probability, y = high_use, col = prediction))
 
 # define the geom as points and draw the plot
@@ -944,7 +954,7 @@ success_msg("Very well done! You are a master Piper already!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:2c4cd21197
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Accuracy and loss functions
 
 A simple measure of performance in binary classification is accuracy: the average number of correctly classified observations. 
@@ -1018,10 +1028,10 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:9344688783
+--- type:NormalExercise lang:r xp:100 skills:1
 ## Cross-validation 
 
-[Cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is a method of testing a predictive model on unseen data. In cross-validation, the value of a penalty function (mean prediction error) is computed on data not used for finding the model. 
+[Cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is a method of testing a predictive model on unseen data. In cross-validation, the value of a penalty (loss) function (mean prediction error) is computed on data not used for finding the model. Low value = good.
 
 Cross-validation gives a good estimate of the actual predictive power of the model. It can also be used to compare different models or classification methods.
 
@@ -1029,7 +1039,7 @@ Cross-validation gives a good estimate of the actual predictive power of the mod
 *** =instructions
 - Define the loss function `loss_func`
 - Compute the mean prediction error for the training data: The `high_use` column in `alc` is the target and the `probability` column has the predictions.
-- Perform leave-one-out cross-validation and print out the mean prediction error for the testing data. (`nrow(alc)` gives the observation count in `alc` and using `K = nrow(alc)` defines the leave-one-out method). The `cv.glm` function computes the error and stores it in `delta`. See `?cv.glm` for more information.
+- Perform leave-one-out cross-validation and print out the mean prediction error for the testing data. (`nrow(alc)` gives the observation count in `alc` and using `K = nrow(alc)` defines the leave-one-out method). The `cv.glm` function from the 'boot' library computes the error and stores it in `delta`. See `?cv.glm` for more information.
 - Adjust the code: Perform 10-fold cross validation. Print out the mean prediction error for the testing data
 
 *** =hint
@@ -1049,7 +1059,7 @@ alc <- mutate(alc, prediction = probability > 0.5)
 
 *** =sample_code
 ```{r}
-# the logistic regression model m and dataset alc with predictions are available
+# the logistic regression model m and dataset alc (with predictions) are available
 
 # define a loss function (average prediction error)
 loss_func <- function(class, prob) {
@@ -1070,7 +1080,7 @@ cv$delta[1]
 
 *** =solution
 ```{r}
-# the logistic regression model m and dataset alc with predictions are available
+# the logistic regression model m and dataset alc (with predictions) are available
 
 # define a loss function (average prediction error)
 loss_func <- function(class, prob) {
