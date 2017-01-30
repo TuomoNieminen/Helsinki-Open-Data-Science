@@ -1037,10 +1037,9 @@ Cross-validation gives a good estimate of the actual predictive power of the mod
 
 
 *** =instructions
-- Define the loss function `loss_func`
-- Compute the mean prediction error for the training data: The `high_use` column in `alc` is the target and the `probability` column has the predictions.
-- Perform leave-one-out cross-validation and print out the mean prediction error for the testing data. (`nrow(alc)` gives the observation count in `alc` and using `K = nrow(alc)` defines the leave-one-out method). The `cv.glm` function from the 'boot' library computes the error and stores it in `delta`. See `?cv.glm` for more information.
-- Adjust the code: Perform 10-fold cross validation. Print out the mean prediction error for the testing data
+- Define the loss function `loss_func` and compute the mean prediction error for the training data: The `high_use` column in `alc` is the target and the `probability` column has the predictions.
+- Perform leave-one-out cross-validation and print out the mean prediction error for the testing data. (`nrow(alc)` gives the observation count in `alc` and using `K = nrow(alc)` defines the leave-one-out method. The `cv.glm` function from the 'boot' library computes the error and stores it in `delta`. See `?cv.glm` for more information.)
+- Adjust the code: Perform 10-fold cross validation. Print out the mean prediction error for the testing data. Is the prediction error higher or lower on the testing data compared to the training data? Why?
 
 *** =hint
 - The `K` argument in `cv.glm` tells how many folds you will have.
