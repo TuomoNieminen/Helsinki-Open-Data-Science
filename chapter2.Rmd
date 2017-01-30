@@ -26,12 +26,12 @@ R offers the convenient `paste()` function which makes it easy to combine charac
 
 *** =pre_exercise_code
 ```{r}
-url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
+url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets"
 ```
 
 *** =sample_code
 ```{r}
-url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
+url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets"
 
 # web address for math class data
 url_math <- paste(url, "student-mat.csv", sep = "/")
@@ -59,7 +59,7 @@ colnames(math)
 
 *** =solution
 ```{r}
-url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets"
+url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets"
 
 # web address for math class data
 url_math <- paste(url, "student-mat.csv", sep = "/")
@@ -129,10 +129,10 @@ Here we'll use `inner.join()` function from the dplyr library to combine the dat
 *** =pre_exercise_code
 ```{r}
 ## read the math class questionaire data
-math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-mat.csv",sep=";",header=TRUE)
 
 ## read the portuguese class questionaire data
-por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-por.csv",sep=";",header=TRUE)
 
 ```
 
@@ -229,8 +229,8 @@ if(condition) {
 *** =pre_exercise_code
 ```{r}
 library(dplyr)
-math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
-por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-mat.csv",sep=";",header=TRUE)
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-por.csv",sep=";",header=TRUE)
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
 ```
@@ -349,8 +349,8 @@ The tidyverse functions have a lot of similarities. For example, the first argum
 *** =pre_exercise_code
 ```{r}
 library(dplyr)
-math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-mat.csv",sep=";",header=TRUE)
-por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/student-por.csv",sep=";",header=TRUE)
+math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-mat.csv",sep=";",header=TRUE)
+por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-por.csv",sep=";",header=TRUE)
 
 join_by <- c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet")
 math_por <- inner_join(math, por, by = join_by, suffix = c(".math", ".por"))
@@ -456,7 +456,7 @@ We'll look at `%>%` more closely in the next exercise. But now, let's draw some 
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 ```
 
 *** =sample_code
@@ -538,7 +538,7 @@ Utilizing the pipe, you'll apply the functions `group_by()` and `summarise()` on
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 ```
 
 *** =sample_code
@@ -600,7 +600,7 @@ Values outside the whiskers can be considered as outliers, unusually distant obs
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 ```
 
 *** =sample_code
@@ -671,7 +671,7 @@ Because logistic regression can be used to classify observations into one of two
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
 ```
 
@@ -743,7 +743,7 @@ For this reason, the exponents of the coefficients of a logistic regression mode
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
 ```
 
@@ -818,7 +818,7 @@ In the case of a binary response variable, the 'type' argument of `predict()` ca
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
 ```
 
@@ -896,7 +896,7 @@ Let's continue to explore the predictions of our model.
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
 # fit the model
 m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
@@ -975,7 +975,7 @@ Since we know how to make predictions with our model, we can also compute the av
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
 # fit the model
 m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
@@ -1047,7 +1047,7 @@ Cross-validation gives a good estimate of the actual predictive power of the mod
 
 *** =pre_exercise_code
 ```{r}
-alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datasets/alc.txt", sep  =",", header = T)
+alc <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep  =",", header = T)
 library(dplyr)
 # fit the model
 m <- glm(high_use ~ sex + failures + absences, data = alc, family = "binomial")
