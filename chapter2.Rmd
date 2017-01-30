@@ -35,6 +35,8 @@ url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datas
 
 # web address for math class data
 url_math <- paste(url, "student-mat.csv", sep = "/")
+
+# print out the address
 url_math
 
 # read the math class questionaire data into memory
@@ -43,11 +45,13 @@ math <- read.table(url_math, sep = ";" , header=TRUE)
 # web address for portuguese class data
 url_por <- paste("replace me!", "student-por.csv", sep =" change me! ")
 
+# print out the address
 
-## read the portuguese class questionaire data into memory
+
+# read the portuguese class questionaire data into memory
 por <- read.table(url_por, sep = ";", header = TRUE)
 
-## look at the column names of both data
+# look at the column names of both data
 colnames(math)
 
 
@@ -59,6 +63,8 @@ url <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_3140/datas
 
 # web address for math class data
 url_math <- paste(url, "student-mat.csv", sep = "/")
+
+# print out the address
 url_math
 
 # read the math class questionaire data into memory
@@ -66,12 +72,14 @@ math <- read.table(url_math, sep = ";" , header=TRUE)
 
 # web address for portuguese class data
 url_por <- paste(url, "student-por.csv", sep ="/")
+
+# print out the address
 url_por
 
-## read the portuguese class questionaire data into memory
+# read the portuguese class questionaire data into memory
 por <- read.table(url_por, sep = ";", header = TRUE)
 
-## look at the column names of both data
+# look at the column names of both data
 colnames(math)
 colnames(por)
 
@@ -81,10 +89,13 @@ colnames(por)
 ```{r}
 
 test_object("url_math", incorrect_msg = "Please store a valid web address in the `url_math` object")
+
 test_object("math", incorrect_msg = "Use `url_math` to load data and store the data in the `math` object.")
 
 test_object("url_por", incorrect_msg = "Make the necessary changes to store a valid web address in the `url_por` object")
-test_output_contains("url_por", "Please print out the object `url_por`")
+
+test_output_contains("url_por", incorrect_msg = "Please print out the object `url_por`")
+
 test_object("por", incorrect_msg = "Use `url_por` to load data and store the data in the `por` object.")
 
 test_output_contains("colnames(math)", times = 2, incorrect_msg = "Please print out the column names of both data sets")
@@ -270,7 +281,7 @@ alc <- select(math_por, one_of(join_by))
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
 # print out the colums not used for joining
-
+notjoined_columns
 
 # for every column name not used for joining...
 for(column_name in notjoined_columns) {
@@ -299,7 +310,9 @@ glimpse(alc)
 ```{r}
 
 test_output_contains("notjoined_columns", incorrect_msg = "Please print out the names of the columns not used for joining the math and por questionaires.")
+
 test_object("alc", incorrect_msg = "Please follow the instructions to modify the `alc` data frame via for for-loop")
+
 test_function("glimpse", args = "x", incorrect_msg = "Please use `glimpse()` to look at the `alc` data.frame")
  
 test_error()
@@ -730,10 +743,10 @@ library(dplyr)
 # find the model with glm()
 m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 
-# compute odds ratios
+# compute odds ratios (OR)
 coef(m) %>% exp
 
-# compute confidence intervals
+# compute confidence intervals (CI)
 
 
 # print out the odds ratios with their confidence intervals
@@ -748,11 +761,11 @@ cbind(OR, CI)
 # find the model with glm()
 m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 
-# compute odds ratios
-coef(m) %>% exp
+# compute odds ratios (OR)
+OR <- coef(m) %>% exp
 
-# compute confidence intervals
-
+# compute confidence intervals (CI)
+CI <- confint(m) %>% exp
 
 # print out the odds ratios with their confidence intervals
 cbind(OR, CI)
@@ -948,7 +961,7 @@ Since we know how to make predictions with our model, we can also compute the av
 
 *** =hint
 - Select the whole code of `loss_func` to execute it.
-- You can access the `probability` column in `alc` by using the $-mark.
+- You can access the `probability` column in `alc` by using the `$`-mark.
 
 *** =pre_exercise_code
 ```{r}
@@ -972,15 +985,9 @@ loss_func <- function(class, prob) {
   mean(n_wrong)
 }
 
-# compute the average number of wrong predictions in the (training) data
+# call loss_func to compute the average number of wrong predictions in the (training) data
 loss_func(class = alc$high_use, prob = 0)
 
-# K-fold cross-validation
-library(boot)
-cv <- cv.glm(data = alc, cost = loss_func, glmfit = m, K = nrow(alc))
-
-# average number of wrong predictions in the cross validation
-cv$delta[1]
 
 ```
 
@@ -994,15 +1001,9 @@ loss_func <- function(class, prob) {
   mean(n_wrong)
 }
 
-# compute the average number of wrong predictions in the (training) data
+# call loss_func to compute the average number of wrong predictions in the (training) data
 loss_func(class = alc$high_use, prob = alc$probability)
 
-# K-fold cross-validation
-library(boot)
-cv <- cv.glm(data = alc, cost = loss_func, glmfit = m, K = 10)
-
-# average number of wrong predictions in the cross validation
-cv$delta[1]
 
 ```
 
@@ -1011,7 +1012,7 @@ cv$delta[1]
 test_object("loss_func", incorrect_msg = "Please do not change the definition of `loss_func()`")
 
 test_function("loss_func", args = c("class", "prob"), 
-              incorrect_msg = "Please adjust the `prob` argument of `loss_func` as instructed. Do not change the `class` argument.")
+              incorrect_msg = "In the call to the `loss_func()` function, please adjust the `prob` argument of `loss_func` as instructed. Do not change the `class` argument.")
 
 test_error()
 success_msg("Good work!")
