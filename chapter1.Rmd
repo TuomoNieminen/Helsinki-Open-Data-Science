@@ -16,7 +16,7 @@ After the correct function has been identified and data read into R, the data wi
 
 
 *** =instructions
-- Read the `lrn14` data frame to memory with `read.table()`. The meta file for the data is [here](http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-meta.txt)
+- Read the `lrn14` data frame to memory with `read.table()`. There is information related to the data [here](http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-meta.txt)
 - Use `dim()` on the data frame to look at the dimensions of the data. How many rows and colums does the data have?
 - Look at the structure of the data with `str()`. 
 
