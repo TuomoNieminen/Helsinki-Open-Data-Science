@@ -80,14 +80,14 @@ If the target variable $Y$ is *binary*, taking only the values 0 ("failure") or 
 
 $$E[Y] = p$$
 
-- **The goal** in logistic regression is to define a linear model for the probability of 'success', $p$ (the exptected value of $Y$)
+- **The goal** in logistic regression is to define a linear model for the probability of "success" ($p$, the expected value of $Y$)
 - The problem is that $p$ only takes on values between 0 and 1
-- A possible predictor can take on any value. There is no way to use multiplication and addition to restrict the the predictors values to the range of $p$. What to do?
+- A possible predictor can take on any value. There is no way to use multiplication and addition to restrict the predictors values to the range of $p$. What to do?
 
 Odds
 ========================================================
 
-The ratio of expected 'successes' to 'failures' are called the odds:
+The ratio of expected "successes" to "failures" are called the odds:
 
 $$\frac{p}{1-p}$$
 
@@ -97,7 +97,8 @@ $$\frac{p}{1-p}$$
 
 ***
 
-<small> *Odds of 2 to 1: the probability of success is twice as likely as the probability of failure when p = 2/3.*</small>
+<small> *Odds of 2 to 1: the probability of success is twice as likely as the probability of failure, when p = 2/3.*</small>
+<br>
 ```{r}
 options(warn = -1)
 p <- seq(0,0.96, by=0.001)
@@ -137,7 +138,7 @@ Simple logistic regression
 
 In a simple case, the logistic regression model for the expected value $p$ of a binary variable $Y$, is:
 
-$$log\left( \frac{p}{1 - p} \right) = \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$$
+$$log\left( \frac{\boldsymbol{p}}{1 - \boldsymbol{p}} \right) = \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$$
 
 R:  
 `glm(Y ~ X, family = "binomial")`
@@ -168,11 +169,11 @@ Odds ratio
 
 The ratio of two odds is called the odds ratio. It can be computed by the following steps:
 
-1. Compute the odds of 'success' ($Y = 1$) for individuals who have the property $X$. 
-2. Compute the odds of 'success' ($Y = 1$) for individuals who **do not** have property $X$.
+1. Compute the odds of "success" ($Y = 1$) for individuals who have the property $X$. 
+2. Compute the odds of "success" ($Y = 1$) for individuals who **do not** have property $X$.
 3. Divide the odds from step 1 by the odds from step 2 to obtain the odds ratio (OR).
 
-Odds ratio can be used to quantify the relationship between $X$ and $Y$. Odds **higher than 1** mean that $X$ is **positively associated** with 'success'.
+Odds ratio can be used to quantify the relationship between $X$ and $Y$. Odds **higher than 1** mean that $X$ is **positively associated** with "success".
 
 Odds ratio example (1)
 ========================================================
@@ -182,7 +183,7 @@ Odds ratio example (1)
 - *1 = "success"*
 - *0 = "failure"*
 
-<small>Toy data:</small>
+<small>toy data:</small>
 ```{r}
 X <- c("1" = 10, "0" = 15)
 X_ <- c("1" = 16, "0" = 4)
@@ -211,14 +212,14 @@ Odds is the ratio of successes to failures:
 - $Odds(Y \mid X) = \frac{P(Y = 1 \mid X)}{P(Y = 0 \mid X)} = \frac{0.4}{0.6} = \frac{2}{3}$
 - $Odds(Y \mid X\_) = \frac{P(Y = 1 \mid X\_)}{P(Y = 0 \mid X\_)} =\frac{0.8}{0.2} = 4$
 
-Odds ratio is the ratio of the two odds:
+Odds ratio (OR) is the ratio of the two odds:
 
-$$\frac{Odds(Y \mid X)}{Odds(Y \mid X\_)} = \frac{2/3}{4} = \frac{1}{6}$$
+$$OR = \frac{Odds(Y \mid X)}{Odds(Y \mid X\_)} = \frac{2/3}{4} = \frac{1}{6}$$
 
 ***
 <br><br><br><br><br>
 
-<small>Toy data:</small>
+<small>toy data:</small>
 ```{r}
 X <- c("1" = 10, "0" = 15)
 X_ <- c("1" = 16, "0" = 4)
@@ -232,11 +233,11 @@ Interpreting the parameters of logistic regression
 ========================================================
 From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function to the fitted  values gives the odds:
 
-$$\exp \left( log\left( \frac{p}{1 - p} \right) \right) = \frac{p}{1 - p}.$$
+$$\exp \left( log\left( \frac{\hat{\boldsymbol{p}}}{1 - \hat{\boldsymbol{p}}} \right) \right) = \frac{\hat{\boldsymbol{p}}}{1 - \hat{\boldsymbol{p}}}.$$
 
 The exponents of the coefficients can be interpret as odds ratios between a unit change (vs no change) in the corresponding explanatory variable.
 
-$$exp(\hat{\beta_x}) = Odds(Y \mid X + 1) / Odds(Y \mid X)$$
+$$exp(\hat{\beta_x}) = Odds(Y \mid x + 1) / Odds(Y \mid x)$$
 
 Cross-validation
 ========================================================
@@ -265,7 +266,7 @@ Accuracy and error
 In order to assert model performance, we need to measure it somehow. 
 
 - Depending on the nature of the target variable, different measures might make sense.
-- If the task is *binary classification* such as logistic regression, it is straight forward to calculate the proportion of correctly classified observations
+- If the task is *binary classification* such as in logistic regression, it is straight forward to calculate the proportion of correctly classified observations
 - The proportion of incorrectly classified observations is the error (penalty, loss)
 
 
@@ -276,7 +277,7 @@ Cross-validation is a powerful general technique for assessing how the results o
 - Utilizes the idea of training and testing sets effectively
 - Mainly used in settings where one wants to estimate how accurately a predictive model will perform in practice
 - Gives a reasonable measure of performance on unseen data
-- Can be used to compare different models to choose the best performing one.
+- Can be used to compare different models to choose the best performing one
 
 Cross-validation (2)
 ========================================================

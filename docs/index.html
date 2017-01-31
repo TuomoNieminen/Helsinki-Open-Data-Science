@@ -1253,9 +1253,9 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <p>\[ E[Y] = p \]</p>
 
 <ul>
-<li><strong>The goal</strong> in logistic regression is to define a linear model for the probability of &#39;success&#39;, \( p \) (the exptected value of \( Y \))</li>
+<li><strong>The goal</strong> in logistic regression is to define a linear model for the probability of &ldquo;success&rdquo; (\( p \), the expected value of \( Y \))</li>
 <li>The problem is that \( p \) only takes on values between 0 and 1</li>
-<li>A possible predictor can take on any value. There is no way to use multiplication and addition to restrict the the predictors values to the range of \( p \). What to do?</li>
+<li>A possible predictor can take on any value. There is no way to use multiplication and addition to restrict the predictors values to the range of \( p \). What to do?</li>
 </ul>
 
 </div>
@@ -1264,7 +1264,7 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <section data-transition="default" data-transition-speed="default">
 <h3>Odds</h3>
 <div class="column column1 slideContent" >
-<p>The ratio of expected &#39;successes&#39; to &#39;failures&#39; are called the odds:</p>
+<p>The ratio of expected &ldquo;successes&rdquo; to &ldquo;failures&rdquo; are called the odds:</p>
 
 <p>\[ \frac{p}{1-p} \]</p>
 
@@ -1280,7 +1280,8 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <div class="column column2 slideContent" >
 
 
-<p><small> <em>Odds of 2 to 1: the probability of success is twice as likely as the probability of failure when p = 2/3.</em></small>
+<p><small> <em>Odds of 2 to 1: the probability of success is twice as likely as the probability of failure, when p = 2/3.</em></small>
+<br>
 <img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-4"/></p>
 
 </div>
@@ -1314,7 +1315,7 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <div class="column column1 slideContent" >
 <p>In a simple case, the logistic regression model for the expected value \( p \) of a binary variable \( Y \), is:</p>
 
-<p>\[ log\left( \frac{p}{1 - p} \right) = \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon} \]</p>
+<p>\[ log\left( \frac{\boldsymbol{p}}{1 - \boldsymbol{p}} \right) = \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon} \]</p>
 
 <p>R:<br/>
 <code>glm(Y ~ X, family = &quot;binomial&quot;)</code></p>
@@ -1336,12 +1337,12 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <p>The ratio of two odds is called the odds ratio. It can be computed by the following steps:</p>
 
 <ol>
-<li>Compute the odds of &#39;success&#39; (\( Y = 1 \)) for individuals who have the property \( X \). </li>
-<li>Compute the odds of &#39;success&#39; (\( Y = 1 \)) for individuals who <strong>do not</strong> have property \( X \).</li>
+<li>Compute the odds of &ldquo;success&rdquo; (\( Y = 1 \)) for individuals who have the property \( X \). </li>
+<li>Compute the odds of &ldquo;success&rdquo; (\( Y = 1 \)) for individuals who <strong>do not</strong> have property \( X \).</li>
 <li>Divide the odds from step 1 by the odds from step 2 to obtain the odds ratio (OR).</li>
 </ol>
 
-<p>Odds ratio can be used to quantify the relationship between \( X \) and \( Y \). Odds <strong>higher than 1</strong> mean that \( X \) is <strong>positively associated</strong> with &#39;success&#39;.</p>
+<p>Odds ratio can be used to quantify the relationship between \( X \) and \( Y \). Odds <strong>higher than 1</strong> mean that \( X \) is <strong>positively associated</strong> with &ldquo;success&rdquo;.</p>
 
 </div>
 
@@ -1356,7 +1357,7 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <li><em>0 = &ldquo;failure&rdquo;</em></li>
 </ul>
 
-<p><small>Toy data:</small></p>
+<p><small>toy data:</small></p>
 
 <table><thead>
 <tr>
@@ -1414,9 +1415,9 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <li>\( Odds(Y \mid X\_) = \frac{P(Y = 1 \mid X\_)}{P(Y = 0 \mid X\_)} =\frac{0.8}{0.2} = 4 \)</li>
 </ul>
 
-<p>Odds ratio is the ratio of the two odds:</p>
+<p>Odds ratio (OR) is the ratio of the two odds:</p>
 
-<p>\[ \frac{Odds(Y \mid X)}{Odds(Y \mid X\_)} = \frac{2/3}{4} = \frac{1}{6} \]</p>
+<p>\[ OR = \frac{Odds(Y \mid X)}{Odds(Y \mid X\_)} = \frac{2/3}{4} = \frac{1}{6} \]</p>
 
 
 </div>
@@ -1426,7 +1427,7 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 
 <p><br><br><br><br><br></p>
 
-<p><small>Toy data:</small></p>
+<p><small>toy data:</small></p>
 
 <table><thead>
 <tr>
@@ -1464,11 +1465,11 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <div class="slideContent" >
 <p>From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function to the fitted  values gives the odds:</p>
 
-<p>\[ \exp \left( log\left( \frac{p}{1 - p} \right) \right) = \frac{p}{1 - p}. \]</p>
+<p>\[ \exp \left( log\left( \frac{\hat{\boldsymbol{p}}}{1 - \hat{\boldsymbol{p}}} \right) \right) = \frac{\hat{\boldsymbol{p}}}{1 - \hat{\boldsymbol{p}}}. \]</p>
 
 <p>The exponents of the coefficients can be interpret as odds ratios between a unit change (vs no change) in the corresponding explanatory variable.</p>
 
-<p>\[ exp(\hat{\beta_x}) = Odds(Y \mid X + 1) / Odds(Y \mid X) \]</p>
+<p>\[ exp(\hat{\beta_x}) = Odds(Y \mid x + 1) / Odds(Y \mid x) \]</p>
 
 </div>
 
@@ -1507,7 +1508,7 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 
 <ul>
 <li>Depending on the nature of the target variable, different measures might make sense.</li>
-<li>If the task is <em>binary classification</em> such as logistic regression, it is straight forward to calculate the proportion of correctly classified observations</li>
+<li>If the task is <em>binary classification</em> such as in logistic regression, it is straight forward to calculate the proportion of correctly classified observations</li>
 <li>The proportion of incorrectly classified observations is the error (penalty, loss)</li>
 </ul>
 
@@ -1523,7 +1524,7 @@ F-statistic: 9.475 on 1 and 28 DF,  p-value: 0.004626
 <li>Utilizes the idea of training and testing sets effectively</li>
 <li>Mainly used in settings where one wants to estimate how accurately a predictive model will perform in practice</li>
 <li>Gives a reasonable measure of performance on unseen data</li>
-<li>Can be used to compare different models to choose the best performing one.</li>
+<li>Can be used to compare different models to choose the best performing one</li>
 </ul>
 
 </div>
