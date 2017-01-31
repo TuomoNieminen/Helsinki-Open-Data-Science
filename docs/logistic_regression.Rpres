@@ -1,18 +1,6 @@
-```{r, include = F}
-knitr::opts_chunk$set(echo = F, comment = NA)
-```
-
-
-```{r, include = F}
-mytheme <- function(axt_text = 18, axt_title = 22 ) {
-  ggplot2::theme(axis.text=element_text(size = axt_text),
-        axis.title=element_text(size = axt_title, face="bold"))
-}
-```
 
 Logistic regression and cross-validation
 ========================================================
-css: index.css
 type: sub-section
 
 For IODS by Tuomo Nieminen
@@ -23,6 +11,16 @@ For IODS by Tuomo Nieminen
 <br>
 
 Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/logistic_regression.Rpres)
+
+
+```{r, include = F}
+# setup
+knitr::opts_chunk$set(echo = F, comment = NA)
+mytheme <- function(axt_text = 18, axt_title = 22 ) {
+  ggplot2::theme(axis.text=element_text(size = axt_text),
+        axis.title=element_text(size = axt_title, face="bold"))
+}
+```
 
 
 Logistic regression

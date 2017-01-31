@@ -1,11 +1,6 @@
 
-
-
-
-
 Logistic regression and cross-validation
 ========================================================
-css: index.css
 type: sub-section
 
 For IODS by Tuomo Nieminen
@@ -18,18 +13,21 @@ For IODS by Tuomo Nieminen
 Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/logistic_regression.Rpres)
 
 
+
+
+
 Logistic regression
 ========================================================
 type: prompt
 incremental: false
 
 Odds and probability
-![plot of chunk unnamed-chunk-3](logistic_regression-figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-2](logistic_regression-figure/unnamed-chunk-2-1.png)
 
 ***
 
 Predicting binary outcomes
-![plot of chunk unnamed-chunk-4](logistic_regression-figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-3](logistic_regression-figure/unnamed-chunk-3-1.png)
 
 
 A conditional look at regression
@@ -71,7 +69,7 @@ $$\frac{p}{1-p}$$
 ***
 
 <small> *Odds of 2 to 1: the probability of success is twice as likely as the probability of failure when p = 2/3.*</small>
-![plot of chunk unnamed-chunk-5](logistic_regression-figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-4](logistic_regression-figure/unnamed-chunk-4-1.png)
 
 
 The logit function
@@ -87,7 +85,7 @@ $$log\left( \frac{p}{1 - p} \right) \in [- \infty, \infty]$$
 
 ***
 
-![plot of chunk unnamed-chunk-6](logistic_regression-figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-5](logistic_regression-figure/unnamed-chunk-5-1.png)
 
 Simple logistic regression
 ========================================================
@@ -101,7 +99,7 @@ R:
 
 ***
  
-![plot of chunk unnamed-chunk-7](logistic_regression-figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-6](logistic_regression-figure/unnamed-chunk-6-1.png)
 
 
 Odds ratio
