@@ -35,11 +35,11 @@ A conditional look at regression
 
 In regression analysis, the target variable $\boldsymbol{Y}$ is modelled as a linear combination of the model parameters and the explanatory variables $\boldsymbol{X}$
 
-$$\boldsymbol{Y} = \boldsymbol{\alpha} + \boldsymbol{\beta}\boldsymbol{X} + \boldsymbol{\epsilon}$$
+$$\boldsymbol{Y} = \boldsymbol{\alpha} + \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$$
 
 Another way to express this is to use *conditional expectation*
 
-$$E[\boldsymbol{Y} \mid \boldsymbol{X}] = \boldsymbol{\alpha} + \boldsymbol{\beta}\boldsymbol{X}$$
+$$E[\boldsymbol{Y} \mid \boldsymbol{X}] = \boldsymbol{\alpha} + \boldsymbol{X}\boldsymbol{\beta}$$
 
 So, linear regression is a model for the (conditional) expected value of Y.
 
@@ -57,6 +57,7 @@ $$E[Y] = p$$
 
 Odds
 ========================================================
+left: 55%
 
 The ratio of expected "successes" to "failures" are called the odds:
 
@@ -75,7 +76,7 @@ $$\frac{p}{1-p}$$
 
 The logit function
 ========================================================
-incremental: false
+left: 55%
 
 To transform $p$ into a completely unrestricted scale, we can take the logarithm of odds:
 
@@ -90,7 +91,7 @@ $$log\left( \frac{p}{1 - p} \right) \in [- \infty, \infty]$$
 
 Simple logistic regression
 ========================================================
-left: 60%
+left: 55%
 
 In a simple case, the logistic regression model for the expected value $p$ of a binary variable $Y$, is:
 
@@ -156,7 +157,7 @@ Odds ratio (OR) is the ratio of the two odds:
 $$OR = \frac{Odds(Y \mid X)}{Odds(Y \mid X\_)} = \frac{2/3}{4} = \frac{1}{6}$$
 
 ***
-<br><br><br><br><br>
+<br><br><br><br>
 
 <small>toy data:</small>
 
@@ -173,7 +174,7 @@ From the fact that the computational target variable in the logistic regression 
 
 $$\exp \left( log\left( \frac{\hat{p}}{1 - \hat{p}} \right) \right) = \frac{\hat{p}}{1 - \hat{p}}.$$
 
-The exponents of the coefficients can be interpret as odds ratios between a unit change (vs no change) in the corresponding explanatory variable.
+The **exponents of the coefficients** can be interpret as **odds ratios** between a unit change (vs no change) in the corresponding explanatory variable.
 
 $$exp(\hat{\beta_x}) = Odds(Y \mid x + 1) / Odds(Y \mid x)$$
 
