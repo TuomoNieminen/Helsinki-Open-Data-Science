@@ -297,7 +297,6 @@ K-fold cross-validation
 
 Below is an example of 4-fold cross-validation 
 
-
 ![](https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png)
 
 The data is divided into subsets K times and eventually all the data is used for both training and testing.  
