@@ -17,7 +17,7 @@ R offers the convenient `paste()` function which makes it easy to combine charac
 - Create and print out the object `url_math`.
 - Create object `math` by reading the math class questionaire data from the web address defined in `url_math`.
 - Create and print out `url_por`.
-- Adjust the code: similarily to `url_math`, make `url_por` into a valid web address using `past()` and the `url` object.
+- Adjust the code: similarily to `url_math`, make `url_por` into a valid web address using `paste()` and the `url` object.
 - Create object `por` by reading the portuguese class questionaire data from the web address defined in `url_por`.
 - Print out the names of the columns in both data sets.
 
@@ -108,11 +108,11 @@ success_msg("Nice work! That was a tough warm-up!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:af9b851a1c
 ## Joining 2 datasets
 
-There are multiple students who have answered both questionaires in our two datasets. Unfortunately we do not have a single identification variable to identify these students. However, we can use a bunch of background questions together for identification.
+There are multiple students who have answered both questionnaires in our two datasets. Unfortunately we do not have a single identification variable to identify these students. However, we can use a bunch of background questions together for identification.
 
 Combining two data sets is easy if the data have a mutual identifier column or if a combination of mutual columns can be used as identifiers. 
 
-Here we'll use `inner.join()` function from the dplyr library to combine the data (remember the [dplyr cheatsheet!](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)). This means that we'll only keep the students who answered the questionaire in both math and portuguese classes.
+Here we'll use `inner.join()` function from the dplyr library to combine the data (remember the [dplyr cheatsheet!](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)). This means that we'll only keep the students who answered the questionnaire in both math and portuguese classes.
 
 *** =instructions
 - Access the dplyr library and create object `join_by`.
@@ -128,10 +128,10 @@ Here we'll use `inner.join()` function from the dplyr library to combine the dat
 
 *** =pre_exercise_code
 ```{r}
-## read the math class questionaire data
+## read the math class questionnaire data
 math <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-mat.csv",sep=";",header=TRUE)
 
-## read the portuguese class questionaire data
+## read the portuguese class questionnaire data
 por <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/student-por.csv",sep=";",header=TRUE)
 
 ```
@@ -215,7 +215,7 @@ if(condition) {
 
 *** =instructions
 - Print out the column names of `math_por`
-- Adjust the code: Create the data frame `alc` by selecting only the columns in `math_por` which were used for joining the two questinaires. The names of those columns are available in the `join_by` object.
+- Adjust the code: Create the data frame `alc` by selecting only the columns in `math_por` which were used for joining the two questionnaires. The names of those columns are available in the `join_by` object.
 - Create the object `notjoined_columns` and print it out.
 - Execute the `for`-loop (don't mind the "change me!").
 - Take a `glimpse()` at the `alc` data frame. The factor type variables should look strange at this point.
@@ -248,7 +248,7 @@ alc <- select(math_por, one_of("change me!"))
 # the columns in the datasets which were not used for joining the data
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
-# print out the colums not used for joining
+# print out the columns not used for joining
 
 
 # for every column name not used for joining...
@@ -264,7 +264,7 @@ for(column_name in notjoined_columns) {
     # add the resulting vector to the alc data frame
     alc[column_name] <- round(rowMeans(two_columns))
   } else { # else if it's not numeric...
-    # add the fist column vector to the alc data frame
+    # add the first column vector to the alc data frame
     alc[column_name] <- "change me!"
   }
 }
@@ -287,7 +287,7 @@ alc <- select(math_por, one_of(join_by))
 # columns that were not used for joining the data
 notjoined_columns <- colnames(math)[!colnames(math) %in% join_by]
 
-# print out the colums not used for joining
+# print out the columns not used for joining
 notjoined_columns
 
 # for every column name not used for joining...
@@ -303,7 +303,7 @@ for(column_name in notjoined_columns) {
     # add the resulting vector to the alc data frame
     alc[column_name] <- round(rowMeans(two_columns))
   } else { # else if it's not numeric...
-    # add the fist column vector to the alc data frame
+    # add the first column vector to the alc data frame
     alc[column_name] <- first_column
   }
 }
@@ -654,7 +654,7 @@ success_msg("Great work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
 ## Learning a logistic regression model
 
-We will now use [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression) to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alchohol using background variables and school performance.
+We will now use [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression) to identify factors related to higher than average student alcohol consumption. You will also attempt to learn to identify (predict) students who consume high amounts of alcohol using background variables and school performance.
 
 Because logistic regression can be used to classify observations into one of two groups (by giving the group probability) it is a [binary classification](https://en.wikipedia.org/wiki/Binary_classification) method. You will meet more classification methods in the next chapter.
 
@@ -732,7 +732,7 @@ For this reason, the exponents of the coefficients of a logistic regression mode
 *** =instructions
 - Use `glm()` to fit a logistic regression model.
 - Creat the object `OR`: Use `coef()` on the model object to extract the coefficients of the model and then apply the `exp` function on the coefficients.
-- Use `confint()` on the model object to compute (profile likelihood) confidence intervals for the coefficients. Exponentiate the values and assign the results to the object `CI`.
+- Use `confint()` on the model object to compute confidence intervals for the coefficients. Exponentiate the values and assign the results to the object `CI`. (R does this quite fast, despite the "Waiting.." message)
 - Combine and print out the odds ratios and their confidence intervals. Which predictor has the widest interval? Does any of the intervals contain 1 and why would that matter?
 
 *** =hint
@@ -801,7 +801,7 @@ success_msg("Very nice work!")
 
 When you have a linear model, you can make predictions. A very basic question is, of course, how well does our model actually predict the target variable. Let's take a look!
 
-The `precict()` function can be used to make predictions with a model object. If `predict()` is not given any new data, it will use the data used for finding (fitting, leaning, training) the model to make predictions.  
+The `predict()` function can be used to make predictions with a model object. If `predict()` is not given any new data, it will use the data used for finding (fitting, leaning, training) the model to make predictions.  
 
 In the case of a binary response variable, the 'type' argument of `predict()` can be used to get the predictions as probabilities (instead of log of odds, the default).
 
