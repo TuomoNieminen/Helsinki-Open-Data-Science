@@ -135,10 +135,11 @@ q + mytheme() + ggtitle("probability and the logit transformation") + xlab("prob
 
 Simple logistic regression
 ========================================================
+left: 60%
 
 In a simple case, the logistic regression model for the expected value $p$ of a binary variable $Y$, is:
 
-$$log\left( \frac{\boldsymbol{p}}{1 - \boldsymbol{p}} \right) = \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$$
+$$log\left( \frac{p}{1 - p} \right) = \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$$
 
 R:  
 `glm(Y ~ X, family = "binomial")`
@@ -195,7 +196,7 @@ kable(rbind(d, "total" = colSums(d)))
 
 ***
 
-The following probabilities can be calculated from the (toy) data:  
+The following conditional probabilities can be calculated from the (toy) data:  
 
 - $P(Y = 1 \mid X) = 10 / 25 = 0.4$
 - $P(Y = 0 \mid X) = 15 / 25 = 0.6$
@@ -233,7 +234,7 @@ Interpreting the parameters of logistic regression
 ========================================================
 From the fact that the computational target variable in the logistic regression model is the log of odds, it follows that applying the exponent function to the fitted  values gives the odds:
 
-$$\exp \left( log\left( \frac{\hat{\boldsymbol{p}}}{1 - \hat{\boldsymbol{p}}} \right) \right) = \frac{\hat{\boldsymbol{p}}}{1 - \hat{\boldsymbol{p}}}.$$
+$$\exp \left( log\left( \frac{\hat{p}}{1 - \hat{p}} \right) \right) = \frac{\hat{p}}{1 - \hat{p}}.$$
 
 The exponents of the coefficients can be interpret as odds ratios between a unit change (vs no change) in the corresponding explanatory variable.
 
