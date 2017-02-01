@@ -14,6 +14,7 @@ Logistic regression and cross-validation
 ========================================================
 css: index.css
 type: sub-section
+incremental: true
 
 For IODS by Tuomo Nieminen
 
@@ -78,9 +79,12 @@ So, linear regression is a model for the (conditional) expected value of Y.
 Regression for binary outcomes
 ========================================================
 
-If the target variable $Y$ is *binary*, taking only the values 0 ("failure") or 1 ("success"), with probability $p$, then 
+If the target variable $Y$ is *binary*, taking only the values 
 
-$$E[Y] = p$$
+- 0 ("failure")
+- 1 ("success")
+
+with probability $p$, then $E[Y] = p$.
 
 - **The goal** in logistic regression is to define a linear model for the probability of 'success', $p$ (the exptected value of $Y$)
 - The problem is that $p$ only takes on values between 0 and 1
