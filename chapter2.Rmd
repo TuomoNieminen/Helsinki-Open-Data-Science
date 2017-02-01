@@ -655,7 +655,7 @@ success_msg("Great work!")
 ## Video: Logistic regression
 
 *** =video_link
-//player.vimeo.com/video/198979481
+//player.vimeo.com/video/202056054
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
