@@ -214,6 +214,7 @@ if(condition) {
 ```
 
 *** =instructions
+- **Please note!** Here in DataCamp, executing a command over multiple lines is best done by selecting (painting) the lines with a mouse first and then hitting `Ctrl+Enter` normally.
 - Print out the column names of `math_por`
 - Adjust the code: Create the data frame `alc` by selecting only the columns in `math_por` which were used for joining the two questionnaires. The names of those columns are available in the `join_by` object.
 - Create the object `notjoined_columns` and print it out.
