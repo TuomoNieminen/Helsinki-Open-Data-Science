@@ -726,7 +726,7 @@ test_error()
 success_msg("Great work!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:ac7ae9647b
 ## Video: Odds ratios
 
 *** =video_link
@@ -1041,7 +1041,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:fe4633a36d
 ## Video: Cross-validation
 
 *** =video_link
