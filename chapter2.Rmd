@@ -651,6 +651,12 @@ test_error()
 success_msg("Great work!")
 ```
 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
+## Video: Logistic regression
+
+*** =video_link
+//player.vimeo.com/video/198979481
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d4b84e1b0
 ## Learning a logistic regression model
@@ -719,6 +725,12 @@ test_function("coef", args = "object", incorrect_msg = "Please use `coef()` on t
 test_error()
 success_msg("Great work!")
 ```
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
+## Video: Odds ratios
+
+*** =video_link
+//player.vimeo.com/video/202056098
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:bf36a9b331
 ## From coefficients to odds ratios
@@ -1028,6 +1040,13 @@ test_function("loss_func", args = c("class", "prob"),
 test_error()
 success_msg("Good work!")
 ```
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
+## Video: Cross-validation
+
+*** =video_link
+//player.vimeo.com/video/202056141
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9344688783
 ## Cross-validation 
