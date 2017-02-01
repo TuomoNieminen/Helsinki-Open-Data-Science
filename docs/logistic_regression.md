@@ -47,9 +47,12 @@ So, linear regression is a model for the (conditional) expected value of Y.
 Regression for binary outcomes
 ========================================================
 
-If the target variable $Y$ is *binary*, taking only the values 0 ("failure") or 1 ("success"), with probability $p$, then 
+If the target variable $Y$ is *binary*, taking only the values 
 
-$$E[Y] = p$$
+- 0 ("failure")
+- 1 ("success")
+
+with probability $p$, then $E[Y] = p$.
 
 - **The goal** in logistic regression is to define a linear model for the probability of "success" ($p$, the expected value of $Y$)
 - The problem is that $p$ only takes on values between 0 and 1
@@ -97,8 +100,9 @@ In a simple case, the logistic regression model for the expected value $p$ of a 
 
 $$log\left( \frac{p}{1 - p} \right) = \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$$
 
-R:  
-`glm(Y ~ X, family = "binomial")`
+which implies
+
+$$P(Y_i = 1) = \frac{1}{1 + e^{-\alpha - \beta \cdot x_i}} = p_i$$
 
 ***
  
@@ -233,7 +237,7 @@ This process is repeated so that eventually all of the data is used for both tra
 K-fold cross-validation
 ========================================================
 
-Below is an example of 4-fold cross-validation 
+Below is an example of 5-fold cross-validation 
 
 
 ![](https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png)

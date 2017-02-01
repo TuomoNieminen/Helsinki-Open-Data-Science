@@ -46,6 +46,9 @@ incremental: false
 ```{r child ="regression.md"}
 ```
 
+```{r child = "logistic_regression.md"}
+```
+
 Update treshold
 ========================================================
 type: alert
@@ -55,8 +58,4 @@ Please note that the following slides are drafts and subject to changes.
 <img src = "https://upload.wikimedia.org/wikipedia/en/6/69/Stop_sign(standard).svg" height = "500px>
 
 ========================================================
-
-
-```{r child = "logistic_regression.md"}
-```
 
