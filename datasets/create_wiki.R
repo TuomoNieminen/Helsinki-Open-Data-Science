@@ -169,4 +169,7 @@ wikinew <- cbind(bg_var, df)
 glimpse(wikinew)
 
 # save
-write.table(file = "wiki.txt", wikinew)
+write.table(file = "wiki.txt", wikinew, sep = ",", row.names = F)
+
+test <- read.table("wiki.txt", sep = ",", header = T)
+str(test)
