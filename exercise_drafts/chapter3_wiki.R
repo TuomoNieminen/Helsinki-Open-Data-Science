@@ -1,6 +1,6 @@
 # Wikipedia ---------------------------------------------------------------
 
-#https://archive.ics.uci.edu/ml/datasets/wiki4HE#
+# https://archive.ics.uci.edu/ml/datasets/wiki4HE#
 
 # AGE: numeric 
 # GENDER: 0=Male; 1=Female 
@@ -83,14 +83,15 @@
 # EXP5: I use wikis to work with my students 
 
 # working dir
-setwd("/Users/d0500439/OneDrive/DataCamp/Helsinki-Open-Data-Science/data/")
-setwd("C:\\Users\\emmak\\OneDrive\\DataCamp\\data")
+# setwd("/Users/d0500439/OneDrive/DataCamp/Helsinki-Open-Data-Science/data/")
+# setwd("C:\\Users\\emmak\\OneDrive\\DataCamp\\data")
+# 
 
 # libraries
 library(dplyr)
 
 # read data
-wiki<-read.csv("wiki4HE.csv",sep=";", header=TRUE)
+wiki<-read.csv("../datasets/wiki4HE.csv",sep=";", header=TRUE)
 
 # look at the data
 head(wiki)
@@ -109,7 +110,7 @@ wiki<-droplevels(wiki)
 bg_var <- select(wiki, one_of(c("AGE", "GENDER", "DOMAIN", "PhD", "YEARSEXP", "UNIVERSITY", "UOC_POSITION", "OTHER_POSITION", "OTHERSTATUS", "USERWIKI")))
 
 # select all the other variables than background vars
-questions<-wiki[!colnames(wiki) %in% colnames(bg_var)]
+questions <- wiki[!colnames(wiki) %in% colnames(bg_var)]
 
 # turn all the likert scale variables from factor to numeric
 questions<- mutate_all(questions, as.numeric)
@@ -118,33 +119,42 @@ questions<- mutate_all(questions, as.numeric)
 questions$Qu4 <- 6 - questions$Qu4
 
 # create new variables based on the questions
-useful<-apply(select(questions, contains('PU')), 1, mean, na.rm = TRUE)
-easyuse<-apply(select(questions, contains('PEU')), 1, mean, na.rm = TRUE)
-enjoyment<-apply(select(questions, contains('ENJ')), 1, mean, na.rm = TRUE)
-quality<-apply(select(questions, contains('Qu')), 1, mean, na.rm = TRUE)
-visibility<-apply(select(questions, contains('Vis')), 1, mean, na.rm = TRUE)
-social_image<-apply(select(questions, contains('Im')), 1, mean, na.rm = TRUE)
-sharing_attitude<-apply(select(questions, contains('SA')), 1, mean, na.rm = TRUE)
-use_behaviour<-apply(select(questions, contains('Use')), 1, mean, na.rm = TRUE)
-profile<-apply(select(questions, contains('Pf')), 1, mean, na.rm = TRUE)
-job_relevance<-apply(select(questions, contains('JR')), 1, mean, na.rm = TRUE)
-behavioral_intention<-apply(select(questions, contains('BI')), 1, mean, na.rm = TRUE)
-incentives<-apply(select(questions, contains('Inc')), 1, mean, na.rm = TRUE)
-experience<-apply(select(questions, contains('Exp')), 1, mean, na.rm = TRUE)
+useful <- select(questions, contains('PU')) %>% rowMeans(na.rm = TRUE)
+easyuse <- select(questions, contains('PEU')) %>% rowMeans(na.rm = TRUE)
+enjoyment <- select(questions, contains('ENJ')) %>% rowMeans(na.rm = TRUE)
+quality <- select(questions, contains('Qu')) %>% rowMeans(na.rm = TRUE)
+visibility <- select(questions, contains('Vis')) %>% rowMeans(na.rm = TRUE)
+social_image <- select(questions, contains('Im')) %>% rowMeans(na.rm = TRUE)
+sharing_attitude <- select(questions, contains('SA')) %>% rowMeans(na.rm = TRUE)
+use_behaviour <- select(questions, contains('Use')) %>% rowMeans(na.rm = TRUE)
+profile <- select(questions, contains('Pf')) %>% rowMeans(na.rm = TRUE)
+job_relevance <- select(questions, contains('JR')) %>% rowMeans(na.rm = TRUE)
+behavioral_intention <- select(questions, contains('BI')) %>% rowMeans(na.rm = TRUE)
+incentives <- select(questions, contains('Inc')) %>% rowMeans(na.rm = TRUE)
+experience <- select(questions, contains('Exp')) %>% rowMeans(na.rm = TRUE)
 
 # combine question variables to new data frame
 df <- data.frame(useful, easyuse, enjoyment, quality, visibility, social_image, sharing_attitude, use_behaviour, profile, job_relevance, behavioral_intention,
                  incentives, experience)
 
+# number of rows
+nrow(df)
+
 # rows with na
-rows <- complete.cases(df)
+complete_rows <- complete.cases(df)
+
+# how many rows without na's
+sum(complete_rows)
 
 #remove na's from questions
-df<-df[rows,]
+df <- filter(df, complete_rows)
 
-# remove the same rows from the background varaibles
-bg_var<-bg_var[rows,]
+# number of rows
+nrow(df)
 
-# classify yearsexp to five classes and drop the original column
-bg_var$years_bin <- ntile(bg_var$YEARSEXP, n = 5)
-bg_var <- select(bg_var, -YEARSEXP)
+# remove the same rows from the background variables
+bg_var <- bg_var[complete_rows,]
+
+# transform yearsexp to numeric
+bg_var$YEARSEXP <- bg_var$YEARSEXP %>% as.character %>% as.numeric
+
