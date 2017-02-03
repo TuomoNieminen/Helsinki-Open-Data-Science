@@ -156,5 +156,15 @@ nrow(df)
 bg_var <- bg_var[complete_rows,]
 
 # transform yearsexp to numeric
-bg_var$YEARSEXP <- bg_var$YEARSEXP %>% as.character %>% as.numeric
+bg_var$YEARSEXP <- bg_var$YEARSEXP %>% as.character %>% as.integer
 
+# transform gender to factor
+bg_var$GENDER <- bg_var$GENDER %>% factor(levels = c(0,1), labels = c("M", "F"))
+
+# combine
+wikinew <- cbind(bg_var, df)
+
+# glimpse at the data
+glimpse(wikinew)
+
+write.table(file = "..datasets/wiki.txt", wikinew)
