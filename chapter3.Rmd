@@ -230,6 +230,9 @@ Exercise info here
 # access the MASS package
 library(MASS)
 
+# load the data
+data("Boston")
+
 ```
 
 *** =sample_code
@@ -292,6 +295,23 @@ Exercise info here
 ```{r}
 # access the MASS package
 library(MASS)
+
+# load the data
+data("Boston")
+
+# center and standardize variables
+boston <- as.data.frame(scale(Boston))
+
+# crim to categorical
+summary(boston$crim)
+crime <- cut(boston$crim, quantile(boston$crim), include.lowest = TRUE, 
+             labels = c("low", "med_low", "med_high", "high"))
+
+# remove original
+boston <- dplyr::select(boston, -crim)
+
+# combine
+boston <- data.frame(boston, crime)
 
 lda.fit = lda(crime ~ ., data=boston)
 df <- dplyr::select(boston,-crime)
