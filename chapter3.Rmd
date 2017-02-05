@@ -3,9 +3,171 @@ title       : Clustering and classification
 description : K-means clustering, Discriminant analysis
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3db2d48f25
-## Exercise title
+## Datasets inside R
 
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
+Welcome to the *Clustering and classification* chapter.
+
+R has many (small) datasets already loaded in. When installing R packages, there are also often datasets included. Some of the datasets are quite famous (like the [Iris](https://en.wikipedia.org/wiki/Iris_flower_data_set) flower data) and they are often used for teaching purposes or to demonstrate statistical methods. 
+
+This week we will be using the [Boston](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html) dataset from the MASS package. Let's see how it looks like!
+
+
+*** =instructions
+- Load the Boston dataset from MASS
+- Explore the Boston dataset. Look at the structure with `str()` and use `summary()` to see the details of the variables.
+- Draw the plot matrix with `ggpairs()`
+- Change the plot so that density plots are in the upper side of the matrix and scatter plots are in the lower side of the matrix
+
+*** =hint
+- You can draw the `ggpairs()` plot by typing the object name where it is saved.
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+# access the MASS package
+library(MASS)
+
+# load the data
+data("Boston")
+
+# explore the dataset
+str(Boston)
+summary(Boston)
+
+# plot matrix of the variables
+library(GGally)
+library(ggplot2)
+p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("cor"), alpha = 0.3), lower = list(continuous = wrap("points")), alpha = 0.6)
+
+# draw the plot
+
+
+```
+
+*** =solution
+```{r}
+# access the MASS package
+library(MASS)
+
+# load the data
+data("Boston")
+
+# explore the dataset
+str(Boston)
+summary(Boston)
+
+# plot matrix of the variables
+library(GGally)
+library(ggplot2)
+p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("points")), lower = list(combo = wrap("facethist", bins=10)))
+
+# draw the plot
+p
+
+```
+
+*** =sct
+```{r}
+test_output_contains("summary(Boston)", incorrect_msg = "Did you use the summary() function on the Boston data?")
+
+test_output_contains("str(Boston)", incorrect_msg = "Did you use the str() function on the Boston data?")
+
+test_student_typed("p", not_typed_msg = "Please draw the plot created with `ggpairs()`")
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Correlations plot
+
+The `ggpairs()` function plots the correlations numbers in the plot matrix quite nicely (if the argument `cor` is chosen). A more visual way to see the correlations quickly is to use `corrplot()` function (from the corrplot package).
+
+It is useful to The 
+
+*** =instructions
+- Calculate the correlation matrix and save it as `cor_matrix`. Print the matrix to see how it looks like.
+- Adjust the code: use the pipe (`%>%`) to round the matrix. Rounding can be done with the `round()` function. Use the first two digits. Print the matrix again. 
+- Plot the rounded correlation matrix
+- Adjust the code: add argument `type="upper"` to the plot. Print the plot again. 
+- Adjust the code little more: add arguments `cl.pos="b"`, `tl.pos="d"` and `tl.cex = 0.6` to the plot. Print the plot again. 
+- See more of corrplot [here](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+# access the MASS package
+library(MASS)
+
+# load the data
+data("Boston")
+
+```
+
+*** =sample_code
+```{r}
+# MASS and Boston dataset are available
+
+# access corrplot and tidyverse packages
+library(corrplot)
+library(tidyverse)
+
+# calculate the correlation matrix
+cor_matrix<-cor(Boston) %>% round(digits = 2)
+
+# print the correlation matrix
+cor_matrix
+
+# visualize the correlation matrix
+corrplot(cor_matrix, method="circle")
+
+```
+
+*** =solution
+```{r}
+# MASS and Boston dataset are available
+
+# access corrplot and tidyverse packages
+library(corrplot)
+library(tidyverse)
+
+# calculate the correlation matrix
+cor_matrix<-cor(Boston) %>% round(digits = 2)
+
+# visualize the correlation matrix
+corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.cex = 0.6)
+
+```
+
+*** =sct
+```{r}
+
+test_function("round", args = "digits",incorrect_msg = "Did you use the first two digits in rounding?")
+test_function("corrplot", args = "type",incorrect_msg = "Did you set the `type` to upper in corrplot?")
+test_function("corrplot", args = "type",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
+test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
+test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Scale the whole dataset
+
+Usually the R datasets do not need much data wrangling as they are already in a good shape. 
+
+The Boston data contains only numerical values, so we can use the function `scale()` to standardize the dataset.
 
 *** =instructions
 - instruction
@@ -20,6 +182,19 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 
 *** =sample_code
 ```{r}
+# center and standardize variables
+boston <- as.data.frame(scale(Boston))
+
+# crim to categorical
+summary(boston$crim)
+crime <- cut(boston$crim, quantile(boston$crim), include.lowest = TRUE, 
+             labels = c("low", "med_low", "med_high", "high"))
+
+# remove original
+boston <- dplyr::select(boston, -crim)
+
+# combine
+boston <- data.frame(boston, crime)
 
 ```
 
@@ -38,3 +213,234 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 # test_error()
 success_msg("Good work!")
 ```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Linear Discriminant analysis(1)
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+# http://stackoverflow.com/questions/17232251/how-can-i-plot-a-biplot-for-lda-in-r
+lda.arrows <- function(x, myscale = 1, color='red', tex = 0.75, choices = c(1,2), ...){
+  ## adds `biplot` arrows to an lda using the discriminant function values
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, ...)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
+
+lda.fit = lda(crime ~ ., data=boston)
+plot(lda.fit, col=as.numeric(boston$crime), pch=as.numeric(boston$crime))
+lda.fit
+
+df <- dplyr::select(boston,-crime)
+dim(df)
+dim(lda.fit$scaling)
+
+MM <- as.matrix(df) %*% lda.fit$scaling
+MM <- as.data.frame(MM)
+plot(MM, col=as.numeric(boston$crime), pch=as.numeric(boston$crime))
+lda.arrows(lda.fit, myscale = 1)
+
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## More dimensions with Plotly!
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+lda.fit = lda(crime ~ ., data=boston)
+df <- dplyr::select(boston,-crime)
+MM <- as.matrix(df) %*% lda.fit$scaling
+```
+
+*** =sample_code
+```{r}
+# 3D plot
+library(plotly)
+
+d <- as.data.frame(MM)
+plot_ly(data=d, x = d$LD1, y = d$LD2, z = d$LD3, color=crime,
+        type= 'scatter3d', mode='markers')
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Distance measures
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+dist<-dist(Boston)
+head(dist)
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## K-means
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+# number of clusters
+library(ggplot2)
+k.max <- 10
+wss <- sapply(1:k.max, function(k){kmeans(dist, k, nstart=10)$tot.withinss})
+qplot(1:k.max, wss, geom = 'line')
+
+km <-kmeans(dist, 4)
+# pairs(df, col=km$cluster)
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## K-medoids
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+library(cluster)
+pa <- pam(dist(df), 3)
+# pairs(df, col=pa$cluster)
+plot_ly(data=d, x=d$LD1, y=d$LD2, z=d$LD3, color=pa$cluster,
+        type= 'scatter3d', mode='markers')
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
