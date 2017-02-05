@@ -1,28 +1,43 @@
 # Boston data lda
 # Emma Kamarainen 2017
 
+# https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html
 library(MASS)
 
 # load
 data("Boston")
 
 # look at the dataset
+str(Boston)
 pairs(Boston)
 summary(Boston)
 
+# plot matrix with ggpairs()
+p <- ggpairs(Boston, mapping = aes(), 
+             upper = list(continuous = wrap("points")), 
+             lower = list(continuous = wrap("cor")))
+p
+
+# correlations
+library(corrplot)
+library(tidyverse)
+cor_matrix<-cor(Boston) %>% round(digits = 2)
+corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.cex = 0.6)
+
+
 # center and standardize variables
-b <- as.data.frame(scale(Boston))
+boston <- as.data.frame(scale(Boston))
 
 # crim to categorical
-summary(b$crim)
-crime <- cut(b$crim, quantile(b$crim), include.lowest = TRUE, 
-             labels = "low", "med_low", "med_high", "high")
+summary(boston$crim)
+crime <- cut(boston$crim, quantile(boston$crim), include.lowest = TRUE, 
+             labels = c("low", "med_low", "med_high", "high"))
 
 # remove original
-b <- dplyr::select(b, -crim)
+boston <- dplyr::select(boston, -crim)
 
 # combine
-b <- data.frame(b, crime)
+boston <- data.frame(boston, crime)
 
 # lda
 
@@ -34,20 +49,22 @@ lda.arrows <- function(x, myscale = 1, color='red', tex = 0.75, choices = c(1,2)
          x1 = myscale * heads[,choices[1]], 
          y1 = myscale * heads[,choices[2]], col=color, ...)
   text(myscale * heads[,choices], labels = row.names(heads), 
-       cex = tex, col=color)
+       cex = tex, col=color, pos=3)
 }
 
-lda.fit = lda(crime~., data=b)
-plot(lda.fit, col=as.numeric(b$crime), pch=as.numeric(b$crime))
+lda.fit = lda(crime ~ ., data=boston)
+plot(lda.fit, col=as.numeric(boston$crime), pch=as.numeric(boston$crime))
 lda.fit
 
-df <- dplyr::select(b,-crime)
+df <- dplyr::select(boston,-crime)
 dim(df)
 dim(lda.fit$scaling)
 
 MM <- as.matrix(df) %*% lda.fit$scaling
-plot(MM, col=as.numeric(b$crime), pch=as.numeric(b$crime))
+MM <- as.data.frame(MM)
+plot(MM, col=as.numeric(boston$crime), pch=as.numeric(boston$crime))
 lda.arrows(lda.fit, myscale = 1)
+
 
 # 3D plot
 # install.packages('plotly')
