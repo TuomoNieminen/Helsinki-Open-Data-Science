@@ -227,6 +227,8 @@ Exercise info here
 
 *** =pre_exercise_code
 ```{r}
+# access the MASS package
+library(MASS)
 
 ```
 
@@ -288,6 +290,9 @@ Exercise info here
 
 *** =pre_exercise_code
 ```{r}
+# access the MASS package
+library(MASS)
+
 lda.fit = lda(crime ~ ., data=boston)
 df <- dplyr::select(boston,-crime)
 MM <- as.matrix(df) %*% lda.fit$scaling
