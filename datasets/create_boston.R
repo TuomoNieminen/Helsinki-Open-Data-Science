@@ -18,4 +18,4 @@ boston <- dplyr::select(boston, -crim)
 boston <- data.frame(boston, crime)
 
 # write output
-write.table(boston, "boston_scaled.csv")
+write.table(boston, "boston_scaled.txt", sep=',')
