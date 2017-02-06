@@ -106,10 +106,10 @@ It is useful to The
 
 *** =pre_exercise_code
 ```{r}
-# access the MASS package
 library(MASS)
+library(corrplot)
+library(tidyverse)
 
-# load the data
 data("Boston")
 
 ```
