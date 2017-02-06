@@ -235,7 +235,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:3d45bd1da6
 ## Creating a target variable
 
 We will need a categorical variable as a target in the linear discriminant analysis in the next exercise. The scaled Boston dataset contains only continious variables, so we will need to create one. See how it's done below!
