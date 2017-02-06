@@ -167,57 +167,167 @@ success_msg("Good work!")
 
 Usually the R datasets do not need much data wrangling as they are already in a good shape. 
 
-The Boston data contains only numerical values, so we can use the function `scale()` to standardize the dataset.
+For later use, we will need to scale the data. The Boston data contains only numerical values, so we can use the function `scale()` to standardize the dataset.
 
 *** =instructions
-- instruction
+- Use the `scale()` function on the `Boston` dataset. Save the scaled data to `boston_scaled` object.
+- Use `summary()` to look at the scaled variables. Note the means of the variables.
+- Find out the class of the scaled object by executing the `class()` function. 
+- Later we will want the data to be a data frame. Use `as.data.frame()` to convert the `boston_scaled` to a data frame format. Keep the object name as `boston_scaled`.
 
 *** =hint
-- hint
+- `?scale`
 
 *** =pre_exercise_code
 ```{r}
+library(MASS)
+library(corrplot)
+library(tidyverse)
 
+data("Boston")
 ```
 
 *** =sample_code
 ```{r}
+# MASS and Boston dataset are available
+
 # center and standardize variables
-boston <- as.data.frame(scale(Boston))
 
-# crim to categorical
-summary(boston$crim)
-crime <- cut(boston$crim, quantile(boston$crim), include.lowest = TRUE, 
-             labels = c("low", "med_low", "med_high", "high"))
 
-# remove original
-boston <- dplyr::select(boston, -crim)
+# summaries of the scaled variables
 
-# combine
-boston <- data.frame(boston, crime)
+
+# class of the boston_scaled object
+class(boston_scaled)
+
+# change the object to data frame
+
 
 ```
 
 *** =solution
 ```{r}
+# MASS and Boston dataset are available
+
+# center and standardize variables
+boston_scaled <- scale(Boston)
+
+# summaries of the scaled variables
+summary(boston_scaled)
+
+# class of the boston_scaled object
+class(boston_scaled)
+
+# change the object to data frame
+boston_scaled <- as.data.frame(boston_scaled)
 
 ```
 
 *** =sct
 ```{r}
+test_function("scale", args = "x",incorrect_msg = "Did you scale the dataset?")
+
+test_function("as.data.frame", args = "x",incorrect_msg = "Please use the function as.data.frame() to convert the data to a data frame.")
+
+test_function("summary", args = "object", incorrect_msg = "Please use the function summary() to look at the summaries of the data variables.")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Creating a target variable
+
+We will need a categorical variable as a target in the linear discriminant analysis in the next exercise. The scaled Boston dataset contains only continious variables, so we will need to create one. See how it's done below!
+
+*** =instructions
+- Let's choose the variable `crim` (per capita crime rate by town) to be our target. The description of the Boston dataset variables could be seen [here](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html).
+- Look at the summary of the (scaled) variable `crim`
+- We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile). Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
+- Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created. Print the results.
+- Create a string vector from `"low"`, `"med_low"`, `"med_high"`, `"high"` (in that order) and save it as `label_names`.
+- Adjust the code of `cut()` by adding the `label` argument in the function. Set the `label_names` as labels and print the categorical variable again.
+- Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
+
+*** =hint
+- 
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+data("Boston")
+boston_scaled <- as.data.frame(scale(Boston))
+```
+
+*** =sample_code
+```{r}
+# MASS, Boston and boston_scaled are available
+
+# summary of the scaled crime rate
+
+
+# create a quantile vector of crim and print it
+bins <- "change me!"
+
+
+# create a categorical variable 'crime' and print it
+crime <- cut(boston_scaled$crim, breaks = "change me!", include.lowest = TRUE)
+
+
+# label names
+label_names <- "change me!"
+
+# remove original crim from the dataset
+boston_scaled <- dplyr::select(boston_scaled, -crim)
+
+# add the new categorical value to scaled data
+boston_scaled <- data.frame(boston_scaled, crime)
+
+```
+
+*** =solution
+```{r}
+# MASS, Boston and boston_scaled are available
+
+# summary of the scaled crime rate
+summary(boston_scaled$crim)
+
+# create a quantile vector of crim and print it
+bins <- quantile(boston_scaled$crim)
+bins
+
+# create a categorical variable 'crime' and print it
+crime <- cut(boston_scaled$crim, breaks=bins, include.lowest = TRUE, labels = label_names)
+crime 
+
+# label names
+label_names <- c("low", "med_low", "med_high", "high")
+
+# remove original crim from the dataset
+boston_scaled <- dplyr::select(boston_scaled, -crim)
+
+# add the new categorical value to scaled data
+boston_scaled <- data.frame(boston_scaled, crime)
+
+```
+
+*** =sct
+```{r}
+test_function("summary", args = "object", incorrect_msg = "Please use the function summary() on crime rate.")
 
 # test_function("", args = "",incorrect_msg = "")
 # test_object("", incorrect_msg = "")
 # test_output_contains("", incorrect_msg = "")
 # 
-# test_error()
-success_msg("Good work!")
+
+test_error()
+success_msg("Nicely done! By the way, sometimes there are functions with the same name in different R packages (like `select` in **dplyr** and **MASS**). You can choose which one to use by adding the name of the package with two colons in front of the function call (for example `dplyr::select()`).")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2de2d66d11
 ## Linear Discriminant analysis(1)
 
-Exercise info here
+[Linear Discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis) 
 
 *** =instructions
 - instruction
@@ -227,11 +337,9 @@ Exercise info here
 
 *** =pre_exercise_code
 ```{r}
-# access the MASS package
 library(MASS)
-
-# load the data
 data("Boston")
+
 
 ```
 
