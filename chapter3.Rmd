@@ -93,7 +93,7 @@ success_msg("Good work!")
 
 The `ggpairs()` function plots the correlations numbers in the plot matrix quite nicely (if the argument `cor` is chosen). A more visual way to see the correlations quickly is to use `corrplot()` function (from the corrplot package).
 
-It is useful to The 
+Use the corrplot to visualize the correlation between variables of the Boston dataset.
 
 *** =instructions
 - Calculate the correlation matrix and save it as `cor_matrix`. Print the matrix to see how it looks like.
@@ -125,10 +125,10 @@ library(corrplot)
 library(tidyverse)
 
 # calculate the correlation matrix
-cor_matrix<-cor(Boston) %>% round(digits = 2)
+cor_matrix<-cor(Boston) 
 
 # print the correlation matrix
-cor_matrix
+
 
 # visualize the correlation matrix
 corrplot(cor_matrix, method="circle")
@@ -167,9 +167,9 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:3a4eacf66c
 ## Scale the whole dataset
 
-Usually the R datasets do not need much data wrangling as they are already in a good shape. 
+Usually the R datasets do not need much data wrangling as they are already in a good shape. But we will need to do little adjustments.
 
-For later use, we will need to scale the data. The Boston data contains only numerical values, so we can use the function `scale()` to standardize the dataset.
+For later use, we will need to scale the data. The Boston data contains only numerical values, so we can use the function `scale()` to standardize the whole dataset (by columns).
 
 *** =instructions
 - Use the `scale()` function on the `Boston` dataset. Save the scaled data to `boston_scaled` object.
@@ -240,15 +240,14 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:3d45bd1da6
 ## Creating a target variable
 
-We will need a categorical variable as a target in the linear discriminant analysis in the next exercise. The scaled Boston dataset contains only continious variables, so we will need to create one. See how it's done below!
+We will need a categorical variable as a target in the **Linear Discriminant Analysis** in the next exercise. The scaled Boston dataset contains only continuous variables, so we will need to create one. See how it's done below!
 
 *** =instructions
 - Let's choose the variable `crim` (per capita crime rate by town) to be our target. The description of the Boston dataset variables could be seen [here](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html).
-- Look at the summary of the (scaled) variable `crim`
+- Look at the summary of the scaled variable `crim`
 - We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile). Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
 - Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created. Print the results.
-- Create a string vector from `"low"`, `"med_low"`, `"med_high"`, `"high"` (in that order) and save it as `label_names`.
-- Adjust the code of `cut()` by adding the `label` argument in the function. Set the `label_names` as labels and print the categorical variable again.
+- Adjust the code of `cut()` by adding the `label` argument in the function. Create a string vector from `"low"`, `"med_low"`, `"med_high"`, `"high"` (in that order) and use it to set the labels. Print the categorical variable again.
 - Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
 
 *** =hint
@@ -275,10 +274,6 @@ bins <- "change me!"
 # create a categorical variable 'crime' and print it
 crime <- cut(boston_scaled$crim, breaks = "change me!", include.lowest = TRUE)
 
-
-# label names
-label_names <- "change me!"
-
 # remove original crim from the dataset
 boston_scaled <- dplyr::select(boston_scaled, -crim)
 
@@ -299,11 +294,8 @@ bins <- quantile(boston_scaled$crim)
 bins
 
 # create a categorical variable 'crime' and print it
-crime <- cut(boston_scaled$crim, breaks=bins, include.lowest = TRUE, labels = label_names)
+crime <- cut(boston_scaled$crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
 crime 
-
-# label names
-label_names <- c("low", "med_low", "med_high", "high")
 
 # remove original crim from the dataset
 boston_scaled <- dplyr::select(boston_scaled, -crim)
@@ -317,17 +309,15 @@ boston_scaled <- data.frame(boston_scaled, crime)
 ```{r}
 test_function("summary", args = "object", incorrect_msg = "Please use the function summary() on crime rate.")
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
+test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
+test_object("bins", incorrect_msg = "Did you create `bins` ?")
 
 test_error()
 success_msg("Nicely done! By the way, sometimes there are functions with the same name in different R packages (like `select` in **dplyr** and **MASS**). You can choose which one to use by adding the name of the package with two colons in front of the function call (for example `dplyr::select()`).")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2de2d66d11
-## Linear Discriminant analysis(1)
+## Linear Discriminant analysis
 
 [Linear Discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis) is a classification (and dimension reduction) method. It finds the (linear) combination of the features that separate the target variable classes. The target can be binary or multiclass variable. 
 
@@ -361,7 +351,7 @@ train <- boston_scaled[ind,]
 test <- boston_scaled[-ind,]
 
 # linear discriminant analysis
-lda.fit = lda(" change me!", data = train)
+lda.fit <- lda(" change me!", data = train)
 
 # target classes as numeric
 classes <- as.numeric(train$crime)
@@ -385,13 +375,13 @@ train <- boston_scaled[ind,]
 test <- boston_scaled[-ind,]
 
 # linear discriminant analysis
-lda.fit = lda(crime ~ ., data=train)
+lda.fit <- lda(crime ~ ., data=train)
 
 # target classes as numeric
 classes <- as.numeric(train$crime)
 
 # plot the lda results
-plot(lda.fit, col=classes, pch=classes)
+plot(lda.fit, col = classes, pch = classes)
 
 # look at the loadings
 lda.fit$scaling
@@ -400,10 +390,10 @@ lda.fit$scaling
 
 *** =sct
 ```{r}
-test_function("plot", args = "col, pch", incorrect_msg = "Did you use the arguments `col` and `pch` in the plot fucntion?")
+test_function("plot", incorrect_msg = "Did you plot the lda.fit object?")
 
 test_error()
-success_msg("Good work!")
+success_msg("Expanding your statistcal skills! Nice!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0efb23a544
@@ -418,7 +408,7 @@ Splitting the original data to test and train sets allows us to check how well o
 - Save the correct crime classes of the test data into new object `correct_classes`
 - Remove the `crime` variable from the test data
 - Predict the crime classes with the test data
-- Create a table of the results, where you compare the correct classes to the one that model produced. Did the classifier predict the crime rate correctly?
+- Create a table of the results, where you compare the correct classes to the one that model produced. You can get the predicted classes with `lda.pred$class`. Did the classifier predict the crime rate correctly?
 
 *** =hint
 - hint
@@ -453,7 +443,7 @@ test <- dplyr::select(test, -crime)
 lda.pred <- predict(lda.fit, newdata = "change me!")
 
 # cross tabulate the results
-table(correct_classes, lda.pred$class)
+
 
 ```
 
@@ -477,12 +467,10 @@ table(correct_classes, lda.pred$class)
 
 *** =sct
 ```{r}
+test_function("table", incorrect_msg = "Did you create a table of the predicted classes and the correct ones?")
+test_object("correct_classes", incorrect_msg = "Did you create `correct_classes`?")
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
+test_error()
 success_msg("Good work!")
 ```
 
@@ -516,7 +504,7 @@ train <- boston_scaled[ind,]
 test <- boston_scaled[-ind,]
 
 # linear discriminant analysis
-lda.fit = lda(crime ~ ., data=train)
+lda.fit = lda(crime ~ ., data = train)
 ```
 
 *** =sample_code
@@ -585,19 +573,16 @@ lda.arrows(lda.fit, myscale = 2)
 
 *** =sct
 ```{r}
+test_function("lda.arrows", args = "myscale",incorrect_msg = "Did you set myscale to two in the lda.arrows() function?")
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
+test_error()
 success_msg("Good work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:10414fc9d1
 ## More dimensions with Plotly!
 
-[Plotly](https://plot.ly/r/) is an R graphing library that creates interactive plots and has an ggplot2 integration as well. Let's try it out!
+[Plotly](https://plot.ly/r/) is an R graphing library that creates interactive plots and has an ggplot2 integration as well. Let's try it out and visualize LDA a bit more!
 
 *** =instructions
 - Access plotly
@@ -645,19 +630,15 @@ plot_ly(x = matrix_product$LD1, y = matrix_product$LD2, z = matrix_product$LD3, 
 library(plotly)
 
 # plotly plot
-plot_ly(x = matrix_product$LD1, y = matrix_product$LD2, z = matrix_product$LD3, type= 'scatter3d', mode='markers', color = train$crime)
+plot_ly(x = matrix_product$LD1, y = matrix_product$LD2, z = matrix_product$LD3, type =  'scatter3d', mode = 'markers', color = train$crime)
 
 ```
 
 *** =sct
 ```{r}
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("plot_ly", args = "color",incorrect_msg = "Did you set the color correctly in plot_ly()?")
+test_error()
+success_msg("Plot_ting like no tomorrow!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:6719c6079e
@@ -677,6 +658,7 @@ There are functions that calculate the distances in R. In this exercise, we will
 *** =hint
 - `data(*name_of_the_dataset*)` can be used to load dataset from R package
 - Look at the help page of `dist()` function with `?dist`
+- `?head`
 
 *** =pre_exercise_code
 ```{r}
@@ -727,12 +709,10 @@ head(dist_man)
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_object("dist_man", incorrect_msg = "Did you create dist_man?")
+test_output_contains("head(dist_eu)", incorrect_msg = "Did you look at the first six values of dist_eu?")
+test_error()
+success_msg("Dissimilar might be similar if measured in a different way. Mind = blown!")
 ```
 
 
@@ -743,7 +723,7 @@ success_msg("Good work!")
 
 K-means needs the number of clusters as an argument. One way to determine the number of clusters is to look at how the within cluster sum of squares behaves when the number of cluster changes. 
 
-K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` 
+K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` can be used to deal with that. 
 
 *** =instructions
 - Execute the code for the distance matrix
@@ -804,7 +784,7 @@ qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 ```{r}
 
 # test_function("", args = "",incorrect_msg = "")
-test_object("K_max", incorrect_msg = "Did you set the k_max to 10?")
+test_object("k_max", incorrect_msg = "Did you set the k_max to 10?")
 # test_output_contains("", incorrect_msg = "")
 # 
 # test_error()
@@ -814,10 +794,10 @@ success_msg("Well done! ")
 --- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
 ## K-means clustering
 
-In the Elbow plot the optimal number of clusters is when the within cluster sum of squares drops (there is an "elbow" in the curve). In this case,  the  Let's see how the clusters will look like. 
+In the Elbow plot the optimal number of clusters is when the within cluster sum of squares drops (when there is an "elbow" in the curve). In this case, two clusters would seem optimal. Let's see how the clusters will look like. 
 
 *** =instructions
-- Based on the 
+- Based on the elbow plot we will want to have two clusters. 
 
 *** =hint
 - hint
@@ -838,15 +818,23 @@ qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 *** =sample_code
 ```{r}
 # Boston and dist_eu are available
-km <-kmeans(dist_eu, "change me!")
 
-# plot the pairwise 
-pairs(Boston)
+#k-means clustering
+km <-kmeans(dist_eu, k = "change me!")
+
+# plot the Boston dataset with clusters
+pairs(Boston, col = km$cluster)
 ```
 
 *** =solution
 ```{r}
+# Boston and dist_eu are available
 
+#k-means clustering
+km <-kmeans(dist_eu, k = "change me!")
+
+# plot the Boston dataset with clusters
+pairs(Boston, col = km$cluster)
 ```
 
 *** =sct
