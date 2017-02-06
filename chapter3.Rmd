@@ -327,7 +327,9 @@ success_msg("Nicely done! By the way, sometimes there are functions with the sam
 --- type:NormalExercise lang:r xp:100 skills:1 key:2de2d66d11
 ## Linear Discriminant analysis(1)
 
-[Linear Discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis) 
+[Linear Discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis) is a classification (and dimension reduction) method. It finds the (linear) combination of the features that separate the target variable classes. The target can be binary or multiclass variable. 
+
+Linear discriminant analysis is closely related to many other methods, such as principal component analysis (we will look into that next week) and the already familiar logistic regression. 
 
 *** =instructions
 - instruction
@@ -338,9 +340,7 @@ success_msg("Nicely done! By the way, sometimes there are functions with the sam
 *** =pre_exercise_code
 ```{r}
 library(MASS)
-data("Boston")
-
-
+boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
 ```
 
 *** =sample_code
@@ -356,9 +356,13 @@ lda.arrows <- function(x, myscale = 1, color='red', tex = 0.75, choices = c(1,2)
        cex = tex, col=color, pos=3)
 }
 
-lda.fit = lda(crime ~ ., data=boston)
-plot(lda.fit, col=as.numeric(boston$crime), pch=as.numeric(boston$crime))
+lda.fit = lda(crime ~ ., data=boston_scaled)
+plot(lda.fit, col=as.numeric(boston_scaled$crime), pch=as.numeric(boston_scaled$crime))
 lda.fit
+pred.lda <- predict(lda.fit, boston_scaled)
+
+pred.lda$x
+table(boston_scaled$crime, pred.lda$class)
 
 df <- dplyr::select(boston,-crime)
 dim(df)
@@ -369,6 +373,42 @@ MM <- as.data.frame(MM)
 plot(MM, col=as.numeric(boston$crime), pch=as.numeric(boston$crime))
 lda.arrows(lda.fit, myscale = 1)
 
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+--- type:NormalExercise lang:r xp:100 skills:1
+## Linear Discriminant analysis(2)
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
 
 ```
 
@@ -456,27 +496,64 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:6719c6079e
 ## Distance measures
 
-Exercise info here
+Similarity or dissimilarity of objects can be measured with distance measures. There are many different measures for different types of data. The most common or "normal" distance measure is [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance). 
+
+There are functions that calculate the distances in R. In this exercise, we will be using the base R's `dist()` function. The function creates a distance matrix that is saved as dist object. The distance matrix is usually square matrix containing the pairwise distances of the observations. So with large datasets, the computation of distance matrix is time consuming and storing the matrix might take a lot of memory. 
 
 *** =instructions
-- instruction
+- Load the MASS package and the `Boston` dataset from it
+- Create `dist_eu` by calling the `dist()` function on the Boston dataset. Note that by default, the function uses Euclidean distance measure.
+- Look at the head of the `dist_eu`
+- Next create object `dist_man` that contains the Manhattan distance matrix of the Boston dataset
+- Look at the first six values of the `dist_man`
 
 *** =hint
-- hint
+- `data(*name_of_the_dataset*)` can be used to load dataset from R package
+- Look at the help page of `dist()` function with `?dist`
 
 *** =pre_exercise_code
 ```{r}
-
+library(MASS)
+data('Boston')
 ```
 
 *** =sample_code
 ```{r}
-dist<-dist(Boston)
-head(dist)
+# load MASS and Boston
+library(MASS)
+data('Boston')
+
+# euclidean distance matrix
+dist_eu <- "change me!"
+
+# look at the first 6 distances
+
+
+# manhattan distance matrix
+dist_man <- "change me!"
+
+# look at the first 6 distances
+head(dist_man)
+
 ```
 
 *** =solution
 ```{r}
+# load MASS and Boston
+library(MASS)
+data('Boston')
+
+# euclidean distance matrix
+dist_eu <- dist(Boston)
+
+# look at the first 6 distances
+head(dist_eu)
+
+# manhattan distance matrix
+dist_man <- dist(Boston, method = 'manhattan')
+
+# look at the first 6 distances
+head(dist_man)
 
 ```
 
@@ -493,31 +570,46 @@ success_msg("Good work!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f3d6cd6c00
-## K-means
+## K-means (1)
 
-Exercise info here
+[K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects.
+
+K-means needs the number of clusters as an argument. One way to determine the number of clusters is to look at the within sum of squares that the clustering produces. 
 
 *** =instructions
-- instruction
+- Execute the code for the distance matrix
+- Set the max number of clusters (`k_max`) to be 10.
+- Execute the code to calculate within sum of squares. This might take a while.
+- Visualize the within sum of squares when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of within sum of squares changes radically. 
 
 *** =hint
 - hint
 
 *** =pre_exercise_code
 ```{r}
+library(MASS)
+library(ggplot2)
 
+data('Boston')
+set.seed(123)
 ```
 
 *** =sample_code
 ```{r}
-# number of clusters
-library(ggplot2)
-k.max <- 10
-wss <- sapply(1:k.max, function(k){kmeans(dist, k, nstart=10)$tot.withinss})
-qplot(1:k.max, wss, geom = 'line')
+# MASS, ggplot2 and Boston dataset are available
 
-km <-kmeans(dist, 4)
-# pairs(df, col=km$cluster)
+# euclidean distance matrix
+dist_eu <- dist(Boston)
+
+# determine the number of clusters
+k_max <- "change me!"
+
+# calculate within sum of square
+wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
+
+# visualize WSS
+qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
+
 ```
 
 *** =solution
@@ -533,7 +625,53 @@ km <-kmeans(dist, 4)
 # test_output_contains("", incorrect_msg = "")
 # 
 # test_error()
-success_msg("Good work!")
+success_msg("Well done! ")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## K-means (2)
+
+Now based on the Elbow plot we drew in the last exercise we can choose the number of clusters. Let's see how the clusters will look like. 
+
+*** =instructions
+- Based on the 
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+library(ggplot2)
+
+data('Boston')
+set.seed(13)
+dist_eu <- dist(Boston)
+```
+
+*** =sample_code
+```{r}
+# Boston and dist_eu are available
+km <-kmeans(dist_eu, "change me!")
+
+# plot the pairwise 
+pairs(Boston)
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Clustering like a pro!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0b27c3c46a
