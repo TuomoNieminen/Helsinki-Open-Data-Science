@@ -1,6 +1,6 @@
 ---
 title       : Clustering and classification
-description : K-means clustering, Discriminant analysis
+description : Datasets in R, Linear Discriminant Analysis (LDA) and K-means clustering
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3db2d48f25
 ## Datasets inside R
@@ -41,7 +41,8 @@ summary(Boston)
 # plot matrix of the variables
 library(GGally)
 library(ggplot2)
-p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("cor"), alpha = 0.3), lower = list(continuous = wrap("points")), alpha = 0.6)
+p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("cor"), alpha = 0.3), 
+             lower = list(continuous = wrap("points")), alpha = 0.6)
 
 # draw the plot
 
@@ -63,7 +64,8 @@ summary(Boston)
 # plot matrix of the variables
 library(GGally)
 library(ggplot2)
-p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("points")), lower = list(combo = wrap("facethist", bins=10)))
+p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("points")), 
+             lower = list(combo = wrap("facethist", bins=10)))
 
 # draw the plot
 p
@@ -192,7 +194,7 @@ data("Boston")
 # MASS and Boston dataset are available
 
 # center and standardize variables
-
+boston_scaled <- "change me!"
 
 # summaries of the scaled variables
 
@@ -332,7 +334,12 @@ success_msg("Nicely done! By the way, sometimes there are functions with the sam
 Linear discriminant analysis is closely related to many other methods, such as principal component analysis (we will look into that next week) and the already familiar logistic regression. 
 
 *** =instructions
-- instruction
+- Execute the codes to create train and test sets 
+- Create a linear discriminant analysis with the function `lda()`. The function takes a formula (like in regression) as a first argument. Use the `crime` as a target variable and all the other variables as predictors. Hint! You can type `target ~ .` where the dot means all other variables in the data.
+- Create a numeric vector of the target classes (for plotting purposes)
+- Use the function `plot()` on the `lda.fit` model
+- Adjust the code: add arguments `col = classes` and `pch = classes` to the plot.
+- Print out the linear combination coefficients (scaling) that LDA produced for every variable. If the target variable has $n$ categories, then LDA will produce $n-1$ linear discriminants (LD1, LD2, ... ).
 
 *** =hint
 - hint
@@ -345,39 +352,126 @@ boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/product
 
 *** =sample_code
 ```{r}
-# http://stackoverflow.com/questions/17232251/how-can-i-plot-a-biplot-for-lda-in-r
-lda.arrows <- function(x, myscale = 1, color='red', tex = 0.75, choices = c(1,2), ...){
-  ## adds `biplot` arrows to an lda using the discriminant function values
-  heads <- coef(x)
-  arrows(x0 = 0, y0 = 0, 
-         x1 = myscale * heads[,choices[1]], 
-         y1 = myscale * heads[,choices[2]], col=color, ...)
-  text(myscale * heads[,choices], labels = row.names(heads), 
-       cex = tex, col=color, pos=3)
-}
+# MASS and boston_scaled are available
 
-lda.fit = lda(crime ~ ., data=boston_scaled)
-plot(lda.fit, col=as.numeric(boston_scaled$crime), pch=as.numeric(boston_scaled$crime))
-lda.fit
-pred.lda <- predict(lda.fit, boston_scaled)
+# create train and test set 
+n <- nrow(boston_scaled)
+ind <- sample(n,  size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
 
-pred.lda$x
-table(boston_scaled$crime, pred.lda$class)
+# linear discriminant analysis
+lda.fit = lda(" change me!", data = train)
 
-df <- dplyr::select(boston,-crime)
-dim(df)
-dim(lda.fit$scaling)
+# target classes as numeric
+classes <- as.numeric(train$crime)
 
-MM <- as.matrix(df) %*% lda.fit$scaling
-MM <- as.data.frame(MM)
-plot(MM, col=as.numeric(boston$crime), pch=as.numeric(boston$crime))
-lda.arrows(lda.fit, myscale = 1)
+# plot the lda results
 
+
+# look at the loadings
+lda.fit$scaling
 
 ```
 
 *** =solution
 ```{r}
+# MASS and boston_scaled are available
+
+# create train and test set 
+n <- nrow(boston_scaled)
+ind <- sample(n,  size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
+
+# linear discriminant analysis
+lda.fit = lda(crime ~ ., data=train)
+
+# target classes as numeric
+classes <- as.numeric(train$crime)
+
+# plot the lda results
+plot(lda.fit, col=classes, pch=classes)
+
+# look at the loadings
+lda.fit$scaling
+
+```
+
+*** =sct
+```{r}
+test_function("plot", args = "col, pch", incorrect_msg = "Did you use the arguments `col` and `pch` in the plot fucntion?")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Predict LDA
+
+Like in the regression, the function `predict()` can be used to predict values based on a model. The function arguments are almost the same. You can see the help page of prediction function for LDA with `?predict.lda`.
+
+Splitting the original data to test and train sets allows us to check how well our model works. So the training of the model is done with the train set and model validation is done with the test set.  
+
+
+*** =instructions
+- Save the correct crime classes of the test data into new object `correct_classes`
+- Remove the `crime` variable from the test data
+- Predict the crime classes with the test data
+- Create a table of the results, where you compare the correct classes to the one that model produced. Did the classifier predict the crime rate correctly?
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
+
+# create train and test set 
+n <- nrow(boston_scaled)
+ind <- sample(n,  size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
+
+# linear discriminant analysis
+lda.fit = lda(crime ~ ., data=train)
+
+```
+
+*** =sample_code
+```{r}
+# lda.fit, train and test are available
+
+# save the correct classes from test data
+correct_classes <- "change me!"
+
+# remove the crime variable from test data
+test <- dplyr::select(test, -crime)
+
+# predict classes with test data
+lda.pred <- predict(lda.fit, newdata = "change me!")
+
+# cross tabulate the results
+table(correct_classes, lda.pred$class)
+
+```
+
+*** =solution
+```{r}
+# lda.fit, train and test are available
+
+# save the correct classes from test data
+correct_classes <- test$crime
+
+# remove the crime variable from test data
+test <- dplyr::select(test, -crime)
+
+# predict classes with test data
+lda.pred <- predict(lda.fit, newdata = test)
+
+# cross tabulate the results
+table(correct_classes, lda.pred$class)
 
 ```
 
@@ -391,29 +485,101 @@ lda.arrows(lda.fit, myscale = 1)
 # test_error()
 success_msg("Good work!")
 ```
---- type:NormalExercise lang:r xp:100 skills:1 key:50338b95ba
-## Linear Discriminant analysis(2)
 
-Exercise info here
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:50338b95ba
+## LDA biplot
+
+The loadings that linear discriminant model produces are coefficients for the variables used in the model creation. These coefficients can be used as arrows in biplot. From biplot you can quickly see which variables have the most impact on the linear discriminants. 
+
+The LDA biplot arrow function used in the exercise is (with slight changes) taken from [this](http://stackoverflow.com/questions/17232251/how-can-i-plot-a-biplot-for-lda-in-r) Stack Overflow message thread.
 
 *** =instructions
-- instruction
+- Create `classes` and `predictions`. The `crime` variable is removed from the train set, because otherwise the [matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication) won't work.
+- Create the `matrix_product`. The matrix multiplication can be done with `%*%` in R.
+- The class of `matrix_product` is matrix. Change it to data frame.
+- Execute the `lda.arrow()` function. Draw the plot and draw the lda arrows. Note that in DataCamp you will need to select both lines of code and execute them at the same time for the `lda.arrow()` function to work.
+- Change the color in `lda.arrow()` function from `"red"` to `"steel blue"`. Also change the `myscale` argument to two. Draw the plot again.
 
 *** =hint
 - hint
 
 *** =pre_exercise_code
 ```{r}
+library(MASS)
+boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
 
+# create train and test set 
+n <- nrow(boston_scaled)
+ind <- sample(n,  size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
+
+# linear discriminant analysis
+lda.fit = lda(crime ~ ., data=train)
 ```
 
 *** =sample_code
 ```{r}
+# train and lda.fit are available
+
+# crime classes as numeric
+classes <- as.numeric(train$crime)
+
+# remove the crime variable
+predictors <- dplyr::select(train, -crime)
+
+# matrix product of the predictors and linear discriminant loadings
+matrix_product <- as.matrix(predictors) %*% lda.fit$scaling
+
+# from matrix to data frame
+matrix_product <- as.data.frame(matrix_product)
+
+# the function for lda biplot arrows
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0.75, choices = c(1,2)){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
+
+# plot the results with arrow loadings 
+plot(matrix_product$LD1, matrix_product$LD2, col=classes)
+lda.arrows(lda.fit, myscale = 1)
 
 ```
 
 *** =solution
 ```{r}
+# train and lda.fit are available
+
+# crime classes as numeric
+classes <- as.numeric(train$crime)
+
+# remove the crime variable
+predictors <- dplyr::select(train, -crime)
+
+# matrix product of the predictors and linear discriminant loadings
+matrix_product <- as.matrix(predictors) %*% lda.fit$scaling
+
+# from matrix to data frame
+matrix_product <- as.data.frame(matrix_product)
+
+# the function for lda biplot arrows
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "steel blue", tex = 0.75, choices = c(1,2)){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
+
+# plot the results with arrow loadings 
+plot(matrix_product$LD1, matrix_product$LD2, col=classes)
+lda.arrows(lda.fit, myscale = 2)
 
 ```
 
@@ -431,54 +597,55 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:10414fc9d1
 ## More dimensions with Plotly!
 
-Exercise info here
+[Plotly](https://plot.ly/r/) is an R graphing library that creates interactive plots and has an ggplot2 integration as well. Let's try it out!
 
 *** =instructions
-- instruction
+- Access plotly
+- Execute the code for the `plot_ly()` plot
+- Adjust the code: add argument `color` as a function argument. Set the color to be the crime classes of the train set.
+
 
 *** =hint
-- hint
+- You can access the crime classes of the train data with `train$crime`
 
 *** =pre_exercise_code
 ```{r}
-# access the MASS package
 library(MASS)
+boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
 
-# load the data
-data("Boston")
+n <- nrow(boston_scaled)
+ind <- sample(n,  size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
 
-# center and standardize variables
-boston <- as.data.frame(scale(Boston))
+lda.fit = lda(crime ~ ., data=train)
+predictors <- dplyr::select(train, -crime)
+matrix_product <- as.matrix(predictors) %*% lda.fit$scaling
+matrix_product <- as.data.frame(matrix_product)
 
-# crim to categorical
-summary(boston$crim)
-crime <- cut(boston$crim, quantile(boston$crim), include.lowest = TRUE, 
-             labels = c("low", "med_low", "med_high", "high"))
-
-# remove original
-boston <- dplyr::select(boston, -crim)
-
-# combine
-boston <- data.frame(boston, crime)
-
-lda.fit = lda(crime ~ ., data=boston)
-df <- dplyr::select(boston,-crime)
-MM <- as.matrix(df) %*% lda.fit$scaling
 ```
 
 *** =sample_code
 ```{r}
-# 3D plot
+# train, lda.fit and matrix_product are available
+
+# access plotly
 library(plotly)
 
-d <- as.data.frame(MM)
-plot_ly(data=d, x = d$LD1, y = d$LD2, z = d$LD3, color=crime,
-        type= 'scatter3d', mode='markers')
+# plotly plot
+plot_ly(x = matrix_product$LD1, y = matrix_product$LD2, z = matrix_product$LD3, type= 'scatter3d', mode='markers')
 
 ```
 
 *** =solution
 ```{r}
+# train, lda.fit and matrix_product are available
+
+# access plotly
+library(plotly)
+
+# plotly plot
+plot_ly(x = matrix_product$LD1, y = matrix_product$LD2, z = matrix_product$LD3, type= 'scatter3d', mode='markers', color = train$crime)
 
 ```
 
@@ -494,7 +661,7 @@ success_msg("Good work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:6719c6079e
-## Distance measures
+## Towards clustering: distance measures
 
 Similarity or dissimilarity of objects can be measured with distance measures. There are many different measures for different types of data. The most common or "normal" distance measure is [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance). 
 
@@ -570,11 +737,13 @@ success_msg("Good work!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f3d6cd6c00
-## K-means (1)
+## K-means: determine the k
 
 [K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects.
 
-K-means needs the number of clusters as an argument. One way to determine the number of clusters is to look at the within sum of squares that the clustering produces. 
+K-means needs the number of clusters as an argument. One way to determine the number of clusters is to look at how the within cluster sum of squares behaves when the number of cluster changes. 
+
+K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` 
 
 *** =instructions
 - Execute the code for the distance matrix
@@ -591,12 +760,13 @@ library(MASS)
 library(ggplot2)
 
 data('Boston')
-set.seed(123)
+
 ```
 
 *** =sample_code
 ```{r}
 # MASS, ggplot2 and Boston dataset are available
+set.seed(123)
 
 # euclidean distance matrix
 dist_eu <- dist(Boston)
@@ -614,6 +784,19 @@ qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 
 *** =solution
 ```{r}
+# MASS, ggplot2 and Boston dataset are available
+
+# euclidean distance matrix
+dist_eu <- dist(Boston)
+
+# determine the number of clusters
+k_max <- 10
+
+# calculate within sum of square
+wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
+
+# visualize WSS
+qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 
 ```
 
@@ -621,7 +804,7 @@ qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 ```{r}
 
 # test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
+test_object("K_max", incorrect_msg = "Did you set the k_max to 10?")
 # test_output_contains("", incorrect_msg = "")
 # 
 # test_error()
@@ -629,9 +812,9 @@ success_msg("Well done! ")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
-## K-means (2)
+## K-means clustering
 
-Now based on the Elbow plot we drew in the last exercise we can choose the number of clusters. Let's see how the clusters will look like. 
+In the Elbow plot the optimal number of clusters is when the within cluster sum of squares drops (there is an "elbow" in the curve). In this case,  the  Let's see how the clusters will look like. 
 
 *** =instructions
 - Based on the 
@@ -647,6 +830,9 @@ library(ggplot2)
 data('Boston')
 set.seed(13)
 dist_eu <- dist(Boston)
+k_max <- 10
+wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
+qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 ```
 
 *** =sample_code
@@ -673,45 +859,3 @@ pairs(Boston)
 # test_error()
 success_msg("Clustering like a pro!")
 ```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:0b27c3c46a
-## K-medoids
-
-Exercise info here
-
-*** =instructions
-- instruction
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-library(cluster)
-pa <- pam(dist(df), 3)
-# pairs(df, col=pa$cluster)
-plot_ly(data=d, x=d$LD1, y=d$LD2, z=d$LD3, color=pa$cluster,
-        type= 'scatter3d', mode='markers')
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
-```
-
