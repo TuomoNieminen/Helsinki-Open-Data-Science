@@ -7,14 +7,14 @@ description : K-means clustering, Discriminant analysis
 
 Welcome to the *Clustering and classification* chapter.
 
-R has many (small) datasets already loaded in. When installing R packages, there are also often datasets included. Some of the datasets are quite famous (like the [Iris](https://en.wikipedia.org/wiki/Iris_flower_data_set) flower data) and they are often used for teaching purposes or to demonstrate statistical methods. 
+R has many (usually small) datasets already loaded in. There are also datasets included in the package installations. Some of the datasets are quite famous (like the [Iris](https://en.wikipedia.org/wiki/Iris_flower_data_set) flower data) and they are frequently used for teaching purposes or to demonstrate statistical methods. 
 
 This week we will be using the [Boston](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html) dataset from the MASS package. Let's see how it looks like!
 
 
 *** =instructions
-- Load the Boston dataset from MASS
-- Explore the Boston dataset. Look at the structure with `str()` and use `summary()` to see the details of the variables.
+- Load the `Boston` dataset from MASS
+- Explore the `Boston` dataset. Look at the structure with `str()` and use `summary()` to see the details of the variables.
 - Draw the plot matrix with `ggpairs()`
 - Change the plot so that density plots are in the upper side of the matrix and scatter plots are in the lower side of the matrix
 
@@ -153,10 +153,10 @@ corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.c
 ```{r}
 
 test_function("round", args = "digits",incorrect_msg = "Did you use the first two digits in rounding?")
-test_function("corrplot", args = "type",incorrect_msg = "Did you set the `type` to upper in corrplot?")
-test_function("corrplot", args = "type",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
-test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
-test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
+# test_function("corrplot", args = "type",incorrect_msg = "Did you set the `type` to upper in corrplot?")
+# test_function("corrplot", args = "type",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
+# test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
+# test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
 
 test_error()
 success_msg("Good work!")
