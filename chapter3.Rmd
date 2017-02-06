@@ -391,7 +391,7 @@ lda.arrows(lda.fit, myscale = 1)
 # test_error()
 success_msg("Good work!")
 ```
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:50338b95ba
 ## Linear Discriminant analysis(2)
 
 Exercise info here
@@ -628,7 +628,7 @@ qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 success_msg("Well done! ")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
 ## K-means (2)
 
 Now based on the Elbow plot we drew in the last exercise we can choose the number of clusters. Let's see how the clusters will look like. 
