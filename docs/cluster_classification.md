@@ -1,8 +1,14 @@
+
+
+
+
+
 Clustering and classification
 ========================================================
+css: index.css
 type: sub-section
 
-For IODS by Emma K‰m‰r‰inen
+For IODS by Emma K√§m√§r√§inen
 
 <br>
 <br>
@@ -16,20 +22,50 @@ Clustering and classification
 incremental: false
 
 Classification:
-- Identify in which (sub-)group the observation belongs
+- You know the number of classes
+- The classification model is trained based on data
+- Classify new observation
+
+***
 
 Clustering: 
-- Find groups within data so that observations within groups are more similar with each other than with observations with other groups
-
+- Unknown classes / number of classes is unknown
+- Find groups within data based on similarity 
 
 Clustering and classification
 ========================================================
 incremental: false
 
+- Linear discriminant analysis
 - Distance measures
 - K-means
-- Linear discriminant analysis
-- Quadric discriminant analysis
+
+Linear discriminant analysis
+==================================================
+
+Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. The target variable needs to be categorical. 
+
+It can be used to
+- Find the variables that discriminate/separate the classes best
+- Prediction of classes
+- Dimension reduction
+
+Linear discriminant analysis
+==================================================
+
+Assumptions:
+- Data variables are normally distributed
+- Each variable has the same variance
+  - Because of the variance assumption, the data might need scaling before fitting the model 
+
+Linear discriminant analysis
+==================================================
+
+Classifying new observations:
+- Based on the trained model LDA calculates the probabilities for the new observation for belonging in each of the classes
+- The observation is classified to the class of the highest probability
+- The math behind the probabilities can be seen [here](http://scikit-learn.org/stable/modules/lda_qda.html) for those who are interested. [Bayes theorem](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to estimate the probabilities.
+
 
 Distance measures
 ==================================================
@@ -42,24 +78,20 @@ How to determine if observations are similar or dissimilar with each others?
 - [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) (binary/categorical distance measure)
 - [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) (distance measure for words/strings)
 
-K-means (1)
+K -means
 ==================================================
 incremental: false
 autosize: true
 
-- K-means is possibly the oldest and used clustering method in many fields of study
-    - Easy to use and relatively fast, often finds a solution
-    - Small change in the dataset can produce very different results
+- *K*-means is possibly the oldest and used clustering method in many fields of study
+- Pro: Easy to use and often finds a solution
+- Con: Small change in the dataset can produce very different results
+- Many variations of *k*-means: *k*-means++, *k*-medoids, *k*-medians... 
     
-***
-
-*nice plot here*
-
-K-means (2)
+K-means algorithm
 ==================================================
 incremental: false
-
-Algorithm
+autosize: true
 
 1. Choose the number of clusters you want to have and pick initial cluster centroids.
 2. Calculate distances between centroids and datapoints. 
@@ -69,43 +101,38 @@ Algorithm
 
 Continue updating steps until the centroids or the clusters do not change
 
-K-means (3)
+K-means example
+==================================================
+
+![plot of chunk unnamed-chunk-3](cluster_classification-figure/unnamed-chunk-3-1.png)
+
+***
+
+![plot of chunk unnamed-chunk-4](cluster_classification-figure/unnamed-chunk-4-1.png)
+
+Source: [This R-Blogges Post](https://www.r-bloggers.com/k-means-clustering-in-r/)
+ 
+K-means notes
 ==================================================
 incremental: false
+autosize: true
 
-- Distance measure in the algorithm
-- Similarity/dissimilarity measures between data points
-- Calculating centroid: usually mean of the data points of the cluster
-- If distance measure is euclidean distance, the mean as centroid minimizes the objective function of k-means
+Remarks about *k*-means:
+- Distance measure in the algorithm: similarity/dissimilarity measure between data points
+  - Different distance measures produce different output
+  - Deciding the best distance is not
+- Number of clusters as input
+  - Many ways to find the optimal number of clusters
+  - One way is to look at the total within cluster sum of squares (see next slide)
+  - [Other ways](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set): hierarchical clustering, silhouette method, cross validation ...
 
-
-Linear discriminant analysis(1)
+K-means: Total within sum of squares
 ==================================================
+incremental: false
+autosize: true
 
-Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. LDA is a probabilistic model that forms a class conditional distribution of the data for each of the classes.
+Total within sum of squares is calculated by adding the within cluster sum of squares (WCSS) of every cluster together. The WCSS can be calculated with the pattern 
 
-[Bayes' rule](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to predict in what class the observation belongs to.
+$WCSS = \sum_i^N (x_i - centroid)^2$
 
-The probability of the observations being in a certain class can be written $P(y=k|X$ where X denotes the data and there are k number of classes. 
- 
-http://scikit-learn.org/stable/modules/lda_qda.html 
-
-Linear discriminant analysis(2)
-==================================================
-
-The conditional distribution of the data can be written as $P(X|y=k)$ where X means the data and k denotes the kth class. The conditional probability is modelled by using multivariate Gaussian distribution
-
-Cross Validation
-==================================================
-
-- Split the data into two: training set and test/validation set 
-- Train the statistical model with training set
-- Use test set validate the performace of the model:
-    + Error rate for classification
-    + Mean squared error for example linear regeression
-    + Other error measures
-- IMPORTANT
-
-DA biplot
-==================================================
-
+So you are searching for the number of clusters, where the observations are closest to the cluster center. 
