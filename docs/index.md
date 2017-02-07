@@ -10,7 +10,7 @@ transition: rotate
 
 University of Helsinki, spring 2017
 - Adjunct professor Kimmo Vehkalahti with  
-- Tuomo Nieminen and Emma K√§m√§r√§inen  
+- Tuomo Nieminen and Emma K‰m‰r‰inen  
 
 ========================================================
 type: prompt
@@ -535,3 +535,9 @@ Please note that the following slides are drafts and subject to changes.
 
 ========================================================
 
+
+
+```
+Error in readLines(if (is.character(input2)) { : 
+  cannot open the connection
+```
