@@ -91,9 +91,6 @@ The Boston data contains only numerical values, so we can use the function `scal
 *** =pre_exercise_code
 ```{r}
 library(MASS)
-library(corrplot)
-library(tidyverse)
-
 data("Boston")
 ```
 
