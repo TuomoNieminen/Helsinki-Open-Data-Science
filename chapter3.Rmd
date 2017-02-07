@@ -506,10 +506,11 @@ In the last exercise you created a scatter plot with the two linear discrimants 
 library(MASS)
 boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
 
-n <- nrow(boston_scaled)
-ind <- sample(n,  size = n * 0.8)
+ind <- sample(nrow(boston_scaled),  size = nrow(boston_scaled) * 0.8)
 train <- boston_scaled[ind,]
 test <- boston_scaled[-ind,]
+correct_classes <- test$crime
+test <- dplyr::select(test, -crime)
 
 lda.fit = lda(crime ~ ., data=train)
 model_predictors <- dplyr::select(train, -crime)
@@ -521,6 +522,11 @@ matrix_product <- as.data.frame(matrix_product)
 *** =sample_code
 ```{r}
 # train, abd lda.fit are available
+
+# otetaanko mukaan? nämä pitäis selittää
+model_predictors <- dplyr::select(train, -crime)
+matrix_product <- as.matrix(model_predictors) %*% lda.fit$scaling
+matrix_product <- as.data.frame(matrix_product)
 
 # access plotly
 library(plotly)
