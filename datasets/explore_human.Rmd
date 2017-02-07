@@ -1,13 +1,28 @@
+---
+title: Human development and Gender equality dimensions
+output: html_document
+---
 
-# The Human Development Index (HDI) is a summary measure of achievements 
-# in key dimensions of human development
-# data from kaggle: https://www.kaggle.com/undp/human-development
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Data for this exercise is taken [from kaggle](https://www.kaggle.com/undp/human-development). It includes two types of data from countries around the world.
+
+The Human Development Index (HDI) is a summary measure of achievements in key dimensions of human development. The Gender Inequality Index (GII) reflects gender-based disadvantage in three dimensions-reproductive health, empowerment, and the labour market.
+
+Here we explore the dimensions behind these two indicators.
+
+# Wrangle
+
+
+```{r human, message = F}
 # Tuomo Nieminen 2017
 
 # meta
 # browseURL("https://www.kaggle.com/undp/human-development")
 
-# libraries
+# access dplyr
 library(dplyr)
 
 # read human develop data
@@ -15,6 +30,10 @@ hd <- read.csv("human_development.csv", stringsAsFactors = F)
 
 # read gender inequality data
 gii <- read.csv("gender_inequality.csv", stringsAsFactors = F, na.strings = "..")
+
+# look at the data
+glimpse(hd)
+glimpse(gii)
 
 # rename human development variables
 names(hd) <- c("HDI.Rank", "Country", "HDI", "Life.Expectancy", "Education.Expected", "Education.Mean", "GNI", "GNI.Minus.Rank")
@@ -47,10 +66,25 @@ human <- slice(human, -nrow(human))
 rownames(human) <- human$Country
 human <- select(human, -Country)
 
+```
 
+
+# Explore
+```{r, message = F}
+
+# glimpse at the joined data
+glimpse(human)
+
+# summaries of variables
+summary(human)
+
+# pairs plot
 library(GGally)
-# ggpairs(human)
+ggpairs(human)
+```
 
+# PCA
+```{r, message = F}
 
 # pca 
 #---
@@ -63,4 +97,7 @@ pc <- prcomp(human_)
 
 # plot
 library(ggfortify)
-autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.size = 2.5, size = 0, loadings.label.size = 6)
+autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.size = 2.5, size = 0, loadings.label.size = 5, label.alpha = 0.4, loadings.label.alpha = 0.7, xlim = c(-0.2, 0.25))
+
+```
+
