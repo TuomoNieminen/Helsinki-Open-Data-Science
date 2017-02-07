@@ -163,7 +163,7 @@ Use the corrplot to visualize the correlation between variables of the Boston da
 *** =pre_exercise_code
 ```{r}
 library(MASS)
-library(tidyverse)
+library(tidyr)
 
 source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.R")
 source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/colorlegend.R")
@@ -192,7 +192,7 @@ corrplot(cor_matrix, method="circle")
 
 *** =solution
 ```{r}
-# MASS and Boston dataset are available
+# MASS, corrplot, tidyr and Boston dataset are available
 
 # calculate the correlation matrix
 cor_matrix<-cor(Boston) %>% round(digits = 2)
@@ -375,7 +375,7 @@ test <- dplyr::select(test, -crime)
 
 *** =sct
 ```{r}
-test_object("n", incorrect_msg = "Did you create n with nrow()?")
+test_object("`n`", incorrect_msg = "Did you create n with nrow()?")
 test_object("correct_classes", incorrect_msg = "Did you create `correct_classes`?")
 test_error()
 success_msg("Splitting data is heavy work, well done!")
@@ -484,12 +484,15 @@ success_msg("Expanding your statistcal skills! Nice!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:10414fc9d1
 ## More dimensions with Plotly!
 
-[Plotly](https://plot.ly/r/) is an R graphing library that creates **interactive** plots and has an ggplot2 integration as well. Let's try it out and visualize LDA a bit more!
+In the last exercise you created a scatter plot with the two linear discrimants that the LDA model generates If the target variable has $n$ categories, then LDA  will produce $n-1$ linear discriminants (LD1, LD2, ... ). In our `crime`target, we had 4 classes so the model has 3 linear discriminants.
+
+[Plotly](https://plot.ly/r/) is an R graphing library that creates **interactive** plots (and has an ggplot2 integration as well). In Plotly it is possible to create a 3D plot. Let's try it out and visualize our linear discriminants a bit more!
 
 *** =instructions
 - Access plotly
 - Execute the code for the `plot_ly()` plot
 - Adjust the code: add argument `color` as a function argument. Set the color to be the crime classes of the train set.
+- Note that you can pan and zoom the plot! Cool!
 
 
 *** =hint
