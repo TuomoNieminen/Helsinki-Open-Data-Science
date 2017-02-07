@@ -11,15 +11,13 @@ R has many (usually small) datasets already loaded in. There are also datasets i
 
 This week we will be using the [Boston](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html) dataset from the MASS package. Let's see how it looks like!
 
-
 *** =instructions
 - Load the `Boston` dataset from MASS
 - Explore the `Boston` dataset. Look at the structure with `str()` and use `summary()` to see the details of the variables.
-- Draw the plot matrix with `ggpairs()`
-- Change the plot so that density plots are in the upper side of the matrix and scatter plots are in the lower side of the matrix
+- Draw the plot matrix with `pairs()`
 
 *** =hint
-- You can draw the `ggpairs()` plot by typing the object name where it is saved.
+- You can draw the `pairs()` plot by typing the object name where it is saved.
 
 *** =pre_exercise_code
 ```{r}
@@ -35,16 +33,10 @@ library(MASS)
 data("Boston")
 
 # explore the dataset
-str(Boston)
-summary(Boston)
+
+
 
 # plot matrix of the variables
-library(GGally)
-library(ggplot2)
-p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("cor"), alpha = 0.3), 
-             lower = list(continuous = wrap("points")), alpha = 0.6)
-
-# draw the plot
 
 
 ```
@@ -62,103 +54,15 @@ str(Boston)
 summary(Boston)
 
 # plot matrix of the variables
-library(GGally)
-library(ggplot2)
-p <- ggpairs(Boston, mapping = aes(), upper = list(continuous = wrap("points")), 
-             lower = list(combo = wrap("facethist", bins=10)))
-
-# draw the plot
-p
+pairs(Boston)
 
 ```
 
 *** =sct
 ```{r}
 test_output_contains("summary(Boston)", incorrect_msg = "Did you use the summary() function on the Boston data?")
-
 test_output_contains("str(Boston)", incorrect_msg = "Did you use the str() function on the Boston data?")
-
-test_student_typed("p", not_typed_msg = "Please draw the plot created with `ggpairs()`")
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-test_error()
-success_msg("Good work!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:603dff42ce
-## Correlations plot
-
-The `ggpairs()` function plots the correlations numbers in the plot matrix quite nicely (if the argument `cor` is chosen). A more visual way to see the correlations quickly is to use `corrplot()` function (from the corrplot package).
-
-Use the corrplot to visualize the correlation between variables of the Boston dataset.
-
-*** =instructions
-- Calculate the correlation matrix and save it as `cor_matrix`. Print the matrix to see how it looks like.
-- Adjust the code: use the pipe (`%>%`) to round the matrix. Rounding can be done with the `round()` function. Use the first two digits. Print the matrix again. 
-- Plot the rounded correlation matrix
-- Adjust the code: add argument `type="upper"` to the plot. Print the plot again. 
-- Adjust the code little more: add arguments `cl.pos="b"`, `tl.pos="d"` and `tl.cex = 0.6` to the plot. Print the plot again. 
-- See more of corrplot [here](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-library(MASS)
-library(corrplot)
-library(tidyverse)
-
-data("Boston")
-
-```
-
-*** =sample_code
-```{r}
-# MASS and Boston dataset are available
-
-# access corrplot and tidyverse packages
-library(corrplot)
-library(tidyverse)
-
-# calculate the correlation matrix
-cor_matrix<-cor(Boston) 
-
-# print the correlation matrix
-
-
-# visualize the correlation matrix
-corrplot(cor_matrix, method="circle")
-
-```
-
-*** =solution
-```{r}
-# MASS and Boston dataset are available
-
-# access corrplot and tidyverse packages
-library(corrplot)
-library(tidyverse)
-
-# calculate the correlation matrix
-cor_matrix<-cor(Boston) %>% round(digits = 2)
-
-# visualize the correlation matrix
-corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.cex = 0.6)
-
-```
-
-*** =sct
-```{r}
-
-test_function("round", args = "digits",incorrect_msg = "Did you use the first two digits in rounding?")
-# test_function("corrplot", args = "type",incorrect_msg = "Did you set the `type` to upper in corrplot?")
-# test_function("corrplot", args = "type",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
-# test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
-# test_function("corrplot", args = "cl.pos",incorrect_msg = "Did you set the `cl.pos` in corrplot?")
+test_function("pairs", incorrect_msg = "Did you draw the plot matrix with pairs?")
 
 test_error()
 success_msg("Good work!")
@@ -169,7 +73,11 @@ success_msg("Good work!")
 
 Usually the R datasets do not need much data wrangling as they are already in a good shape. But we will need to do little adjustments.
 
-For later use, we will need to scale the data. The Boston data contains only numerical values, so we can use the function `scale()` to standardize the whole dataset (by columns).
+For later use, we will need to scale the data. In the scaling we subtract the column means from the corredponding columns and divide the difference with standard deviation.
+
+$ scaled_x = \frac{x - mean(x)}{ sd(x)}$
+
+The Boston data contains only numerical values, so we can use the function `scale()` to standardize the whole dataset.
 
 *** =instructions
 - Use the `scale()` function on the `Boston` dataset. Save the scaled data to `boston_scaled` object.
@@ -238,16 +146,19 @@ success_msg("Good work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3d45bd1da6
-## Creating a target variable
+## Creating a factor variable
 
-We will need a categorical variable as a target in the **Linear Discriminant Analysis** in the next exercise. The scaled Boston dataset contains only continuous variables, so we will need to create one. See how it's done below!
+We can create a categorical variable from a continuous one. There are many ways to to do that. Let's choose the variable `crim` (per capita crime rate by town) to be our factor variable. The description of the Boston dataset variables could be seen [here](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html). We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile) to get the high, low and middle rates of crime into their own categories.
+
+See how it's done below!
 
 *** =instructions
-- Let's choose the variable `crim` (per capita crime rate by town) to be our target. The description of the Boston dataset variables could be seen [here](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html).
 - Look at the summary of the scaled variable `crim`
-- We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile). Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
-- Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created. Print the results.
-- Adjust the code of `cut()` by adding the `label` argument in the function. Create a string vector from `"low"`, `"med_low"`, `"med_high"`, `"high"` (in that order) and use it to set the labels. Print the categorical variable again.
+- Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
+- Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created.
+- Use the function `table()` on the `crime` object
+- Adjust the code of `cut()` by adding the `label` argument in the function. Create a string vector with the values `"low"`, `"med_low"`, `"med_high"`, `"high"` (in that order) and use it to set the labels.
+- Do the table of the `crime` object again
 - Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
 
 *** =hint
@@ -268,11 +179,14 @@ boston_scaled <- as.data.frame(scale(Boston))
 
 
 # create a quantile vector of crim and print it
-bins <- "change me!"
+bins <- quantile(boston_scaled$crim)
+bins
 
-
-# create a categorical variable 'crime' and print it
+# create a categorical variable 'crime'
 crime <- cut(boston_scaled$crim, breaks = "change me!", include.lowest = TRUE)
+
+# look at the table of the new factor crime
+
 
 # remove original crim from the dataset
 boston_scaled <- dplyr::select(boston_scaled, -crim)
@@ -293,9 +207,11 @@ summary(boston_scaled$crim)
 bins <- quantile(boston_scaled$crim)
 bins
 
-# create a categorical variable 'crime' and print it
+# create a categorical variable 'crime'
 crime <- cut(boston_scaled$crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
-crime 
+
+# look at the table of the new factor crime
+table(crime)
 
 # remove original crim from the dataset
 boston_scaled <- dplyr::select(boston_scaled, -crim)
@@ -307,7 +223,7 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 *** =sct
 ```{r}
-test_function("summary", args = "object", incorrect_msg = "Please use the function summary() on crime rate.")
+test_output_contains("summary(boston_scaled$crim)", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
 
 test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
 test_object("bins", incorrect_msg = "Did you create `bins` ?")
@@ -316,20 +232,18 @@ test_error()
 success_msg("Nicely done! By the way, sometimes there are functions with the same name in different R packages (like `select` in **dplyr** and **MASS**). You can choose which one to use by adding the name of the package with two colons in front of the function call (for example `dplyr::select()`).")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:2de2d66d11
-## Linear Discriminant analysis
+--- type:NormalExercise lang:r xp:100 skills:1
+## Splitting the data to train and test sets
 
-[Linear Discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis) is a classification (and dimension reduction) method. It finds the (linear) combination of the features that separate the target variable classes. The target can be binary or multiclass variable. 
-
-Linear discriminant analysis is closely related to many other methods, such as principal component analysis (we will look into that next week) and the already familiar logistic regression. 
+Exercise info here
 
 *** =instructions
-- Execute the codes to create train and test sets 
-- Create a linear discriminant analysis with the function `lda()`. The function takes a formula (like in regression) as a first argument. Use the `crime` as a target variable and all the other variables as predictors. Hint! You can type `target ~ .` where the dot means all other variables in the data.
-- Create a numeric vector of the target classes (for plotting purposes)
-- Use the function `plot()` on the `lda.fit` model
-- Adjust the code: add arguments `col = classes` and `pch = classes` to the plot.
-- Print out the linear combination coefficients (scaling) that LDA produced for every variable. If the target variable has $n$ categories, then LDA will produce $n-1$ linear discriminants (LD1, LD2, ... ).
+- Use the function `nrow()` on the `boston_scaled` to get the number of rows in the dataset. Save the number of rows in `n`.
+- Execute the code to choose randomly 80% of the rows and save the row numbers to `ind`
+- Create `train` set by selecting the row numbers that are saved in `ind`.
+- Create `test` set by subtracting the rows that are used in the train set
+- Take the crime classes from the `test` and save them as `correct_classes`
+- Execute the code to remove `crime` from `test` set
 
 *** =hint
 - hint
@@ -342,25 +256,118 @@ boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/product
 
 *** =sample_code
 ```{r}
-# MASS and boston_scaled are available
+# number of rows in the Boston dataset 
+n <- "change me!"
 
-# create train and test set 
-n <- nrow(boston_scaled)
+# choose randomly 80% of the rows
 ind <- sample(n,  size = n * 0.8)
+
+# create train set
+train <- boston_scaled[ind,]
+
+# create test set 
+test <- boston_scaled[-ind,]
+
+# save the correct classes from test data
+correct_classes <- "change me!"
+
+# remove the crime variable from test data
+test <- dplyr::select(test, -crime)
+
+```
+
+*** =solution
+```{r}
+# boston_scaled is available
+
+# number of rows in the Boston dataset 
+n <- nrow(boston_scaled)
+
+# choose randomly 80% of the rows
+ind <- sample(n,  size = n * 0.8)
+
+# create train set
+train <- boston_scaled[ind,]
+
+# create test set 
+test <- boston_scaled[-ind,]
+
+# save the correct classes from test data
+correct_classes <- test$crime
+
+# remove the crime variable from test data
+test <- dplyr::select(test, -crime)
+
+```
+
+*** =sct
+```{r}
+test_object("n", incorrect_msg = "Did you create n with nrow()?")
+test_object("correct_classes", incorrect_msg = "Did you create `correct_classes`?")
+test_error()
+success_msg("Splitting data is heavy work, well done!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:2de2d66d11
+## Linear Discriminant analysis
+
+[Linear Discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis) is a classification (and dimension reduction) method. It finds the (linear) combination of the variables that separate the target variable classes. The target can be binary or multiclass variable. 
+
+Linear discriminant analysis is closely related to many other methods, such as principal component analysis (we will look into that next week) and the already familiar logistic regression. 
+
+LDA can be visualized with a biplot. We will talk more about biplots next week. The LDA biplot arrow function used in the exercise is (with slight changes) taken from [this](http://stackoverflow.com/questions/17232251/how-can-i-plot-a-biplot-for-lda-in-r) Stack Overflow message thread.
+
+*** =instructions
+- Fit a linear discriminant analysis with the function `lda()`. The function takes a formula (like in regression) as a first argument. Use the `crime` as a target variable and all the other variables as predictors. Hint! You can type `target ~ .` where the dot means all other variables in the data.
+- Print the `lda.fit` object
+- Create a numeric vector of the target classes (for plotting purposes)
+- Use the function `plot()` on the `lda.fit` model
+- Adjust the code: add arguments `col = classes` and `pch = classes` to the plot.
+- Execute the `lda.arrow()` function (if you haven't done that already). Draw the plot with the lda arrows. Note that in DataCamp you will need to select both lines of code and execute them at the same time for the `lda.arrow()` function to work.
+- Print out the linear combination coefficients (scaling) that LDA produced for every variable. If the target variable has $n$ categories, then LDA will produce $n-1$ linear discriminants (LD1, LD2, ... ).
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
+
+ind <- sample(nrow(boston_scaled),  size = nrow(boston_scaled) * 0.8)
 train <- boston_scaled[ind,]
 test <- boston_scaled[-ind,]
+correct_classes <- test$crime
+test <- dplyr::select(test, -crime)
+
+```
+
+*** =sample_code
+```{r}
+# MASS and boston_scaled are available
 
 # linear discriminant analysis
 lda.fit <- lda(" change me!", data = train)
+
+# print the lda.fit object
+lda.fit
+
+# the function for lda biplot arrows
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0.75, choices = c(1,2)){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
 
 # target classes as numeric
 classes <- as.numeric(train$crime)
 
 # plot the lda results
-
-
-# look at the loadings
-lda.fit$scaling
+plot("change me!", dimen = 2)
+lda.arrows(lda.fit, myscale = 1)
 
 ```
 
@@ -368,30 +375,32 @@ lda.fit$scaling
 ```{r}
 # MASS and boston_scaled are available
 
-# create train and test set 
-n <- nrow(boston_scaled)
-ind <- sample(n,  size = n * 0.8)
-train <- boston_scaled[ind,]
-test <- boston_scaled[-ind,]
-
 # linear discriminant analysis
-lda.fit <- lda(crime ~ ., data=train)
+lda.fit <- lda(crime ~ ., data = train)
+
+# the function for lda biplot arrows
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "orange", tex = 0.75, choices = c(1,2)){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
 
 # target classes as numeric
 classes <- as.numeric(train$crime)
 
 # plot the lda results
-plot(lda.fit, col = classes, pch = classes)
-
-# look at the loadings
-lda.fit$scaling
+plot(lda.fit, dimen = 2, col = classes, pch = classes)
+lda.arrows(lda.fit, myscale = 1)
 
 ```
 
 *** =sct
 ```{r}
 test_function("plot", incorrect_msg = "Did you plot the lda.fit object?")
-
+test_function("plot", args= "col", incorrect_msg = "Did you set the color in the plot?")
 test_error()
 success_msg("Expanding your statistcal skills! Nice!")
 ```
@@ -408,7 +417,8 @@ Splitting the original data to test and train sets allows us to check how well o
 - Save the correct crime classes of the test data into new object `correct_classes`
 - Remove the `crime` variable from the test data
 - Predict the crime classes with the test data
-- Create a table of the results, where you compare the correct classes to the one that model produced. You can get the predicted classes with `lda.pred$class`. Did the classifier predict the crime rate correctly?
+- Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. You can get the predicted classes with `lda.pred$class`. 
+- Did the classifier predict the crime rate correctly?
 
 *** =hint
 - hint
@@ -451,11 +461,6 @@ lda.pred <- predict(lda.fit, newdata = "change me!")
 ```{r}
 # lda.fit, train and test are available
 
-# save the correct classes from test data
-correct_classes <- test$crime
-
-# remove the crime variable from test data
-test <- dplyr::select(test, -crime)
 
 # predict classes with test data
 lda.pred <- predict(lda.fit, newdata = test)
@@ -468,7 +473,7 @@ table(correct_classes, lda.pred$class)
 *** =sct
 ```{r}
 test_function("table", incorrect_msg = "Did you create a table of the predicted classes and the correct ones?")
-test_object("correct_classes", incorrect_msg = "Did you create `correct_classes`?")
+
 
 test_error()
 success_msg("Good work!")
@@ -480,13 +485,13 @@ success_msg("Good work!")
 
 The loadings that linear discriminant model produces are coefficients for the variables used in the model creation. These coefficients can be used as arrows in biplot. From biplot you can quickly see which variables have the most impact on the linear discriminants. 
 
-The LDA biplot arrow function used in the exercise is (with slight changes) taken from [this](http://stackoverflow.com/questions/17232251/how-can-i-plot-a-biplot-for-lda-in-r) Stack Overflow message thread.
+
 
 *** =instructions
 - Create `classes` and `predictions`. The `crime` variable is removed from the train set, because otherwise the [matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication) won't work.
 - Create the `matrix_product`. The matrix multiplication can be done with `%*%` in R.
 - The class of `matrix_product` is matrix. Change it to data frame.
-- Execute the `lda.arrow()` function. Draw the plot and draw the lda arrows. Note that in DataCamp you will need to select both lines of code and execute them at the same time for the `lda.arrow()` function to work.
+
 - Change the color in `lda.arrow()` function from `"red"` to `"steel blue"`. Also change the `myscale` argument to two. Draw the plot again.
 
 *** =hint
@@ -523,15 +528,7 @@ matrix_product <- as.matrix(predictors) %*% lda.fit$scaling
 # from matrix to data frame
 matrix_product <- as.data.frame(matrix_product)
 
-# the function for lda biplot arrows
-lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0.75, choices = c(1,2)){
-  heads <- coef(x)
-  arrows(x0 = 0, y0 = 0, 
-         x1 = myscale * heads[,choices[1]], 
-         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
-  text(myscale * heads[,choices], labels = row.names(heads), 
-       cex = tex, col=color, pos=3)
-}
+
 
 # plot the results with arrow loadings 
 plot(matrix_product$LD1, matrix_product$LD2, col=classes)
@@ -582,7 +579,7 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:10414fc9d1
 ## More dimensions with Plotly!
 
-[Plotly](https://plot.ly/r/) is an R graphing library that creates interactive plots and has an ggplot2 integration as well. Let's try it out and visualize LDA a bit more!
+[Plotly](https://plot.ly/r/) is an R graphing library that creates **interactive** plots and has an ggplot2 integration as well. Let's try it out and visualize LDA a bit more!
 
 *** =instructions
 - Access plotly
@@ -651,14 +648,13 @@ There are functions that calculate the distances in R. In this exercise, we will
 *** =instructions
 - Load the MASS package and the `Boston` dataset from it
 - Create `dist_eu` by calling the `dist()` function on the Boston dataset. Note that by default, the function uses Euclidean distance measure.
-- Look at the head of the `dist_eu`
+- Look at the summary of the `dist_eu`
 - Next create object `dist_man` that contains the Manhattan distance matrix of the Boston dataset
-- Look at the first six values of the `dist_man`
+- Look at the summary of the `dist_man`
 
 *** =hint
 - `data(*name_of_the_dataset*)` can be used to load dataset from R package
 - Look at the help page of `dist()` function with `?dist`
-- `?head`
 
 *** =pre_exercise_code
 ```{r}
@@ -675,14 +671,14 @@ data('Boston')
 # euclidean distance matrix
 dist_eu <- "change me!"
 
-# look at the first 6 distances
+# look at the summary of the distances
 
 
 # manhattan distance matrix
 dist_man <- "change me!"
 
-# look at the first 6 distances
-head(dist_man)
+# look at the summary of the distances
+
 
 ```
 
@@ -695,22 +691,22 @@ data('Boston')
 # euclidean distance matrix
 dist_eu <- dist(Boston)
 
-# look at the first 6 distances
-head(dist_eu)
+# look at the summary of the distances
+summary(dist_eu)
 
 # manhattan distance matrix
 dist_man <- dist(Boston, method = 'manhattan')
 
-# look at the first 6 distances
-head(dist_man)
+# look at the summary of the distances
+summary(dist_man)
 
 ```
 
 *** =sct
 ```{r}
-
 test_object("dist_man", incorrect_msg = "Did you create dist_man?")
-test_output_contains("head(dist_eu)", incorrect_msg = "Did you look at the first six values of dist_eu?")
+test_output_contains("summary(dist_eu)", incorrect_msg = "Did you use the summary() function on the dist_eu?")
+test_output_contains("summary(dist_man)", incorrect_msg = "Did you use the summary() function on the dist_man?")
 test_error()
 success_msg("Dissimilar might be similar if measured in a different way. Mind = blown!")
 ```
