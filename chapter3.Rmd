@@ -142,10 +142,82 @@ test_error()
 success_msg("Good work!")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:603dff42ce
+## Correlations plot
+
+It is often interesting to look at the correlations between variables in the data. The function `cor()` can be used to create the correlation matrix. A more visual way to look at the correlations is to use `corrplot()` function (from the corrplot package).
+
+Use the corrplot to visualize the correlation between variables of the Boston dataset.
+
+*** =instructions
+- Calculate the correlation matrix and save it as `cor_matrix`. Print the matrix to see how it looks like.
+- Adjust the code: use the pipe (`%>%`) to round the matrix. Rounding can be done with the `round()` function. Use the first two digits. Print the matrix again. 
+- Plot the rounded correlation matrix
+- Adjust the code: add argument `type="upper"` to the plot. Print the plot again. 
+- Adjust the code little more: add arguments `cl.pos="b"`, `tl.pos="d"` and `tl.cex = 0.6` to the plot. Print the plot again. 
+- See more of corrplot [here](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+library(tidyverse)
+
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/colorlegend.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrMatOrder.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrRect.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrRect.hclust.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.mixed.R")
+data("Boston")
+
+```
+
+*** =sample_code
+```{r}
+# MASS, corrplot, tidyverse and Boston dataset are available
+
+# calculate the correlation matrix
+cor_matrix<-cor(Boston) 
+
+# print the correlation matrix
+
+
+# visualize the correlation matrix
+corrplot(cor_matrix, method="circle")
+
+```
+
+*** =solution
+```{r}
+# MASS and Boston dataset are available
+
+# calculate the correlation matrix
+cor_matrix<-cor(Boston) %>% round(digits = 2)
+
+# print the correlation matrix
+cor_matrix
+
+# visualize the correlation matrix
+corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.cex = 0.6)
+
+```
+
+*** =sct
+```{r}
+
+test_function("round", args = "digits",incorrect_msg = "Did you use the first two digits in rounding?")
+
+test_error()
+success_msg("Good work!")
+```
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:3d45bd1da6
 ## Creating a factor variable
 
-We can create a categorical variable from a continuous one. There are many ways to to do that. Let's choose the variable `crim` (per capita crime rate by town) to be our factor variable. The description of the Boston dataset variables could be seen [here](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html). We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile) to get the high, low and middle rates of crime into their own categories.
+We can create a categorical variable from a continuous one. There are many ways to to do that. Let's choose the variable `crim` (per capita crime rate by town) to be our factor variable. We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile) to get the high, low and middle rates of crime into their own categories.
 
 See how it's done below!
 
@@ -232,7 +304,9 @@ success_msg("Nicely done! By the way, sometimes there are functions with the sam
 --- type:NormalExercise lang:r xp:100 skills:1 key:bca5932717
 ## Splitting the data to train and test sets
 
-Exercise info here
+Splitting the original data to test and train sets allows us to check how well our model works. 
+
+The training of the model is done with the train set and prediction on new data is done with the test set. 
 
 *** =instructions
 - Use the function `nrow()` on the `boston_scaled` to get the number of rows in the dataset. Save the number of rows in `n`.
@@ -253,6 +327,8 @@ boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/product
 
 *** =sample_code
 ```{r}
+# boston_scaled is available
+
 # number of rows in the Boston dataset 
 n <- "change me!"
 
@@ -317,11 +393,11 @@ LDA can be visualized with a biplot. We will talk more about biplots next week. 
 *** =instructions
 - Fit a linear discriminant analysis with the function `lda()`. The function takes a formula (like in regression) as a first argument. Use the `crime` as a target variable and all the other variables as predictors. Hint! You can type `target ~ .` where the dot means all other variables in the data.
 - Print the `lda.fit` object
-- Create a numeric vector of the target classes (for plotting purposes)
-- Use the function `plot()` on the `lda.fit` model
+- Create a numeric vector of the train sets crime classes (for plotting purposes)
+- Use the function `plot()` on the `lda.fit` model. The argument `dimen` can be used to choose how many discriminants is used. 
 - Adjust the code: add arguments `col = classes` and `pch = classes` to the plot.
 - Execute the `lda.arrow()` function (if you haven't done that already). Draw the plot with the lda arrows. Note that in DataCamp you will need to select both lines of code and execute them at the same time for the `lda.arrow()` function to work.
-- Print out the linear combination coefficients (scaling) that LDA produced for every variable. If the target variable has $n$ categories, then LDA will produce $n-1$ linear discriminants (LD1, LD2, ... ).
+- You can change the `myscale` argument in `lda.arrow()` to see more clearly which way the arrows are pointing. 
 
 *** =hint
 - hint
@@ -341,7 +417,7 @@ test <- dplyr::select(test, -crime)
 
 *** =sample_code
 ```{r}
-# MASS and boston_scaled are available
+# MASS and train are available
 
 # linear discriminant analysis
 lda.fit <- lda(" change me!", data = train)
@@ -370,10 +446,13 @@ lda.arrows(lda.fit, myscale = 1)
 
 *** =solution
 ```{r}
-# MASS and boston_scaled are available
+# MASS and train are available
 
 # linear discriminant analysis
 lda.fit <- lda(crime ~ ., data = train)
+
+# print the lda.fit object
+lda.fit
 
 # the function for lda biplot arrows
 lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "orange", tex = 0.75, choices = c(1,2)){
@@ -400,177 +479,6 @@ test_function("plot", incorrect_msg = "Did you plot the lda.fit object?")
 test_function("plot", args= "col", incorrect_msg = "Did you set the color in the plot?")
 test_error()
 success_msg("Expanding your statistcal skills! Nice!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:0efb23a544
-## Predict LDA
-
-Like in the regression, the function `predict()` can be used to predict values based on a model. The function arguments are almost the same. You can see the help page of prediction function for LDA with `?predict.lda`.
-
-Splitting the original data to test and train sets allows us to check how well our model works. So the training of the model is done with the train set and model validation is done with the test set.  
-
-
-*** =instructions
-- Save the correct crime classes of the test data into new object `correct_classes`
-- Remove the `crime` variable from the test data
-- Predict the crime classes with the test data
-- Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. You can get the predicted classes with `lda.pred$class`. 
-- Did the classifier predict the crime rate correctly?
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-library(MASS)
-boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
-
-# create train and test set 
-n <- nrow(boston_scaled)
-ind <- sample(n,  size = n * 0.8)
-train <- boston_scaled[ind,]
-test <- boston_scaled[-ind,]
-
-# linear discriminant analysis
-lda.fit = lda(crime ~ ., data=train)
-
-```
-
-*** =sample_code
-```{r}
-# lda.fit, train and test are available
-
-# save the correct classes from test data
-correct_classes <- "change me!"
-
-# remove the crime variable from test data
-test <- dplyr::select(test, -crime)
-
-# predict classes with test data
-lda.pred <- predict(lda.fit, newdata = "change me!")
-
-# cross tabulate the results
-
-
-```
-
-*** =solution
-```{r}
-# lda.fit, train and test are available
-
-
-# predict classes with test data
-lda.pred <- predict(lda.fit, newdata = test)
-
-# cross tabulate the results
-table(correct_classes, lda.pred$class)
-
-```
-
-*** =sct
-```{r}
-test_function("table", incorrect_msg = "Did you create a table of the predicted classes and the correct ones?")
-
-
-test_error()
-success_msg("Good work!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:50338b95ba
-## LDA biplot
-
-The loadings that linear discriminant model produces are coefficients for the variables used in the model creation. These coefficients can be used as arrows in biplot. From biplot you can quickly see which variables have the most impact on the linear discriminants. 
-
-
-
-*** =instructions
-- Create `classes` and `predictions`. The `crime` variable is removed from the train set, because otherwise the [matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication) won't work.
-- Create the `matrix_product`. The matrix multiplication can be done with `%*%` in R.
-- The class of `matrix_product` is matrix. Change it to data frame.
-
-- Change the color in `lda.arrow()` function from `"red"` to `"steel blue"`. Also change the `myscale` argument to two. Draw the plot again.
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-library(MASS)
-boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
-
-# create train and test set 
-n <- nrow(boston_scaled)
-ind <- sample(n,  size = n * 0.8)
-train <- boston_scaled[ind,]
-test <- boston_scaled[-ind,]
-
-# linear discriminant analysis
-lda.fit = lda(crime ~ ., data = train)
-```
-
-*** =sample_code
-```{r}
-# train and lda.fit are available
-
-# crime classes as numeric
-classes <- as.numeric(train$crime)
-
-# remove the crime variable
-predictors <- dplyr::select(train, -crime)
-
-# matrix product of the predictors and linear discriminant loadings
-matrix_product <- as.matrix(predictors) %*% lda.fit$scaling
-
-# from matrix to data frame
-matrix_product <- as.data.frame(matrix_product)
-
-
-
-# plot the results with arrow loadings 
-plot(matrix_product$LD1, matrix_product$LD2, col=classes)
-lda.arrows(lda.fit, myscale = 1)
-
-```
-
-*** =solution
-```{r}
-# train and lda.fit are available
-
-# crime classes as numeric
-classes <- as.numeric(train$crime)
-
-# remove the crime variable
-predictors <- dplyr::select(train, -crime)
-
-# matrix product of the predictors and linear discriminant loadings
-matrix_product <- as.matrix(predictors) %*% lda.fit$scaling
-
-# from matrix to data frame
-matrix_product <- as.data.frame(matrix_product)
-
-# the function for lda biplot arrows
-lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "steel blue", tex = 0.75, choices = c(1,2)){
-  heads <- coef(x)
-  arrows(x0 = 0, y0 = 0, 
-         x1 = myscale * heads[,choices[1]], 
-         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
-  text(myscale * heads[,choices], labels = row.names(heads), 
-       cex = tex, col=color, pos=3)
-}
-
-# plot the results with arrow loadings 
-plot(matrix_product$LD1, matrix_product$LD2, col=classes)
-lda.arrows(lda.fit, myscale = 2)
-
-```
-
-*** =sct
-```{r}
-test_function("lda.arrows", args = "myscale",incorrect_msg = "Did you set myscale to two in the lda.arrows() function?")
-
-test_error()
-success_msg("Good work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:10414fc9d1
@@ -634,6 +542,72 @@ test_function("plot_ly", args = "color",incorrect_msg = "Did you set the color c
 test_error()
 success_msg("Plot_ting like no tomorrow!")
 ```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:0efb23a544
+## Predict LDA
+
+Like in the regression, the function `predict()` can be used to predict values based on a model. The function arguments are almost the same. You can see the help page of prediction function for LDA with `?predict.lda`.
+
+Splitting the original data to test and train sets allows us to check how well our model works. So the training of the model is done with the train set and prediction on new data is done with the test set.  
+
+*** =instructions
+- Predict the crime classes with the `test` data. Like in regression, the `predict()` function takes the model object as a first argument.
+- Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. You can get the predicted classes with `lda.pred$class`. 
+- Did the classifier predict the crime rate correctly?
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
+
+# create train and test set 
+n <- nrow(boston_scaled)
+ind <- sample(n,  size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
+
+# linear discriminant analysis
+lda.fit = lda(crime ~ ., data=train)
+
+```
+
+*** =sample_code
+```{r}
+# lda.fit, correct_classes and test are available
+
+# predict classes with test data
+lda.pred <- predict(lda.fit, newdata = "change me!")
+
+# cross tabulate the results
+
+
+```
+
+*** =solution
+```{r}
+# lda.fit, correct_classes and test are available
+
+# predict classes with test data
+lda.pred <- predict(lda.fit, newdata = "change me!")
+
+# cross tabulate the results
+table(correct_classes, lda.pred$class)
+
+```
+
+*** =sct
+```{r}
+test_function("table", incorrect_msg = "Did you create a table of the predicted classes and the correct ones?")
+
+
+test_error()
+success_msg("Good work!")
+```
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:6719c6079e
 ## Towards clustering: distance measures
@@ -714,7 +688,7 @@ success_msg("Dissimilar might be similar if measured in a different way. Mind = 
 
 [K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects.
 
-K-means needs the number of clusters as an argument. One way to determine the number of clusters is to look at how the within cluster sum of squares behaves when the number of cluster changes. 
+K-means needs the number of clusters as an argument. One way to determine the number of clusters is to look at how the within cluster sum of squares behaves when the number of cluster changes. In the Elbow plot the optimal number of clusters is when the within cluster sum of squares drops (when there is an "elbow" in the curve).
 
 K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` can be used to deal with that. 
 
@@ -722,7 +696,7 @@ K-means might produce different results every time, because it randomly assigns 
 - Execute the code for the distance matrix
 - Set the max number of clusters (`k_max`) to be 10.
 - Execute the code to calculate within sum of squares. This might take a while.
-- Visualize the within sum of squares when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of within sum of squares changes radically. 
+- Visualize the within sum of squares when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of within sum of squares changes radically. In this case, two clusters would seem optimal. 
 
 *** =hint
 - Simply adjust the part of the code that says "change me!"
@@ -751,7 +725,7 @@ k_max <- "change me!"
 wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 
 # visualize WSS
-qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
+qplot(x = 1:k_max, y = wss, geom = 'bar', main = 'Elbow method')
 
 ```
 
@@ -769,7 +743,8 @@ k_max <- 10
 wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 
 # visualize WSS
-qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
+
+qplot(data = data.frame(1:k_max, wss), aes() geom = 'bar', main = 'Elbow method')
 
 ```
 
@@ -787,7 +762,7 @@ success_msg("Well done! ")
 --- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
 ## K-means clustering
 
-In the Elbow plot the optimal number of clusters is when the within cluster sum of squares drops (when there is an "elbow" in the curve). In this case, two clusters would seem optimal. Let's see how the clusters will look like. 
+ Let's see how the clusters will look like. 
 
 *** =instructions
 - Based on the elbow plot we will want to have two clusters. 
@@ -813,10 +788,10 @@ qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
 # Boston and dist_eu are available
 
 #k-means clustering
-km <-kmeans(dist_eu, k = "change me!")
+km <-kmeans(dist_eu, centers = "change me!")
 
 # plot the Boston dataset with clusters
-pairs(Boston, col = km$cluster)
+pairs(Boston)
 ```
 
 *** =solution
@@ -824,7 +799,7 @@ pairs(Boston, col = km$cluster)
 # Boston and dist_eu are available
 
 #k-means clustering
-km <-kmeans(dist_eu, k = "change me!")
+km <-kmeans(dist_eu, centers = "change me!")
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
