@@ -145,7 +145,7 @@ success_msg("Good work!")
 
 Usually the R datasets do not need much data wrangling as they are already in a good shape. But we will need to do little adjustments.
 
-For later use, we will need to scale the data. In the scaling we subtract the column means from the corredponding columns and divide the difference with standard deviation.
+For later use, we will need to scale the data. In the scaling we subtract the column means from the corresponding columns and divide the difference with standard deviation.
 
 $$scaled_x = \frac{x - mean(x)}{ sd(x)}$$
 
