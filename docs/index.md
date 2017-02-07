@@ -536,11 +536,6 @@ Please note that the following slides are drafts and subject to changes.
 ========================================================
 
 
-
-
-
-
-
 Clustering and classification
 ========================================================
 css: index.css
@@ -554,6 +549,9 @@ For IODS by Emma Kämäräinen
 <br>
 
 Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/cluster_classification.Rpres)
+
+
+
 
 Clustering and classification
 ========================================================
@@ -641,7 +639,7 @@ LDA example
 ==================================================
 autosize: true
 
-![plot of chunk unnamed-chunk-4](cluster_classification-figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-3](cluster_classification-figure/unnamed-chunk-3-1.png)
 
 LDA predictions
 ==================================================
@@ -691,11 +689,11 @@ Continue updating steps until the centroids or the clusters do not change
 K-means example
 ==================================================
 
-![plot of chunk unnamed-chunk-5](cluster_classification-figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-4](cluster_classification-figure/unnamed-chunk-4-1.png)
 
 ***
 
-![plot of chunk unnamed-chunk-6](cluster_classification-figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-5](cluster_classification-figure/unnamed-chunk-5-1.png)
 
 Source: [This R-Blogges Post](https://www.r-bloggers.com/k-means-clustering-in-r/)
  
