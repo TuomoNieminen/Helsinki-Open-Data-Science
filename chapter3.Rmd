@@ -728,7 +728,7 @@ K-means might produce different results every time, because it randomly assigns 
 - Visualize the within sum of squares when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of within sum of squares changes radically. 
 
 *** =hint
-- hint
+- Simply adjust the part of the code that says "change me!"
 
 *** =pre_exercise_code
 ```{r}
