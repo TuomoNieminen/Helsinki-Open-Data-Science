@@ -595,7 +595,7 @@ lda.pred <- predict(lda.fit, newdata = "change me!")
 # lda.fit, correct_classes and test are available
 
 # predict classes with test data
-lda.pred <- predict(lda.fit, newdata = "change me!")
+lda.pred <- predict(lda.fit, newdata = test)
 
 # cross tabulate the results
 table(correct_classes, lda.pred$class)
@@ -797,7 +797,7 @@ pairs(Boston)
 # Boston and dist_eu are available
 
 #k-means clustering
-km <-kmeans(dist_eu, centers = "change me!")
+km <-kmeans(dist_eu, centers = 2)
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
