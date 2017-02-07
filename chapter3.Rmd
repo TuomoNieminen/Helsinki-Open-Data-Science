@@ -475,6 +475,7 @@ lda.arrows(lda.fit, myscale = 1)
 
 *** =sct
 ```{r}
+test_object("lda.fit", incorrect_msg = "Did you add a formula to the LDA model?")
 test_function("plot", incorrect_msg = "Did you plot the lda.fit object?")
 test_function("plot", args= "col", incorrect_msg = "Did you set the color in the plot?")
 test_error()
@@ -711,7 +712,6 @@ dist_eu <- dist(Boston)
 *** =sample_code
 ```{r}
 # Boston dataset is available
-set.seed(13)
 
 # Euclidean distance matrix
 dist_eu <- dist(Boston)
@@ -758,10 +758,10 @@ K-means might produce different results every time, because it randomly assigns 
 
 *** =instructions
 - Create Euclidean distance matrix
-- Set the max number of clusters (`k_max`) to be 10.
+- Set the max number of clusters (`k_max`) to be 10
 - Execute the code to calculate total WCSS. This might take a while.
 - Visualize the total WCSS when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of total WCSS changes radically. In this case, two clusters would seem optimal. 
-- run 
+- Run `kmeans()` again with two clusters and visualize the results
 
 *** =hint
 - Simply adjust the part of the code that says "change me!"
@@ -786,10 +786,10 @@ dist_eu <- dist(Boston)
 # determine the number of clusters
 k_max <- "change me!"
 
-# calculate total within sum of square
+# calculate the total within sum of squares
 twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 
-# visualize WSS
+# visualize the results
 qplot(x = 1:k_max, y = twcss, geom = 'line')
 
 ```
@@ -797,6 +797,7 @@ qplot(x = 1:k_max, y = twcss, geom = 'line')
 *** =solution
 ```{r}
 # Boston dataset is available
+set.seed(123)
 
 # Euclidean distance matrix
 dist_eu <- dist(Boston)
@@ -804,17 +805,24 @@ dist_eu <- dist(Boston)
 # determine the number of clusters
 k_max <- 10
 
-# calculate within sum of square
+# calculate the total within sum of squares
 twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 
-# visualize WSS
-# qplot(data = data.frame(1:k_max, wss), aes() geom = 'bar', main = 'Elbow method')
+# visualize the results
+qplot(x = 1:k_max, y = twcss, geom = 'line')
+
+# k-means clustering
+km <-kmeans(dist_eu, centers = "change me!")
+
+# plot the Boston dataset with clusters
+pairs(Boston, col = km$cluster)
 
 ```
 
 *** =sct
 ```{r}
 test_object("k_max", incorrect_msg = "Did you set the k_max to 10?")
+test_object("km", incorrect_msg = "Did you do the clustering with 2 clusters?")
 test_error()
 success_msg("Well done! ")
 ```
