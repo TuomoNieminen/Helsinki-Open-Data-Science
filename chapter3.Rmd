@@ -792,6 +792,12 @@ twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss}
 # visualize the results
 qplot(x = 1:k_max, y = twcss, geom = 'line')
 
+# k-means clustering
+km <-kmeans(dist_eu, centers = "change me!")
+
+# plot the Boston dataset with clusters
+pairs(Boston, col = km$cluster)
+
 ```
 
 *** =solution
@@ -812,7 +818,7 @@ twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss}
 qplot(x = 1:k_max, y = twcss, geom = 'line')
 
 # k-means clustering
-km <-kmeans(dist_eu, centers = "change me!")
+km <-kmeans(dist_eu, centers = 2)
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
