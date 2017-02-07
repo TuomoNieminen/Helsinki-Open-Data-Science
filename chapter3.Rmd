@@ -375,7 +375,7 @@ test <- dplyr::select(test, -crime)
 
 *** =sct
 ```{r}
-test_object("`n`", incorrect_msg = "Did you create n with nrow()?")
+test_object("n", incorrect_msg = "Did you create `n` with nrow()?")
 test_object("correct_classes", incorrect_msg = "Did you create `correct_classes`?")
 test_error()
 success_msg("Splitting data is heavy work, well done!")
@@ -556,7 +556,7 @@ Splitting the original data to test and train sets allows us to check how well o
 
 *** =instructions
 - Predict the crime classes with the `test` data. Like in regression, the `predict()` function takes the model object as a first argument.
-- Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. You can get the predicted classes with `lda.pred$class`. 
+- Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. Use the correct classes as the first argument in the function. You can get the predicted classes with `lda.pred$class`. 
 - Did the classifier predict the crime rate correctly?
 
 *** =hint
@@ -604,7 +604,7 @@ table(correct_classes, lda.pred$class)
 
 *** =sct
 ```{r}
-test_function("table", incorrect_msg = "Did you create a table of the predicted classes and the correct ones?")
+test_output_contains("table(correct_classes, lda.pred$class)", incorrect_msg = "Please create a cross tabulation of `correct_classes` and `lda.pred$class`. Type the `correct_classes` first.")
 
 
 test_error()
@@ -746,19 +746,14 @@ k_max <- 10
 wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 
 # visualize WSS
-
-qplot(data = data.frame(1:k_max, wss), aes() geom = 'bar', main = 'Elbow method')
+# qplot(data = data.frame(1:k_max, wss), aes() geom = 'bar', main = 'Elbow method')
 
 ```
 
 *** =sct
 ```{r}
-
-# test_function("", args = "",incorrect_msg = "")
 test_object("k_max", incorrect_msg = "Did you set the k_max to 10?")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
+test_error()
 success_msg("Well done! ")
 ```
 
