@@ -304,9 +304,11 @@ success_msg("Nicely done! By the way, sometimes there are functions with the sam
 --- type:NormalExercise lang:r xp:100 skills:1 key:bca5932717
 ## Divide and conquer: train and test sets
 
-Splitting the original data to test and train sets allows us to check how well our model works. 
+When we want to use a statistical method to predict something, it is important to have data to test how well the predictions fit. Splitting the original data to test and train sets allows us to check how well our model works. 
 
-The training of the model is done with the train set and prediction on new data is done with the test set. 
+The training of the model is done with the train set and prediction on new data is done with the test set. This way you have true classes / labels for the test data, and you can calculate how well the model performed in prediction. 
+ 
+Time to split our data!
 
 *** =instructions
 - Use the function `nrow()` on the `boston_scaled` to get the number of rows in the dataset. Save the number of rows in `n`.
@@ -510,15 +512,15 @@ train <- boston_scaled[ind,]
 test <- boston_scaled[-ind,]
 
 lda.fit = lda(crime ~ ., data=train)
-predictors <- dplyr::select(train, -crime)
-matrix_product <- as.matrix(predictors) %*% lda.fit$scaling
+model_predictors <- dplyr::select(train, -crime)
+matrix_product <- as.matrix(model_predictors) %*% lda.fit$scaling
 matrix_product <- as.data.frame(matrix_product)
 
 ```
 
 *** =sample_code
 ```{r}
-# train, lda.fit and matrix_product are available
+# train, abd lda.fit are available
 
 # access plotly
 library(plotly)
@@ -531,6 +533,11 @@ plot_ly(x = matrix_product$LD1, y = matrix_product$LD2, z = matrix_product$LD3, 
 *** =solution
 ```{r}
 # train, lda.fit and matrix_product are available
+
+# create the standardized 
+model_predictors <- dplyr::select(train, -crime)
+matrix_product <- as.matrix(model_predictors) %*% lda.fit$scaling
+matrix_product <- as.data.frame(matrix_product)
 
 # access plotly
 library(plotly)
@@ -553,12 +560,12 @@ success_msg("Plot_ting like no tomorrow!")
 
 Like in the regression, the function `predict()` can be used to predict values based on a model. The function arguments are almost the same. You can see the help page of prediction function for LDA with `?predict.lda`.
 
-Splitting the original data to test and train sets allows us to check how well our model works. So the training of the model is done with the train set and prediction on new data is done with the test set.  
+We split our data earlier so that we have the test set and the correct class labels. See how the LDA model performs when predicting on new (test) data.  
 
 *** =instructions
 - Predict the crime classes with the `test` data. Like in regression, the `predict()` function takes the model object as a first argument.
 - Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. Use the correct classes as the first argument in the function. You can get the predicted classes with `lda.pred$class`. 
-- Look at the table. Did the classifier predict the crime rate correctly?
+- Look at the table. Did the classifier predict the crime rates correctly?
 
 *** =hint
 - hint
