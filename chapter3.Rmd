@@ -68,80 +68,6 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:3a4eacf66c
-## Scale the whole dataset
-
-Usually the R datasets do not need much data wrangling as they are already in a good shape. But we will need to do little adjustments.
-
-For later use, we will need to scale the data. In the scaling we subtract the column means from the corredponding columns and divide the difference with standard deviation.
-
-$ scaled_x = \frac{x - mean(x)}{ sd(x)}$
-
-The Boston data contains only numerical values, so we can use the function `scale()` to standardize the whole dataset.
-
-*** =instructions
-- Use the `scale()` function on the `Boston` dataset. Save the scaled data to `boston_scaled` object.
-- Use `summary()` to look at the scaled variables. Note the means of the variables.
-- Find out the class of the scaled object by executing the `class()` function. 
-- Later we will want the data to be a data frame. Use `as.data.frame()` to convert the `boston_scaled` to a data frame format. Keep the object name as `boston_scaled`.
-
-*** =hint
-- `?scale`
-
-*** =pre_exercise_code
-```{r}
-library(MASS)
-data("Boston")
-```
-
-*** =sample_code
-```{r}
-# MASS and Boston dataset are available
-
-# center and standardize variables
-boston_scaled <- "change me!"
-
-# summaries of the scaled variables
-
-
-# class of the boston_scaled object
-class(boston_scaled)
-
-# change the object to data frame
-
-
-```
-
-*** =solution
-```{r}
-# MASS and Boston dataset are available
-
-# center and standardize variables
-boston_scaled <- scale(Boston)
-
-# summaries of the scaled variables
-summary(boston_scaled)
-
-# class of the boston_scaled object
-class(boston_scaled)
-
-# change the object to data frame
-boston_scaled <- as.data.frame(boston_scaled)
-
-```
-
-*** =sct
-```{r}
-test_function("scale", args = "x",incorrect_msg = "Did you scale the dataset?")
-
-test_function("as.data.frame", args = "x",incorrect_msg = "Please use the function as.data.frame() to convert the data to a data frame.")
-
-test_function("summary", args = "object", incorrect_msg = "Please use the function summary() to look at the summaries of the data variables.")
-
-test_error()
-success_msg("Good work!")
-```
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:603dff42ce
 ## Correlations plot
 
@@ -209,6 +135,80 @@ corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.c
 ```{r}
 
 test_function("round", args = "digits",incorrect_msg = "Did you use the first two digits in rounding?")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:3a4eacf66c
+## Scale the whole dataset
+
+Usually the R datasets do not need much data wrangling as they are already in a good shape. But we will need to do little adjustments.
+
+For later use, we will need to scale the data. In the scaling we subtract the column means from the corredponding columns and divide the difference with standard deviation.
+
+$$scaled_x = \frac{x - mean(x)}{ sd(x)}$$
+
+The Boston data contains only numerical values, so we can use the function `scale()` to standardize the whole dataset.
+
+*** =instructions
+- Use the `scale()` function on the `Boston` dataset. Save the scaled data to `boston_scaled` object.
+- Use `summary()` to look at the scaled variables. Note the means of the variables.
+- Find out the class of the scaled object by executing the `class()` function. 
+- Later we will want the data to be a data frame. Use `as.data.frame()` to convert the `boston_scaled` to a data frame format. Keep the object name as `boston_scaled`.
+
+*** =hint
+- `?scale`
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+data("Boston")
+```
+
+*** =sample_code
+```{r}
+# MASS and Boston dataset are available
+
+# center and standardize variables
+boston_scaled <- "change me!"
+
+# summaries of the scaled variables
+
+
+# class of the boston_scaled object
+class(boston_scaled)
+
+# change the object to data frame
+
+
+```
+
+*** =solution
+```{r}
+# MASS and Boston dataset are available
+
+# center and standardize variables
+boston_scaled <- scale(Boston)
+
+# summaries of the scaled variables
+summary(boston_scaled)
+
+# class of the boston_scaled object
+class(boston_scaled)
+
+# change the object to data frame
+boston_scaled <- as.data.frame(boston_scaled)
+
+```
+
+*** =sct
+```{r}
+test_function("scale", args = "x",incorrect_msg = "Did you scale the dataset?")
+
+test_function("as.data.frame", args = "x",incorrect_msg = "Please use the function as.data.frame() to convert the data to a data frame.")
+
+test_function("summary", args = "object", incorrect_msg = "Please use the function summary() to look at the summaries of the data variables.")
 
 test_error()
 success_msg("Good work!")
@@ -302,7 +302,7 @@ success_msg("Nicely done! By the way, sometimes there are functions with the sam
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:bca5932717
-## Splitting the data to train and test sets
+## Divide and conquer: train and test sets
 
 Splitting the original data to test and train sets allows us to check how well our model works. 
 
@@ -484,7 +484,7 @@ success_msg("Expanding your statistcal skills! Nice!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:10414fc9d1
 ## More dimensions with Plotly!
 
-In the last exercise you created a scatter plot with the two linear discrimants that the LDA model generates If the target variable has $n$ categories, then LDA  will produce $n-1$ linear discriminants (LD1, LD2, ... ). In our `crime`target, we had 4 classes so the model has 3 linear discriminants.
+In the last exercise you created a scatter plot with the two linear discrimants that the LDA model generates. If the target variable in the model has $n$ categories, then LDA  will produce $n-1$ linear discriminants. In our `crime`target, we had 4 classes so the model has 3 linear discriminants (LD1, LD2 and LD3).
 
 [Plotly](https://plot.ly/r/) is an R graphing library that creates **interactive** plots (and has an ggplot2 integration as well). In Plotly it is possible to create a 3D plot. Let's try it out and visualize our linear discriminants a bit more!
 
@@ -557,7 +557,7 @@ Splitting the original data to test and train sets allows us to check how well o
 *** =instructions
 - Predict the crime classes with the `test` data. Like in regression, the `predict()` function takes the model object as a first argument.
 - Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. Use the correct classes as the first argument in the function. You can get the predicted classes with `lda.pred$class`. 
-- Did the classifier predict the crime rate correctly?
+- Look at the table. Did the classifier predict the crime rate correctly?
 
 *** =hint
 - hint
@@ -567,15 +567,13 @@ Splitting the original data to test and train sets allows us to check how well o
 library(MASS)
 boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
 
-# create train and test set 
-n <- nrow(boston_scaled)
-ind <- sample(n,  size = n * 0.8)
+ind <- sample(nrow(boston_scaled),  size = nrow(boston_scaled) * 0.8)
 train <- boston_scaled[ind,]
 test <- boston_scaled[-ind,]
+correct_classes <- test$crime
+test <- dplyr::select(test, -crime)
 
-# linear discriminant analysis
 lda.fit = lda(crime ~ ., data=train)
-
 ```
 
 *** =sample_code
@@ -685,21 +683,85 @@ test_error()
 success_msg("Dissimilar might be similar if measured in a different way. Mind = blown!")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
+## K-means clustering
+
+[K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects. Let's cluster a bit!
+
+*** =instructions
+- Create Euclidean distance matrix
+- Change the centers in the `kmeans()` function to be `4` and execute the clustering code
+- Plot the Boston data with `pairs()`. Adjust the code by adding the `col` argument. Set the color based on the clusters that k-means produced. You can access the cluster numbers with `km$cluster`.
+- Try a different number of clusters: `6`, `10` and `15`. Visualize the results.
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+library(MASS)
+library(ggplot2)
+
+data('Boston')
+set.seed(13)
+dist_eu <- dist(Boston)
+
+```
+
+*** =sample_code
+```{r}
+# Boston dataset is available
+set.seed(13)
+
+# Euclidean distance matrix
+dist_eu <- dist(Boston)
+
+# k-means clustering
+km <-kmeans(dist_eu, centers = "change me!")
+
+# plot the Boston dataset with clusters
+pairs(Boston, col = "change me!")
+
+```
+
+*** =solution
+```{r}
+# Boston dataset is available
+
+# Euclidean distance matrix
+dist_eu <- dist(Boston)
+
+# k-means clustering
+km <-kmeans(dist_eu, centers = 10)
+
+# plot the Boston dataset with clusters
+pairs(Boston, col = km$cluster)
+
+```
+
+*** =sct
+```{r}
+test_function("pairs", args = "col",incorrect_msg = "Did you set the color based on the clusters in `pairs()` ? ")
+ 
+test_error()
+success_msg("Clustering like a pro!")
+```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f3d6cd6c00
 ## K-means: determine the k
 
-[K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects.
+K-means needs the number of clusters as an argument. There are many ways to look at the optimal number of clusters and a good way might depend on the data you have. 
 
-K-means needs the number of clusters as an argument. One way to determine the number of clusters is to look at how the within cluster sum of squares behaves when the number of cluster changes. In the Elbow plot the optimal number of clusters is when the within cluster sum of squares drops (when there is an "elbow" in the curve).
+One way to determine the number of clusters is to look at how the total of within cluster sum of squares (WCSS) behaves when the number of cluster changes (the calculation of total WCSS was explained in the video before). When you plot the number of clusters and the total WCSS, the optimal number of clusters is when the total WCSS drops radically.
 
 K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` can be used to deal with that. 
 
 *** =instructions
-- Execute the code for the distance matrix
+- Create Euclidean distance matrix
 - Set the max number of clusters (`k_max`) to be 10.
-- Execute the code to calculate within sum of squares. This might take a while.
-- Visualize the within sum of squares when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of within sum of squares changes radically. In this case, two clusters would seem optimal. 
+- Execute the code to calculate total WCSS. This might take a while.
+- Visualize the total WCSS when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of total WCSS changes radically. In this case, two clusters would seem optimal. 
+- run 
 
 *** =hint
 - Simply adjust the part of the code that says "change me!"
@@ -724,26 +786,26 @@ dist_eu <- dist(Boston)
 # determine the number of clusters
 k_max <- "change me!"
 
-# calculate within sum of square
-wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
+# calculate total within sum of square
+twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 
 # visualize WSS
-qplot(x = 1:k_max, y = wss, geom = 'bar', main = 'Elbow method')
+qplot(x = 1:k_max, y = twcss, geom = 'line')
 
 ```
 
 *** =solution
 ```{r}
-# MASS, ggplot2 and Boston dataset are available
+# Boston dataset is available
 
-# euclidean distance matrix
+# Euclidean distance matrix
 dist_eu <- dist(Boston)
 
 # determine the number of clusters
 k_max <- 10
 
 # calculate within sum of square
-wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
+twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 
 # visualize WSS
 # qplot(data = data.frame(1:k_max, wss), aes() geom = 'bar', main = 'Elbow method')
@@ -755,61 +817,4 @@ wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
 test_object("k_max", incorrect_msg = "Did you set the k_max to 10?")
 test_error()
 success_msg("Well done! ")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
-## K-means clustering
-
- Let's see how the clusters will look like. 
-
-*** =instructions
-- Based on the elbow plot we will want to have two clusters. 
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-library(MASS)
-library(ggplot2)
-
-data('Boston')
-set.seed(13)
-dist_eu <- dist(Boston)
-k_max <- 10
-wss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
-qplot(x = 1:k_max, y = wss, geom = 'line', main = 'Elbow method')
-```
-
-*** =sample_code
-```{r}
-# Boston and dist_eu are available
-
-#k-means clustering
-km <-kmeans(dist_eu, centers = "change me!")
-
-# plot the Boston dataset with clusters
-pairs(Boston)
-```
-
-*** =solution
-```{r}
-# Boston and dist_eu are available
-
-#k-means clustering
-km <-kmeans(dist_eu, centers = 2)
-
-# plot the Boston dataset with clusters
-pairs(Boston, col = km$cluster)
-```
-
-*** =sct
-```{r}
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Clustering like a pro!")
 ```
