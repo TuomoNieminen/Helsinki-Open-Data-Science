@@ -42,6 +42,7 @@ Clustering:
 Clustering and classification
 ========================================================
 incremental: false
+autosize: true
 
 - Linear discriminant analysis
 - Distance measures
@@ -49,34 +50,81 @@ incremental: false
 
 Linear discriminant analysis
 ==================================================
+autosize: true
 
 Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. The target variable needs to be categorical. 
 
 It can be used to
 - Find the variables that discriminate/separate the classes best
 - Prediction of classes
-- Dimension reduction
+- Dimension reduction (not covered here)
+
+[This](http://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/) is a good and simple blog post about LDA. R-Bloggers also have a post about LDA, see it [here](https://www.r-bloggers.com/computing-and-visualizing-lda-in-r/).
 
 Linear discriminant analysis
 ==================================================
+autosize: true
 
-Assumptions:
-- Data variables are normally distributed
-- Each variable has the same variance
-  - Because of the variance assumption, the data might need scaling before fitting the model 
+Linear discriminant analysis produces results based on the assumptions that
+- your data has normally distributed variables
+- each variable has the same variance
 
-Linear discriminant analysis
+Because of the assumptions, the data might need scaling before fitting the model. The variables also need to be continuous. 
+
+Let's see an example next to wrap our heads around what LDA is really doing.
+
+LDA example
 ==================================================
+autosize: true
+
+<font size=6>
+```{r, echo=FALSE, }
+library(MASS)
+data(iris)
+d <- scale(iris[,1:4])
+Species <- as.factor(iris$Species)
+d<-data.frame(d, Species)
+fit <- lda(Species ~., data = d)
+fit
+```
+</font>
+
+LDA example
+==================================================
+autosize: true
+
+```{r, echo=FALSE, fig.height=15, fig.width=19}
+library(RColorBrewer)
+col <- brewer.pal(8, 'Set1')
+palette(col)
+
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.2, color = "orange", tex = 2, choices = c(1,2), lwd= 2){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads, lwd=2)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3, lwd=2.5)
+}
+par(cex.label=2, cex.lab=2, cex =1.5, mar=c(5,6,3,3))
+plot(fit, col=as.numeric(d$Species),  cex =1.5)
+lda.arrows(fit)
+```
+
+LDA predictions
+==================================================
+autosize: true
 
 Classifying new observations:
 - Based on the trained model LDA calculates the probabilities for the new observation for belonging in each of the classes
 - The observation is classified to the class of the highest probability
 - The math behind the probabilities can be seen [here](http://scikit-learn.org/stable/modules/lda_qda.html) for those who are interested. [Bayes theorem](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to estimate the probabilities.
-
+- You'll see how the predicting is done in the DataCamp exercises. 
 
 Distance measures
 ==================================================
 incremental: false
+autosize: true
 
 How to determine if observations are similar or dissimilar with each others?
 

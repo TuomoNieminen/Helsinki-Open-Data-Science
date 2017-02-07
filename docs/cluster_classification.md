@@ -35,6 +35,7 @@ Clustering:
 Clustering and classification
 ========================================================
 incremental: false
+autosize: true
 
 - Linear discriminant analysis
 - Distance measures
@@ -42,34 +43,82 @@ incremental: false
 
 Linear discriminant analysis
 ==================================================
+autosize: true
 
 Linear discriminant analysis (LDA) is a classification method. It can be used to model binary variables, like in logistic regression, or multiple class variables. The target variable needs to be categorical. 
 
 It can be used to
 - Find the variables that discriminate/separate the classes best
 - Prediction of classes
-- Dimension reduction
+- Dimension reduction (not covered here)
+
+[This](http://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/) is a good and simple blog post about LDA. R-Bloggers also have a post about LDA, see it [here](https://www.r-bloggers.com/computing-and-visualizing-lda-in-r/).
 
 Linear discriminant analysis
 ==================================================
+autosize: true
 
-Assumptions:
-- Data variables are normally distributed
-- Each variable has the same variance
-  - Because of the variance assumption, the data might need scaling before fitting the model 
+Linear discriminant analysis produces results based on the assumptions that
+- your data has normally distributed variables
+- each variable has the same variance
 
-Linear discriminant analysis
+Because of the assumptions, the data might need scaling before fitting the model. The variables also need to be continuous. 
+
+Let's see an example next to wrap our heads around what LDA is really doing.
+
+LDA example
 ==================================================
+autosize: true
+
+<font size=6>
+
+```
+Call:
+lda(Species ~ ., data = d)
+
+Prior probabilities of groups:
+    setosa versicolor  virginica 
+ 0.3333333  0.3333333  0.3333333 
+
+Group means:
+           Sepal.Length Sepal.Width Petal.Length Petal.Width
+setosa       -1.0111914   0.8504137   -1.3006301  -1.2507035
+versicolor    0.1119073  -0.6592236    0.2843712   0.1661774
+virginica     0.8992841  -0.1911901    1.0162589   1.0845261
+
+Coefficients of linear discriminants:
+                    LD1         LD2
+Sepal.Length  0.6867795  0.01995817
+Sepal.Width   0.6688251  0.94344183
+Petal.Length -3.8857950 -1.64511887
+Petal.Width  -2.1422387  2.16413593
+
+Proportion of trace:
+   LD1    LD2 
+0.9912 0.0088 
+```
+</font>
+
+LDA example
+==================================================
+autosize: true
+
+![plot of chunk unnamed-chunk-4](cluster_classification-figure/unnamed-chunk-4-1.png)
+
+LDA predictions
+==================================================
+autosize: true
 
 Classifying new observations:
 - Based on the trained model LDA calculates the probabilities for the new observation for belonging in each of the classes
 - The observation is classified to the class of the highest probability
 - The math behind the probabilities can be seen [here](http://scikit-learn.org/stable/modules/lda_qda.html) for those who are interested. [Bayes theorem](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to estimate the probabilities.
-
+- You'll see how the predicting is done in the DataCamp exercises. 
 
 Distance measures
 ==================================================
 incremental: false
+autosize: true
 
 How to determine if observations are similar or dissimilar with each others?
 
@@ -104,11 +153,11 @@ Continue updating steps until the centroids or the clusters do not change
 K-means example
 ==================================================
 
-![plot of chunk unnamed-chunk-3](cluster_classification-figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-5](cluster_classification-figure/unnamed-chunk-5-1.png)
 
 ***
 
-![plot of chunk unnamed-chunk-4](cluster_classification-figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-6](cluster_classification-figure/unnamed-chunk-6-1.png)
 
 Source: [This R-Blogges Post](https://www.r-bloggers.com/k-means-clustering-in-r/)
  
