@@ -562,7 +562,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:fc6108e633
 ## Video: Distance measures and clustering
 
 *** =video_link
