@@ -79,12 +79,14 @@ Use the corrplot to visualize the correlation between variables of the Boston da
 - Calculate the correlation matrix and save it as `cor_matrix`. Print the matrix to see how it looks like.
 - Adjust the code: use the pipe (`%>%`) to round the matrix. Rounding can be done with the `round()` function. Use the first two digits. Print the matrix again. 
 - Plot the rounded correlation matrix
-- Adjust the code: add argument `type="upper"` to the plot. Print the plot again. 
-- Adjust the code little more: add arguments `cl.pos="b"`, `tl.pos="d"` and `tl.cex = 0.6` to the plot. Print the plot again. 
+- Adjust the code: add argument `type = "upper"` to the plot. Print the plot again. 
+- Adjust the code little more: add arguments `cl.pos = "b"`, `tl.pos = "d"` and `tl.cex = 0.6` to the plot. Print the plot again. 
 - See more of corrplot [here](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
 
 *** =hint
-- hint
+- For correlation matrices, see `?cor`
+- The pipe (`%>%`) takes the data before the pipe and applies the functionality assigned in the right. For example `data_column %>% summary()` creates a summary of the data_column.
+- The link on the last line of the instructions have quite good examples about the corrplot
 
 *** =pre_exercise_code
 ```{r}
@@ -158,7 +160,7 @@ The Boston data contains only numerical values, so we can use the function `scal
 - Later we will want the data to be a data frame. Use `as.data.frame()` to convert the `boston_scaled` to a data frame format. Keep the object name as `boston_scaled`.
 
 *** =hint
-- `?scale`
+- See `?scale`
 
 *** =pre_exercise_code
 ```{r}
@@ -231,7 +233,10 @@ See how it's done below!
 - Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
 
 *** =hint
-- 
+- You can create a vector with `c()`
+- Separate the values with comma in a vector
+- Remember that strings need the quotes around them
+- `table(*object_name*)` creates a cross tabulation of the object
 
 *** =pre_exercise_code
 ```{r}
@@ -319,7 +324,8 @@ Time to split our data!
 - Execute the code to remove `crime` from `test` set
 
 *** =hint
-- hint
+- You can get the number of rows with `nrow(*name_of_the_dataframe*)`
+- `train` and `test` are data frames, so you can access their columns with `$` mark
 
 *** =pre_exercise_code
 ```{r}
@@ -402,7 +408,10 @@ LDA can be visualized with a biplot. We will talk more about biplots next week. 
 - You can change the `myscale` argument in `lda.arrow()` to see more clearly which way the arrows are pointing. 
 
 *** =hint
-- hint
+- The formula looks like `target ~ .`
+- The target variable in here is `crime`
+- You can change a factor to numeric with `as.numeric()`
+- Remember to execute the `lda.arrows()` code together with the plot in DataCamp. Otherwise the arrows won't work.
 
 *** =pre_exercise_code
 ```{r}
@@ -422,7 +431,7 @@ test <- dplyr::select(test, -crime)
 # MASS and train are available
 
 # linear discriminant analysis
-lda.fit <- lda(" change me!", data = train)
+lda.fit <- lda("change me!", data = train)
 
 # print the lda.fit object
 lda.fit
@@ -574,7 +583,8 @@ We split our data earlier so that we have the test set and the correct class lab
 - Look at the table. Did the classifier predict the crime rates correctly?
 
 *** =hint
-- hint
+- `table(*object_name*)` creates a cross tabulation of the object
+- You can get the predicted classes with `lda.pred$class`
 
 *** =pre_exercise_code
 ```{r}
@@ -640,7 +650,8 @@ There are functions that calculate the distances in R. In this exercise, we will
 
 *** =hint
 - `data(*name_of_the_dataset*)` can be used to load dataset from R package
-- Look at the help page of `dist()` function with `?dist`
+- See `?dist`. The argument you will need to change the distance measure is called `method`
+- Remember that strings need the quotes in R
 
 *** =pre_exercise_code
 ```{r}
@@ -709,7 +720,9 @@ success_msg("Dissimilar might be similar if measured in a different way. Mind = 
 - Try a different number of clusters: `6`, `10` and `15`. Visualize the results.
 
 *** =hint
-- hint
+- You can change the number of the cluster you want to have with the `centers` argument in `kmeans()`
+- See `?kmeans`
+- You can access the cluster numbers with `km$cluster`
 
 *** =pre_exercise_code
 ```{r}
@@ -778,6 +791,8 @@ K-means might produce different results every time, because it randomly assigns 
 
 *** =hint
 - Simply adjust the part of the code that says "change me!"
+- You can change the number of the cluster you want to have with the `centers` argument in `kmeans()`
+- Numeric values do not need quotes in R
 
 *** =pre_exercise_code
 ```{r}
