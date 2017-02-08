@@ -107,7 +107,7 @@ data("Boston")
 ```{r}
 # MASS, corrplot, tidyverse and Boston dataset are available
 
-# calculate the correlation matrix
+# calculate the correlation matrix and round it
 cor_matrix<-cor(Boston) 
 
 # print the correlation matrix
@@ -122,7 +122,7 @@ corrplot(cor_matrix, method="circle")
 ```{r}
 # MASS, corrplot, tidyr and Boston dataset are available
 
-# calculate the correlation matrix
+# calculate the correlation matrix and round it
 cor_matrix<-cor(Boston) %>% round(digits = 2)
 
 # print the correlation matrix
@@ -149,7 +149,7 @@ Usually the R datasets do not need much data wrangling as they are already in a 
 
 For later use, we will need to scale the data. In the scaling we subtract the column means from the corresponding columns and divide the difference with standard deviation.
 
-$$scaled_x = \frac{x - mean(x)}{ sd(x)}$$
+$$scaled(x) = \frac{x - mean(x)}{ sd(x)}$$
 
 The Boston data contains only numerical values, so we can use the function `scale()` to standardize the whole dataset.
 
@@ -297,7 +297,7 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 *** =sct
 ```{r}
-test_output_contains("summary(boston_scaled$crim)", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
+test_function("summary", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
 
 test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
 test_object("bins", incorrect_msg = "Did you create `bins` ?")
@@ -579,7 +579,7 @@ We split our data earlier so that we have the test set and the correct class lab
 
 *** =instructions
 - Predict the crime classes with the `test` data. Like in regression, the `predict()` function takes the model object as a first argument.
-- Create a table of the results with `table()`, where you compare the correct classes to the one that model produced. Use the correct classes as the first argument in the function. You can get the predicted classes with `lda.pred$class`. 
+- Create a table of the correct classes and the predicted ones. You can get the predicted classes with `lda.pred$class`. 
 - Look at the table. Did the classifier predict the crime rates correctly?
 
 *** =hint
@@ -608,7 +608,7 @@ lda.fit = lda(crime ~ ., data=train)
 lda.pred <- predict(lda.fit, newdata = "change me!")
 
 # cross tabulate the results
-
+table(correct = "change me!", predicted = "change me!")
 
 ```
 
@@ -620,14 +620,13 @@ lda.pred <- predict(lda.fit, newdata = "change me!")
 lda.pred <- predict(lda.fit, newdata = test)
 
 # cross tabulate the results
-table(correct_classes, lda.pred$class)
+table(correct = correct_classes, predicted = lda.pred$class)
 
 ```
 
 *** =sct
 ```{r}
-test_output_contains("table(correct_classes, lda.pred$class)", incorrect_msg = "Please create a cross tabulation of `correct_classes` and `lda.pred$class`. Type the `correct_classes` first.")
-
+test_output_contains("table(correct = correct_classes, predicted = lda.pred$class)", incorrect_msg = "Please create a cross tabulation of the correct classes versus the predicted ones")
 
 test_error()
 success_msg("Good work!")
@@ -716,7 +715,7 @@ success_msg("Dissimilar might be similar if measured in a different way. Mind = 
 *** =instructions
 - Create Euclidean distance matrix
 - Change the centers in the `kmeans()` function to be `4` and execute the clustering code
-- Plot the Boston data with `pairs()`. Adjust the code by adding the `col` argument. Set the color based on the clusters that k-means produced. You can access the cluster numbers with `km$cluster`.
+- Plot the Boston data with `pairs()`. Adjust the code by adding the `col` argument. Set the color based on the clusters that k-means produced. You can access the cluster numbers with `km$cluster`. What variables do seem to effect the clustering results? 
 - Try a different number of clusters: `6`, `10` and `15`. Visualize the results.
 
 *** =hint
@@ -815,7 +814,7 @@ dist_eu <- dist(Boston)
 k_max <- "change me!"
 
 # calculate the total within sum of squares
-twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
+twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
 
 # visualize the results
 qplot(x = 1:k_max, y = twcss, geom = 'line')
@@ -840,7 +839,7 @@ dist_eu <- dist(Boston)
 k_max <- 10
 
 # calculate the total within sum of squares
-twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k, nstart=10)$tot.withinss})
+twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
 
 # visualize the results
 qplot(x = 1:k_max, y = twcss, geom = 'line')
