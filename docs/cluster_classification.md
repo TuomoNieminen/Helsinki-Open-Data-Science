@@ -19,16 +19,18 @@ Clustering and classification
 ========================================================
 incremental: false
 
+
 Classification:
-- You know the number of classes
+- You know the classes
 - The classification model is trained based on data
-- Classify new observation
+- Classify new observations
 
 ***
 
 Clustering: 
 - Unknown classes / number of classes is unknown
-- Find groups within data based on similarity 
+- Find groups within data based on similarity of the observations
+
 
 Clustering and classification
 ========================================================
@@ -47,7 +49,7 @@ Linear discriminant analysis (LDA) is a classification method. It can be used to
 
 It can be used to
 - Find the variables that discriminate/separate the classes best
-- Prediction of classes
+- Predict the classes of new data
 - Dimension reduction (not covered here)
 
 [This](http://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/) is a good and simple blog post about LDA. R-Bloggers also have a post about LDA, see it [here](https://www.r-bloggers.com/computing-and-visualizing-lda-in-r/).
@@ -56,8 +58,8 @@ Linear discriminant analysis
 ==================================================
 autosize: true
 
-Linear discriminant analysis produces results based on the assumptions that
-- your data has normally distributed variables
+Linear discriminant analysis produces results based on the assumptions that 
+- variables are normally distributed (on condition of the classes)
 - each variable has the same variance
 
 Because of the assumptions, the data might need scaling before fitting the model. The variables also need to be continuous. 
@@ -97,12 +99,6 @@ Proportion of trace:
 ```
 </font>
 
-LDA example
-==================================================
-autosize: true
-
-![plot of chunk unnamed-chunk-3](cluster_classification-figure/unnamed-chunk-3-1.png)
-
 LDA predictions
 ==================================================
 autosize: true
@@ -112,6 +108,12 @@ Classifying new observations:
 - The observation is classified to the class of the highest probability
 - The math behind the probabilities can be seen [here](http://scikit-learn.org/stable/modules/lda_qda.html) for those who are interested. [Bayes theorem](https://en.wikipedia.org/wiki/Bayes'_theorem) is used to estimate the probabilities.
 - You'll see how the predicting is done in the DataCamp exercises. 
+
+LDA example
+==================================================
+autosize: true
+
+![plot of chunk unnamed-chunk-3](cluster_classification-figure/unnamed-chunk-3-1.png)
 
 Distance measures
 ==================================================
@@ -157,7 +159,7 @@ K-means example
 
 ![plot of chunk unnamed-chunk-5](cluster_classification-figure/unnamed-chunk-5-1.png)
 
-Source: [This R-Blogges Post](https://www.r-bloggers.com/k-means-clustering-in-r/)
+Source: [This R-Bloggers Post](https://www.r-bloggers.com/k-means-clustering-in-r/)
  
 K-means notes
 ==================================================
@@ -165,9 +167,9 @@ incremental: false
 autosize: true
 
 Remarks about *k*-means:
-- Distance measure in the algorithm: similarity/dissimilarity measure between data points
+- Distance measure in the algorithm: 
   - Different distance measures produce different output
-  - Deciding the best distance is not
+  - Deciding the best distance is not always easy
 - Number of clusters as input
   - Many ways to find the optimal number of clusters
   - One way is to look at the total within cluster sum of squares (see next slide)
