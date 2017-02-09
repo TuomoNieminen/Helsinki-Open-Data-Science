@@ -224,7 +224,8 @@ We can create a categorical variable from a continuous one. There are many ways 
 See how it's done below!
 
 *** =instructions
-- Look at the summary of the scaled variable `crim`
+- Save the scaled crime rate as `scaled_crim`
+- Look at the summary of the scaled variable `scaled_crim`
 - Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
 - Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created.
 - Use the function `table()` on the `crime` object
@@ -253,11 +254,11 @@ boston_scaled <- as.data.frame(scale(Boston))
 
 
 # create a quantile vector of crim and print it
-bins <- quantile(boston_scaled$crim)
+bins <- quantile(scaled_crim)
 bins
 
 # create a categorical variable 'crime'
-crime <- cut(boston_scaled$crim, breaks = "change me!", include.lowest = TRUE)
+crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
 
 # look at the table of the new factor crime
 
@@ -274,15 +275,18 @@ boston_scaled <- data.frame(boston_scaled, crime)
 ```{r}
 # MASS, Boston and boston_scaled are available
 
-# summary of the scaled crime rate
-summary(boston_scaled$crim)
+# save crim as scaled_crim
+scaled_crim <- boston_scaled$crim
 
-# create a quantile vector of crim and print it
-bins <- quantile(boston_scaled$crim)
+# summary of the scaled_crim
+summary(scaled_crim)
+
+# create a quantile vector of scaled_crim and print it
+bins <- quantile(scaled_crim)
 bins
 
 # create a categorical variable 'crime'
-crime <- cut(boston_scaled$crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
+crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
 
 # look at the table of the new factor crime
 table(crime)
@@ -297,7 +301,8 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 *** =sct
 ```{r}
-test_function("summary", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
+test_object("scaled_crim", incorrect_msg = "Did you create `scaled_crim` ?")
+test_function("summary", args = "object", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
 
 test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
 test_object("bins", incorrect_msg = "Did you create `bins` ?")
