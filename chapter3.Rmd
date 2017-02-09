@@ -761,7 +761,7 @@ k_max <- "change me!"
 twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
 
 # visualize the results
-qplot(x = 1:k_max, y = twcss, geom = 'line')
+plot(1:k_max, twcss, type='b')
 
 # k-means clustering
 km <-kmeans(dist_eu, centers = "change me!")
@@ -786,7 +786,7 @@ k_max <- 10
 twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
 
 # visualize the results
-qplot(x = 1:k_max, y = twcss, geom = 'line')
+plot(1:k_max, twcss, type='b')
 
 # k-means clustering
 km <-kmeans(dist_eu, centers = 2)
