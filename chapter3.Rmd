@@ -224,7 +224,7 @@ We can create a categorical variable from a continuous one. There are many ways 
 See how it's done below!
 
 *** =instructions
-- Save the scaled crime rate as `scaled_crim`
+- Save the scaled crime rate from the `boston_scaled` as `scaled_crim`
 - Look at the summary of the scaled variable `scaled_crim`
 - Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
 - Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created.
@@ -250,7 +250,7 @@ boston_scaled <- as.data.frame(scale(Boston))
 ```{r}
 # MASS, Boston and boston_scaled are available
 
-# save crim as scaled_crim
+# save the scaled crim as scaled_crim
 scaled_crim <- "change me!"
 
 # summary of the scaled crime rate
@@ -278,7 +278,7 @@ boston_scaled <- data.frame(boston_scaled, crime)
 ```{r}
 # MASS, Boston and boston_scaled are available
 
-# save crim as scaled_crim
+# save the scaled crim as scaled_crim
 scaled_crim <- boston_scaled$crim
 
 # summary of the scaled_crim
