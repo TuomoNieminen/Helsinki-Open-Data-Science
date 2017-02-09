@@ -49,6 +49,9 @@ incremental: false
 ```{r child = "logistic_regression.md"}
 ```
 
+```{r child = "cluster_classification.md"}
+```
+
 Update treshold
 ========================================================
 type: alert
@@ -59,5 +62,6 @@ Please note that the following slides are drafts and subject to changes.
 
 ========================================================
 
-```{r child = "cluster_classification.md"}
+```{r child = "dimensionality_reduction.md"}
 ```
+
