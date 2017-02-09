@@ -250,6 +250,9 @@ boston_scaled <- as.data.frame(scale(Boston))
 ```{r}
 # MASS, Boston and boston_scaled are available
 
+# save crim as scaled_crim
+scaled_crim <- "change me!"
+
 # summary of the scaled crime rate
 
 
