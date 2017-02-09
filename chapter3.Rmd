@@ -710,7 +710,7 @@ pairs(Boston, col = km$cluster)
 
 *** =sct
 ```{r}
-test_function("kmeans", args = "center",incorrect_msg = "Did you set the center argument in `kmeans()` ? ")
+test_function("kmeans", args = "centers",incorrect_msg = "Did you set the center argument in `kmeans()` ? ")
  
 test_error()
 success_msg("Clustering like a pro!")
