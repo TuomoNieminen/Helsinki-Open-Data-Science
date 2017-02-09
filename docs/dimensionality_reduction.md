@@ -64,7 +64,7 @@ In PCA, the data is first *projected* to a new space with the same number of dim
 
 - The first dimension (1st principal component) captures the maximum amount of variance from the features in the original data.
 - The second dimension (2nd principal component) is orthogonal to the first (they are uncorrelated) and captures the maximum amount of variability left.
-- The same is true for each principal component. They are all orthogonal and each is 'less important' than the previous one, in terms of captured variability.
+- The same is true for each principal component. They are all orthogonal and each is "less important" than the previous one, in terms of captured variability.
 
 Pricipal component analysis (PCA) (2)
 ========================================================
