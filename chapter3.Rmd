@@ -248,17 +248,17 @@ boston_scaled <- as.data.frame(scale(Boston))
 
 *** =sample_code
 ```{r}
-# MASS, Boston and boston_scaled are available
+# boston_scaled is available
 
 # save the scaled crim as scaled_crim
 scaled_crim <- "change me!"
 
-# summary of the scaled crime rate
+# summary of the scaled_crim
 
 
 # create a quantile vector of crim and print it
 bins <- quantile(scaled_crim)
-bins
+
 
 # create a categorical variable 'crime'
 crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
@@ -276,7 +276,7 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 *** =solution
 ```{r}
-# MASS, Boston and boston_scaled are available
+# boston_scaled is available
 
 # save the scaled crim as scaled_crim
 scaled_crim <- boston_scaled$crim
@@ -306,9 +306,9 @@ boston_scaled <- data.frame(boston_scaled, crime)
 ```{r}
 test_object("scaled_crim", incorrect_msg = "Did you create `scaled_crim` ?")
 test_function("summary", args = "object", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
-
+test_output_contains("bins", incorrect_msg = "Did you print `bins`?")
 test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
-test_object("bins", incorrect_msg = "Did you create `bins` ?")
+test_object("bins", incorrect_msg = "Did you create `bins`?")
 
 test_error()
 success_msg("Nicely done! By the way, sometimes there are functions with the same name in different R packages (like `select` in **dplyr** and **MASS**). You can choose which one to use by adding the name of the package with two colons in front of the function call (for example `dplyr::select()`).")
@@ -701,7 +701,7 @@ pairs(Boston, col = "change me!")
 dist_eu <- dist(Boston)
 
 # k-means clustering
-km <-kmeans(dist_eu, centers = 10)
+km <-kmeans(dist_eu, centers = 15)
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
@@ -710,7 +710,7 @@ pairs(Boston, col = km$cluster)
 
 *** =sct
 ```{r}
-#test_function("pairs", args = "col",incorrect_msg = "Did you set the color based on the clusters in `pairs()` ? ")
+test_function("kmeans", args = "center",incorrect_msg = "Did you set the center argument in `kmeans()` ? ")
  
 test_error()
 success_msg("Clustering like a pro!")
