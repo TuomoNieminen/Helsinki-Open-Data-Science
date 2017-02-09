@@ -710,7 +710,7 @@ pairs(Boston, col = km$cluster)
 
 *** =sct
 ```{r}
-test_function("pairs", args = "col",incorrect_msg = "Did you set the color based on the clusters in `pairs()` ? ")
+#test_function("pairs", args = "col",incorrect_msg = "Did you set the color based on the clusters in `pairs()` ? ")
  
 test_error()
 success_msg("Clustering like a pro!")
