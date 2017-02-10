@@ -823,6 +823,7 @@ In the case of a binary response variable, the 'type' argument of `predict()` ca
 - Create object `probabilities` by using `predict()` on the model object.
 - Mutate the alc data: add a column 'probability' with the predicted probabilities.
 - Mutate the data again: add a column 'prediction' which is true if the value of 'probability' is greater than 0.5.
+- Look at the first ten observations of the data, along with the predictions.
 - Use `table()` to create a cross table of the columns 'high_use' versus 'prediction' in `alc`. This is sometimes called a 'confusion matrix`.
 
 *** =hint
@@ -851,6 +852,9 @@ alc <- mutate(alc, probability = probabilities)
 # use the probabilities to make a prediction of high_use
 alc <- mutate(alc, prediction = "change me!")
 
+# see the last ten original classes, predicted probabilities, and class predictions
+select(alc, failures, absences, sex, high_use, probability, prediction) %>% tail(10)
+
 # tabulate the target variable versus the predictions
 table(high_use = alc$high_use, prediction = "change me!")
 
@@ -871,6 +875,9 @@ alc <- mutate(alc, probability = probabilities)
 
 # use the probabilities to make a prediction of high_use
 alc <- mutate(alc, prediction = probability > 0.5)
+
+# see the last ten original classes, predicted probabilities, and class predictions
+select(alc, failures, absences, sex, high_use, probability, prediction) %>% tail(10)
 
 # tabulate the target variable versus the predictions
 table(high_use = alc$high_use, prediction = alc$prediction)
