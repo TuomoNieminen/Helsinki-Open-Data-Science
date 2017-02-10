@@ -54,10 +54,9 @@ human <- filter(human, complete.cases(human))
 # add countries as rownames
 rownames(human) <- human$Country
 
-# remove 'World' observation (which is the last row)
-n <- nrow(human)
-world <- human[n,]
-human <- human[-n, ]
+# remove last 7  observations
+n_until <- nrow(human) - 7
+human <- human[1:n_until, ]
 
 # remove the Country variable
 human <- dplyr::select(human, -Country)
