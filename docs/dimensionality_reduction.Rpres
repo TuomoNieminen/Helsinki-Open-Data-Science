@@ -21,7 +21,7 @@ mytheme <- function(axt_text = 18, axt_title = 22 ) {
 ```
 
 
-Pricipal component analysis
+Principal component analysis
 ========================================================
 type: prompt
 incremental: false
@@ -91,10 +91,10 @@ On the linear algebra level, Singular Value Decomposition (SVD) is the most impo
 - Unlike LDA, PCA has no criteria or target variable for the reduction. In machine learning vocabulary, PCA may therefore be called an *unsupervised* method.
 
 
-Pricipal Component Analysis (PCA)
+Principal Component Analysis (PCA)
 ========================================================
 
-In PCA, the data is first *projected* to a new space with the same number of dimensions (new features). These new features always have the following properties:
+In PCA, the data is first *transformed* to a new space with equal ($\leq$) number of dimensions (new features). These new features always have the following properties:
 
 - The first dimension (1st principal component) captures the maximum amount of variance from the features in the original data.
 - The second dimension (2nd principal component) is orthogonal to the first (they are **uncorrelated**) and captures the maximum amount of variability left.
@@ -127,7 +127,7 @@ About PCA
 ========================================================
 Because of it's unsuperwised nature, PCA operates on numerical data rather blindly.
 
-- PCA assumes that features with larger variance are more important than features with smaller variance
+- PCA is sensitive to the relative scaling of the original features. PCA assumes that features with larger variance are more important than features with smaller variance.
 - If higher measurements do not correspond to higher importance/effect in your data, the features should be standardized before performing PCA
 - PCA is most powerful at encapsulating linear relationships (correlations)
 
