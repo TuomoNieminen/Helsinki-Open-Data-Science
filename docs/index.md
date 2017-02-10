@@ -780,8 +780,8 @@ Tools for dimensionality reduction
 On the linear algebra level, Singular Value Decomposition (SVD) is the most important tool for reducing the number of dimensions in multivariate data.
 
 - Principal Component Analysis (PCA) is an important statistical procedure which does the same thing
-- LDA can also be considered a dimensionality reduction technique. The visualisation techniques related to PCA and LDA are similar (biplot)
-- Unlike LDA, PCA has no criteria or target variable for the reduction. In machine learning vocabulary, PCA may be called an *unsupervised* method.
+- LDA can also be considered as a dimensionality reduction technique. The visualisation techniques related to PCA and LDA are similar (biplot).
+- Unlike LDA, PCA has no criteria or target variable for the reduction. In machine learning vocabulary, PCA may therefore be called an *unsupervised* method.
 
 
 Pricipal component analysis (PCA) (1)
@@ -804,7 +804,7 @@ This will give us uncorrelated variables which capture the maximum amount of var
 
 ![plot of chunk unnamed-chunk-5](dimensionality_reduction-figure/unnamed-chunk-5-1.png)
 
-*The dimensionality of iris reduced to two principal components (PC). The first PC captures more than 90% of the total variance in the 4 original variables.*
+<small>*The dimensionality of iris reduced to two principal components (PC). The first PC captures more than 90% of the total variance in the 4 original variables.*</small>
 
 About PCA
 ========================================================
@@ -813,5 +813,5 @@ PCA is a mathematical tool, not a statistical model, which is why linear algebra
 - PCA is most powerful at encapsulating linear relationships (correlations)
 - There is no statistical model for separating the sources of variance. All variance is thought to be from the same - although multidimensional - source.
 - It is also possible to model the dimensionality using underlying latent variables with for example Factor Analysis
-- The advanced methods of multivariate analysis are not part of this course
+- These advanced methods of multivariate analysis are not part of this course
 
