@@ -86,21 +86,21 @@ Tools for dimensionality reduction
 
 On the linear algebra level, Singular Value Decomposition (SVD) is the most important tool for reducing the number of dimensions in multivariate data.
 
-- Principal Component Analysis (PCA) is an important statistical procedure which does the same thing
+- Principal Component Analysis (PCA) is a statistical procedure which does the same thing
 - LDA can also be considered as a dimensionality reduction technique. The visualisation techniques related to PCA and LDA are similar (biplot).
 - Unlike LDA, PCA has no criteria or target variable for the reduction. In machine learning vocabulary, PCA may therefore be called an *unsupervised* method.
 
 
-Pricipal component analysis (PCA) (1)
+Pricipal Component Analysis (PCA)
 ========================================================
 
 In PCA, the data is first *projected* to a new space with the same number of dimensions (new features). These new features always have the following properties:
 
 - The first dimension (1st principal component) captures the maximum amount of variance from the features in the original data.
-- The second dimension (2nd principal component) is orthogonal to the first (they are uncorrelated) and captures the maximum amount of variability left.
-- The same is true for each principal component. They are all orthogonal and each is "less important" than the previous one, in terms of captured variability.
+- The second dimension (2nd principal component) is orthogonal to the first (they are **uncorrelated**) and captures the maximum amount of variability left.
+- The same is true for each principal component. They are all orthogonal and **each is less important than the previous one**, in terms of captured variance.
 
-Principal component analysis (PCA) (2)
+Principal Component Analysis (PCA) (2)
 ========================================================
 
 Given the properties of the principal components, we can simply **choose the first few principal components** to represent our data.
@@ -125,9 +125,17 @@ autoplot(pc, loadings = T, data = iris, col = "Species", loadings.label.size = 5
 
 About PCA
 ========================================================
+Because of it's unsuperwised nature, PCA operates on numerical data rather blindly.
+
+- PCA assumes that features with larger variance are more important than features with smaller variance
+- If higher measurements do not correspond to higher importance/effect in your data, the features should be standardized before performing PCA
+- PCA is most powerful at encapsulating linear relationships (correlations)
+
+About PCA (2)
+========================================================
 PCA is a mathematical tool, not a statistical model, which is why linear algebra (SVD) is enough.
 
-- PCA is most powerful at encapsulating linear relationships (correlations)
 - There is no statistical model for separating the sources of variance. All variance is thought to be from the same - although multidimensional - source.
 - It is also possible to model the dimensionality using underlying latent variables with for example Factor Analysis
 - These advanced methods of multivariate analysis are not part of this course
+

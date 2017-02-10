@@ -1876,7 +1876,7 @@ Proportion of trace:
 <p>On the linear algebra level, Singular Value Decomposition (SVD) is the most important tool for reducing the number of dimensions in multivariate data.</p>
 
 <ul>
-<li>Principal Component Analysis (PCA) is an important statistical procedure which does the same thing</li>
+<li>Principal Component Analysis (PCA) is a statistical procedure which does the same thing</li>
 <li>LDA can also be considered as a dimensionality reduction technique. The visualisation techniques related to PCA and LDA are similar (biplot).</li>
 <li>Unlike LDA, PCA has no criteria or target variable for the reduction. In machine learning vocabulary, PCA may therefore be called an <em>unsupervised</em> method.</li>
 </ul>
@@ -1885,21 +1885,21 @@ Proportion of trace:
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>Pricipal component analysis (PCA) (1)</h3>
+<h3>Pricipal Component Analysis (PCA)</h3>
 <div class="slideContent" >
 <p>In PCA, the data is first <em>projected</em> to a new space with the same number of dimensions (new features). These new features always have the following properties:</p>
 
 <ul>
 <li>The first dimension (1st principal component) captures the maximum amount of variance from the features in the original data.</li>
-<li>The second dimension (2nd principal component) is orthogonal to the first (they are uncorrelated) and captures the maximum amount of variability left.</li>
-<li>The same is true for each principal component. They are all orthogonal and each is &ldquo;less important&rdquo; than the previous one, in terms of captured variability.</li>
+<li>The second dimension (2nd principal component) is orthogonal to the first (they are <strong>uncorrelated</strong>) and captures the maximum amount of variability left.</li>
+<li>The same is true for each principal component. They are all orthogonal and <strong>each is less important than the previous one</strong>, in terms of captured variance.</li>
 </ul>
 
 </div>
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>Principal component analysis (PCA) (2)</h3>
+<h3>Principal Component Analysis (PCA) (2)</h3>
 <div class="column column1 slideContent" >
 <p>Given the properties of the principal components, we can simply <strong>choose the first few principal components</strong> to represent our data.</p>
 
@@ -1921,10 +1921,23 @@ Proportion of trace:
 <section data-transition="default" data-transition-speed="default">
 <h3>About PCA</h3>
 <div class="slideContent" >
+<p>Because of it&#39;s unsuperwised nature, PCA operates on numerical data rather blindly.</p>
+
+<ul>
+<li>PCA assumes that features with larger variance are more important than features with smaller variance</li>
+<li>If higher measurements do not correspond to higher importance/effect in your data, the features should be standardized before performing PCA</li>
+<li>PCA is most powerful at encapsulating linear relationships (correlations)</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>About PCA (2)</h3>
+<div class="slideContent" >
 <p>PCA is a mathematical tool, not a statistical model, which is why linear algebra (SVD) is enough.</p>
 
 <ul>
-<li>PCA is most powerful at encapsulating linear relationships (correlations)</li>
 <li>There is no statistical model for separating the sources of variance. All variance is thought to be from the same - although multidimensional - source.</li>
 <li>It is also possible to model the dimensionality using underlying latent variables with for example Factor Analysis</li>
 <li>These advanced methods of multivariate analysis are not part of this course</li>
