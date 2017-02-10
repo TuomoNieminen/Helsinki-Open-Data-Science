@@ -62,8 +62,10 @@ human <- human[-n, ]
 # remove the Country variable
 human <- dplyr::select(human, -Country)
 
-# save the data
-write.table(file = "human2.txt", human, sep = ",", row.names = F)
+# save the data (with row.names = T !!)
+write.table(file = "human2.txt", human, sep = ",", row.names = T)
 
+# # check that everything is in order
 # test <- read.table("human2.txt", sep = ",", header = T)
 # str(test)
+# head(test)
