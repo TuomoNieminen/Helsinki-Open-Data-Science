@@ -7,10 +7,10 @@ library(dplyr)
 # ------------------
 
 # read data
-human1 <- read.table("human1.txt", sep  =",", header = T)
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 
 # deal with comma  separator for thousand (GNI variable)
-human1$GNI <- gsub(",","",human1$GNI) %>% as.numeric
+human$GNI <- gsub(",","",human$GNI) %>% as.numeric
 
 
 # Dealing with NA values
@@ -37,6 +37,11 @@ human <- human[-n, ]
 
 # remove the Country variable
 human <- select(human, -Country)
+
+
+
+# modified data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
 
 
 # exlore
