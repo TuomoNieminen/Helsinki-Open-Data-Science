@@ -1859,7 +1859,7 @@ Proportion of trace:
 <section data-transition="default" data-transition-speed="default">
 <h3>Dimensionality reduction</h3>
 <div class="slideContent" >
-<p>The original variables of high dimensional data might contain &ldquo;too much&rdquo; information (and noise or some other random error) for representing the underlying phenomenom of interest</p>
+<p>The original variables of high dimensional data might contain &ldquo;too much&rdquo; information (and noise or some other random error) for representing the underlying phenomenom of interest.</p>
 
 <ul>
 <li>A solution is to reduce the number of dimensions and focus only on the most essential dimensions extracted from the data</li>
@@ -1887,12 +1887,12 @@ Proportion of trace:
 <section data-transition="default" data-transition-speed="default">
 <h3>Principal Component Analysis (PCA)</h3>
 <div class="slideContent" >
-<p>In PCA, the data is first <em>transformed</em> to a new space with equal (\( \leq \)) number of dimensions (new features). These new features always have the following properties:</p>
+<p>In PCA, the data is first <em>transformed</em> to a new space with \( \leq \) number of dimensions (new features). These new features are called the <strong>principal components</strong>  and they always have the following properties:</p>
 
 <ul>
-<li>The first dimension (1st principal component) captures the maximum amount of variance from the features in the original data.</li>
-<li>The second dimension (2nd principal component) is orthogonal to the first (they are <strong>uncorrelated</strong>) and captures the maximum amount of variability left.</li>
-<li>The same is true for each principal component. They are all orthogonal and <strong>each is less important than the previous one</strong>, in terms of captured variance.</li>
+<li>The 1st principal component captures the maximum amount of variance from the features in the original data.</li>
+<li>The 2nd principal component is orthogonal to the first and it captures the maximum amount of variability left.</li>
+<li>The same is true for each principal component. They are <strong>all uncorreleated and each is less important than the previous one</strong>, in terms of captured variance.</li>
 </ul>
 
 </div>
@@ -1926,7 +1926,7 @@ Proportion of trace:
 <ul>
 <li>PCA is sensitive to the relative scaling of the original features. PCA assumes that features with larger variance are more important than features with smaller variance.</li>
 <li>If higher measurements do not correspond to higher importance/effect in your data, the features should be standardized before performing PCA</li>
-<li>PCA is most powerful at encapsulating linear relationships (correlations)</li>
+<li>PCA is powerful at encapsulating correlations between the original features into a smaller number of uncorrelated dimensions</li>
 </ul>
 
 </div>

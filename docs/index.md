@@ -768,7 +768,7 @@ In statistical analysis, one can think of *dimensionality* as the number of vari
 Dimensionality reduction
 ========================================================
   
-The original variables of high dimensional data might contain "too much" information (and noise or some other random error) for representing the underlying phenomenom of interest
+The original variables of high dimensional data might contain "too much" information (and noise or some other random error) for representing the underlying phenomenom of interest.
 
 - A solution is to reduce the number of dimensions and focus only on the most essential dimensions extracted from the data
 - In practise we can *transform* the data and use only a few *principal components* for visualisation and/or analysis
@@ -787,11 +787,11 @@ On the linear algebra level, Singular Value Decomposition (SVD) is the most impo
 Principal Component Analysis (PCA)
 ========================================================
 
-In PCA, the data is first *transformed* to a new space with equal ($\leq$) number of dimensions (new features). These new features always have the following properties:
+In PCA, the data is first *transformed* to a new space with $\leq$ number of dimensions (new features). These new features are called the **principal components**  and they always have the following properties:
 
-- The first dimension (1st principal component) captures the maximum amount of variance from the features in the original data.
-- The second dimension (2nd principal component) is orthogonal to the first (they are **uncorrelated**) and captures the maximum amount of variability left.
-- The same is true for each principal component. They are all orthogonal and **each is less important than the previous one**, in terms of captured variance.
+- The 1st principal component captures the maximum amount of variance from the features in the original data.
+- The 2nd principal component is orthogonal to the first and it captures the maximum amount of variability left.
+- The same is true for each principal component. They are **all uncorreleated and each is less important than the previous one**, in terms of captured variance.
 
 Principal Component Analysis (PCA) (2)
 ========================================================
@@ -812,7 +812,7 @@ Because of it's unsuperwised nature, PCA operates on numerical data rather blind
 
 - PCA is sensitive to the relative scaling of the original features. PCA assumes that features with larger variance are more important than features with smaller variance.
 - If higher measurements do not correspond to higher importance/effect in your data, the features should be standardized before performing PCA
-- PCA is most powerful at encapsulating linear relationships (correlations)
+- PCA is powerful at encapsulating correlations between the original features into a smaller number of uncorrelated dimensions
 
 About PCA (2)
 ========================================================
