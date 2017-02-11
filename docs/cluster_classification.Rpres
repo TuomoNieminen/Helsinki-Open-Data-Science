@@ -67,7 +67,7 @@ autosize: true
 
 Linear discriminant analysis produces results based on the assumptions that 
 - variables are normally distributed (on condition of the classes)
-- each variable has the same variance
+- the normal distributions for each class share the same covariance matrix
 
 Because of the assumptions, the data might need scaling before fitting the model. The variables also need to be continuous. 
 
