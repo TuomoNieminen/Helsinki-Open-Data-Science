@@ -3,9 +3,14 @@ title       : Dimensionality reduction techniques
 description : Principal component analysis (PCA), Correspondence analysis (CA)
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
-## Exercise title
+## Meet the human data
 
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
+The human dataset is a combination of the indicators behind the human development index and the gender inequality index. The data originates from the United Nations Development Programme, see also [their data page](http://hdr.undp.org/en/content/human-development-index-hdi).  
+
+For a nice overview and detailed explanations see the following pdf:
+[Calculating the human development indices](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
+
+Some of the variable names have been shortened but the connections should be obvious.
 
 *** =instructions
 - instruction
@@ -15,26 +20,380 @@ UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
 
 *** =pre_exercise_code
 ```{r}
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+```
 
+*** =sample_code
+```{r}
+# human is available
+
+# look at a summary of human
+summary(human)
+
+# look at the structure of GNI
+str(human$GNI)
+
+# use gsub() to remove ',' and then tranform GNI to numeric
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+
+# look at a summary of GNI
+summary(human$GNI)
+```
+
+*** =solution
+```{r}
+# human is available
+
+# look at a summary of human
+summary(human)
+
+# look at the structure of GNI
+str(human$GNI)
+
+# replace ',' with '' (nothing) and then transform GNI to numeric
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+
+# look at a summary of GNI
+summary(human$GNI)
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+# success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## String manipulation
+
+A string is a combination of characters. There are quite a few functions in R that can be used for manipulating strings. Rhere are of course also many packages that do this. 
+
+Two functions in base R stand out as especially useful when wrangling character data:
+
+- `gsub()` : replace a pattern with something
+- `substr()`: extract a part of a string
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 ```
 
 *** =sample_code
 ```{r}
 
+# create a string object
+abc <- "abcdefg"
+
+# extract the characters from third to fifth
+substr(abc, start = 3, stop = 5)
+
+# replace a pattern with something else
+gsub("cde", "123", abc)
+
+# create a date object
+today <- Sys.Date()
+
+# print out the date
+today
+
+# extract the year from 'today' with substr()
+substr(today, 1, 4)
+
+# change the month of 'today' to 'feb' with gsub()
+gsub("-.*-", "-feb-", today)
+
+
 ```
 
 *** =solution
 ```{r}
+# create a string object
+abc <- "abcdefg"
+
+# extract the characters from third to fifth
+substr(abc, start = 3, stop = 5)
+
+# replace a pattern with something else
+gsub("cde", "123", abc)
+
+# create a date object
+today <- Sys.Date()
+
+# print out the date
+today
+
+# extract the year from 'today' with substr()
+substr(today, 1, 4)
+
+# change the month of 'today' to 'feb' with gsub()
+gsub("-.*-", "-feb-", today)
+
 
 ```
 
 *** =sct
 ```{r}
 
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
 
-test_error()
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Dealing with not available (NA) values
+
+In R, NA stands for not available, which means that the data point is missing. If a variable you wish to analyse contains missing values, there are usually two main options 
+
+- Remove the observations with missing values
+- Replace the missing values with actual values with an *imputation* technique.
+
+We will use the first option, which is the simplest solution.
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+# read data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+
+```
+
+*** =sample_code
+```{r}
+# human is available
+
+# exclude unneeded variables
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+human <- select(human, one_of(keep))
+
+# remove rows with NA values
+human <- filter(human, complete.cases(human))
+
+```
+
+*** =solution
+```{r}
+# human is available
+
+# exclude unneeded variables
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+human <- select(human, one_of(keep))
+
+# remove rows with NA values
+human <- filter(human, complete.cases(human))
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Excluding observations
+
+Besides missing values, there might be other reasons to exclude observations. In our data, there are a few data points that are simply linear combinations of other observations.
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+# read data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+human <- select(human, one_of(keep))
+human <- filter(human, complete.cases(human))
+
+```
+
+*** =sample_code
+```{r}
+# add countries as rownames
+rownames(human) <- human$Country
+
+# look at the last 10 observations
+tail(human, 10)
+
+# keep everything but the last 7 observations
+n_last <- nrow(human) - 7
+human <- human[1:n_last, ]
+
+```
+
+*** =solution
+```{r}
+# add countries as rownames
+rownames(human) <- human$Country
+
+# look at the last 10 observations
+tail(human, 10)
+
+# keep everything but the last 7 observations
+n_last <- nrow(human) - 7
+human <- human[1:n_last, ]
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Exploring the countries of the world
+
+Exercise info here
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+# read data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+human <- select(human, one_of(keep))
+human <- filter(human, complete.cases(human))
+rownames(human) <- human$Country
+n_last <- nrow(human) - 7
+human <- human[1:n_last, ]
+
+```
+
+*** =sample_code
+```{r}
+# human is available
+
+# remove the Country variable
+human <- select(human, -Country)
+
+# Access GGally
+library(GGally)
+
+# draw a generalised pairs plot of the data
+ggpairs(human)
+
+```
+
+*** =solution
+```{r}
+# human is available
+
+# remove the Country variable
+human <- select(human, -Country)
+
+# Access GGally
+library(GGally)
+
+# draw a generalised pairs plot of the data
+ggpairs(human)
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Principal component analysis
+
+
+*** =instructions
+- instruction
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+# human is available
+
+# center
+human <- scale(human)
+
+# pca
+pc <- prcomp(human_)
+
+# plot
+library(ggfortify)
+autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.size = 2.5, size = 0, loadings.label.size = 6)
+
+```
+
+*** =solution
+```{r}
+# center
+human <- scale(human)
+
+# pca
+pc <- prcomp(human_)
+
+# plot
+library(ggfortify)
+autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.size = 2.5, size = 0, loadings.label.size = 6)
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
 success_msg("Good work!")
 ```
