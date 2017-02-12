@@ -68,7 +68,7 @@ summary(human$GNI)
 # success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:63c85a3cfc
 ## String manipulation
 
 A string is a combination of characters. There are quite a few functions in R that can be used for manipulating strings. Rhere are of course also many packages that do this. 
@@ -154,7 +154,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:99d98acadf
 ## Dealing with not available (NA) values
 
 In R, NA stands for not available, which means that the data point is missing. If a variable you wish to analyse contains missing values, there are usually two main options 
@@ -215,7 +215,7 @@ human <- filter(human, complete.cases(human))
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:17ccfcda8e
 ## Excluding observations
 
 Besides missing values, there might be other reasons to exclude observations. In our data, there are a few data points that are simply linear combinations of other observations.
@@ -276,7 +276,7 @@ human <- human[1:n_last, ]
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:b94de4cad1
 ## Exploring the countries of the world
 
 Exercise info here
@@ -342,7 +342,7 @@ ggpairs(human)
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
 ## Principal component analysis
 
 
