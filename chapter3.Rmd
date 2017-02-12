@@ -219,6 +219,8 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:3d45bd1da6
 ## Creating a factor variable
 
+**obs! This exercise might have issues. If you think your correct solution isn't accepted, try refreshing the browser and submitting again.**
+
 We can create a categorical variable from a continuous one. There are many ways to to do that. Let's choose the variable `crim` (per capita crime rate by town) to be our factor variable. We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile) to get the high, low and middle rates of crime into their own categories.
 
 See how it's done below!
