@@ -17,7 +17,7 @@ human$GNI <- gsub(",","",human$GNI) %>% as.numeric
 # ---------------------
 
 # exclude unneeded variables
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expect","Life.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth","Parliament.F")
 human <- select(human, one_of(keep))
 
 # remove rows with NA values
@@ -30,14 +30,14 @@ human <- filter(human, complete.cases(human))
 # add countries as rownames
 rownames(human) <- human$Country
 
-# remove 'World' observation (which is the last row)
-n <- nrow(human)
-world <- human[n,]
-human <- human[-n, ]
+tail(human)
+
+# remove last 7 rows
+n_last <- nrow(human) - 7
+human <- human[1:n_last, ]
 
 # remove the Country variable
 human <- select(human, -Country)
-
 
 
 # modified data
