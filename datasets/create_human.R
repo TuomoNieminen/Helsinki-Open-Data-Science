@@ -23,12 +23,12 @@ library(dplyr)
 hd <- read.csv("human_development.csv", stringsAsFactors = F)
 gi <- read.csv("gender_inequality.csv", stringsAsFactors = F, na.strings = "..")
 # rename variables
-names(hd) <- c("HDI.Rank", "Country", "HDI", "Life.Expectancy", "Edu.Expected", "Edu.Mean", "GNI", "GNI.Minus.Rank")
-names(gi) <- c("GII.Rank", "Country", "GII", "Maternal.Mortality", 
-                "Adolescent.Birth", "Percent.Parliament.F", "Edu2.Female", "Edu2.Male", 
-                "Labour.Female", "Labour.Male")
+names(hd) <- c("HDI.Rank", "Country", "HDI", "Life.Expectancy", "Edu.Expect", "Edu.Mean", "GNI", "GNI.Minus.Rank")
+names(gi) <- c("GII.Rank", "Country", "GII", "Matern.Mortal", 
+                "Adolesc.Birth", "Parliament.F", "Edu2.F", "Edu2.M", 
+                "Labour.F", "Labour.M")
 # do a bit of feature engineering
-gi <- mutate(gi, Edu2.FM = Edu2.Female / Edu2.Male, Labour.FM = Labour.Female / Labour.Male)
+gi <- mutate(gi, Edu2.FM = Edu2.F / Edu2.M, Labour.FM = Labour.F / Labour.M)
 # join data and write to file
 human1 <- inner_join(hd, gi, by = "Country")
 write.table(file = "human1.txt", human1, sep =",", row.names = F)
@@ -45,7 +45,7 @@ human <- read.table("human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",","",human$GNI) %>% as.numeric
 
 # exclude unneeded variables
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament.F")
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
 human <- dplyr::select(human, one_of(keep))
 
 # remove rows with NA values
@@ -64,7 +64,7 @@ human <- dplyr::select(human, -Country)
 # save the data (with row.names = T !!)
 write.table(file = "human2.txt", human, sep = ",", row.names = T)
 
-# # check that everything is in order
-# test <- read.table("human2.txt", sep = ",", header = T)
-# str(test)
-# head(test)
+# check that everything is in order
+test <- read.table("human2.txt", sep = ",", header = T)
+str(test)
+head(test)
