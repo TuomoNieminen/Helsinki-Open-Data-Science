@@ -7,13 +7,16 @@ description : Principal component analysis (PCA), Correspondence analysis (CA)
 
 The human dataset is a combination of the indicators behind the human development index and the gender inequality index. The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview and detailed explanations see the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
 
-Some of the variable names have been shortened but the connections should be clear. F always stands for female and M for male.
+Some of the variable names have been shortened but the connections should be clear. "F" always stands for female and "M" for male. There are two new variables:
+
+- **Edu2.FM**: The ratio of the percentages of female and male populations with secondary education (Edu2.F / Edu2.M)
+- **Labour.FM**: The ratio of the percentages of female and male populations in the labour force. (Labour.F / Labour.M)
 
 *** =instructions
 - Read the human data into memory
-- print out the (column) names of the data
-- look at the structure of the data
-- print out summaries of the variables in the data
+- Print out the (column) names of the data
+- Look at the structure of the data
+- Print out summaries of the variables in the data
 
 *** =hint
 - Use `str()` to see structure
@@ -25,7 +28,6 @@ Some of the variable names have been shortened but the connections should be cle
 
 *** =sample_code
 ```{r}
-
 # read the human data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 
@@ -35,7 +37,7 @@ names(human)
 # look at the structure of human
 
 
-# compute summaries of the variables
+# print out summaries of the variables
 
 
 ```
@@ -62,15 +64,19 @@ test_function("str", args = "object",incorrect_msg = "Please look at the structu
 test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the human data frame")
 
 test_error()
-success_msg("Awsome, you have mastered an important first step of exploring your data!")
+success_msg("Awsome, you have mastered an important first step!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:63c85a3cfc
 ## String manipulation
 
-Sometimes a variable is coded in a weird way that is not natural for R to understand. For example, numbers can sometimes be stored along with a comma to separate thousands. In these cases, R simply doesn't understand that such a combination represents a number, but rather treats the variable as a factor or a character.
+Sometimes a variable is coded in a way that is not natural for R to understand. For example, large integers can sometimes be coded with a comma to separate thousands (1,000 == 1000). In these cases, R interprets the variable as a factor or a character. 
 
-In programming, a combination of characters is usually called a string. There are quite a few functions in Base R that can be used for manipulating characters, but there is also a more consintent and a bit simpler tidyverse package **stringr.**
+In some cases you could use the `dec` argument in `read.table()` to get around this, but if the data also includes decimals separated by a dot, this is not an option. To get rid of the unwanted commas, we need *string manipulation*.
+
+In programming, a combination of characters is usually called a *string*. In R, strings are of the basic type *character* and they can be created by using quotation marks.  
+
+There are quite a few functions in Base R that can be used for manipulating the character types, but there is also a bit more consintent and simple tidyverse package **stringr.**
 
 
 *** =instructions
@@ -80,7 +86,9 @@ In programming, a combination of characters is usually called a string. There ar
 - Adjust the code: Use the pipe operator (`%>%`) to convert the resulting vector to numeric with `as.numeric`.
 
 *** =hint
-- hint
+- Use `$` to access a single column of a data frame.
+- Use `str()` to look at the structure of any object
+- Add the pipe and `as.numeric` to the row where `str_replace()` is used
 
 *** =pre_exercise_code
 ```{r}
@@ -94,11 +102,11 @@ human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/cour
 # access the stringr package
 library(stringr)
 
-# look at the structure of the GNI variable in human
+# look at the structure of the GNI column in 'human'
 
 
-# remove ',' from the GNI variable and convert it to numeric
-str_replace(human$GNI, ",", "")
+# remove the commas from GNI and convert to numeric
+str_replace(human$GNI, pattern=",", replace ="")
 
 
 ```
@@ -113,8 +121,8 @@ library(stringr)
 # look at the structure of the GNI variable in human
 str(human$GNI)
 
-# remove ',' from the GNI variable and convert to numeric
-str_replace(human$GNI, ",", "") %>% as.numeric
+# remove the commas from GNI and convert to numeric
+str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
 
 
 ```
@@ -122,12 +130,12 @@ str_replace(human$GNI, ",", "") %>% as.numeric
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("str", args = "object",incorrect_msg = "Please look at the structure of GNI in human")
+gni <- str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
+test_output_contains("gni", incorrect_msg = "Please adjust the code to convert the gni variable to numeric and print out the result")
+ 
+test_error()
+success_msg("Wow, what a manipulator you are! You certainly can have your way with words now.")
 ```
 
 
@@ -144,53 +152,59 @@ We will use the first option, which is the simplest solution.
 *** =instructions
 - Create a smaller version of the human data by selecting the variables defined in `keep`
 - Use complete.cases() on human to print out a logical "completeness indicator" vector
-- Print out the human data along with the completeness indicator vector. When is the indicator FALSE and when is it TRUE? hint: See the help page of `complete.cases()`.
-- use `filter()` from **dplyr** to filter out all the rows with any `NA` values. Right now, TRUE is simply recycled so that nothing is filtered out.
+- Print out the 'human' data along with an added completeness indicator. When is the indicator FALSE and when is it TRUE? You can also look at the help page of `complete.cases()`.
+- `filter()` out all the rows with any `NA` values. Right now, `TRUE` is simply recycled so that nothing is filtered out.
 
 *** =hint
-- hint
+- Use `complete.cases()` on 'human' again to define the 'complete' column
+- Use the logical vector created by complete.cases to filter out the rows with `NA` values.
 
 *** =pre_exercise_code
 ```{r}
 # read data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+library(dplyr)
 ```
 
 *** =sample_code
 ```{r}
-# human is available
+# human with modified GNI and dplyr are available
 
-# keep selected variables
+# columns to keep
 keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
+
+# select the 'keep' columns
 human <- select(human, one_of(keep))
 
-# use complete.cases() on human
-
+# print out a completeness indicator of the 'human' data
+complete.cases(human)
 
 # print out the data along with a completeness indicator
-cbind(human , complete = "change me!")
+data.frame(human, complete = "change me!")
 
-# remove rows with NA values using filter() from dplyr
-human_ <- dplyr::filter(human, TRUE)
+# filter out all rows with NA values
+human_ <- filter(human, TRUE)
 
 ```
 
 *** =solution
 ```{r}
-# human (with new GNI) is available
+# human with modified GNI and dplyr are available
 
-# keep selected variables
+# columns to keep
 keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
+
+# select the 'keep' columns
 human <- select(human, one_of(keep))
 
-# use complete.cases() on human
+# print out a completeness indicator of the 'human' data
 complete.cases(human)
 
 # print out the data along with a completeness indicator
-cbind(human , complete = complete.cases(human))
+data.frame(human , complete = complete.cases(human))
 
-# remove rows with NA values
+# filter out all rows with NA values
 human_ <- filter(human, complete.cases(human))
 
 ```
@@ -198,35 +212,36 @@ human_ <- filter(human, complete.cases(human))
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_output_contains("complete.cases(human)")
+test_output_contains("cbind(human , complete = complete.cases(human))", 
+                     incorrect_msg = "Please print out the human data along with the completeness indicators")
+test_object("human_", incorrect_msg = "Please filter out the incomplete observations from the human data and create object `human_`")
+
+test_error()
+success_msg("Great work! You complete me <3")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:17ccfcda8e
 ## Excluding observations
 
-Besides missing values, there might be other reasons to exclude observations. In our human data, there are a few data points which have been computed from the other observations. We want to remove them before further analysis.
+Besides missing values, there might be other reasons to exclude observations. In our human data, there are a few data points which have been computed from other observations. We want to remove them before further analysis.
 
-The basic way in R to reference the rows (or columns) of a data frame is to use brackets (`[,]`) with indices or names. The part before the comma references rows and the part after the comma columns. If either is left empty it means that everything is selected. In the examples below, `df` is some data frame.
+The basic way in R to reference the rows or columns of a data frame is to use brackets (`[,]`) along with indices or names. When brackets are used with data frames, a comma is used to separate row and column references. In the examples below, `df` is a data frame.
 
 ```
-df[,] # identical to df
-df[1:5, ] # first five rows of df
-df[, c(2, 5)] # second and fifth columns of df
+df[,] # select every row and every column
+df[1:5, ] # select first five rows
+df[, c(2, 5)] # select 2nd and 5th columns
 ```
 
 *** =instructions
-- Define the rownames in human by the Country column
 - Use `tail()` to print out the last 10 observations of human (hint: `?tail`)
-- Create object n_last
-- Create the data frame `human_` by selecting the rows from the 1st to `n_last` from `human`.
+- Create object `i_last`
+- Create data frame 'human_' by selecting rows from the 1st to `i_last` from `human`.
+- Define the rownames in 'human_' by the Country column
 
 *** =hint
-- Use `1:n_last` to select rows from 1 to `n_last`
+- Use `1:i_last` to select rows from 1 to `i_last`
 
 *** =pre_exercise_code
 ```{r}
@@ -242,25 +257,26 @@ human <- filter(human, complete.cases(human))
 
 *** =sample_code
 ```{r}
-# human (without NA) is available
+# human without NA is available
 
-# add countries as rownames
-rownames(human) <- human$Country
 
 # look at the last 10 observations
 
 
-# last indice we want to keep
-n_last <- nrow(human) - 7
+# define the last indice we want to keep
+i_last <- nrow(human) - 7
 
 # choose everything until the last 7 observations
 human_ <- human["change me!", ]
+
+# add countries as rownames
+rownames(human_) <- human_$Country
 
 ```
 
 *** =solution
 ```{r}
-# human (without NA) is available
+# human without NA is available
 
 # add countries as rownames
 rownames(human) <- human$Country
@@ -269,34 +285,40 @@ rownames(human) <- human$Country
 tail(human, 10)
 
 # last indice we want to keep
-n_last <- nrow(human) - 7
+i_last <- nrow(human) - 7
 
 # choose everything until the last 7 observations
-human_ <- human[1:n_last, ]
+human_ <- human[1:i_last, ]
+
+# add countries as rownames
+rownames(human) <- human$Country
 
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("tail", args = c("x", "n"))
+test_object("human_", incorrect_msg = "Please create the data frame 'human_' as instructed by selecting rows from 'human'")
+
+test_error()
+success_msg("Yes! You're definately included in awsomeland!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b94de4cad1
 ## Exploring the human countries
 
-Exercise info here
+A pairs plot or a generalized pairs plot is a good way of visualizing a reasonably sized data frame. Correlations can be computed with the `cor()` function and visualized with the 
 
 *** =instructions
-- instruction
+- Create the data frame 'human_' by removing the Country variable from 'human'
+- Draw a scatter plot matrix of the 'human_' variables with `pairs()`. Make the points more colorfull by adding the argument `col = "blue"`.
+- Compute and print out the correlation matrix of 'human_'
+- Adjust the code: use the pipe operator (`%>%`) and visualize the correlation matrix with `corrplot()`.
 
 *** =hint
-- hint
+- The pipe assigns the output on its left as the first argument to the function name on its right. Use it on the same or where the correlation matrix is computed
+
 
 *** =pre_exercise_code
 ```{r}
@@ -310,55 +332,77 @@ human <- filter(human, complete.cases(human))
 rownames(human) <- human$Country
 n_last <- nrow(human) - 7
 human <- human[1:n_last, ]
+
+# corrplot
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/colorlegend.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrMatOrder.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrRect.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrRect.hclust.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.mixed.R")
+
 ```
 
 *** =sample_code
 ```{r}
-# human (with changes) and dplyr are available
+# modified human, dplyr and the corrplot functions are available
 
 # remove the Country variable
 human_ <- select(human, -Country)
 
-# Access GGally
-library(GGally)
+# draw a scatter plot matrix with pairs()
 
-# draw a generalised pairs plot of the data
+
+# compute the correlation matrix and visualize it
+cor(human_)
+
 
 
 ```
 
 *** =solution
 ```{r}
-# human (with changes) and dplyr are available
+# modified human, dplyr and the corrplot functions are available
 
 # remove the Country variable
 human_ <- select(human, -Country)
 
-# Access GGally
-library(GGally)
+# draw a scatter plot matrix with pairs()
+pairs(human_, col = "blue")
 
-# draw a generalised pairs plot of the data
-ggpairs(human_)
+# compute the correlation matrix and visualize it
+cor(human_) %>% corrplot
+
 
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("pairs", args = "x", incorrect_msg = "Please use the `pairs()` function on `human_`")
+test_function("corrplot", args = "corr", incorrect_msg = "Please use the pipe operator to apply the `corrplot()` function on the correlation matrix of 'human_'")
+
+test_error()
+success_msg("Great work!!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
 ## PCA with R
 
+There are two functions in the default package distribution of R that can be used to perform Principal Components Analysis (PCA): `princomp()` and `prcomp()`. This is because PCA can be performed by two sightly different matrix decomposition methods from linear algebra: the Eigenvalue Decomposition and the Singular Value Decomposition (SVD). 
+
+The `prcomp()` function uses the SVD and is the preferred and more numerically accurate method for PCA.
+
+Both methods quite literally *decompose* a data matrix into a product of smaller matrices, which let's us extract the underlying *principal components*. This makes it possible to approximate a lower dimensional representation of the data by choosing only a few principal components.
+
 
 *** =instructions
-- instruction
+- Create 'human_std' by standardizing the variables in 'human'.
+- Print out summaries of the standardized variables. What are the means? Do you know the standard deviations?
+- Use `prcomp()` to perform principal component analysis on the standardized data. Save the results in the object `pca_human`
+- Access the **ggfortify** package. 
+- Use autoplot to draw a biplot of `pca_human` with the 1st principal component on the x-axis and the second on the y-axis
+- Adjust the code: Add the following arguments and draw the plot again after each one: `label = T`,  `size = -1`, `label.size = 3`
 
 *** =hint
 - hint
@@ -370,33 +414,43 @@ human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/cour
 
 *** =sample_code
 ```{r}
-# human (with changes) is available
+# modified human is available
 
-# center
-human <- scale(human)
+# standardize the variables
+human_std <- scale(human)
 
-# pca
-pc <- prcomp(human_)
+# print out summaries of the standardized variables
 
-# plot
-library(ggfortify)
-autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.size = 2.5, size = 0, loadings.label.size = 6)
+
+# perform principal component analysis (with the SVD method)
+pca_human <- prcomp(human_std)
+
+# access the ggfortify package
+
+
+# draw a biplot of the principal components and the original variables
+autoplot(pca_human, x = 1, y = 2)
 
 ```
 
 *** =solution
 ```{r}
-# human (with changes) is available
+# modified human is available
 
-# center
-human <- scale(human)
+# standardize the variables
+human_std <- scale(human)
 
-# pca
-pc <- prcomp(human_)
+# print out summaries of the standardized variables
+summary(human_std)
 
-# plot
+# perform principal component analysis (with the SVD method)
+pca_human <- prcomp(human_std)
+
+# access the ggfortify package
 library(ggfortify)
-autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.size = 2.5, size = 0, loadings.label.size = 6)
+
+# draw a biplot of the 2-dimensional principal component representation of the observations
+autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
 
 ```
 
@@ -409,4 +463,131 @@ autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.s
 # 
 # test_error()
 success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## A biplot of PCA (1)
+
+Exercise info here
+
+*** =instructions
+- Print out the object `pca_human` (created in the previous exercise)
+- Create objects `pc_var` and `pc_varp`.
+- Execute the `paste0()` function. Adjust the code: insert the proportions of variance for each Principal component (PC) inside the matching parenthesis. Then save the resulting output to the object `pc_lab`
+- Draw the biplot again. Adjust the code: use the first value of the `PC` vector as the label for the x-axis and the second value as the label for the y-axis.
+
+*** =hint
+- Replace the appropriate part of the call to the `paste0()` function with the `pc_varp` object
+- Brackets can be used to access values of a vector: `V[1]` gets the first value of `V`
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
+human_std <- scale(human)
+pca_human <- prcomp(human_std)
+library(ggfortify)
+autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
+```
+
+*** =sample_code
+```{r}
+# pca_human, ggfortify, dplyr are available
+
+# print out pca_human
+
+
+# variance captured by each PC
+pc_var <- pca_human$sdev^2
+
+# percentage of variance captured by PC
+pc_varp <- (100 * pc_var / sum(pc_var)) %>% round(2)
+
+# create object pc_lab to be used as axis labels
+paste0("PC", 1:8, " (", "replace me!", "%)")
+
+# draw a biplot
+autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = NA, ylab = NA)
+```
+
+*** =solution
+```{r}
+# pca_human, ggfortify, dplyr are available
+
+# print out pca_human
+pca_human
+
+# variance captured by each PC
+pc_var <- pca_human$sdev^2
+
+# proportion of variance captured for each PC
+pc_varp <- (100 * pc_var / sum(pc_var)) %>% round(2)
+
+# create object pc_lab to be used as labels
+pc_lab <- paste0("PC", 1:8, " (", pc_varp, "%)")
+
+# draw a biplot
+autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2])
+
+```
+
+*** =sct
+```{r}
+
+test_object("pc_lab")
+
+test_error()
+success_msg("Good work!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## A biplot of PCA (2)
+
+Exercise info here
+
+*** =instructions
+- Adjust the code: Add the following arguments to the call to `autoplot()` and draw the plot again after each adjustment `loadings = T`, `loadings.label  = T`, `loadings.label.size = 5`, `label.alpha = 0.2`
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
+human_std <- scale(human)
+pca_human <- prcomp(human_std)
+pc_var <- pca_human$sdev^2
+pc_varp <- (100 * pc_var / sum(pc_var)) %>% round(2)
+pc_lab <- paste0("PC", 1:8, " (", pc_varp, "%)")
+library(ggfortify)
+autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2])
+```
+
+*** =sample_code
+```{r}
+# pca_human, pc_lab, and ggfortify are available
+
+# draw a biplot
+autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = PC[1], ylab = PC[2])
+
+```
+
+*** =solution
+```{r}
+# pca_human, pc_lab and ggfortify are available
+
+# draw a biplot
+autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2], loadings = T, loadings.label  = T, loadings.label.size = 4, label.alpha = 0.2)
+
+```
+
+*** =sct
+```{r}
+
+# test_function("", args = "",incorrect_msg = "")
+# test_object("", incorrect_msg = "")
+# test_output_contains("", incorrect_msg = "")
+# 
+# test_error()
+success_msg("Awsome work!")
 ```
