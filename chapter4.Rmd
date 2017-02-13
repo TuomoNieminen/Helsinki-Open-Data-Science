@@ -611,26 +611,27 @@ The [Factominer](https://cran.r-project.org/web/packages/FactoMineR/index.html) 
 Let's dwell in teas for a bit!
 
 *** =instructions
-- Access the FactoMineR and dplyr packages and load the tea dataset
+- Look at first six rows of the `tea` dataset
 - Create the `keep_columns` object. Then `select()` the columns from `tea` to create a new dataset. Save the new data as `tea_time`. 
 - Look at the summaries and structure of the `tea_time` data.
 - visu !
 
 *** =hint
-- hint
+- You can see the first six rows with the `head()` function
 
 *** =pre_exercise_code
 ```{r}
+library(dplyr)
+source("https://github.com/cran/FactoMineR/blob/master/data/tea.rda")
 
 ```
 
 *** =sample_code
 ```{r}
-# access the FactoMineR and dplyr packages
-library(FactoMineR); library(dplyr)
+# the tea dataset and packages FactoMineR and dplyr are available
 
-# load the tea dataset
-data(tea)
+# look at the head of the tea dataset
+
 
 # column names to keep in the dataset
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
@@ -639,8 +640,8 @@ keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
 tea_time <- select(tea, "change me!")
 
 # look at the summaries and structure of the data
-summary(tea_time)
-str(tea_time)
+
+
 
 # visualize the dataset
 #joku plot
@@ -649,11 +650,10 @@ str(tea_time)
 
 *** =solution
 ```{r}
-# access the FactoMineR and dplyr packages
-library(FactoMineR); library(dplyr)
+# the tea dataset and packages FactoMineR and dplyr are available
 
-# load the tea dataset
-data(tea)
+# look at the head of the tea dataset
+head(tea)
 
 # column names to keep in the dataset
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
@@ -664,6 +664,9 @@ tea_time <- select(tea, one_of(keep_columns))
 # look at the summaries and structure of the data
 summary(tea_time)
 str(tea_time)
+
+# visualize the dataset
+
 
 ```
 
@@ -696,8 +699,8 @@ Exercise info here
 
 *** =pre_exercise_code
 ```{r}
-library(FactoMineR); library(dplyr)
-data(tea)
+source("https://github.com/cran/FactoMineR/blob/master/data/tea.rda")
+library(dplyr)
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
 tea_time <- select(tea, one_of(keep_columns))
 
@@ -708,13 +711,13 @@ tea_time <- select(tea, one_of(keep_columns))
 # tea_time is available
 
 # multiple correspondence analysis
-mca <- MCA("change me!", graph = FALSE)
+#mca <- MCA("change me!", graph = FALSE)
 
 # summary of the model
 
 
 # visualize MCA
-plot("change me!", invisible=c("ind"))
+#plot("change me!", invisible=c("ind"))
 
 ```
 
@@ -723,13 +726,13 @@ plot("change me!", invisible=c("ind"))
 # tea_time is available
 
 # multiple correspondence analysis
-mca <- MCA(tea_time, graph = FALSE)
+#mca <- MCA(tea_time, graph = FALSE)
 
 # summary of the model
-summary(mca)
+#summary(mca)
 
 # visualize MCA
-plot(mca, invisible=c("ind"), habillage = "quali")
+#plot(mca, invisible=c("ind"), habillage = "quali")
 
 ```
 
