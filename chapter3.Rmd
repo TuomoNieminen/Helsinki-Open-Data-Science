@@ -236,9 +236,10 @@ See how it's done below!
 - Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
 
 *** =hint
-- You can create a vector with `c()`
-- Separate the values with comma in a vector
-- Remember that strings need the quotes around them
+- You can get `scaled_crim` from `boston_scaled` with the $ mark
+- For labels: you can create a vector with `c()`
+- For labels: Separate the values with comma in a vector
+- For labels: Remember that strings need the quotes around them
 - `table(*object_name*)` creates a cross tabulation of the object
 
 *** =pre_exercise_code
