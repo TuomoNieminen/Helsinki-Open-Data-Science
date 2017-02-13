@@ -131,8 +131,7 @@ str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
 ```{r}
 
 test_function("str", args = "object",incorrect_msg = "Please look at the structure of GNI in human")
-gni <- str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
-test_output_contains("gni", incorrect_msg = "Please adjust the code to convert the gni variable to numeric and print out the result")
+test_output_contains("str_replace(human$GNI, pattern=',', replace ='') %>% as.numeric", incorrect_msg = "Please adjust the code to convert the gni variable to numeric and print out the result")
  
 test_error()
 success_msg("Wow, what a manipulator you are! You certainly can have your way with words now.")
@@ -161,10 +160,10 @@ We will use the first option, which is the simplest solution.
 
 *** =pre_exercise_code
 ```{r}
+library(dplyr)
 # read data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
-library(dplyr)
 ```
 
 *** =sample_code
@@ -380,7 +379,7 @@ cor(human_) %>% corrplot
 ```{r}
 
 test_function("pairs", args = "x", incorrect_msg = "Please use the `pairs()` function on `human_`")
-test_function("corrplot", args = "corr", incorrect_msg = "Please use the pipe operator to apply the `corrplot()` function on the correlation matrix of 'human_'")
+test_function("`%>%`", args = c("lhs", "rhs"), incorrect_msg = "Please use the pipe operator to apply the `corrplot()` function on the correlation matrix of 'human_'")
 
 test_error()
 success_msg("Great work!!")
@@ -400,8 +399,7 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 - Create 'human_std' by standardizing the variables in 'human'.
 - Print out summaries of the standardized variables. What are the means? Do you know the standard deviations?
 - Use `prcomp()` to perform principal component analysis on the standardized data. Save the results in the object `pca_human`
-- Access the **ggfortify** package. 
-- Use autoplot to draw a biplot of `pca_human` with the 1st principal component on the x-axis and the second on the y-axis
+- Use `autoplot()` (from **ggfortigy**) to draw a biplot of `pca_human` with the 1st principal component on the x-axis and the second on the y-axis
 - Adjust the code: Add the following arguments and draw the plot again after each one: `label = T`,  `size = -1`, `label.size = 3`
 
 *** =hint
@@ -410,11 +408,14 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 *** =pre_exercise_code
 ```{r}
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_base.R")
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/base_fortify_ts.R")
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_stats.R")
 ```
 
 *** =sample_code
 ```{r}
-# modified human is available
+# modified human and autoplot from ggfortify are available
 
 # standardize the variables
 human_std <- scale(human)
@@ -424,8 +425,6 @@ human_std <- scale(human)
 
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
-
-# access the ggfortify package
 
 
 # draw a biplot of the principal components and the original variables
@@ -486,7 +485,9 @@ library(dplyr)
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
 human_std <- scale(human)
 pca_human <- prcomp(human_std)
-library(ggfortify)
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_base.R")
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/base_fortify_ts.R")
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_stats.R")
 autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
 ```
 
@@ -553,13 +554,16 @@ Exercise info here
 
 *** =pre_exercise_code
 ```{r}
+library(dplyr)
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
 human_std <- scale(human)
 pca_human <- prcomp(human_std)
 pc_var <- pca_human$sdev^2
 pc_varp <- (100 * pc_var / sum(pc_var)) %>% round(2)
 pc_lab <- paste0("PC", 1:8, " (", pc_varp, "%)")
-library(ggfortify)
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_base.R")
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/base_fortify_ts.R")
+source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_stats.R")
 autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2])
 ```
 
