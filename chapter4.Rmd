@@ -594,7 +594,7 @@ autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = p
 success_msg("Awsome work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:51411e6d45
 ## It's tea time!
 
 The [Factominer](https://cran.r-project.org/web/packages/FactoMineR/index.html) package contains a `tea` dataset and it contains the answers of a questionnaire on tea consumption. 
@@ -671,7 +671,7 @@ test_error()
 success_msg("Nice! Pour yourself a cup of tea and continue to the next exercise :) ")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:42c9b3c01b
 ## Multiple Correspondence analysis
 
 Exercise info here
