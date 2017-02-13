@@ -445,8 +445,6 @@ summary(human_std)
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
 
-# access the ggfortify package
-library(ggfortify)
 
 # draw a biplot of the 2-dimensional principal component representation of the observations
 autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
@@ -493,7 +491,7 @@ autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
 
 *** =sample_code
 ```{r}
-# pca_human, ggfortify, dplyr are available
+# pca_human, autoplot from ggfortify, dplyr are available
 
 # print out pca_human
 
@@ -513,7 +511,7 @@ autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = N
 
 *** =solution
 ```{r}
-# pca_human, ggfortify, dplyr are available
+# pca_human, autoplot from ggfortify, dplyr are available
 
 # print out pca_human
 pca_human
@@ -569,7 +567,7 @@ autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = p
 
 *** =sample_code
 ```{r}
-# pca_human, pc_lab, and ggfortify are available
+# pca_human, pc_lab, and autoplot from ggfortify are available
 
 # draw a biplot
 autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = PC[1], ylab = PC[2])
@@ -578,7 +576,7 @@ autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = P
 
 *** =solution
 ```{r}
-# pca_human, pc_lab and ggfortify are available
+# pca_human, pc_lab and autoplot from ggfortify are available
 
 # draw a biplot
 autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2], loadings = T, loadings.label  = T, loadings.label.size = 4, label.alpha = 0.2)
