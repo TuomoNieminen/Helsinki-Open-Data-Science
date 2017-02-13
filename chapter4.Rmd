@@ -593,3 +593,141 @@ autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = p
 # test_error()
 success_msg("Awsome work!")
 ```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## It's tea time!
+
+The [Factominer](https://cran.r-project.org/web/packages/FactoMineR/index.html) package contains a `tea` dataset and it contains the answers of a questionnaire on tea consumption. 
+
+Let's dwell in teas for a bit!
+
+*** =instructions
+- Access the FactoMineR and dplyr packages and load the tea dataset
+- Create the `keep_columns` object. Then `select()` the columns from `tea` to create a new dataset. Save the new data as `tea_time`. 
+- Look at the summaries and structure of the `tea_time` data.
+- visu !
+
+*** =hint
+- hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+# access the FactoMineR and dplyr packages
+library(FactoMineR); library(dplyr)
+
+# load the tea dataset
+data(tea)
+
+# column names to keep in the dataset
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+
+# select the 'keep_columns' to create a new dataset
+tea_time <- select(tea, "change me!")
+
+# look at the summaries and structure of the data
+summary(tea_time)
+str(tea_time)
+
+# visualize the dataset
+#joku plot
+
+```
+
+*** =solution
+```{r}
+# access the FactoMineR and dplyr packages
+library(FactoMineR); library(dplyr)
+
+# load the tea dataset
+data(tea)
+
+# column names to keep in the dataset
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+
+# select the 'keep_columns' to create a new dataset
+tea_time <- select(tea, one_of(keep_columns))
+
+# look at the summaries and structure of the data
+summary(tea_time)
+str(tea_time)
+
+```
+
+*** =sct
+```{r}
+test_object("tea_time", incorrect_msg = "Did you create `tea_time`?")
+
+test_function("summary", args = "object",incorrect_msg = "Did you look at the summary of `tea_time`?")
+test_function("str", args = "object",incorrect_msg = "Did you look at the structure of `tea_time`?")
+
+# test_output_contains("", incorrect_msg = "")
+# 
+test_error()
+success_msg("Nice! Pour yourself a cup of tea and continue to the next exercise :) ")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1
+## Multiple Correspondence analysis
+
+Exercise info here
+
+*** =instructions
+- Do multiple correspondence analysis with the function `MCA()`. Give `tea_time` as the functions first argument. Note that the `MCA()` function visualizes the analysis by default, and the plots can be turned off with the argument `graph = FALSE`.
+- Look at the summary of the model.
+- Plot the variables of the model. You can either plot the variables or the individuals or both. You can change which one to plot with the `invisible` argument.
+- Adjust the code: add argument `habillage = "quali"` (how french!) to the plot. Do you notice what changes?
+
+*** =hint
+- See `?MCA` and/or `?plot.MCA`
+
+*** =pre_exercise_code
+```{r}
+library(FactoMineR); library(dplyr)
+data(tea)
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+tea_time <- select(tea, one_of(keep_columns))
+
+```
+
+*** =sample_code
+```{r}
+# tea_time is available
+
+# multiple correspondence analysis
+mca <- MCA("change me!", graph = FALSE)
+
+# summary of the model
+
+
+# visualize MCA
+plot("change me!", invisible=c("ind"))
+
+```
+
+*** =solution
+```{r}
+# tea_time is available
+
+# multiple correspondence analysis
+mca <- MCA(tea_time, graph = FALSE)
+
+# summary of the model
+summary(mca)
+
+# visualize MCA
+plot(mca, invisible=c("ind"), habillage = "quali")
+
+```
+
+*** =sct
+```{r}
+test_function("summary", args = "object",incorrect_msg = "Did you look at the summary of the MCA model?")
+test_object("mca", incorrect_msg = "Did you create the `mca` object?")
+test_error()
+success_msg("Dimensions are decreasing fewer by the minute! Good work!")
+```
