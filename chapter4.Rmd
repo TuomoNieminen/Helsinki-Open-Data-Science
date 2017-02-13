@@ -465,7 +465,7 @@ autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:65a759a329
 ## A biplot of PCA (1)
 
 Exercise info here
@@ -540,7 +540,7 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1
+--- type:NormalExercise lang:r xp:100 skills:1 key:99b67a82a1
 ## A biplot of PCA (2)
 
 Exercise info here
