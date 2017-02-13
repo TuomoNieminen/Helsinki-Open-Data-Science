@@ -23,7 +23,7 @@ library(dplyr)
 hd <- read.csv("human_development.csv", stringsAsFactors = F)
 gi <- read.csv("gender_inequality.csv", stringsAsFactors = F, na.strings = "..")
 # rename variables
-names(hd) <- c("HDI.Rank", "Country", "HDI", "Life.Expectancy", "Edu.Expect", "Edu.Mean", "GNI", "GNI.Minus.Rank")
+names(hd) <- c("HDI.Rank", "Country", "HDI", "Life.Expect", "Edu.Expect", "Edu.Mean", "GNI", "GNI.Minus.Rank")
 names(gi) <- c("GII.Rank", "Country", "GII", "Matern.Mortal", 
                 "Adolesc.Birth", "Parliament.F", "Edu2.F", "Edu2.M", 
                 "Labour.F", "Labour.M")
@@ -45,7 +45,7 @@ human <- read.table("human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",","",human$GNI) %>% as.numeric
 
 # exclude unneeded variables
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expect", "Life.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
 human <- dplyr::select(human, one_of(keep))
 
 # remove rows with NA values

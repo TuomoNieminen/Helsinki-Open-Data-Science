@@ -1,4 +1,4 @@
-"HDI.Rank","Country","HDI","Life.Expectancy","Edu.Expect","Edu.Mean","GNI","GNI.Minus.Rank","GII.Rank","GII","Matern.Mortal","Adolesc.Birth","Parliament.F","Edu2.F","Edu2.M","Labour.F","Labour.M","Edu2.FM","Labour.FM"
+"HDI.Rank","Country","HDI","Life.Expect","Edu.Expect","Edu.Mean","GNI","GNI.Minus.Rank","GII.Rank","GII","Matern.Mortal","Adolesc.Birth","Parliament.F","Edu2.F","Edu2.M","Labour.F","Labour.M","Edu2.FM","Labour.FM"
 1,"Norway",0.944,81.6,17.5,12.6,"64,992",5,1,0.067,4,7.8,39.6,97.4,96.7,61.2,68.7,1.00723888314374,0.890829694323144
 2,"Australia",0.935,82.4,20.2,13,"42,261",17,2,0.11,6,12.1,30.5,94.3,94.6,58.8,71.8,0.996828752642706,0.818941504178273
 3,"Switzerland",0.93,83,15.8,12.8,"56,431",6,3,0.028,6,1.9,28.5,95,96.6,61.8,74.9,0.98343685300207,0.825100133511348
