@@ -1,85 +1,83 @@
 ---
-title       : Dimensionality reduction techniques 
+  title       : Dimensionality reduction techniques 
 description : Principal component analysis (PCA), Correspondence analysis (CA)
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
 ## Meet the human data
 
-The human dataset is a combination of the indicators behind the human development index and the gender inequality index. The data originates from the United Nations Development Programme, see also [their data page](http://hdr.undp.org/en/content/human-development-index-hdi).  
+The human dataset is a combination of the indicators behind the human development index and the gender inequality index. The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview and detailed explanations see the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
 
-For a nice overview and detailed explanations see the following pdf:
-[Calculating the human development indices](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
-
-Some of the variable names have been shortened but the connections should be obvious.
+Some of the variable names have been shortened but the connections should be clear. F always stands for female and M for male.
 
 *** =instructions
-- instruction
+- Read the human data into memory
+- print out the (column) names of the data
+- look at the structure of the data
+- print out summaries of the variables in the data
 
 *** =hint
-- hint
+- Use `str()` to see structure
+- Use `summary()` to compute summaries
 
 *** =pre_exercise_code
 ```{r}
-human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 ```
 
 *** =sample_code
 ```{r}
-# human is available
 
-# look at a summary of human
-summary(human)
+# read the human data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 
-# look at the structure of GNI
-str(human$GNI)
+# look at the (column) names of human
+names(human)
 
-# use gsub() to remove ',' and then tranform GNI to numeric
-human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+# look at the structure of human
 
-# look at a summary of GNI
-summary(human$GNI)
+
+# compute summaries of the variables
+
+
 ```
 
 *** =solution
 ```{r}
-# human is available
+# read the human data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 
-# look at a summary of human
+# look at the (column) names of human
+names(human)
+
+# look at the structure of human
+str(human)
+
+# print out summaries of the variables
 summary(human)
-
-# look at the structure of GNI
-str(human$GNI)
-
-# replace ',' with '' (nothing) and then transform GNI to numeric
-human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
-
-# look at a summary of GNI
-summary(human$GNI)
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-# success_msg("Good work!")
+test_function("str", args = "object",incorrect_msg = "Please look at the structure of the human data frame")
+test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the human data frame")
+
+test_error()
+success_msg("Awsome, you have mastered an important first step of exploring your data!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:63c85a3cfc
 ## String manipulation
 
-A string is a combination of characters. There are quite a few functions in R that can be used for manipulating strings. Rhere are of course also many packages that do this. 
+Sometimes a variable is coded in a weird way that is not natural for R to understand. For example, numbers can sometimes be stored along with a comma to separate thousands. In these cases, R simply doesn't understand that such a combination represents a number, but rather treats the variable as a factor or a character.
 
-Two functions in base R stand out as especially useful when wrangling character data:
+In programming, a combination of characters is usually called a string. There are quite a few functions in Base R that can be used for manipulating characters, but there is also a more consintent and a bit simpler tidyverse package **stringr.**
 
-- `gsub()` : replace a pattern with something
-- `substr()`: extract a part of a string
 
 *** =instructions
-- instruction
+- Access the stringr package
+- Print out a summary of the Gross National Income (GNI) variable in `human`
+- Execute the sample code where the comma is removed from each value of GNI.
+- Adjust the code: Use the pipe operator (`%>%`) to convert the resulting vector to numeric with `as.numeric`.
 
 *** =hint
 - hint
@@ -91,53 +89,32 @@ human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/cour
 
 *** =sample_code
 ```{r}
+# human is available
 
-# create a string object
-abc <- "abcdefg"
+# access the stringr package
+library(stringr)
 
-# extract the characters from third to fifth
-substr(abc, start = 3, stop = 5)
+# look at the structure of the GNI variable in human
 
-# replace a pattern with something else
-gsub("cde", "123", abc)
 
-# create a date object
-today <- Sys.Date()
-
-# print out the date
-today
-
-# extract the year from 'today' with substr()
-substr(today, 1, 4)
-
-# change the month of 'today' to 'feb' with gsub()
-gsub("-.*-", "-feb-", today)
+# remove ',' from the GNI variable and convert it to numeric
+str_replace(human$GNI, ",", "")
 
 
 ```
 
 *** =solution
 ```{r}
-# create a string object
-abc <- "abcdefg"
+# human is available
 
-# extract the characters from third to fifth
-substr(abc, start = 3, stop = 5)
+# access the stringr package
+library(stringr)
 
-# replace a pattern with something else
-gsub("cde", "123", abc)
+# look at the structure of the GNI variable in human
+str(human$GNI)
 
-# create a date object
-today <- Sys.Date()
-
-# print out the date
-today
-
-# extract the year from 'today' with substr()
-substr(today, 1, 4)
-
-# change the month of 'today' to 'feb' with gsub()
-gsub("-.*-", "-feb-", today)
+# remove ',' from the GNI variable and convert to numeric
+str_replace(human$GNI, ",", "") %>% as.numeric
 
 
 ```
@@ -157,15 +134,18 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:99d98acadf
 ## Dealing with not available (NA) values
 
-In R, NA stands for not available, which means that the data point is missing. If a variable you wish to analyse contains missing values, there are usually two main options 
+In R, NA stands for not available, which means that the data point is missing. If a variable you wish to analyse contains missing values, there are usually two main options:
 
 - Remove the observations with missing values
-- Replace the missing values with actual values with an *imputation* technique.
+- Replace the missing values with actual values using an *imputation* technique.
 
 We will use the first option, which is the simplest solution.
 
 *** =instructions
-- instruction
+- Create a smaller version of the human data by selecting the variables defined in `keep`
+- Use complete.cases() on human to print out a logical "completeness indicator" vector
+- Print out the human data along with the completeness indicator vector. When is the indicator FALSE and when is it TRUE? hint: See the help page of `complete.cases()`.
+- use `filter()` from **dplyr** to filter out all the rows with any `NA` values. Right now, TRUE is simply recycled so that nothing is filtered out.
 
 *** =hint
 - hint
@@ -175,32 +155,43 @@ We will use the first option, which is the simplest solution.
 # read data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
-
 ```
 
 *** =sample_code
 ```{r}
 # human is available
 
-# exclude unneeded variables
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+# keep selected variables
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
 human <- select(human, one_of(keep))
 
-# remove rows with NA values
-human <- filter(human, complete.cases(human))
+# use complete.cases() on human
+
+
+# print out the data along with a completeness indicator
+cbind(human , complete = "change me!")
+
+# remove rows with NA values using filter() from dplyr
+human_ <- dplyr::filter(human, TRUE)
 
 ```
 
 *** =solution
 ```{r}
-# human is available
+# human (with new GNI) is available
 
-# exclude unneeded variables
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+# keep selected variables
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
 human <- select(human, one_of(keep))
 
+# use complete.cases() on human
+complete.cases(human)
+
+# print out the data along with a completeness indicator
+cbind(human , complete = complete.cases(human))
+
 # remove rows with NA values
-human <- filter(human, complete.cases(human))
+human_ <- filter(human, complete.cases(human))
 
 ```
 
@@ -218,20 +209,32 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:17ccfcda8e
 ## Excluding observations
 
-Besides missing values, there might be other reasons to exclude observations. In our data, there are a few data points that are simply linear combinations of other observations.
+Besides missing values, there might be other reasons to exclude observations. In our human data, there are a few data points which have been computed from the other observations. We want to remove them before further analysis.
+
+The basic way in R to reference the rows (or columns) of a data frame is to use brackets (`[,]`) with indices or names. The part before the comma references rows and the part after the comma columns. If either is left empty it means that everything is selected. In the examples below, `df` is some data frame.
+
+```
+df[,] # identical to df
+df[1:5, ] # first five rows of df
+df[, c(2, 5)] # second and fifth columns of df
+```
 
 *** =instructions
-- instruction
+- Define the rownames in human by the Country column
+- Use `tail()` to print out the last 10 observations of human (hint: `?tail`)
+- Create object n_last
+- Create the data frame `human_` by selecting the rows from the 1st to `n_last` from `human`.
 
 *** =hint
-- hint
+- Use `1:n_last` to select rows from 1 to `n_last`
 
 *** =pre_exercise_code
 ```{r}
+library(dplyr)
 # read data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
 human <- select(human, one_of(keep))
 human <- filter(human, complete.cases(human))
 
@@ -239,29 +242,37 @@ human <- filter(human, complete.cases(human))
 
 *** =sample_code
 ```{r}
+# human (without NA) is available
+
 # add countries as rownames
 rownames(human) <- human$Country
 
 # look at the last 10 observations
-tail(human, 10)
 
-# keep everything but the last 7 observations
+
+# last indice we want to keep
 n_last <- nrow(human) - 7
-human <- human[1:n_last, ]
+
+# choose everything until the last 7 observations
+human_ <- human["change me!", ]
 
 ```
 
 *** =solution
 ```{r}
+# human (without NA) is available
+
 # add countries as rownames
 rownames(human) <- human$Country
 
 # look at the last 10 observations
 tail(human, 10)
 
-# keep everything but the last 7 observations
+# last indice we want to keep
 n_last <- nrow(human) - 7
-human <- human[1:n_last, ]
+
+# choose everything until the last 7 observations
+human_ <- human[1:n_last, ]
 
 ```
 
@@ -277,7 +288,7 @@ success_msg("Good work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b94de4cad1
-## Exploring the countries of the world
+## Exploring the human countries
 
 Exercise info here
 
@@ -289,45 +300,45 @@ Exercise info here
 
 *** =pre_exercise_code
 ```{r}
+library(dplyr)
 # read data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Expected", "GNI", "Maternal.Mortality", "Percent.Parliament")
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
 human <- select(human, one_of(keep))
 human <- filter(human, complete.cases(human))
 rownames(human) <- human$Country
 n_last <- nrow(human) - 7
 human <- human[1:n_last, ]
-
 ```
 
 *** =sample_code
 ```{r}
-# human is available
+# human (with changes) and dplyr are available
 
 # remove the Country variable
-human <- select(human, -Country)
+human_ <- select(human, -Country)
 
 # Access GGally
 library(GGally)
 
 # draw a generalised pairs plot of the data
-ggpairs(human)
+
 
 ```
 
 *** =solution
 ```{r}
-# human is available
+# human (with changes) and dplyr are available
 
 # remove the Country variable
-human <- select(human, -Country)
+human_ <- select(human, -Country)
 
 # Access GGally
 library(GGally)
 
 # draw a generalised pairs plot of the data
-ggpairs(human)
+ggpairs(human_)
 
 ```
 
@@ -343,7 +354,7 @@ success_msg("Good work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
-## Principal component analysis
+## PCA with R
 
 
 *** =instructions
@@ -359,7 +370,7 @@ human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/cour
 
 *** =sample_code
 ```{r}
-# human is available
+# human (with changes) is available
 
 # center
 human <- scale(human)
@@ -375,6 +386,8 @@ autoplot(pc, data = human_, label = T, loadings =T, loadings.label  = T, label.s
 
 *** =solution
 ```{r}
+# human (with changes) is available
+
 # center
 human <- scale(human)
 
