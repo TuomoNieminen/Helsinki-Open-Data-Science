@@ -65,3 +65,5 @@ Please note that the following slides are drafts and subject to changes.
 ```{r child = "dimensionality_reduction.md"}
 ```
 
+```{r child = "mca.md"}
+```
