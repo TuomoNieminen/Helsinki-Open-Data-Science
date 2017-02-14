@@ -1,4 +1,4 @@
-"Edu2.FM","Labour.FM","Edu.Expect","Life.Expect","GNI","Matern.Mortal","Adolesc.Birth","Parliament.F"
+"Edu2.FM","Labour.FM","Edu.Exp","Life.Exp","GNI","Mat.Mort","Young.Birth","Parliam.F"
 "Norway",1.00723888314374,0.890829694323144,17.5,81.6,64992,4,7.8,39.6
 "Australia",0.996828752642706,0.818941504178273,20.2,82.4,42261,6,12.1,30.5
 "Switzerland",0.98343685300207,0.825100133511348,15.8,83,56431,6,1.9,28.5
