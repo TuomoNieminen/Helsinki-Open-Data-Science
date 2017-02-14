@@ -20,7 +20,8 @@ autosize: true
 - Analyses the pattern of relationships of several categorical
 variables
 - Generalization of PCA and a extension of correspondence analysis (CA)
-- Deals with categorical variables, but continuous ones can be used as background (sublimentary) variables
+- Deals with categorical variables, but continuous ones can be used as background (supplementary) variables
+- Can be used with qualitative data, so there are little assumptions about the variables or the data in general. MCA uses frequencies and you can count those even from text based datasets.
 
 </font>
 
@@ -33,9 +34,10 @@ autosize: true
 
 - For the categorical variables, you can either use the [indicator matrix or the Burt matrix](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis#As_an_extension_of_correspondences_analysis) in the analysis
     - The Indicator matrix contains all the levels of categorical variables as a binary variables (1 = belongs to category, 0 = if doesn't)
-    - Burt matrix is a two-way cross tabulations between all the variables in the dataset
-- tästä jotain lisää ? yhteys CA:han ?
-- ...
+    - Burt matrix is a matrix of two-way cross-tabulations between all the variables in the dataset
+- The general aim is to condense and present the information of the cross-tabulations in a clear graphical form
+- Correspondence Analysis (a special case of MCA) works similarly with a cross-table of only two categorical variables
+- There are also several other variations of the CA methods
 
 - And next, let's look how the MCA outputs look in R!
 
@@ -174,7 +176,7 @@ autosize: true
 <font size=5>
 
 Visualizing MCA:
-- You can plot for variables, individuals and background (sublimentary variables) separately or you can draw them in the same plot. 
+- You can plot for variables, individuals and background (supplementary variables) separately or you can draw them in the same plot. 
 - `plot.MCA()` function in R (from FactoMineR) has a lot of options for plotting
 - See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
 - Let's look at a minimal example on the next slide.
@@ -193,6 +195,7 @@ left: 50%
     - The MCA biplot is a good visualization to see the possible variable patterns
     - The distance between variable categories gives a measure of their similarity
     - For example Label2 and Name2 are more similar than Label2 and Level2 and Label3 is different from all the other categories
+
 
 </font>
 
