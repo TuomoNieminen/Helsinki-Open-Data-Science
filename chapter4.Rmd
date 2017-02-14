@@ -551,7 +551,9 @@ success_msg("Very nice work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:51411e6d45
 ## It's tea time!
 
-The [Factominer](https://cran.r-project.org/web/packages/FactoMineR/index.html) package contains a `tea` dataset and it contains the answers of a questionnaire on tea consumption. 
+The [Factominer](https://cran.r-project.org/web/packages/FactoMineR/index.html) package contains functions dedicated to multivariate explanatory data analysis. It contains for example methods *(Multiple) Correspondence analysis* , *Multiple Factor analysi*s as well as PCA.
+
+In the next exercises we are going to use the `tea` dataset. The dataset contains the answers of a questionnaire on tea consumption. 
 
 Let's dwell in teas for a bit!
 
@@ -629,9 +631,9 @@ success_msg("Nice! Pour yourself a cup of tea and continue to the next exercise 
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:42c9b3c01b
-## Multiple Correspondence analysis
+## Multiple Correspondence Analysis
 
-Exercise info here
+[Multiple Correspondence Analysis](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis) (MCA) is a method to analyze qualitative data and it is an extension of Correspondence analysis (CA). MCA can be used to detect patterns or structure in the data as well as in dimension reduction.
 
 *** =instructions
 - Do multiple correspondence analysis with the function `MCA()`. Give `tea_time` as the functions first argument. Note that the `MCA()` function visualizes the analysis by default, and the plots can be turned off with the argument `graph = FALSE`.
