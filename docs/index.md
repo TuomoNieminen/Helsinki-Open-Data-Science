@@ -826,9 +826,16 @@ PCA is a mathematical tool, not a statistical model, which is why linear algebra
 
 
 
-Multiple Correspondence analysis
+Multiple Correspondence Analysis
 ========================================================
 type: prompt
+incremental: false
+autosize: true
+
+
+
+Multiple Correspondence Analysis
+========================================================
 incremental: false
 autosize: true
 
@@ -842,14 +849,16 @@ variables
 
 </font>
 
-Multiple Correspondence analysis
+Multiple Correspondence Analysis
 ========================================================
 incremental: false
 autosize: true
 
 <font size=6>
 
-- In the analysis, you can either use the [indicator or the Burt matrix](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis#As_an_extension_of_correspondences_analysis). 
+- For the categorical variables, you can either use the [indicator matrix or the Burt matrix](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis#As_an_extension_of_correspondences_analysis) in the analysis
+    - The Indicator matrix contains all the levels of categorical variables as a binary variables (1 = belongs to category, 0 = if doesn't)
+    - Burt matrix is a two-way cross tabulations between all the variables in the dataset
 - tästä jotain lisää ? yhteys CA:han ?
 - ...
 
@@ -857,7 +866,7 @@ autosize: true
 
 </font>
 
-MCA summary
+MCA summary(1)
 ========================================================
 incremental: false
 autosize: true
@@ -865,10 +874,10 @@ left: 40%
 
 <font size=5>
 
-Output of summary contains...
+Output of MCA summary contains...
 
 - **Eigenvalues**: the variances and the percentage of variances retained by each dimension
-- **Individuals**: the individuals coordinates, the contribution (ctr) and the cos2 (cosini squared, quality of representation) on the first two dimensions.
+- **Individuals**: the individuals coordinates, the individuals contribution (%) on the dimension and the cos2 (the squared correlations) on the dimensions.
 
 </font>
 
@@ -926,9 +935,9 @@ left: 40%
 
 <font size=5>
 
-Output of summary contains...
+Output of MCA summary contains...
 
-- **Categories**: the coordinates of the variable categories, the contribution (ctr), the cosini squared and v.test value. The v.test follows normal distribution: if the value is below/above $\pm$ 1.96, the coordinate is significantly different from zero.
+- **Categories**: the coordinates of the variable categories, the contribution (%), the cos2 (the squared correlations) and v.test value. The v.test follows normal distribution: if the value is below/above $\pm$ 1.96, the coordinate is significantly different from zero.
 - **Categorical variables**: the squared correlation between each variable and the dimensions. If the value is close to one it indicates a strong link with the variable and dimension.
 
 </font>
@@ -982,7 +991,7 @@ Var3   | 0.553 0.017 0.078 |
 </font>
 
 
-MCA plot(1)
+MCA biplot(1)
 ========================================================
 incremental: false
 autosize: true
@@ -990,16 +999,16 @@ left: 65%
 
 <font size=6>
 
-MCA plot:
+Visualizing MCA:
 - You can plot for variables, individuals and background (sublimentary variables) separately or you can draw them in the same plot. 
 - `plot.MCA()` function in R (from FactoMineR) has a lot of options for plotting
-- Let's see a minimal example
+- See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
+- Let's look at a minimal example on the next slide.
 
-See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
 
 </font>
 
-MCA plot(2)
+MCA biplot(2)
 ========================================================
 incremental: false
 autosize: true
@@ -1007,10 +1016,10 @@ left: 65%
 
 <font size=6>
 
-- On the right we have MCA factor map, where are variables drawn on the first two dimensions
-    - On the plot you can see correlations of the variables and the dimensions (The squared correlations of variables and dimensions are the coordinates)
-    - The distance between column points gives a measure of their similarity
-    - For example Label3 correlates with 2. dimension, but Level2 has little effect on either of the dimensions. Label2 and Name2 are more similar than Label2 and Level2.
+- On the right we have MCA factor map (biplot), where are variables drawn on the first two dimensions
+    - The MCA biplot is a good visualization to see the possible variable patterns
+    - The distance between variable categories gives a measure of their similarity
+    - For example Label2 and Name2 are more similar than Label2 and Level2 and Label3 is different from all the other categories
 
 </font>
 
