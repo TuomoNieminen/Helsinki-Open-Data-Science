@@ -10,7 +10,7 @@ The human dataset is a combination of the indicators behind the human developmen
 Some of the variable names have been shortened but the connections should be clear. "F" always stands for female and "M" for male. There are two new variables:
 
 - **Edu2.FM**: The ratio of the percentages of female and male populations with secondary education (Edu2.F / Edu2.M)
-- **Labour.FM**: The ratio of the percentages of female and male populations in the labour force. (Labour.F / Labour.M)
+- **Labo.FM**: The ratio of the percentages of female and male populations in the labour force. (Labo.F / Labo.M)
 
 *** =instructions
 - Read the human data into memory
@@ -171,7 +171,7 @@ human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
 # human with modified GNI and dplyr are available
 
 # columns to keep
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mort", "Young.Birth", "Parliam.F")
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
 
 # select the 'keep' columns
 human <- select(human, one_of(keep))
@@ -180,7 +180,7 @@ human <- select(human, one_of(keep))
 complete.cases(human)
 
 # print out the data along with a completeness indicator
-data.frame(human, complete = "change me!")
+data.frame(human[-1], comp = "change me!")
 
 # filter out all rows with NA values
 human_ <- filter(human, TRUE)
@@ -192,7 +192,7 @@ human_ <- filter(human, TRUE)
 # human with modified GNI and dplyr are available
 
 # columns to keep
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
 
 # select the 'keep' columns
 human <- select(human, one_of(keep))
@@ -200,8 +200,8 @@ human <- select(human, one_of(keep))
 # print out a completeness indicator of the 'human' data
 complete.cases(human)
 
-# print out the data along with a completeness indicator
-data.frame(human , complete = complete.cases(human))
+# print out the data along with a completeness indicator as the last column
+data.frame(human[-1] , comp = complete.cases(human))
 
 # filter out all rows with NA values
 human_ <- filter(human, complete.cases(human))
@@ -248,7 +248,7 @@ library(dplyr)
 # read data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
 human <- select(human, one_of(keep))
 human <- filter(human, complete.cases(human))
 
@@ -325,7 +325,7 @@ library(dplyr)
 # read data
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
 human <- select(human, one_of(keep))
 human <- filter(human, complete.cases(human))
 rownames(human) <- human$Country
@@ -405,7 +405,7 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 
 
 *** =hint
-- hint
+- Use the `summary() function to compute summeries of the variables in a data frame
 
 *** =pre_exercise_code
 ```{r}
