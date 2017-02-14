@@ -70,13 +70,13 @@ success_msg("Awsome, you have mastered an important first step!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:63c85a3cfc
 ## String manipulation
 
-Sometimes a variable is coded in a way that is not natural for R to understand. For example, large integers can sometimes be coded with a comma to separate thousands (1,000 == 1000). In these cases, R interprets the variable as a factor or a character. 
+Sometimes a variable is coded in a way that is not natural for R to understand. For example, large integers can sometimes be coded with a comma to separate thousands (1,000 == 1000). In these cases, R interprets the variable as a **factor** or a **character.** 
 
 In some cases you could use the `dec` argument in `read.table()` to get around this, but if the data also includes decimals separated by a dot, this is not an option. To get rid of the unwanted commas, we need *string manipulation*.
 
-In programming, a combination of characters is usually called a *string*. In R, strings are of the basic type *character* and they can be created by using quotation marks.  
+In programming, a combination of characters is usually called a string. In R, strings are of the basic type character and they can be created by using quotation marks or specific functions.  
 
-There are quite a few functions in Base R that can be used for manipulating the character types, but there is also a bit more consintent and simple tidyverse package **stringr.**
+There are quite a few functions in Base R that can be used to manipulate characters, but there is also a bit more consintent and simple tidyverse package **stringr.**
 
 
 *** =instructions
@@ -105,7 +105,7 @@ library(stringr)
 # look at the structure of the GNI column in 'human'
 
 
-# remove the commas from GNI and convert to numeric
+# remove the commas from GNI and convert it to numeric
 str_replace(human$GNI, pattern=",", replace ="")
 
 
