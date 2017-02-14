@@ -832,6 +832,7 @@ type: prompt
 incremental: false
 autosize: true
 
+![plot of chunk unnamed-chunk-2](mca-figure/unnamed-chunk-2-1.png)
 
 
 Multiple Correspondence Analysis
@@ -986,7 +987,7 @@ Var2   | 0.079 0.154 0.741 |
 Var3   | 0.553 0.017 0.078 |
 ```
 
-[Read more](http://www.sthda.com/english/wiki/multiple-correspondence-analysis-essentials-interpretation-and-application-to-investigate-the-associations-between-categories-of-multiple-qualitative-variables-r-software-and-data-mining)
+Read more from [here](http://www.sthda.com/english/wiki/multiple-correspondence-analysis-essentials-interpretation-and-application-to-investigate-the-associations-between-categories-of-multiple-qualitative-variables-r-software-and-data-mining) and [here](http://factominer.free.fr/classical-methods/multiple-correspondence-analysis.html)
 
 </font>
 
@@ -1010,7 +1011,7 @@ MCA biplot(2)
 ========================================================
 incremental: false
 autosize: true
-left: 40%
+left: 50%
 
 <font size=5>
 
@@ -1023,6 +1024,5 @@ left: 40%
 
 ***
 
-![plot of chunk unnamed-chunk-4](mca-figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-5](mca-figure/unnamed-chunk-5-1.png)
 
-[Read more](http://factominer.free.fr/classical-methods/multiple-correspondence-analysis.html)
