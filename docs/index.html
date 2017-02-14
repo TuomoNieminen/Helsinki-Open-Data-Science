@@ -1947,7 +1947,14 @@ Proportion of trace:
 
 </section>
 <section data-state="prompt" data-transition="default" data-transition-speed="default">
-<h3>Multiple Correspondence analysis</h3>
+<h3>Multiple Correspondence Analysis</h3>
+<div class="slideContent" >
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>Multiple Correspondence Analysis</h3>
 <div class="slideContent" >
 <p><font size=6></p>
 
@@ -1965,12 +1972,17 @@ variables</li>
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>Multiple Correspondence analysis</h3>
+<h3>Multiple Correspondence Analysis</h3>
 <div class="slideContent" >
 <p><font size=6></p>
 
 <ul>
-<li>In the analysis, you can either use the <a href="https://en.wikipedia.org/wiki/Multiple_correspondence_analysis#As_an_extension_of_correspondences_analysis">indicator or the Burt matrix</a>. </li>
+<li>For the categorical variables, you can either use the <a href="https://en.wikipedia.org/wiki/Multiple_correspondence_analysis#As_an_extension_of_correspondences_analysis">indicator matrix or the Burt matrix</a> in the analysis
+
+<ul>
+<li>The Indicator matrix contains all the levels of categorical variables as a binary variables (1 = belongs to category, 0 = if doesn&#39;t)</li>
+<li>Burt matrix is a two-way cross tabulations between all the variables in the dataset</li>
+</ul></li>
 <li>tästä jotain lisää ? yhteys CA:han ?</li>
 <li><p>&hellip;</p></li>
 <li><p>And next, let&#39;s look how the MCA outputs look in R!</p></li>
@@ -1982,15 +1994,15 @@ variables</li>
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>MCA summary</h3>
+<h3>MCA summary(1)</h3>
 <div class="column column1 slideContent" style="width: 38%;" >
 <p><font size=5></p>
 
-<p>Output of summary contains&hellip;</p>
+<p>Output of MCA summary contains&hellip;</p>
 
 <ul>
 <li><strong>Eigenvalues</strong>: the variances and the percentage of variances retained by each dimension</li>
-<li><strong>Individuals</strong>: the individuals coordinates, the contribution (ctr) and the cos2 (cosini squared, quality of representation) on the first two dimensions.</li>
+<li><strong>Individuals</strong>: the individuals coordinates, the individuals contribution (%) on the dimension and the cos2 (the squared correlations) on the dimensions.</li>
 </ul>
 
 <p></font></p>
@@ -2051,10 +2063,10 @@ Var3   | 0.553 0.017 0.078 |
 <div class="column column1 slideContent" style="width: 38%;" >
 <p><font size=5></p>
 
-<p>Output of summary contains&hellip;</p>
+<p>Output of MCA summary contains&hellip;</p>
 
 <ul>
-<li><strong>Categories</strong>: the coordinates of the variable categories, the contribution (ctr), the cosini squared and v.test value. The v.test follows normal distribution: if the value is below/above \( \pm \) 1.96, the coordinate is significantly different from zero.</li>
+<li><strong>Categories</strong>: the coordinates of the variable categories, the contribution (%), the cos2 (the squared correlations) and v.test value. The v.test follows normal distribution: if the value is below/above \( \pm \) 1.96, the coordinate is significantly different from zero.</li>
 <li><strong>Categorical variables</strong>: the squared correlation between each variable and the dimensions. If the value is close to one it indicates a strong link with the variable and dimension.</li>
 </ul>
 
@@ -2114,19 +2126,18 @@ Var3   | 0.553 0.017 0.078 |
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>MCA plot(1)</h3>
+<h3>MCA biplot(1)</h3>
 <div class="slideContent" >
 <p><font size=6></p>
 
-<p>MCA plot:</p>
+<p>Visualizing MCA:</p>
 
 <ul>
 <li>You can plot for variables, individuals and background (sublimentary variables) separately or you can draw them in the same plot. </li>
 <li><code>plot.MCA()</code> function in R (from FactoMineR) has a lot of options for plotting</li>
-<li>Let&#39;s see a minimal example</li>
+<li>See a <a href="https://www.youtube.com/watch?v=reG8Y9ZgcaQ">video</a> of MCA (plotting options start at 5:36).</li>
+<li>Let&#39;s look at a minimal example on the next slide.</li>
 </ul>
-
-<p>See a <a href="https://www.youtube.com/watch?v=reG8Y9ZgcaQ">video</a> of MCA (plotting options start at 5:36).</p>
 
 <p></font></p>
 
@@ -2134,17 +2145,17 @@ Var3   | 0.553 0.017 0.078 |
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>MCA plot(2)</h3>
+<h3>MCA biplot(2)</h3>
 <div class="column column1 slideContent" style="width: 63%;" >
 <p><font size=6></p>
 
 <ul>
-<li>On the right we have MCA factor map, where are variables drawn on the first two dimensions
+<li>On the right we have MCA factor map (biplot), where are variables drawn on the first two dimensions
 
 <ul>
-<li>On the plot you can see correlations of the variables and the dimensions (The squared correlations of variables and dimensions are the coordinates)</li>
-<li>The distance between column points gives a measure of their similarity</li>
-<li>For example Label3 correlates with 2. dimension, but Level2 has little effect on either of the dimensions. Label2 and Name2 are more similar than Label2 and Level2.</li>
+<li>The MCA biplot is a good visualization to see the possible variable patterns</li>
+<li>The distance between variable categories gives a measure of their similarity</li>
+<li>For example Label2 and Name2 are more similar than Label2 and Level2 and Label3 is different from all the other categories</li>
 </ul></li>
 </ul>
 
@@ -2156,7 +2167,7 @@ Var3   | 0.553 0.017 0.078 |
 <div class="column column2 slideContent" style="width: 33%;" >
 
 
-<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-4"/></p>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-4"/></p>
 
 <p><a href="http://factominer.free.fr/classical-methods/multiple-correspondence-analysis.html">Read more</a></p>
 
