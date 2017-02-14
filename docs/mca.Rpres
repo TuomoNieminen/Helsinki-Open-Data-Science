@@ -110,9 +110,8 @@ MCA biplot(1)
 ========================================================
 incremental: false
 autosize: true
-left: 65%
 
-<font size=6>
+<font size=5>
 
 Visualizing MCA:
 - You can plot for variables, individuals and background (sublimentary variables) separately or you can draw them in the same plot. 
@@ -120,16 +119,15 @@ Visualizing MCA:
 - See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
 - Let's look at a minimal example on the next slide.
 
-
 </font>
 
 MCA biplot(2)
 ========================================================
 incremental: false
 autosize: true
-left: 65%
+left: 40%
 
-<font size=6>
+<font size=5>
 
 - On the right we have MCA factor map (biplot), where are variables drawn on the first two dimensions
     - The MCA biplot is a good visualization to see the possible variable patterns
