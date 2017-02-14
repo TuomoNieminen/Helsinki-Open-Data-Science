@@ -97,13 +97,14 @@ incremental: false
 autosize: true
 left: 65%
 
+<font size=6>
 MCA plot:
 - You can plot for variables, individuals and background (sublimentary variables) separately or you can draw them in the same plot. 
 - `plot.MCA()` function in R (from FactoMineR) has a lot of options for plotting
 - Let's see a minimal example
 
 See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
-
+</font>
 
 MCA plot(2)
 ========================================================
@@ -111,10 +112,13 @@ incremental: false
 autosize: true
 left: 65%
 
+<font size=6>
 - On the right we have MCA factor map, where are variables drawn on the first two dimensions
     - On the plot you can see correlations of the variables and the dimensions (The squared correlations of variables and dimensions are the coordinates)
     - The distance between column points gives a measure of their similarity
     - For example Label3 correlates with 2. dimension, but Level2 has little effect on either of the dimensions. Label2 and Name2 are more similar than Label2 and Level2.
+
+</font>
 
 ***
 
