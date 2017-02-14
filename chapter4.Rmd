@@ -9,10 +9,7 @@ Welcome to the *Dimensionality Reduction* chapter.
 
 In this chapter we will be using the `human` dataset to introduce Principal Components Analysis (PCA). The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview see also the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
 
-Most of the variable names have been shortened. See the meta file of the modified data [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/datasets/human_meta.txt). There are two new variables:
-
-- **Edu2.FM**: The ratio of the proportions of females and males with at least secondary education (Edu2.F / Edu2.M)
-- **Labo.FM**: The ratio of the proportions of females and males in the labour force. (Labo.F / Labo.M)
+Most of the variable names have been shortened and two new variables have been computed. See the meta file for the modified data [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/datasets/human_meta.txt) for descriptions.
 
 *** =instructions
 - Read the `human` data into memory
@@ -66,7 +63,7 @@ test_function("str", args = "object",incorrect_msg = "Please look at the structu
 test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the human data frame")
 
 test_error()
-success_msg("Awsome, you have mastered an important first step!")
+success_msg("Awsome, you have mastered an important first step of data analysis!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:63c85a3cfc
@@ -88,7 +85,8 @@ In R, strings are of the basic type character and they can be created by using q
 *** =hint
 - Use `$` to access a single column of a data frame.
 - Use `str()` to look at the structure of any object
-- Add the pipe and `as.numeric` to the row where `str_replace()` is used
+- Add the pipe operator and `as.numeric` to the row where `str_replace()` is used
+- The previous chapters have more information and examples related to the pipe.
 
 *** =pre_exercise_code
 ```{r}
@@ -130,6 +128,7 @@ str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
 ```{r}
 
 test_function("str", args = "object",incorrect_msg = "Please look at the structure of GNI in human")
+test_pipe(absent_msg = "Did you use the pipe operator?")
 test_output_contains("str_replace(human$GNI, pattern=',', replace ='') %>% as.numeric", incorrect_msg = "Please adjust the code to convert the gni variable to numeric and print out the result")
  
 test_error()
