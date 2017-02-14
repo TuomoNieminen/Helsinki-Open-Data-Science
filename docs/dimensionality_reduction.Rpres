@@ -2,14 +2,14 @@ Dimensionality Reduction Techniques
 ========================================================
 type: sub-section
 
-For IODS by Tuomo Nieminen
+For IODS by Tuomo Nieminen & Emma Kämäräinen
 
 <br>
 <br>
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/dimensionality_reduction.Rpres)
+Powered by RMarkdown. The code for this presentation is  [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/dimensionality_reduction.Rpres) and [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/mca.Rpres)
 
 ```{r, include = F}
 # setup
