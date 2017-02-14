@@ -212,8 +212,6 @@ human_ <- filter(human, complete.cases(human))
 ```{r}
 
 test_output_contains("complete.cases(human)")
-test_output_contains("cbind(human , complete = complete.cases(human))", 
-                     incorrect_msg = "Please print out the human data along with the completeness indicators")
 test_object("human_", incorrect_msg = "Please filter out the incomplete observations from the human data and create object `human_`")
 
 test_error()
