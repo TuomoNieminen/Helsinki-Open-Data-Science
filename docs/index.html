@@ -1812,14 +1812,14 @@ Proportion of trace:
 <section data-state="sub-section" data-transition="default" data-transition-speed="default">
 <h2>Dimensionality Reduction Techniques</h2>
 <div class="slideContent" >
-<p>For IODS by Tuomo Nieminen</p>
+<p>For IODS by Tuomo Nieminen &amp; Emma Kämäräinen</p>
 
 <p><br>
 <br>
 <br>
 <br></p>
 
-<p>Powered by RMarkdown. The code for this presentation is  <a href="https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/dimensionality_reduction.Rpres">here.</a></p>
+<p>Powered by RMarkdown. The code for this presentation is  <a href="https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/dimensionality_reduction.Rpres">here</a> and <a href="https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/mca.Rpres">here</a></p>
 
 </div>
 
@@ -1848,7 +1848,7 @@ Proportion of trace:
 <p>In statistical analysis, one can think of <em>dimensionality</em> as the number of variables (features) related to each observation in the data.</p>
 
 <ul>
-<li>If each observation is measured by \( d \) number of features, then the data is \( d \) dimensional. Each observation needs \( d \) points to define it&#39;s location in a mathematical space.</li>
+<li>If each observation is measured by \( d \) number of features, then the data is \( d \) dimensional. Each observation needs \( d \) points to define it&#39;s location in a <strong>mathematical space</strong>.</li>
 <li>If there are a lot of features, some of them can relate to the same underlying dimensions (not directly measured)</li>
 <li>Some dimensions may be stronger and some weaker, they are not equally important</li>
 </ul>
@@ -1862,8 +1862,8 @@ Proportion of trace:
 <p>The original variables of high dimensional data might contain &ldquo;too much&rdquo; information (and noise or some other random error) for representing the underlying phenomenom of interest.</p>
 
 <ul>
-<li>A solution is to reduce the number of dimensions and focus only on the most essential dimensions extracted from the data</li>
-<li>In practise we can <em>transform</em> the data and use only a few <em>principal components</em> for visualisation and/or analysis</li>
+<li>A solution is to reduce the number of dimensions and focus only on the <strong>most essential dimensions</strong> extracted from the data</li>
+<li>In practise we can <em>transform</em> the data and use only a few <strong>principal components</strong> for visualisation and/or analysis</li>
 <li>Hope is that the variance along a small number of principal components provides a reasonable characterization of the complete data set</li>
 </ul>
 
@@ -1877,8 +1877,8 @@ Proportion of trace:
 
 <ul>
 <li>Principal Component Analysis (PCA) is a statistical procedure which does the same thing</li>
-<li>LDA can also be considered as a dimensionality reduction technique. The visualisation techniques related to PCA and LDA are similar (biplot).</li>
-<li>Unlike LDA, PCA has no criteria or target variable for the reduction. In machine learning vocabulary, PCA may therefore be called an <em>unsupervised</em> method.</li>
+<li>LDA can also be considered as a dimensionality reduction technique. The visualisation techniques related to PCA and LDA are similar (<strong>biplot</strong>).</li>
+<li>Unlike LDA, <strong>PCA has no criteria or target variable</strong> for the reduction. In machine learning vocabulary, PCA may therefore be called an <strong>unsupervised</strong> method.</li>
 </ul>
 
 </div>
@@ -1887,12 +1887,12 @@ Proportion of trace:
 <section data-transition="default" data-transition-speed="default">
 <h3>Principal Component Analysis (PCA)</h3>
 <div class="slideContent" >
-<p>In PCA, the data is first <em>transformed</em> to a new space with \( \leq \) number of dimensions (new features). These new features are called the <strong>principal components</strong>  and they always have the following properties:</p>
+<p>In PCA, the data is first <em>transformed</em> to a new space with equal or less number of dimensions (new features). These new features are called the <strong>principal components</strong>.  They always have the following properties:</p>
 
 <ul>
 <li>The 1st principal component captures the maximum amount of variance from the features in the original data.</li>
 <li>The 2nd principal component is orthogonal to the first and it captures the maximum amount of variability left.</li>
-<li>The same is true for each principal component. They are <strong>all uncorreleated and each is less important than the previous one</strong>, in terms of captured variance.</li>
+<li>The same is true for each principal component. They are all <strong>uncorreleated</strong> and each is less important than the previous one, in terms of captured variance.</li>
 </ul>
 
 </div>
@@ -1901,7 +1901,7 @@ Proportion of trace:
 <section data-transition="default" data-transition-speed="default">
 <h3>Principal Component Analysis (PCA) (2)</h3>
 <div class="column column1 slideContent" >
-<p>Given the properties of the principal components, we can simply <strong>choose the first few principal components</strong> to represent our data.</p>
+<p>Given the properties of the principal components, we can simply choose the first few principal components to represent our data.</p>
 
 <p>This will give us uncorrelated variables which capture the maximum amount of variation in the data!</p>
 
@@ -1925,7 +1925,7 @@ Proportion of trace:
 
 <ul>
 <li>PCA is sensitive to the relative scaling of the original features. PCA assumes that features with larger variance are more important than features with smaller variance.</li>
-<li>If higher measurements do not correspond to higher importance/effect in your data, the features should be standardized before performing PCA</li>
+<li>If higher measurements do not correspond to higher importance/effect in your data, the features should be <strong>standardized</strong> before performing PCA</li>
 <li>PCA is powerful at encapsulating correlations between the original features into a smaller number of uncorrelated dimensions</li>
 </ul>
 
