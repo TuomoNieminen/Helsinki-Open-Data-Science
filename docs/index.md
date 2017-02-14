@@ -833,6 +833,7 @@ incremental: false
 autosize: true
 
 <font size=6>
+
 - Dimensionality reduction method
 - Analyses the pattern of relationships of several categorical
 variables
@@ -847,6 +848,7 @@ incremental: false
 autosize: true
 
 <font size=6>
+
 - In the analysis, you can either use the [indicator or the Burt matrix](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis#As_an_extension_of_correspondences_analysis). 
 - tästä jotain lisää ? yhteys CA:han ?
 - ...
@@ -862,6 +864,7 @@ autosize: true
 left: 40%
 
 <font size=5>
+
 Output of summary contains...
 
 - **Eigenvalues**: the variances and the percentage of variances retained by each dimension
@@ -872,6 +875,7 @@ Output of summary contains...
 ***
 
 <font size=4>
+
 
 ```
 
@@ -911,6 +915,7 @@ Var1   | 0.608 0.832 0.171 |
 Var2   | 0.079 0.154 0.741 |
 Var3   | 0.553 0.017 0.078 |
 ```
+
 </font>
 
 MCA summary(2)
@@ -920,6 +925,7 @@ autosize: true
 left: 40%
 
 <font size=5>
+
 Output of summary contains...
 
 - **Categories**: the coordinates of the variable categories, the contribution (ctr), the cosini squared and v.test value. The v.test follows normal distribution: if the value is below/above $\pm$ 1.96, the coordinate is significantly different from zero.
@@ -982,6 +988,8 @@ incremental: false
 autosize: true
 left: 65%
 
+<font size=6>
+
 MCA plot:
 - You can plot for variables, individuals and background (sublimentary variables) separately or you can draw them in the same plot. 
 - `plot.MCA()` function in R (from FactoMineR) has a lot of options for plotting
@@ -989,6 +997,7 @@ MCA plot:
 
 See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
 
+</font>
 
 MCA plot(2)
 ========================================================
@@ -996,10 +1005,14 @@ incremental: false
 autosize: true
 left: 65%
 
+<font size=6>
+
 - On the right we have MCA factor map, where are variables drawn on the first two dimensions
     - On the plot you can see correlations of the variables and the dimensions (The squared correlations of variables and dimensions are the coordinates)
     - The distance between column points gives a measure of their similarity
     - For example Label3 correlates with 2. dimension, but Level2 has little effect on either of the dimensions. Label2 and Name2 are more similar than Label2 and Level2.
+
+</font>
 
 ***
 
