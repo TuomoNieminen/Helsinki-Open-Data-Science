@@ -24,11 +24,11 @@ hd <- read.csv("human_development.csv", stringsAsFactors = F)
 gi <- read.csv("gender_inequality.csv", stringsAsFactors = F, na.strings = "..")
 # rename variables
 names(hd) <- c("HDI.Rank", "Country", "HDI", "Life.Exp", "Edu.Exp", "Edu.Mean", "GNI", "GNI.Minus.Rank")
-names(gi) <- c("GII.Rank", "Country", "GII", "Mat.Mort", 
-                "Young.Birth", "Parliam.F", "Edu2.F", "Edu2.M", 
-                "Labour.F", "Labour.M")
+names(gi) <- c("GII.Rank", "Country", "GII", "Mat.Mor", 
+                "Ado.Birth", "Parli.F", "Edu2.F", "Edu2.M", 
+                "Labo.F", "Labo.M")
 # do a bit of feature engineering
-gi <- mutate(gi, Edu2.FM = Edu2.F / Edu2.M, Labour.FM = Labour.F / Labour.M)
+gi <- mutate(gi, Edu2.FM = Edu2.F / Edu2.M, Labo.FM = Labo.F / Labo.M)
 # join data and write to file
 human1 <- inner_join(hd, gi, by = "Country")
 write.table(file = "human1.txt", human1, sep =",", row.names = F)
@@ -45,7 +45,7 @@ human <- read.table("human1.txt", sep  =",", header = T)
 human$GNI <- gsub(",","",human$GNI) %>% as.numeric
 
 # exclude unneeded variables
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Edu.Exp", "Life.Exp", "GNI", "Mat.Mort", "Young.Birth", "Parliam.F")
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Edu.Exp", "Life.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
 human <- dplyr::select(human, one_of(keep))
 
 # remove rows with NA values
