@@ -694,7 +694,6 @@ plot(mca, invisible=c("ind"), habillage = "quali")
 ```{r}
 test_object("mca", incorrect_msg = "Did you create the `mca` object?")
 test_function("summary", args = "object",incorrect_msg = "Did you look at the summary of the MCA model?")
-test_function("plot.MCA", args = c("x", "invisible", "habillage"))
 test_error()
 success_msg("Dimensions are decreasing fewer by the minute! Good work!")
 ```
