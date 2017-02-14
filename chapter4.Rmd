@@ -349,10 +349,10 @@ source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.mixe
 # remove the Country variable
 human_ <- select(human, -Country)
 
-# draw a scatter plot matrix with pairs()
+# draw a scatter plot matrix of human_ with pairs()
 
 
-# compute the correlation matrix and visualize it
+# compute the correlation matrix and visualize it with corrplot
 cor(human_)
 
 
@@ -369,7 +369,7 @@ human_ <- select(human, -Country)
 # draw a scatter plot matrix with pairs()
 pairs(human_, col = "blue")
 
-# compute the correlation matrix and visualize it
+# compute the correlation matrix and visualize it with corrplot
 cor(human_) %>% corrplot
 
 
@@ -379,7 +379,7 @@ cor(human_) %>% corrplot
 ```{r}
 
 test_function("pairs", args = "x", incorrect_msg = "Please use the `pairs()` function on `human_`")
-test_function("`%>%`", args = c("lhs", "rhs"), incorrect_msg = "Please use the pipe operator to apply the `corrplot()` function on the correlation matrix of 'human_'")
+test_pipe(absent_msg = "Please use the pipe operator to apply the `corrplot()` function on the correlation matrix of 'human_'")
 
 test_error()
 success_msg("Great work!!")
@@ -399,8 +399,10 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 - Create 'human_std' by standardizing the variables in 'human'.
 - Print out summaries of the standardized variables. What are the means? Do you know the standard deviations?
 - Use `prcomp()` to perform principal component analysis on the standardized data. Save the results in the object `pca_human`
-- Use `autoplot()` (from **ggfortigy**) to draw a biplot of `pca_human` with the 1st principal component on the x-axis and the second on the y-axis
-- Adjust the code: Add the following arguments and draw the plot again after each one: `label = T`,  `size = -1`, `label.size = 3`
+- Use `biplot()` to draw a biplot of `pca_human`.
+- Experiment with the argument `cex` which should be a vector of length 2 and can be used to scale the labels in the biplot. Which number affects what? Try for example `cex = c(0.5, 0.8)`. 
+- Add the argument `col = c("grey40", "deeppink2")`
+
 
 *** =hint
 - hint
@@ -408,17 +410,12 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 *** =pre_exercise_code
 ```{r}
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
-library(ggplot2)
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_base.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/util.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/plotlib.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/base_fortify_ts.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_stats.R")
+
 ```
 
 *** =sample_code
 ```{r}
-# modified human and autoplot from ggfortify are available
+# modified human is available
 
 # standardize the variables
 human_std <- scale(human)
@@ -431,7 +428,7 @@ pca_human <- prcomp(human_std)
 
 
 # draw a biplot of the principal components and the original variables
-autoplot(pca_human, x = 1, y = 2)
+biplot(pca_human)
 
 ```
 
@@ -448,36 +445,35 @@ summary(human_std)
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
 
-
 # draw a biplot of the 2-dimensional principal component representation of the observations
-autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
+biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"))
 
 ```
 
 *** =sct
 ```{r}
 
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Good work!")
+test_function("summary", args = "object")
+
+test_error()
+success_msg("Great work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:65a759a329
-## A biplot of PCA (1)
+## A biplot of PCA
 
 Exercise info here
 
 *** =instructions
-- Print out the object `pca_human` (created in the previous exercise)
-- Create objects `pc_var` and `pc_varp`.
-- Execute the `paste0()` function. Adjust the code: insert the proportions of variance for each Principal component (PC) inside the matching parenthesis. Then save the resulting output to the object `pc_lab`
-- Draw the biplot again. Adjust the code: use the first value of the `PC` vector as the label for the x-axis and the second value as the label for the y-axis.
+- Create and print out a summary of `pca_human` (created in the previous exercise)
+- Create object `pca_pr` and print it out
+- Adjust the code: instead of proportions, save the percentages of variance in the `pca_pr` object. Round the percentages to 1 digit.
+- Execute the `paste0()` function and then save the output to a new object `pc_lab`.
+- Draw the biplot again. Use the first value of the `pc_lab` vector as the label for the x-axis and the second value as the label for the y-axis.
 
 *** =hint
-- Replace the appropriate part of the call to the `paste0()` function with the `pc_varp` object
+- Percentages are proportions on a different scale. Multiplication by 100 changes proportions to percentages.
+- Objects are created with the assign operator `<-`
 - Brackets can be used to access values of a vector: `V[1]` gets the first value of `V`
 
 *** =pre_exercise_code
@@ -486,121 +482,67 @@ library(dplyr)
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
 human_std <- scale(human)
 pca_human <- prcomp(human_std)
-library(ggplot2)
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_base.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/util.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/plotlib.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/base_fortify_ts.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_stats.R")
-autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3)
+biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"))
+
 ```
 
 *** =sample_code
 ```{r}
-# pca_human, autoplot from ggfortify, dplyr are available
+# pca_human, dplyr are available
 
-# print out pca_human
+# create a summary of pca_human
+s <- summary(pca_human)
+
+# print out the summary
 
 
-# variance captured by each PC
-pc_var <- pca_human$sdev^2
+# rounded percetanges of variance captured by each PC
+pca_pr <- round(1*s$importance[2, ], digits = 5)
 
-# percentage of variance captured by PC
-pc_varp <- (100 * pc_var / sum(pc_var)) %>% round(2)
+# print out the percentages of variance
+
 
 # create object pc_lab to be used as axis labels
-paste0("PC", 1:8, " (", "replace me!", "%)")
+paste0("PC", 1:8, " (", pca_pr, "%)")
 
 # draw a biplot
-autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = NA, ylab = NA)
+biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"), xlab = NA, ylab = NA)
+
 ```
 
 *** =solution
 ```{r}
-# pca_human, autoplot from ggfortify, dplyr are available
+# pca_human, dplyr are available
 
-# print out pca_human
-pca_human
+# create a summary of pca_human
+s <- summary(pca_human)
 
-# variance captured by each PC
-pc_var <- pca_human$sdev^2
+# print out the summary
+s
 
-# proportion of variance captured for each PC
-pc_varp <- (100 * pc_var / sum(pc_var)) %>% round(2)
+# rounded percentages of variance captured by each PC
+pca_pr <- round(100*s$importance[2,], digits = 1) 
 
-# create object pc_lab to be used as labels
-pc_lab <- paste0("PC", 1:8, " (", pc_varp, "%)")
+# print out the percentages of variance
+pca_pr
+
+# create object pc_lab to be used as axis labels
+pc_lab <- paste0("PC", 1:8, " (", pca_pr, "%)")
 
 # draw a biplot
-autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2])
+biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
 
 ```
 
 *** =sct
 ```{r}
-
+test_output_contains("s")
+test_object("pca_pr", incorrect_msg = "Please adjust the code to change proportions into percentages and then round to onw digit.")
+test_output_contains("pca_pr")
 test_object("pc_lab")
 
 test_error()
-success_msg("Good work!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:99b67a82a1
-## A biplot of PCA (2)
-
-Exercise info here
-
-*** =instructions
-- Adjust the code: Add the following arguments to the call to `autoplot()` and draw the plot again after each adjustment `loadings = T`, `loadings.label  = T`, `loadings.label.size = 5`, `label.alpha = 0.2`
-
-*** =hint
-- hint
-
-*** =pre_exercise_code
-```{r}
-library(dplyr)
-human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
-human_std <- scale(human)
-pca_human <- prcomp(human_std)
-pc_var <- pca_human$sdev^2
-pc_varp <- (100 * pc_var / sum(pc_var)) %>% round(2)
-pc_lab <- paste0("PC", 1:8, " (", pc_varp, "%)")
-library(ggplot2)
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_base.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/util.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/plotlib.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/base_fortify_ts.R")
-source("https://raw.githubusercontent.com/sinhrks/ggfortify/master/R/fortify_stats.R")
-autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2])
-```
-
-*** =sample_code
-```{r}
-# pca_human, pc_lab, and autoplot from ggfortify are available
-
-# draw a biplot
-autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = PC[1], ylab = PC[2])
-
-```
-
-*** =solution
-```{r}
-# pca_human, pc_lab and autoplot from ggfortify are available
-
-# draw a biplot
-autoplot(pca_human, x = 1, y = 2, size = -1, label = T, label.size = 3, xlab = pc_lab[1], ylab = pc_lab[2], loadings = T, loadings.label  = T, loadings.label.size = 4, label.alpha = 0.2)
-
-```
-
-*** =sct
-```{r}
-
-# test_function("", args = "",incorrect_msg = "")
-# test_object("", incorrect_msg = "")
-# test_output_contains("", incorrect_msg = "")
-# 
-# test_error()
-success_msg("Awsome work!")
+success_msg("Very nice work!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:51411e6d45
