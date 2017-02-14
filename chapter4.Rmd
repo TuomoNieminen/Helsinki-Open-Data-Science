@@ -5,12 +5,14 @@ description : Principal component analysis (PCA), Correspondence analysis (CA)
 --- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
 ## Meet the human data
 
-The human dataset is a combination of the indicators behind the human development index and the gender inequality index. The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview and detailed explanations see the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
+Wellcome to the *Dimensionality Reduction* chapter.
 
-Some of the variable names have been shortened but the connections should be clear. "F" always stands for female and "M" for male. There are two new variables:
+In this chapter we will be using the 'human' dataset to introduce Principal Components Analysis (PCA). The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview see also the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
 
-- **Edu2.FM**: The ratio of the percentages of female and male populations with secondary education (Edu2.F / Edu2.M)
-- **Labo.FM**: The ratio of the percentages of female and male populations in the labour force. (Labo.F / Labo.M)
+Most of the variable names have been shortened. See the meta file of the modified data [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/datasets/human_meta.txt). There are two new variables:
+
+- **Edu2.FM**: The ratio of the proportions of females and males with at least secondary education (Edu2.F / Edu2.M)
+- **Labo.FM**: The ratio of the proportions of females and males in the labour force. (Labo.F / Labo.M)
 
 *** =instructions
 - Read the human data into memory
@@ -70,13 +72,11 @@ success_msg("Awsome, you have mastered an important first step!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:63c85a3cfc
 ## String manipulation
 
-Sometimes a variable is coded in a way that is not natural for R to understand. For example, large integers can sometimes be coded with a comma to separate thousands (1,000 == 1000). In these cases, R interprets the variable as a **factor** or a **character.** 
+Sometimes a variable is coded in a way that is not natural for R to understand. For example, large integers can sometimes be coded with a comma to separate thousands. In these cases, R interprets the variable as a **factor** or a **character.** 
 
 In some cases you could use the `dec` argument in `read.table()` to get around this, but if the data also includes decimals separated by a dot, this is not an option. To get rid of the unwanted commas, we need *string manipulation*.
 
-In programming, a combination of characters is usually called a string. In R, strings are of the basic type character and they can be created by using quotation marks or specific functions.  
-
-There are quite a few functions in Base R that can be used to manipulate characters, but there is also a bit more consintent and simple tidyverse package **stringr.**
+In R, strings are of the basic type character and they can be created by using quotation marks or specific functions. There are quite a few functions in Base R that can be used to manipulate characters, but there is also a bit more consintent and simple tidyverse package **stringr.**
 
 
 *** =instructions
@@ -151,8 +151,8 @@ We will use the first option, which is the simplest solution.
 *** =instructions
 - Create a smaller version of the human data by selecting the variables defined in `keep`
 - Use complete.cases() on human to print out a logical "completeness indicator" vector
-- Print out the 'human' data along with an added completeness indicator. When is the indicator FALSE and when is it TRUE? You can also look at the help page of `complete.cases()`.
-- `filter()` out all the rows with any `NA` values. Right now, `TRUE` is simply recycled so that nothing is filtered out.
+- Print out the 'human' data along with an added completeness indicator. When is the indicator `F` and when is it `T`? You can also look at the help page `?complete.cases()`.
+- `filter()` out all the rows with any `NA` values. Right now, `TRUE` is recycled so that nothing is filtered out.
 
 *** =hint
 - Use `complete.cases()` on 'human' again to define the 'complete' column
@@ -223,7 +223,7 @@ success_msg("Great work! You complete me <3")
 
 Besides missing values, there might be other reasons to exclude observations. In our human data, there are a few data points which have been computed from other observations. We want to remove them before further analysis.
 
-The basic way in R to reference the rows or columns of a data frame is to use brackets (`[,]`) along with indices or names. When brackets are used with data frames, a comma is used to separate row and column references. In the examples below, `df` is a data frame.
+The basic way in R to reference the rows or columns of a data frame is to use brackets (`[,]`) along with indices or names. A comma is used to separate row and column references. In the examples below, `df` is a data frame.
 
 ```
 df[,] # select every row and every column
@@ -305,7 +305,9 @@ success_msg("Yes! You're definately included in awsomeland!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:b94de4cad1
 ## Exploring the human countries
 
-A pairs plot or a generalized pairs plot is a good way of visualizing a reasonably sized data frame. Correlations can be computed with the `cor()` function and visualized with the 
+A simple pairs plot or a more informative generalized pairs plot from the **GGally** package is a good way of visualizing a reasonably sized data frame.  
+
+To study linear connections more closely, correlations can be computed with the `cor()` function and visualized with the corrplot function from the **corrplot** package.
 
 *** =instructions
 - Create the data frame 'human_' by removing the Country variable from 'human'
@@ -386,9 +388,9 @@ success_msg("Great work!!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
 ## PCA with R
 
-There are two functions in the default package distribution of R that can be used to perform Principal Components Analysis (PCA): `princomp()` and `prcomp()`. This is because PCA can be performed by two sightly different matrix decomposition methods from linear algebra: the Eigenvalue Decomposition and the Singular Value Decomposition (SVD). 
+Principal Components Analysis (PCA) can be performed by two sightly different matrix decomposition methods from linear algebra: the Eigenvalue Decomposition and the Singular Value Decomposition (SVD). 
 
-The `prcomp()` function uses the SVD and is the preferred and more numerically accurate method for PCA.
+There are two functions in the default package distribution of R that can be used to perform PCA: `princomp()` and `prcomp()`.  The `prcomp()` function uses the SVD and is the preferred, more numerically accurate method.
 
 Both methods quite literally *decompose* a data matrix into a product of smaller matrices, which let's us extract the underlying *principal components*. This makes it possible to approximate a lower dimensional representation of the data by choosing only a few principal components.
 
@@ -426,7 +428,7 @@ pca_human <- prcomp(human_std)
 
 
 # draw a biplot of the principal components and the original variables
-biplot(pca_human)
+biplot(pca_human, choices = 1:2)
 
 
 
@@ -446,7 +448,7 @@ summary(human_std)
 pca_human <- prcomp(human_std)
 
 # draw a biplot of the 2-dimensional principal component representation of the observations
-biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
+biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
 
 
 
@@ -464,7 +466,12 @@ success_msg("Great work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:65a759a329
 ## A biplot of PCA
 
-Exercise info here
+A biplot is a way of visualizing the connections between two representations of the same data. First, a simple scatter plot is drawn where the observations are represented by two principal components. Then, arrows are drawn to visualize the connections between the original variables and the principal components (PCs). The following connections hold:
+
+- The angle between the arrows can be interpret as the correlation between the variables.
+- The angle between a variable and a PC axis can be interpret as the correlation between the two.
+- The length of the arrows are proportional to the standard deviations of the variables
+
 
 *** =instructions
 - Create and print out a summary of `pca_human` (created in the previous exercise)
@@ -491,10 +498,8 @@ pca_human <- prcomp(human_std)
 ```{r}
 # pca_human, dplyr are available
 
-# create a summary of pca_human
+# create and print out a summary of pca_human
 s <- summary(pca_human)
-
-# print out the summary
 
 
 # rounded percetanges of variance captured by each PC
@@ -511,16 +516,16 @@ biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = NA, yl
 
 
 
+
+
 ```
 
 *** =solution
 ```{r}
 # pca_human, dplyr are available
 
-# create a summary of pca_human
+# create and print out a summary of pca_human
 s <- summary(pca_human)
-
-# print out the summary
 s
 
 # rounded percentages of variance captured by each PC
@@ -537,10 +542,13 @@ biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab
 
 
 
+
+
 ```
 
 *** =sct
 ```{r}
+test_object("s", incorrect_msg = "Please do not remove the object 's'.")
 test_output_contains("s")
 test_object("pca_pr", incorrect_msg = "Please adjust the code to change proportions into percentages and then round to onw digit.")
 test_output_contains("pca_pr")
