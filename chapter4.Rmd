@@ -391,7 +391,7 @@ success_msg("Great work!!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
 ## PCA with R
 
-[Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA) can be performed by two sightly different matrix decomposition methods from linear algebra: the [Eigenvalue Decomposition](https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix) and the [Singular Value Decomposition (SVD)](https://en.wikipedia.org/wiki/Singular_value_decomposition). 
+[Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA) can be performed by two sightly different matrix decomposition methods from linear algebra: the [Eigenvalue Decomposition](https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix) and the [Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) (SVD). 
 
 There are two functions in the default package distribution of R that can be used to perform PCA: `princomp()` and `prcomp()`. The `prcomp()` function uses the SVD and is the preferred, more numerically accurate method.
 
@@ -429,7 +429,7 @@ human_std <- scale(human)
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
 
-# draw a biplot of the principal components and the original variables
+# draw a biplot of the principal component representation and the original variables
 biplot(pca_human, choices = 1:2)
 
 ```
@@ -447,7 +447,7 @@ summary(human_std)
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
 
-# draw a biplot of the principal components and the original variables
+# draw a biplot of the principal component representation and the original variables
 biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
 
 ```
@@ -692,8 +692,9 @@ plot(mca, invisible=c("ind"), habillage = "quali")
 
 *** =sct
 ```{r}
-test_function("summary", args = "object",incorrect_msg = "Did you look at the summary of the MCA model?")
 test_object("mca", incorrect_msg = "Did you create the `mca` object?")
+test_function("summary", args = "object",incorrect_msg = "Did you look at the summary of the MCA model?")
+test_function("plot.MCA", args = c("x", "invisible", "habillage"))
 test_error()
 success_msg("Dimensions are decreasing fewer by the minute! Good work!")
 ```
