@@ -5,9 +5,9 @@ description : Principal component analysis (PCA), Correspondence analysis (CA)
 --- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
 ## Meet the human data
 
-Wellcome to the *Dimensionality Reduction* chapter.
+Welcome to the *Dimensionality Reduction* chapter.
 
-In this chapter we will be using the 'human' dataset to introduce Principal Components Analysis (PCA). The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview see also the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
+In this chapter we will be using the `human` dataset to introduce Principal Components Analysis (PCA). The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview see also the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
 
 Most of the variable names have been shortened. See the meta file of the modified data [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/datasets/human_meta.txt). There are two new variables:
 
@@ -15,7 +15,7 @@ Most of the variable names have been shortened. See the meta file of the modifie
 - **Labo.FM**: The ratio of the proportions of females and males in the labour force. (Labo.F / Labo.M)
 
 *** =instructions
-- Read the human data into memory
+- Read the `human` data into memory
 - Print out the (column) names of the data
 - Look at the structure of the data
 - Print out summaries of the variables in the data
@@ -92,12 +92,13 @@ In R, strings are of the basic type character and they can be created by using q
 
 *** =pre_exercise_code
 ```{r}
+`human`
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
 ```
 
 *** =sample_code
 ```{r}
-# human is available
+# tidyr package and human are available
 
 # access the stringr package
 library(stringr)
@@ -108,22 +109,20 @@ library(stringr)
 # remove the commas from GNI and convert it to numeric
 str_replace(human$GNI, pattern=",", replace ="")
 
-
 ```
 
 *** =solution
 ```{r}
-# human is available
+# tidyr package and human are available
 
 # access the stringr package
 library(stringr)
 
-# look at the structure of the GNI variable in human
+# look at the structure of the GNI column in 'human'
 str(human$GNI)
 
-# remove the commas from GNI and convert to numeric
+# remove the commas from GNI and convert it to numeric
 str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
-
 
 ```
 
@@ -151,7 +150,7 @@ We will use the first option, which is the simplest solution.
 *** =instructions
 - Create a smaller version of the human data by selecting the variables defined in `keep`
 - Use complete.cases() on human to print out a logical "completeness indicator" vector
-- Print out the 'human' data along with an added completeness indicator. When is the indicator `F` and when is it `T`? You can also look at the help page `?complete.cases()`.
+- Print out the `human` data along with an added completeness indicator. When is the indicator `F` and when is it `T`? You can also look at the help page `?complete.cases()`.
 - `filter()` out all the rows with any `NA` values. Right now, `TRUE` is recycled so that nothing is filtered out.
 
 *** =hint
@@ -179,7 +178,7 @@ human <- select(human, one_of(keep))
 # print out a completeness indicator of the 'human' data
 complete.cases(human)
 
-# print out the data along with a completeness indicator
+# print out the data along with a completeness indicator as the last column
 data.frame(human[-1], comp = "change me!")
 
 # filter out all rows with NA values
@@ -201,7 +200,7 @@ human <- select(human, one_of(keep))
 complete.cases(human)
 
 # print out the data along with a completeness indicator as the last column
-data.frame(human[-1] , comp = complete.cases(human))
+data.frame(human[-1], comp = complete.cases(human))
 
 # filter out all rows with NA values
 human_ <- filter(human, complete.cases(human))
@@ -232,10 +231,10 @@ df[, c(2, 5)] # select 2nd and 5th columns
 ```
 
 *** =instructions
-- Use `tail()` to print out the last 10 observations of human (hint: `?tail`). What are the country names?
+- Use `tail()` to print out the last 10 observations of `human` (hint: `?tail`). What are the country names?
 - Create object `i_last`
-- Create data frame 'human_' by selecting rows from the 1st to `i_last` from `human`.
-- Define the rownames in 'human_' by the Country column
+- Create data frame `human_` by selecting rows from the 1st to `i_last` from `human`.
+- Define the rownames in `human_` by the Country column
 
 *** =hint
 - Use `1:i_last` to select rows from 1 to `i_last`
@@ -255,7 +254,6 @@ human <- filter(human, complete.cases(human))
 *** =sample_code
 ```{r}
 # human without NA is available
-
 
 # look at the last 10 observations of human
 
@@ -310,9 +308,9 @@ A simple pairs plot or a more informative generalized pairs plot from the **GGal
 To study linear connections more closely, correlations can be computed with the `cor()` function and visualized with the corrplot function from the **corrplot** package.
 
 *** =instructions
-- Create the data frame 'human_' by removing the Country variable from 'human'
-- Draw a scatter plot matrix of the 'human_' variables with `pairs()`. Make the points more colorfull by adding the argument `col = "blue"`.
-- Compute and print out the correlation matrix of 'human_'
+- Create the data frame `human_` by removing the `Country` variable from `human`
+- Draw a scatter plot matrix of the `human_` variables with `pairs()`. Make the points more colorful by adding the argument `col = "blue"`.
+- Compute and print out the correlation matrix of `human_`
 - Adjust the code: use the pipe operator (`%>%`) and visualize the correlation matrix with `corrplot()`.
 
 *** =hint
@@ -355,8 +353,6 @@ human_ <- select(human, -Country)
 # compute the correlation matrix and visualize it with corrplot
 cor(human_)
 
-
-
 ```
 
 *** =solution
@@ -371,7 +367,6 @@ pairs(human_, col = "blue")
 
 # compute the correlation matrix and visualize it with corrplot
 cor(human_) %>% corrplot
-
 
 ```
 
@@ -388,7 +383,7 @@ success_msg("Great work!!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
 ## PCA with R
 
-Principal Components Analysis (PCA) can be performed by two sightly different matrix decomposition methods from linear algebra: the Eigenvalue Decomposition and the Singular Value Decomposition (SVD). 
+[Principal Components Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA) can be performed by two sightly different matrix decomposition methods from linear algebra: the Eigenvalue Decomposition and the Singular Value Decomposition (SVD). 
 
 There are two functions in the default package distribution of R that can be used to perform PCA: `princomp()` and `prcomp()`.  The `prcomp()` function uses the SVD and is the preferred, more numerically accurate method.
 
@@ -396,7 +391,7 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 
 
 *** =instructions
-- Create 'human_std' by standardizing the variables in 'human'.
+- Create `human_std` by standardizing the variables in `human`.
 - Print out summaries of the standardized variables. What are the means? Do you know the standard deviations?
 - Use `prcomp()` to perform principal component analysis on the standardized data. Save the results in the object `pca_human`
 - Use `biplot()` to draw a biplot of `pca_human` (Click next to "Plots" to view it larger)
@@ -405,7 +400,7 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 
 
 *** =hint
-- Use the `summary() function to compute summeries of the variables in a data frame
+- Use the `summary()` function to compute summeries of the variables in a data frame
 
 *** =pre_exercise_code
 ```{r}
@@ -426,11 +421,8 @@ human_std <- scale(human)
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
 
-
 # draw a biplot of the principal components and the original variables
 biplot(pca_human, choices = 1:2)
-
-
 
 ```
 
@@ -447,10 +439,8 @@ summary(human_std)
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
 
-# draw a biplot of the 2-dimensional principal component representation of the observations
+# draw a biplot of the principal components and the original variables
 biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
-
-
 
 ```
 
