@@ -171,7 +171,7 @@ human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
 # human with modified GNI and dplyr are available
 
 # columns to keep
-keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Expect", "Edu.Expect", "GNI", "Matern.Mortal", "Adolesc.Birth", "Parliament.F")
+keep <- c("Country", "Edu2.FM", "Labour.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mort", "Young.Birth", "Parliam.F")
 
 # select the 'keep' columns
 human <- select(human, one_of(keep))
