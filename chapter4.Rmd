@@ -232,7 +232,7 @@ df[, c(2, 5)] # select 2nd and 5th columns
 ```
 
 *** =instructions
-- Use `tail()` to print out the last 10 observations of human (hint: `?tail`)
+- Use `tail()` to print out the last 10 observations of human (hint: `?tail`). What are the country names?
 - Create object `i_last`
 - Create data frame 'human_' by selecting rows from the 1st to `i_last` from `human`.
 - Define the rownames in 'human_' by the Country column
@@ -257,7 +257,7 @@ human <- filter(human, complete.cases(human))
 # human without NA is available
 
 
-# look at the last 10 observations
+# look at the last 10 observations of human
 
 
 # define the last indice we want to keep
@@ -347,7 +347,7 @@ source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.mixe
 # remove the Country variable
 human_ <- select(human, -Country)
 
-# draw a scatter plot matrix of human_ with pairs()
+# draw a scatter plot matrix of the 'human_' variables
 
 
 # compute the correlation matrix and visualize it with corrplot
@@ -364,7 +364,7 @@ cor(human_)
 # remove the Country variable
 human_ <- select(human, -Country)
 
-# draw a scatter plot matrix with pairs()
+# draw a scatter plot matrix of the 'human_' variables
 pairs(human_, col = "blue")
 
 # compute the correlation matrix and visualize it with corrplot
@@ -397,8 +397,8 @@ Both methods quite literally *decompose* a data matrix into a product of smaller
 - Create 'human_std' by standardizing the variables in 'human'.
 - Print out summaries of the standardized variables. What are the means? Do you know the standard deviations?
 - Use `prcomp()` to perform principal component analysis on the standardized data. Save the results in the object `pca_human`
-- Use `biplot()` to draw a biplot of `pca_human`.
-- Experiment with the argument `cex` which should be a vector of length 2 and can be used to scale the labels in the biplot. Which number affects what? Try for example `cex = c(0.5, 0.8)`. 
+- Use `biplot()` to draw a biplot of `pca_human` (Click next to "Plots" to view it larger)
+- Experiment with the argument `cex` of `biplot()`. It should be a vector of length 2 and it can be used to scale the labels in the biplot. Try for example `cex = c(0.8, 1)`. Which number affects what?
 - Add the argument `col = c("grey40", "deeppink2")`
 
 
@@ -428,6 +428,8 @@ pca_human <- prcomp(human_std)
 # draw a biplot of the principal components and the original variables
 biplot(pca_human)
 
+
+
 ```
 
 *** =solution
@@ -444,7 +446,9 @@ summary(human_std)
 pca_human <- prcomp(human_std)
 
 # draw a biplot of the 2-dimensional principal component representation of the observations
-biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"))
+biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
+
+
 
 ```
 
@@ -480,7 +484,6 @@ library(dplyr)
 human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
 human_std <- scale(human)
 pca_human <- prcomp(human_std)
-biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"))
 
 ```
 
@@ -504,7 +507,9 @@ pca_pr <- round(1*s$importance[2, ], digits = 5)
 paste0("PC", 1:8, " (", pca_pr, "%)")
 
 # draw a biplot
-biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"), xlab = NA, ylab = NA)
+biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = NA, ylab = NA)
+
+
 
 ```
 
@@ -528,7 +533,9 @@ pca_pr
 pc_lab <- paste0("PC", 1:8, " (", pca_pr, "%)")
 
 # draw a biplot
-biplot(pca_human, cex = c(0.5, 0.8), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
+biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
+
+
 
 ```
 
