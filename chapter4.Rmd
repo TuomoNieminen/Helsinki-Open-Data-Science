@@ -5,7 +5,7 @@ description : Principal component analysis (PCA), Correspondence analysis (CA)
 --- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
 ## Meet the human data
 
-Welcome to the *Dimensionality Reduction* chapter.
+Welcome to the *Dimensionality reduction techniques* chapter.
 
 In this chapter we will be using the `human` dataset to introduce Principal Components Analysis (PCA). The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview see also the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
 
@@ -388,6 +388,12 @@ test_error()
 success_msg("Great work!!")
 ```
 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Video: Dimensionality reduction with PCA
+
+*** =video_link
+//player.vimeo.com/video/204164956
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
 ## PCA with R
 
@@ -460,6 +466,12 @@ test_function("summary", args = "object")
 test_error()
 success_msg("Great work!")
 ```
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Video: Biplots
+
+*** =video_link
+//player.vimeo.com/video/204165420
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:65a759a329
 ## A biplot of PCA
