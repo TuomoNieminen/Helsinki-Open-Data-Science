@@ -579,7 +579,7 @@ Let's dwell in teas for a bit!
 - Create the `keep_columns` object. Then `select()` the columns from `tea` to create a new dataset. Save the new data as `tea_time`. 
 - Look at the summaries and structure of the `tea_time` data.
 - Visualize the dataset. Define the plot type by adding `geom_bar()` after initialization of the ggplot. (Ignore the warning.)
-- Adjust the code: the labels of the x-axis are showing poorly. Make the plot more readable by adding `theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 5))` after barplot the code.
+- Adjust the code: the labels of the x-axis are showing poorly. Make the plot more readable by adding `theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))` after barplot the code.
 
 *** =hint
 - `str()` and `summary()`.
@@ -629,7 +629,7 @@ summary(tea_time)
 str(tea_time)
 
 # visualize the dataset
-gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 5))
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
 
 ```
 
