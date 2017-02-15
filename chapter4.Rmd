@@ -1,40 +1,715 @@
 ---
-title       : Dimensionality reduction techniques 
+  title       : Dimensionality reduction techniques 
 description : Principal component analysis (PCA), Correspondence analysis (CA)
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
-## Exercise title
+## Meet the human data
 
-UNDER CONSTRUCTION, PLEASE DO NOT INTERACT HERE.
+Welcome to the *Dimensionality reduction techniques* chapter.
+
+In this chapter we will be using the `human` dataset to introduce Principal Components Analysis (PCA). The data originates from the United Nations Development Programme. See [their data page](http://hdr.undp.org/en/content/human-development-index-hdi) for more information. For a nice overview see also the [calculating the human development indices pdf](http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf).
+
+Most of the variable names have been shortened and two new variables have been computed. See the meta file for the modified data [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/datasets/human_meta.txt) for descriptions.
 
 *** =instructions
-- instruction
+- Read the `human` data into memory
+- Print out the (column) names of the data
+- Look at the structure of the data
+- Print out summaries of the variables in the data
 
 *** =hint
-- hint
+- Use `str()` to see structure
+- Use `summary()` to compute summaries
 
 *** =pre_exercise_code
 ```{r}
-
 ```
 
 *** =sample_code
 ```{r}
+# read the human data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+
+# look at the (column) names of human
+names(human)
+
+# look at the structure of human
+
+
+# print out summaries of the variables
+
 
 ```
 
 *** =solution
 ```{r}
+# read the human data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+
+# look at the (column) names of human
+names(human)
+
+# look at the structure of human
+str(human)
+
+# print out summaries of the variables
+summary(human)
+```
+
+*** =sct
+```{r}
+
+test_function("str", args = "object",incorrect_msg = "Please look at the structure of the human data frame")
+test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the human data frame")
+
+test_error()
+success_msg("Awsome, you have mastered an important first step of data analysis!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:63c85a3cfc
+## String manipulation
+
+Sometimes a variable is coded in a way that is not natural for R to understand. For example, large integers can sometimes be coded with a comma to separate thousands. In these cases, R interprets the variable as a **factor** or a **character.** 
+
+In some cases you could use the `dec` argument in `read.table()` to get around this, but if the data also includes decimals separated by a dot, this is not an option. To get rid of the unwanted commas, we need *string manipulation*.
+
+In R, strings are of the basic type character and they can be created by using quotation marks or specific functions. There are quite a few functions in Base R that can be used to manipulate characters, but there is also a bit more consintent and simple tidyverse package **stringr.**
+
+
+*** =instructions
+- Access the stringr package
+- Print out a summary of the Gross National Income (GNI) variable in `human`
+- Execute the sample code where the comma is removed from each value of GNI.
+- Adjust the code: Use the pipe operator (`%>%`) to convert the resulting vector to numeric with `as.numeric`.
+
+*** =hint
+- Use `$` to access a single column of a data frame.
+- Use `str()` to look at the structure of any object
+- Add the pipe operator and `as.numeric` to the row where `str_replace()` is used
+- The previous chapters have more information and examples related to the pipe.
+
+*** =pre_exercise_code
+```{r}
+library(tidyr)
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+```
+
+*** =sample_code
+```{r}
+# tidyr package and human are available
+
+# access the stringr package
+library(stringr)
+
+# look at the structure of the GNI column in 'human'
+
+
+# remove the commas from GNI and convert it to numeric
+str_replace(human$GNI, pattern=",", replace ="")
+
+```
+
+*** =solution
+```{r}
+# tidyr package and human are available
+
+# access the stringr package
+library(stringr)
+
+# look at the structure of the GNI column in 'human'
+str(human$GNI)
+
+# remove the commas from GNI and convert it to numeric
+str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
 
 ```
 
 *** =sct
 ```{r}
 
-test_function("", args = "",incorrect_msg = "")
-test_object("", incorrect_msg = "")
-test_output_contains("", incorrect_msg = "")
+test_function("str", args = "object",incorrect_msg = "Please look at the structure of GNI in human")
+test_pipe(absent_msg = "Did you use the pipe operator?")
+test_output_contains("str_replace(human$GNI, pattern=',', replace ='') %>% as.numeric", incorrect_msg = "Please adjust the code to convert the gni variable to numeric and print out the result")
+ 
+test_error()
+success_msg("Wow, what a manipulator you are! You certainly can have your way with words now.")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:99d98acadf
+## Dealing with not available (NA) values
+
+In R, NA stands for not available, which means that the data point is missing. If a variable you wish to analyse contains missing values, there are usually two main options:
+
+- Remove the observations with missing values
+- Replace the missing values with actual values using an *imputation* technique.
+
+We will use the first option, which is the simplest solution.
+
+*** =instructions
+- Create a smaller version of the human data by selecting the variables defined in `keep`
+- Use complete.cases() on human to print out a logical "completeness indicator" vector
+- Adjust the code: Define `comp` as the completeness indicator and print out the resulting data frame. When is the indicator `FALSE` and when is it `TRUE`? (hint: `?complete.cases()`).
+- `filter()` out all the rows with any `NA` values. Right now, `TRUE` is recycled so that nothing is filtered out.
+
+*** =hint
+- Use `complete.cases()` on 'human' again to define the 'comp' column
+- Use the logical vector created by complete.cases to filter out the rows with `NA` values.
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+# read data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+```
+
+*** =sample_code
+```{r}
+# human with modified GNI and dplyr are available
+
+# columns to keep
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
+
+# select the 'keep' columns
+human <- select(human, one_of(keep))
+
+# print out a completeness indicator of the 'human' data
+complete.cases(human)
+
+# print out the data along with a completeness indicator as the last column
+data.frame(human[-1], comp = "change me!")
+
+# filter out all rows with NA values
+human_ <- filter(human, TRUE)
+
+```
+
+*** =solution
+```{r}
+# human with modified GNI and dplyr are available
+
+# columns to keep
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
+
+# select the 'keep' columns
+human <- select(human, one_of(keep))
+
+# print out a completeness indicator of the 'human' data
+complete.cases(human)
+
+# print out the data along with a completeness indicator as the last column
+data.frame(human[-1], comp = complete.cases(human))
+
+# filter out all rows with NA values
+human_ <- filter(human, complete.cases(human))
+
+```
+
+*** =sct
+```{r}
+
+test_output_contains("complete.cases(human)")
+test_object("human_", incorrect_msg = "Please filter out the incomplete observations from the human data and create object `human_`")
 
 test_error()
-success_msg("Good work!")
+success_msg("Great work! You complete me <3")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:17ccfcda8e
+## Excluding observations
+
+Besides missing values, there might be other reasons to exclude observations. In our human data, there are a few data points which have been computed from other observations. We want to remove them before further analysis.
+
+The basic way in R to reference the rows or columns of a data frame is to use brackets (`[,]`) along with indices or names. A comma is used to separate row and column references. In the examples below, `df` is a data frame.
+
+```
+df[,] # select every row and every column
+df[1:5, ] # select first five rows
+df[, c(2, 5)] # select 2nd and 5th columns
+```
+
+*** =instructions
+- Use `tail()` to print out the last 10 observations of `human` (hint: `?tail`). What are the last 10 country names?
+- Create object `last`
+- Create data frame `human_` by selecting rows from the 1st to `last` from `human`.
+- Define the rownames in `human_` by the Country column
+
+*** =hint
+- Use `1:i_last` to select rows from 1 to `i_last`
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+# read data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
+human <- select(human, one_of(keep))
+human <- filter(human, complete.cases(human))
+
+```
+
+*** =sample_code
+```{r}
+# human without NA is available
+
+# look at the last 10 observations of human
+
+
+# define the last indice we want to keep
+last <- nrow(human) - 7
+
+# choose everything until the last 7 observations
+human_ <- human["change me!", ]
+
+# add countries as rownames
+rownames(human_) <- human_$Country
+
+```
+
+*** =solution
+```{r}
+# human without NA is available
+
+# look at the last 10 observations
+tail(human, 10)
+
+# last indice we want to keep
+last <- nrow(human) - 7
+
+# choose everything until the last 7 observations
+human_ <- human[1:last, ]
+
+# add countries as rownames
+rownames(human) <- human$Country
+
+```
+
+*** =sct
+```{r}
+
+test_function("tail", args = c("x", "n"))
+test_object("human_", incorrect_msg = "Please create the data frame 'human_' as instructed by selecting rows from 'human'")
+
+test_error()
+success_msg("Yes! You're definately included in awsomeland!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b94de4cad1
+## Exploring the countries
+
+Now that we have sufficiently wrangled the 'human' data for further analysis, let's explore the variables and their relationships more closely.
+
+A simple pairs plot or a more informative generalized pairs plot from the **GGally** package is a good way of visualizing a reasonably sized data frame.  
+
+To study linear connections, correlations also can be computed with the `cor()` function and then visualized with the corrplot function from the **corrplot** package.
+
+*** =instructions
+- Create the data frame `human_` by removing the `Country` variable from `human` (the countries are still the row names)
+- Access the GGally package and visualize all the `human_` variables with `ggpairs()`.
+- Compute and print out the correlation matrix of `human_`
+- Adjust the code: use the pipe operator (`%>%`) and visualize the correlation matrix with `corrplot()`.
+
+*** =hint
+- The pipe assigns the output on its left as the first argument to the function name on its right. Use it on the same line where the correlation matrix is computed
+
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+# read data
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
+keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
+human <- select(human, one_of(keep))
+human <- filter(human, complete.cases(human))
+rownames(human) <- human$Country
+last <- nrow(human) - 7
+human <- human[1:last, ]
+
+# corrplot
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/colorlegend.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrMatOrder.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrRect.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrRect.hclust.R")
+source("https://raw.githubusercontent.com/taiyun/corrplot/master/R/corrplot.mixed.R")
+
+```
+
+*** =sample_code
+```{r}
+# modified human, dplyr and the corrplot functions are available
+
+# remove the Country variable
+human_ <- select(human, -Country)
+
+# Access GGally
+library(GGally)
+
+# visualize the 'human_' variables
+
+
+# compute the correlation matrix and visualize it with corrplot
+cor(human_)
+
+
+
+```
+
+*** =solution
+```{r}
+# modified human, dplyr and the corrplot functions are available
+
+# remove the Country variable
+human_ <- select(human, -Country)
+
+# Access GGally
+library(GGally)
+
+# visualize the 'human_' variables
+ggpairs(human_)
+
+# compute the correlation matrix and visualize it with corrplot
+cor(human_) %>% corrplot
+
+
+
+```
+
+*** =sct
+```{r}
+
+test_function("ggpairs", args = "data", incorrect_msg = "Please use the `ggpairs()` function on `human_`")
+test_pipe(absent_msg = "Please use the pipe operator to apply the `corrplot()` function on the correlation matrix of 'human_'")
+
+test_error()
+success_msg("Great work!!")
+```
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:f3942b76fc
+## Video: Dimensionality reduction with PCA
+
+*** =video_link
+//player.vimeo.com/video/204164956
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:42c18276a9
+## PCA with R
+
+[Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA) can be performed by two sightly different matrix decomposition methods from linear algebra: the [Eigenvalue Decomposition](https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix) and the [Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) (SVD). 
+
+There are two functions in the default package distribution of R that can be used to perform PCA: `princomp()` and `prcomp()`. The `prcomp()` function uses the SVD and is the preferred, more numerically accurate method.
+
+Both methods quite literally *decompose* a data matrix into a product of smaller matrices, which let's us extract the underlying **principal components**. This makes it possible to approximate a lower dimensional representation of the data by choosing only a few principal components.
+
+
+*** =instructions
+- Create `human_std` by standardizing the variables in `human`.
+- Print out summaries of the standardized variables. What are the means? Do you know the standard deviations? (hint: `?scale`)
+- Use `prcomp()` to perform principal component analysis on the standardized data. Save the results in the object `pca_human`
+- Use `biplot()` to draw a biplot of `pca_human` (Click next to "Plots" to view it larger)
+- Experiment with the argument `cex` of `biplot()`. It should be a vector of length 2 and it can be used to scale the labels in the biplot. Try for example `cex = c(0.8, 1)`. Which number affects what?
+- Add the argument `col = c("grey40", "deeppink2")`
+
+
+*** =hint
+- Use the `summary()` function to compute summaries of the variables in a data frame
+
+*** =pre_exercise_code
+```{r}
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
+
+```
+
+*** =sample_code
+```{r}
+# modified human is available
+
+# standardize the variables
+human_std <- scale(human)
+
+# print out summaries of the standardized variables
+
+
+# perform principal component analysis (with the SVD method)
+pca_human <- prcomp(human_std)
+
+# draw a biplot of the principal component representation and the original variables
+biplot(pca_human, choices = 1:2)
+
+```
+
+*** =solution
+```{r}
+# modified human is available
+
+# standardize the variables
+human_std <- scale(human)
+
+# print out summaries of the standardized variables
+summary(human_std)
+
+# perform principal component analysis (with the SVD method)
+pca_human <- prcomp(human_std)
+
+# draw a biplot of the principal component representation and the original variables
+biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
+
+```
+
+*** =sct
+```{r}
+
+test_function("summary", args = "object")
+
+test_error()
+success_msg("Great work!")
+```
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:d35fcf3d41
+## Video: Biplots
+
+*** =video_link
+//player.vimeo.com/video/204165420
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:65a759a329
+## A biplot of PCA
+
+A biplot is a way of visualizing the connections between two representations of the same data. First, a simple scatter plot is drawn where the observations are represented by two principal components (PC's). Then, arrows are drawn to visualize the connections between the original variables and the PC's. The following connections hold:
+
+- The angle between the arrows can be interpret as the correlation between the variables.
+- The angle between a variable and a PC axis can be interpret as the correlation between the two.
+- The length of the arrows are proportional to the standard deviations of the variables
+
+
+*** =instructions
+- Create and print out a summary of `pca_human` (created in the previous exercise)
+- Create object `pca_pr` and print it out
+- Adjust the code: instead of proportions of variance, save the percentages of variance in the `pca_pr` object. Round the percentages to 1 digit.
+- Execute the `paste0()` function. Then create a new object `pc_lab` by assigning the output to it.
+- Draw the biplot again. Use the first value of the `pc_lab` vector as the label for the x-axis and the second value as the label for the y-axis.
+
+*** =hint
+- Percentages are proportions on a different scale. Multiplication by 100 changes proportions to percentages.
+- Objects are created with the assign operator `<-`
+- Brackets can be used to access values of a vector: `V[1]` gets the first value of `V`
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep  =",", header = T)
+human_std <- scale(human)
+pca_human <- prcomp(human_std)
+
+```
+
+*** =sample_code
+```{r}
+# pca_human, dplyr are available
+
+# create and print out a summary of pca_human
+s <- summary(pca_human)
+
+
+# rounded percetanges of variance captured by each PC
+pca_pr <- round(1*s$importance[2, ], digits = 5)
+
+# print out the percentages of variance
+
+
+# create object pc_lab to be used as axis labels
+paste0(names(pca_pr), " (", pca_pr, "%)")
+
+# draw a biplot
+biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = NA, ylab = NA)
+
+
+
+
+```
+
+*** =solution
+```{r}
+# pca_human, dplyr are available
+
+# create and print out a summary of pca_human
+s <- summary(pca_human)
+s
+
+# rounded percentages of variance captured by each PC
+pca_pr <- round(100*s$importance[2,], digits = 1) 
+
+# print out the percentages of variance
+pca_pr
+
+# create object pc_lab to be used as axis labels
+pc_lab <- paste0(names(pca_pr), " (", pca_pr, "%)")
+
+# draw a biplot
+biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
+
+
+
+
+```
+
+*** =sct
+```{r}
+test_object("s", incorrect_msg = "Please do not remove the object 's'.")
+test_output_contains("s")
+test_object("pca_pr", incorrect_msg = "Please adjust the code to change proportions into percentages and then round to onw digit.")
+test_output_contains("pca_pr")
+test_object("pc_lab")
+
+test_error()
+success_msg("Very nice work!")
+```
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:f3942b76fc
+## Video: Multiple Correspondence Analysis
+
+*** =video_link
+//player.vimeo.com/video/204251158
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:51411e6d45
+## It's tea time!
+
+The [Factominer](https://cran.r-project.org/web/packages/FactoMineR/index.html) package contains functions dedicated to multivariate explanatory data analysis. It contains for example methods *(Multiple) Correspondence analysis* , *Multiple Factor analysi*s as well as PCA.
+
+In the next exercises we are going to use the `tea` dataset. The dataset contains the answers of a questionnaire on tea consumption. 
+
+Let's dwell in teas for a bit!
+
+*** =instructions
+- Create the `keep_columns` object. Then `select()` the columns from `tea` to create a new dataset. Save the new data as `tea_time`. 
+- Look at the summaries and structure of the `tea_time` data.
+- Visualize the dataset. Define the plot type by adding `geom_bar()` after initialization of the ggplot. (Ignore the warning.)
+- Adjust the code: the labels of the x-axis are showing poorly. Make the plot more readable by adding `theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))` after barplot the code.
+
+*** =hint
+- `str()` and `summary()`.
+- Use the `+` mark to add functions to `ggplot()`
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+tea <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/tea.csv", sep  =",", header = T)
+
+```
+
+*** =sample_code
+```{r}
+# the tea dataset and packages FactoMineR, ggplot2, dplyr and tidyr are available
+
+# column names to keep in the dataset
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+
+# select the 'keep_columns' to create a new dataset
+tea_time <- select(tea, "change me!")
+
+# look at the summaries and structure of the data
+
+
+
+# visualize the dataset
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") 
+
+
+```
+
+*** =solution
+```{r}
+# the tea dataset and packages FactoMineR, ggplot2, dplyr and tidyr are available
+
+# column names to keep in the dataset
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+
+# select the 'keep_columns' to create a new dataset
+tea_time <- select(tea, one_of(keep_columns))
+
+# look at the summaries and structure of the data
+summary(tea_time)
+str(tea_time)
+
+# visualize the dataset
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+
+```
+
+*** =sct
+```{r}
+test_object("tea_time", incorrect_msg = "Did you create `tea_time`?")
+
+test_function("summary", args = "object",incorrect_msg = "Did you look at the summary of `tea_time`?")
+test_function("str", args = "object",incorrect_msg = "Did you look at the structure of `tea_time`?")
+test_function("geom_bar", not_called_msg = "Please use `geom_bar()` to define the plots as bar plots..")
+
+test_error()
+success_msg("Nice! Pour yourself a cup of tea and continue to the next exercise :) ")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:42c9b3c01b
+## Multiple Correspondence Analysis
+
+[Multiple Correspondence Analysis](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis) (MCA) is a method to analyze qualitative data and it is an extension of Correspondence analysis (CA). MCA can be used to detect patterns or structure in the data as well as in dimension reduction.
+
+*** =instructions
+- Do multiple correspondence analysis with the function `MCA()`. Give `tea_time` as the functions first argument. Note that the `MCA()` function visualizes the analysis by default, and the plots can be turned off with the argument `graph = FALSE`.
+- Look at the summary of the model.
+- Plot the variables of the model. You can either plot the variables or the individuals or both. You can change which one to plot with the `invisible` argument.
+- Adjust the code: add argument `habillage = "quali"` (how french!) to the plot. Do you notice what changes?
+
+*** =hint
+- See the FactoMineR [documentation](https://cran.r-project.org/web/packages/FactoMineR/FactoMineR.pdf) for help 
+
+*** =pre_exercise_code
+```{r}
+tea_time <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/tea_time.csv", sep  =",", header = T)
+
+source("https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/datasets/source_github.R")
+
+source_github()
+
+```
+
+*** =sample_code
+```{r}
+# tea_time is available
+
+# multiple correspondence analysis
+mca <- MCA("change me!", graph = FALSE)
+
+# summary of the model
+
+
+# visualize MCA
+plot("change me!", invisible=c("ind"))
+
+```
+
+*** =solution
+```{r}
+# tea_time is available
+
+# multiple correspondence analysis
+mca <- MCA(tea_time, graph = FALSE)
+
+# summary of the model
+summary(mca)
+
+# visualize MCA
+plot(mca, invisible=c("ind"), habillage = "quali")
+
+```
+
+*** =sct
+```{r}
+test_object("mca", incorrect_msg = "Did you create the `mca` object?")
+test_function("summary", args = "object",incorrect_msg = "Did you look at the summary of the MCA model?")
+test_error()
+success_msg("Dimensions are decreasing fewer by the minute! Good work!")
 ```
