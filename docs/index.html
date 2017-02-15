@@ -1875,9 +1875,10 @@ Proportion of trace:
 <p>On the linear algebra level, Singular Value Decomposition (SVD) is the most important tool for reducing the number of dimensions in multivariate data.</p>
 
 <ul>
+<li>The SVD literally <em>decomposes</em> a matrix into a product of smaller matrices and reveals the most important components</li>
 <li>Principal Component Analysis (PCA) is a statistical procedure which does the same thing</li>
-<li>LDA can also be considered as a dimensionality reduction technique. </li>
-<li>PCA best applies to continuous variables. If the data consists of categorical variables, Correspondece Analysis (CA) can be used.</li>
+<li>Correspondence Analysis (CA) or Multiple CA (MCA) can be used if the data consists of categorical variables</li>
+<li>The classification method LDA can also be considered as a dimensionality reduction technique</li>
 </ul>
 
 </div>
@@ -1886,11 +1887,11 @@ Proportion of trace:
 <section data-transition="default" data-transition-speed="default">
 <h3>Principal Component Analysis (PCA)</h3>
 <div class="slideContent" >
-<p>In PCA, the data is first <em>transformed</em> to a new space with equal or less number of dimensions (new features). These new features are called the <strong>principal components</strong>.  They always have the following properties:</p>
+<p>In PCA, the data is first <em>transformed</em> to a new space with equal or less number of dimensions (new features). These new features are called the <strong>principal components</strong>. They always have the following properties:</p>
 
 <ul>
-<li>The 1st principal component captures the maximum amount of variance from the features in the original data.</li>
-<li>The 2nd principal component is orthogonal to the first and it captures the maximum amount of variability left.</li>
+<li>The 1st principal component captures the maximum amount of variance from the features in the original data</li>
+<li>The 2nd principal component is orthogonal to the first and it captures the maximum amount of variability left</li>
 <li>The same is true for each principal component. They are all <strong>uncorreleated</strong> and each is less important than the previous one, in terms of captured variance.</li>
 </ul>
 
@@ -1898,7 +1899,7 @@ Proportion of trace:
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>Principal Component Analysis (PCA) (2)</h3>
+<h3>Reducing dimensionality with PCA</h3>
 <div class="column column1 slideContent" >
 <p>Given the properties of the principal components, we can simply choose the first few principal components to represent our data.</p>
 
@@ -1986,10 +1987,10 @@ The correlations (and more) can be interpret from the biplot on the left, but ho
 <li>A scatter plot is drawn where the observations are placed on x and y coordinates defined by two principal components (PC&#39;s)</li>
 </ul>
 
-<p><strong>(2)</strong> The original variables and their relationships with both each other and the principal components</p>
+<p><strong>(2)</strong> The original features and their relationships with both each other and the principal components</p>
 
 <ul>
-<li>Arrows and/or labels are drawn to visualize the connections between the original variables and the PC&#39;s. </li>
+<li>Arrows and/or labels are drawn to visualize the connections between the original features and the PC&#39;s. </li>
 </ul>
 
 </div>
@@ -2001,12 +2002,12 @@ The correlations (and more) can be interpret from the biplot on the left, but ho
 <p>In a biplot, the following connections hold:</p>
 
 <ul>
-<li>The angle between arrows representing the original variables can be interpret as the correlation between the variables. Small angle = high positive correlation.</li>
-<li>The angle between a variable and a PC axis can be interpret as the correlation between the two. Small angle = high positive correlation.</li>
-<li>The length of the arrows are proportional to the standard deviations of the variables</li>
+<li>The angle between arrows representing the original features can be interpret as the correlation between the features. Small angle = high positive correlation.</li>
+<li>The angle between a feature and a PC axis can be interpret as the correlation between the two. Small angle = high positive correlation.</li>
+<li>The length of the arrows are proportional to the standard deviations of the features</li>
 </ul>
 
-<p>Biplots can be used to visualize the results of dimensionality reduction methods such as LDA, PCA, Correspondece Analysis (CA) and Multiple CA.</p>
+<p>Biplots can be used to visualize the results of dimensionality reduction methods such as LDA, PCA, Correspondence Analysis (CA) and Multiple CA.</p>
 
 </div>
 

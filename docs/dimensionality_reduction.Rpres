@@ -86,21 +86,23 @@ Tools for dimensionality reduction
 
 On the linear algebra level, Singular Value Decomposition (SVD) is the most important tool for reducing the number of dimensions in multivariate data.
 
+- The SVD literally *decomposes* a matrix into a product of smaller matrices and reveals the most important components
 - Principal Component Analysis (PCA) is a statistical procedure which does the same thing
-- LDA can also be considered as a dimensionality reduction technique. 
-- PCA best applies to continuous variables. If the data consists of categorical variables, Correspondece Analysis (CA) can be used.
+- Correspondence Analysis (CA) or Multiple CA (MCA) can be used if the data consists of categorical variables
+- The classification method LDA can also be considered as a dimensionality reduction technique
 
 Principal Component Analysis (PCA)
 ========================================================
 
-In PCA, the data is first *transformed* to a new space with equal or less number of dimensions (new features). These new features are called the **principal components**.  They always have the following properties:
+In PCA, the data is first *transformed* to a new space with equal or less number of dimensions (new features). These new features are called the **principal components**. They always have the following properties:
 
-- The 1st principal component captures the maximum amount of variance from the features in the original data.
-- The 2nd principal component is orthogonal to the first and it captures the maximum amount of variability left.
+- The 1st principal component captures the maximum amount of variance from the features in the original data
+- The 2nd principal component is orthogonal to the first and it captures the maximum amount of variability left
 - The same is true for each principal component. They are all **uncorreleated** and each is less important than the previous one, in terms of captured variance.
 
-Principal Component Analysis (PCA) (2)
+Reducing dimensionality with PCA
 ========================================================
+incremental: false
 
 Given the properties of the principal components, we can simply choose the first few principal components to represent our data.
 
@@ -143,6 +145,7 @@ PCA is a mathematical tool, not a statistical model, which is why linear algebra
 Biplots
 ========================================================
 type: prompt
+incremental: false
 
 ```{r}
 library(ggfortify)
@@ -180,16 +183,16 @@ A biplot is a way of visualizing two representations of the same data. The biplo
 **(1)** The observations in a lower (2-)dimensional representation
 - A scatter plot is drawn where the observations are placed on x and y coordinates defined by two principal components (PC's)
 
-**(2)** The original variables and their relationships with both each other and the principal components
-- Arrows and/or labels are drawn to visualize the connections between the original variables and the PC's. 
+**(2)** The original features and their relationships with both each other and the principal components
+- Arrows and/or labels are drawn to visualize the connections between the original features and the PC's. 
 
 Properties of biplots
 ========================================================
 
 In a biplot, the following connections hold:
 
-- The angle between arrows representing the original variables can be interpret as the correlation between the variables. Small angle = high positive correlation.
-- The angle between a variable and a PC axis can be interpret as the correlation between the two. Small angle = high positive correlation.
-- The length of the arrows are proportional to the standard deviations of the variables
+- The angle between arrows representing the original features can be interpret as the correlation between the features. Small angle = high positive correlation.
+- The angle between a feature and a PC axis can be interpret as the correlation between the two. Small angle = high positive correlation.
+- The length of the arrows are proportional to the standard deviations of the features
 
-Biplots can be used to visualize the results of dimensionality reduction methods such as LDA, PCA, Correspondece Analysis (CA) and Multiple CA.
+Biplots can be used to visualize the results of dimensionality reduction methods such as LDA, PCA, Correspondence Analysis (CA) and Multiple CA.
