@@ -388,7 +388,7 @@ test_error()
 success_msg("Great work!!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:f3942b76fc
 ## Video: Dimensionality reduction with PCA
 
 *** =video_link
@@ -467,7 +467,7 @@ test_error()
 success_msg("Great work!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:d35fcf3d41
 ## Video: Biplots
 
 *** =video_link
