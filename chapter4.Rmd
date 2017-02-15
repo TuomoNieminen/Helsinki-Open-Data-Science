@@ -609,7 +609,7 @@ tea_time <- select(tea, "change me!")
 
 
 # visualize the dataset
-p <- gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") 
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") 
 
 
 ```
