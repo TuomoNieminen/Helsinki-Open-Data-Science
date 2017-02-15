@@ -564,7 +564,6 @@ In the next exercises we are going to use the `tea` dataset. The dataset contain
 Let's dwell in teas for a bit!
 
 *** =instructions
-- Look at first six rows of the `tea` dataset
 - Create the `keep_columns` object. Then `select()` the columns from `tea` to create a new dataset. Save the new data as `tea_time`. 
 - Look at the summaries and structure of the `tea_time` data.
 - visu !
@@ -582,9 +581,6 @@ tea <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course
 *** =sample_code
 ```{r}
 # the tea dataset and packages FactoMineR and dplyr are available
-
-# look at the head of the tea dataset
-
 
 # column names to keep in the dataset
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
@@ -604,9 +600,6 @@ tea_time <- select(tea, "change me!")
 *** =solution
 ```{r}
 # the tea dataset and packages FactoMineR and dplyr are available
-
-# look at the head of the tea dataset
-head(tea)
 
 # column names to keep in the dataset
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
