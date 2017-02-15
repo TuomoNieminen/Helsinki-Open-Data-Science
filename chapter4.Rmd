@@ -519,7 +519,7 @@ pca_pr <- round(1*s$importance[2, ], digits = 5)
 
 
 # create object pc_lab to be used as axis labels
-paste0("PC", 1:8, " (", pca_pr, "%)")
+paste0(names(pca_pr), " (", pca_pr, "%)")
 
 # draw a biplot
 biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = NA, ylab = NA)
@@ -544,7 +544,7 @@ pca_pr <- round(100*s$importance[2,], digits = 1)
 pca_pr
 
 # create object pc_lab to be used as axis labels
-pc_lab <- paste0("PC", 1:8, " (", pca_pr, "%)")
+pc_lab <- paste0(names(pca_pr), " (", pca_pr, "%)")
 
 # draw a biplot
 biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
