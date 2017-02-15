@@ -566,6 +566,13 @@ test_error()
 success_msg("Very nice work!")
 ```
 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:f3942b76fc
+## Video: Multiple Correspondence Analysis
+
+*** =video_link
+//player.vimeo.com/video/204251158
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:51411e6d45
 ## It's tea time!
 
