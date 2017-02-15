@@ -29,7 +29,6 @@ incremental: false
 - Logistic regression
 - Clustering and classification  
 - Dimensionality reduction techniques  
-- Multivariate statistical modelling  
 
 
 
@@ -226,7 +225,7 @@ A statistical model always includes several assumptions which describe the data 
 
 Assumptions of linear regression models
 ========================================================
-Analyzing the *residuals* of the model provides a method to exlopore the validity of the model assumptions. A lot of interesting assumptions are included in the expression 
+Analyzing the *residuals* of the model provides a method to explore the validity of the model assumptions. A lot of interesting assumptions are included in the expression 
 
 $$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 
@@ -780,9 +779,8 @@ Tools for dimensionality reduction
 On the linear algebra level, Singular Value Decomposition (SVD) is the most important tool for reducing the number of dimensions in multivariate data.
 
 - Principal Component Analysis (PCA) is a statistical procedure which does the same thing
-- LDA can also be considered as a dimensionality reduction technique. The visualisation techniques related to PCA and LDA are similar (**biplot**).
-- Unlike LDA, **PCA has no criteria or target variable** for the reduction. In machine learning vocabulary, PCA may therefore be called an **unsupervised** method.
-
+- LDA can also be considered as a dimensionality reduction technique. 
+- PCA best applies to continuous variables. If the data consists of categorical variables, Correspondece Analysis (CA) can be used.
 
 Principal Component Analysis (PCA)
 ========================================================
@@ -804,14 +802,14 @@ This will give us uncorrelated variables which capture the maximum amount of var
 
 ![plot of chunk unnamed-chunk-5](dimensionality_reduction-figure/unnamed-chunk-5-1.png)
 
-<small>*The dimensionality of iris reduced to two principal components (PC). The first PC captures more than 90% of the total variance in the 4 original variables.*</small>
+<small>*The dimensionality of iris reduced to two principal components (PC). The first PC captures more than 70% of the total variance in the 4 original variables.*</small>
 
 About PCA
 ========================================================
-Because of it's unsuperwised nature, PCA operates on numerical data rather blindly.
+Unlike LDA, PCA has no criteria or target variable. PCA may therefore be called an **unsupervised** method.  
 
-- PCA is sensitive to the relative scaling of the original features. PCA assumes that features with larger variance are more important than features with smaller variance.
-- If higher measurements do not correspond to higher importance/effect in your data, the features should be **standardized** before performing PCA
+- PCA is sensitive to the relative scaling of the original features and assumes that features with larger variance are more important than features with smaller variance.  
+- **Standardization** of the features before PCA is often a good idea.
 - PCA is powerful at encapsulating correlations between the original features into a smaller number of uncorrelated dimensions
 
 About PCA (2)
@@ -822,6 +820,50 @@ PCA is a mathematical tool, not a statistical model, which is why linear algebra
 - It is also possible to model the dimensionality using underlying latent variables with for example Factor Analysis
 - These advanced methods of multivariate analysis are not part of this course
 
+Biplots
+========================================================
+type: prompt
+
+![plot of chunk unnamed-chunk-6](dimensionality_reduction-figure/unnamed-chunk-6-1.png)
+
+***
+<br>
+Correlations of iris
+
+<font size = 5.5>
+
+```
+        Sep.Len Sep.Wid Pet.Len Pet.Wid
+Sep.Len    1.00   -0.12    0.87    0.82
+Sep.Wid   -0.12    1.00   -0.43   -0.37
+Pet.Len    0.87   -0.43    1.00    0.96
+Pet.Wid    0.82   -0.37    0.96    1.00
+```
+</font>
+<br>
+The correlations (and more) can be interpret from the biplot on the left, but how?
+
+
+The 'Bi' in Biplots
+========================================================
+A biplot is a way of visualizing two representations of the same data. The biplot displays:
+
+**(1)** The observations in a lower (2-)dimensional representation
+- A scatter plot is drawn where the observations are placed on x and y coordinates defined by two principal components (PC's)
+
+**(2)** The original variables and their relationships with both each other and the principal components
+- Arrows and/or labels are drawn to visualize the connections between the original variables and the PC's. 
+
+Properties of biplots
+========================================================
+
+In a biplot, the following connections hold:
+
+- The angle between arrows representing the original variables can be interpret as the correlation between the variables. Small angle = high positive correlation.
+- The angle between a variable and a PC axis can be interpret as the correlation between the two. Small angle = high positive correlation.
+- The length of the arrows are proportional to the standard deviations of the variables
+
+Biplots can be used to visualize the results of dimensionality reduction methods such as LDA, PCA, Correspondece Analysis (CA) and Multiple CA.
 
 
 

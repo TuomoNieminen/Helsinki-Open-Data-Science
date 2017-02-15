@@ -40,7 +40,6 @@ incremental: false
 - Logistic regression
 - Clustering and classification  
 - Dimensionality reduction techniques  
-- Multivariate statistical modelling  
 
 
 ```{r child ="regression.md"}

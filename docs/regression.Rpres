@@ -236,7 +236,7 @@ A statistical model always includes several assumptions which describe the data 
 
 Assumptions of linear regression models
 ========================================================
-Analyzing the *residuals* of the model provides a method to exlopore the validity of the model assumptions. A lot of interesting assumptions are included in the expression 
+Analyzing the *residuals* of the model provides a method to explore the validity of the model assumptions. A lot of interesting assumptions are included in the expression 
 
 $$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 
