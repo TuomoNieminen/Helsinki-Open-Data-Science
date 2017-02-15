@@ -713,16 +713,6 @@ $WCSS = \sum_i^N (x_i - centroid)^2$
 
 So you are searching for the number of clusters, where the observations are closest to the cluster center. 
 
-Update treshold
-========================================================
-type: alert
-
-Please note that the following slides are drafts and subject to changes.
-
-<img src = "https://upload.wikimedia.org/wikipedia/en/6/69/Stop_sign(standard).svg" height = "500px>
-
-========================================================
-
 
 Dimensionality Reduction Techniques
 ========================================================
@@ -1074,3 +1064,11 @@ left: 50%
 
 ![plot of chunk unnamed-chunk-5](mca-figure/unnamed-chunk-5-1.png)
 
+
+
+========================================================
+type: prompt
+
+<img src = "https://upload.wikimedia.org/wikipedia/commons/2/25/Thank-you-word-cloud.jpg" height = "500px>
+
+========================================================

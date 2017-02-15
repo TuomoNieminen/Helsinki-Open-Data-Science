@@ -51,18 +51,16 @@ incremental: false
 ```{r child = "cluster_classification.md"}
 ```
 
-Update treshold
-========================================================
-type: alert
-
-Please note that the following slides are drafts and subject to changes.
-
-<img src = "https://upload.wikimedia.org/wikipedia/en/6/69/Stop_sign(standard).svg" height = "500px>
-
-========================================================
-
 ```{r child = "dimensionality_reduction.md"}
 ```
 
 ```{r child = "mca.md"}
 ```
+
+
+========================================================
+type: prompt
+
+<img src = "https://upload.wikimedia.org/wikipedia/commons/2/25/Thank-you-word-cloud.jpg" height = "500px>
+
+========================================================
