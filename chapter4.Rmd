@@ -236,7 +236,7 @@ df[, c(2, 5)] # select 2nd and 5th columns
 - Define the rownames in `human_` by the Country column
 
 *** =hint
-- Use `1:i_last` to select rows from 1 to `i_last`
+- Use `1:last` to select rows from 1 to `last`
 
 *** =pre_exercise_code
 ```{r}
