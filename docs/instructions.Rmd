@@ -23,6 +23,4 @@ The slides can be converted to pdf using [decktape](https://github.com/astefanut
 
 `.\phantomjs decktape.js reveal https://tuomonieminen.github.io/Helsinki-Open-Data-Science/#/ iods_slides.pdf`
 
-
-
 <hr>
