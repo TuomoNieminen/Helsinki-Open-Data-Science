@@ -18,4 +18,9 @@ Finally, transform the "index.Rpres" into an html document. For this, again use 
 ## 5.  
 After these steps, simply push the changes to GitHub and the presentation will be updated at the GitHub web page related to the helsinki-open-data-science repository (github pages are enabled at Settings - GitHub pages). [link to presentation](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/)
 
+## 6. 
+The slides can be converted to (ugly) pdf with [pandoc](http://pandoc.org): 
+
+`pandoc -s -t beamer index.md -o slides.pdf`
+
 <hr>
