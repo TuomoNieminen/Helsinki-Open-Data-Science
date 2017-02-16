@@ -8,21 +8,22 @@ incremental: false
 autosize: true
 transition: rotate
 
-University of Helsinki, spring 2017
-- Tuomo Nieminen and Emma Kämäräinen with
-- Adjunct professor Kimmo Vehkalahti
+University of Helsinki, spring 2017  
+- Tuomo Nieminen and Emma Kämäräinen with  
+- Adjunct professor Kimmo Vehkalahti  
 
 <br>
 
 Powered by Rpresentation. The code for this presentation is [here](
 https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/index.Rpres)
 
+
+From data wrangling to exploration and modelling
 ========================================================
 type: prompt
 
 <div align="center">
-From data wrangling to exploration and modelling
-</div><br>
+</div>
 <img src="index-figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" />
 
 

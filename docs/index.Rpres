@@ -10,22 +10,23 @@ incremental: false
 autosize: true
 transition: rotate
 
-University of Helsinki, spring 2017
-- Tuomo Nieminen and Emma Kämäräinen with
-- Adjunct professor Kimmo Vehkalahti
+University of Helsinki, spring 2017  
+- Tuomo Nieminen and Emma Kämäräinen with  
+- Adjunct professor Kimmo Vehkalahti  
 
 <br>
 
 Powered by Rpresentation. The code for this presentation is [here](
 https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/index.Rpres)
 
+
+From data wrangling to exploration and modelling
 ========================================================
 type: prompt
 
 <div align="center">
-From data wrangling to exploration and modelling
-</div><br>
-```{r, fig.align = "center", fig.width = 10}
+</div>
+```{r, fig.align = "center", fig.width = 9}
 library(ggplot2); library(ggExtra)
 
 learning2014 <-  read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/learning2014.txt", sep = "\t", header = TRUE)

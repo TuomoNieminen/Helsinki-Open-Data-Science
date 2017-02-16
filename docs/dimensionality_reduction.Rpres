@@ -104,9 +104,9 @@ Reducing dimensionality with PCA
 ========================================================
 incremental: false
 
-Given the properties of the principal components, we can simply choose the first few principal components to represent our data.
+Given the properties of the principal components, we can simply choose the first few principal components to represent our data.  
 
-This will give us uncorrelated variables which capture the maximum amount of variation in the data!
+- This will give us uncorrelated variables which capture the maximum amount of variation in the data!
 
 ***
 
@@ -180,11 +180,14 @@ The 'Bi' in Biplots
 ========================================================
 A biplot is a way of visualizing two representations of the same data. The biplot displays:
 
-**(1)** The observations in a lower (2-)dimensional representation
-- A scatter plot is drawn where the observations are placed on x and y coordinates defined by two principal components (PC's)
+**(1)** The observations in a lower (2-)dimensional representation  
 
-**(2)** The original features and their relationships with both each other and the principal components
-- Arrows and/or labels are drawn to visualize the connections between the original features and the PC's. 
+- A scatter plot is drawn where the observations are placed on x and y coordinates defined by two principal components (PC's)  
+
+**(2)** The original features and their relationships with both each other and the principal components  
+
+- Arrows and/or labels are drawn to visualize the connections between the original features and the PC's.  
+
 
 Properties of biplots
 ========================================================
@@ -316,11 +319,13 @@ autosize: true
 
 <font size=5>
 
-Visualizing MCA:
-- You can plot for variables, individuals and background (supplementary variables) separately or you can draw them in the same plot. 
-- `plot.MCA()` function in R (from FactoMineR) has a lot of options for plotting
-- See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
-- Let's look at a minimal example on the next slide.
+Visualizing MCA:  
+
+- You can plot for variables, individuals and background (supplementary variables) separately or you can draw them in the same plot.  
+- `plot.MCA()` function in R (from FactoMineR) has a lot of options for plotting  
+- See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).  
+- Let's look at a minimal example on the next slide.  
+
 
 </font>
 
