@@ -4,7 +4,7 @@
 
 This a <a href=https://www.datacamp.com target="_blank">DataCamp</a> course created by Tuomo Nieminen and Emma Kämäräinen for the use of a University of Helsinki course Introduction to Open Data Science, thought by prof. Kimmo Vehkalahti.
 
-See the also the course slides  [here](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/#).  
+See the also the course slides  [here](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/#). The course slides have been created by Rpresentation. The files and more information are found in the 'docs' folder.
 
 Changes you make to this GitHub repository are automatically reflected in the linked DataCamp course. This means that you can enjoy all the advantages of version control, collaboration, issue handling ... of GitHub.
 
