@@ -1,6 +1,5 @@
 Clustering and classification
 ========================================================
-css: index.css
 type: sub-section
 
 For IODS by Emma Kämäräinen
@@ -10,7 +9,7 @@ For IODS by Emma Kämäräinen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/cluster_classification.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here.](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/cluster_classification.Rpres)
 
 
 

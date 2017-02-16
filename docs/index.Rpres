@@ -14,6 +14,11 @@ University of Helsinki, spring 2017
 - Tuomo Nieminen and Emma Kämäräinen with
 - Adjunct professor Kimmo Vehkalahti
 
+<br>
+
+Powered by Rpresentation. The code for this presentation is [here](
+https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/index.Rpres)
+
 ========================================================
 type: prompt
 
@@ -34,29 +39,32 @@ ggMarginal(p,type="histogram", bins=15, colour="white")
 
 Contents
 ========================================================
-incremental: false
+type: prompt
 
-- Regression and model validation  
-- Logistic regression
-- Clustering and classification  
-- Dimensionality reduction techniques  
+<br>
+
+1. Regression and model validation  
+2. Logistic regression  
+3. Clustering and classification  
+4. Dimensionality reduction techniques  
 
 
 ```{r child ="regression.md"}
 ```
+<!--link: https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/regression.Rpres --> 
 
 ```{r child = "logistic_regression.md"}
 ```
+<!--link: https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/logistic_regression.Rpres --> 
 
 ```{r child = "cluster_classification.md"}
 ```
+<!--link: 
+https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/cluster_classification.Rpres -->
 
 ```{r child = "dimensionality_reduction.md"}
 ```
-
-```{r child = "mca.md"}
-```
-
+<!--link: https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/dimensionality_reduction.RPres -->
 
 ========================================================
 type: prompt

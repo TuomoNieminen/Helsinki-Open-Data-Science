@@ -10,7 +10,7 @@ For IODS by Tuomo Nieminen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/logistic_regression.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here.](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/logistic_regression.Rpres)
 
 
 

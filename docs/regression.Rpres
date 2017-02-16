@@ -12,7 +12,6 @@ learning2014 <- learning2014[learning2014$points > 0,]
 
 Linear regression and model validation
 ========================================================
-css: index.css
 type: sub-section
 
 For IODS by Tuomo Nieminen
@@ -22,7 +21,7 @@ For IODS by Tuomo Nieminen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/regression.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here.](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/regression.Rpres)
 
 Linear regression models
 ========================================================
@@ -56,9 +55,9 @@ What is a statistical model?
 ========================================================
 
 A statistical model: 
-- Embodies a set of assumptions and describes the generation of a sample from a population
-- Represents the data generating process
-- The uncertainty related to a sample of data is described using probability distributions
+- Embodies a set of assumptions and describes the generation of a sample from a population  
+- Represents the data generating process  
+- The uncertainty related to a sample of data is described using probability distributions  
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
 
@@ -69,8 +68,8 @@ Linear regression is an approach for modeling the relationship between a depende
 
 There are many applications for linear models such as
 
-- Prediction or forecasting
-- Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$
+- Prediction or forecasting  
+- Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$  
 
 
 Simple regression
@@ -124,9 +123,9 @@ In linear regression, it is assumed that the relationship between the target var
 
 $$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
 
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
-- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
-- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$  
+- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations  
+- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$  
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
@@ -134,19 +133,19 @@ Structure of a linear model
 ========================================================
 In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$
 
-- $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
-- $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
-- $\beta$ quantifies the relationship between $\boldsymbol{y}$ and  $\boldsymbol{x}$.
-- $\boldsymbol{\epsilon}$ describes the errors (or the uncertainty) of the model
+- $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.  
+- $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.  
+- $\beta$ quantifies the relationship between $\boldsymbol{y}$ and  $\boldsymbol{x}$.  
+- $\boldsymbol{\epsilon}$ describes the errors (or the uncertainty) of the model  
 
 
 Finding the model
 ========================================================
 The best model is found by minimizing the prediction errors that the model would make
 
-- $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions
-- $\boldsymbol{\hat{\epsilon}} = \hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals
-- The model is found by minimizing the sum of squared residuals
+- $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions  
+- $\boldsymbol{\hat{\epsilon}} = \hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals  
+- The model is found by minimizing the sum of squared residuals  
 
 ***
 
@@ -170,9 +169,9 @@ Interpreting the parameters
 ========================================================
 When the model is $$\boldsymbol{y} = \alpha + \beta_1 \boldsymbol{x}_1 + \beta_2 \boldsymbol{x}_2 + \boldsymbol{\epsilon}$$
 
-- The main interest is to estimate the $\boldsymbol{\beta}$ parameters
-- Interpretation of an estimate $\hat{\beta_1} = 2$: 
-  - When $x_1$ increases by one unit, the average change in $y$ is 2 units, given that the other variables (here $x_2$) do not change.
+- The main interest is to estimate the $\boldsymbol{\beta}$ parameters  
+- Interpretation of an estimate $\hat{\beta_1} = 2$:   
+  - When $x_1$ increases by one unit, the average change in $y$ is 2 units, given that the other variables (here $x_2$) do not change.  
 
 R linear model summary()
 ========================================================
@@ -229,9 +228,9 @@ Model assumptions
 ========================================================
 A statistical model always includes several assumptions which describe the data generating process.  
 
-- How well the model describes the phenomenom of interest, depends on how well the assumptions fit reality.
-- In a linear regression model an obvious assumption is linearity: The target variable is modelled as a linear combination of the model parameters.
-- Usually it is assumed that the errors are normally distributed.
+- How well the model describes the phenomenom of interest, depends on how well the assumptions fit reality.  
+- In a linear regression model an obvious assumption is linearity: The target variable is modelled as a linear combination of the model parameters.  
+- Usually it is assumed that the errors are normally distributed.  
 
 
 Assumptions of linear regression models
@@ -240,10 +239,10 @@ Analyzing the *residuals* of the model provides a method to explore the validity
 
 $$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 
-- The errors are normally distributed
-- The errors are not correlated
-- The errors have constant variance, $\sigma^2$
-- The size of a given error does not depend on the explanatory variables
+- The errors are normally distributed  
+- The errors are not correlated  
+- The errors have constant variance, $\sigma^2$  
+- The size of a given error does not depend on the explanatory variables  
 
 Normality of the errors (QQ-plot)
 ========================================================

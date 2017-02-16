@@ -12,6 +12,11 @@ University of Helsinki, spring 2017
 - Tuomo Nieminen and Emma Kämäräinen with
 - Adjunct professor Kimmo Vehkalahti
 
+<br>
+
+Powered by Rpresentation. The code for this presentation is [here](
+https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/index.Rpres)
+
 ========================================================
 type: prompt
 
@@ -23,12 +28,14 @@ From data wrangling to exploration and modelling
 
 Contents
 ========================================================
-incremental: false
+type: prompt
 
-- Regression and model validation  
-- Logistic regression
-- Clustering and classification  
-- Dimensionality reduction techniques  
+<br>
+
+1. Regression and model validation  
+2. Logistic regression  
+3. Clustering and classification  
+4. Dimensionality reduction techniques  
 
 
 
@@ -40,7 +47,6 @@ incremental: false
 
 Linear regression and model validation
 ========================================================
-css: index.css
 type: sub-section
 
 For IODS by Tuomo Nieminen
@@ -50,7 +56,7 @@ For IODS by Tuomo Nieminen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/regression.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here.](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/regression.Rpres)
 
 Linear regression models
 ========================================================
@@ -70,9 +76,9 @@ What is a statistical model?
 ========================================================
 
 A statistical model: 
-- Embodies a set of assumptions and describes the generation of a sample from a population
-- Represents the data generating process
-- The uncertainty related to a sample of data is described using probability distributions
+- Embodies a set of assumptions and describes the generation of a sample from a population  
+- Represents the data generating process  
+- The uncertainty related to a sample of data is described using probability distributions  
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Statistical_model) -->
 
@@ -83,8 +89,8 @@ Linear regression is an approach for modeling the relationship between a depende
 
 There are many applications for linear models such as
 
-- Prediction or forecasting
-- Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$
+- Prediction or forecasting  
+- Quantifying the strength of the relationship between $\boldsymbol{y}$ and $\boldsymbol{x}$  
 
 
 Simple regression
@@ -122,9 +128,9 @@ In linear regression, it is assumed that the relationship between the target var
 
 $$\boldsymbol{y} = \boldsymbol{\alpha} +  \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
 
-- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$
-- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations
-- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$
+- The goal is to estimate the parameters $\alpha$ and $\boldsymbol{\beta}$, which describe the relationship with the explanatory variables $\boldsymbol{X}$  
+- An unobservable random variable ($\boldsymbol{\epsilon}$) is assumed to add noise to the observations  
+- Often it is reasonable to assume $\boldsymbol{\epsilon} \sim N(0, \sigma^2)$  
 
 <!-- source: [wikipedia](https://en.wikipedia.org/wiki/Linear_regression) -->
 
@@ -132,19 +138,19 @@ Structure of a linear model
 ========================================================
 In the simple linear equation $\boldsymbol{y} =  \alpha + \beta \boldsymbol{x} + \boldsymbol{\epsilon}$
 
-- $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.
-- $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.
-- $\beta$ quantifies the relationship between $\boldsymbol{y}$ and  $\boldsymbol{x}$.
-- $\boldsymbol{\epsilon}$ describes the errors (or the uncertainty) of the model
+- $\boldsymbol{y}$ is the target variable: we wish to predict the values of $\boldsymbol{y}$ using the values of $\boldsymbol{x}$.  
+- $\alpha + \beta \boldsymbol{x}$ is the systematic part of the model.  
+- $\beta$ quantifies the relationship between $\boldsymbol{y}$ and  $\boldsymbol{x}$.  
+- $\boldsymbol{\epsilon}$ describes the errors (or the uncertainty) of the model  
 
 
 Finding the model
 ========================================================
 The best model is found by minimizing the prediction errors that the model would make
 
-- $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions
-- $\boldsymbol{\hat{\epsilon}} = \hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals
-- The model is found by minimizing the sum of squared residuals
+- $\hat{\boldsymbol{y}} = \hat{\alpha} + \hat{\beta} \boldsymbol{x}$ are the predictions  
+- $\boldsymbol{\hat{\epsilon}} = \hat{\boldsymbol{y}} - \boldsymbol{y}$ are the prediction errors, called residuals  
+- The model is found by minimizing the sum of squared residuals  
 
 ***
 
@@ -154,9 +160,9 @@ Interpreting the parameters
 ========================================================
 When the model is $$\boldsymbol{y} = \alpha + \beta_1 \boldsymbol{x}_1 + \beta_2 \boldsymbol{x}_2 + \boldsymbol{\epsilon}$$
 
-- The main interest is to estimate the $\boldsymbol{\beta}$ parameters
-- Interpretation of an estimate $\hat{\beta_1} = 2$: 
-  - When $x_1$ increases by one unit, the average change in $y$ is 2 units, given that the other variables (here $x_2$) do not change.
+- The main interest is to estimate the $\boldsymbol{\beta}$ parameters  
+- Interpretation of an estimate $\hat{\beta_1} = 2$:   
+  - When $x_1$ increases by one unit, the average change in $y$ is 2 units, given that the other variables (here $x_2$) do not change.  
 
 R linear model summary()
 ========================================================
@@ -218,9 +224,9 @@ Model assumptions
 ========================================================
 A statistical model always includes several assumptions which describe the data generating process.  
 
-- How well the model describes the phenomenom of interest, depends on how well the assumptions fit reality.
-- In a linear regression model an obvious assumption is linearity: The target variable is modelled as a linear combination of the model parameters.
-- Usually it is assumed that the errors are normally distributed.
+- How well the model describes the phenomenom of interest, depends on how well the assumptions fit reality.  
+- In a linear regression model an obvious assumption is linearity: The target variable is modelled as a linear combination of the model parameters.  
+- Usually it is assumed that the errors are normally distributed.  
 
 
 Assumptions of linear regression models
@@ -229,10 +235,10 @@ Analyzing the *residuals* of the model provides a method to explore the validity
 
 $$\boldsymbol{\epsilon} \sim N(0, \sigma^2)$$
 
-- The errors are normally distributed
-- The errors are not correlated
-- The errors have constant variance, $\sigma^2$
-- The size of a given error does not depend on the explanatory variables
+- The errors are normally distributed  
+- The errors are not correlated  
+- The errors have constant variance, $\sigma^2$  
+- The size of a given error does not depend on the explanatory variables  
 
 Normality of the errors (QQ-plot)
 ========================================================
@@ -276,6 +282,7 @@ Leverage of observations (3)
 ========================================================
 
 ![plot of chunk unnamed-chunk-15](regression-figure/unnamed-chunk-15-1.png)
+<!--link: https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/regression.Rpres --> 
 
 
 
@@ -290,7 +297,7 @@ For IODS by Tuomo Nieminen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/logistic_regression.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here.](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/logistic_regression.Rpres)
 
 
 
@@ -523,11 +530,11 @@ Below is an example of 5-fold cross-validation
 ![](https://prateekvjoshi.files.wordpress.com/2013/06/cross-validation.png)
 
 The data is divided into subsets K times and eventually all the data is used for both training and testing.  
+<!--link: https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/logistic_regression.Rpres --> 
 
 
 Clustering and classification
 ========================================================
-css: index.css
 type: sub-section
 
 For IODS by Emma Kämäräinen
@@ -537,7 +544,7 @@ For IODS by Emma Kämäräinen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here.](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/cluster_classification.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here.](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/cluster_classification.Rpres)
 
 
 
@@ -712,6 +719,8 @@ Total within sum of squares is calculated by adding the within cluster sum of sq
 $WCSS = \sum_i^N (x_i - centroid)^2$
 
 So you are searching for the number of clusters, where the observations are closest to the cluster center. 
+<!--link: 
+https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/cluster_classification.Rpres -->
 
 
 Dimensionality Reduction Techniques
@@ -725,7 +734,7 @@ For IODS by Tuomo Nieminen & Emma Kämäräinen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/dimensionality_reduction.Rpres) and [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/mca.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/dimensionality_reduction.Rpres)
 
 
 
@@ -858,16 +867,13 @@ In a biplot, the following connections hold:
 
 Biplots can be used to visualize the results of dimensionality reduction methods such as LDA, PCA, Correspondence Analysis (CA) and Multiple CA.
 
-
-
-
 Multiple Correspondence Analysis
 ========================================================
 type: prompt
 incremental: false
 autosize: true
 
-![plot of chunk unnamed-chunk-2](mca-figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-8](dimensionality_reduction-figure/unnamed-chunk-8-1.png)
 
 
 Multiple Correspondence Analysis
@@ -1062,9 +1068,9 @@ left: 50%
 
 ***
 
-![plot of chunk unnamed-chunk-5](mca-figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-11](dimensionality_reduction-figure/unnamed-chunk-11-1.png)
 
-
+<!--link: https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/dimensionality_reduction.RPres -->
 
 ========================================================
 type: prompt

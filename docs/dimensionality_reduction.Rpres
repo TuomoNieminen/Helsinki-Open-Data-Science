@@ -9,7 +9,7 @@ For IODS by Tuomo Nieminen & Emma Kämäräinen
 <br>
 <br>
 
-Powered by RMarkdown. The code for this presentation is  [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/dimensionality_reduction.Rpres) and [here](https://github.com/TuomoNieminen/Helsinki-Open-Data-Science/blob/master/docs/mca.Rpres)
+Powered by Rpresentation. The code for this presentation is  [here](https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/docs/dimensionality_reduction.Rpres)
 
 ```{r, include = F}
 # setup
@@ -196,3 +196,153 @@ In a biplot, the following connections hold:
 - The length of the arrows are proportional to the standard deviations of the features
 
 Biplots can be used to visualize the results of dimensionality reduction methods such as LDA, PCA, Correspondence Analysis (CA) and Multiple CA.
+
+Multiple Correspondence Analysis
+========================================================
+type: prompt
+incremental: false
+autosize: true
+
+```{r, echo=FALSE}
+library(FactoMineR)
+library(RColorBrewer)
+data(hobbies)
+res.mca <- MCA(hobbies,quali.sup=19:22,quanti.sup=23, graph=F)
+plot(res.mca,invisible=c("ind","quali.sup"), cex=.8, col.var=col, habillage = "quali", palette=palette(brewer.pal(8, 'Dark2'))) 
+```
+
+
+Multiple Correspondence Analysis
+========================================================
+incremental: false
+autosize: true
+
+<font size=6>
+
+- Dimensionality reduction method
+- Analyses the pattern of relationships of several categorical
+variables
+- Generalization of PCA and a extension of correspondence analysis (CA)
+- Deals with categorical variables, but continuous ones can be used as background (supplementary) variables
+- Can be used with qualitative data, so there are little assumptions about the variables or the data in general. MCA uses frequencies and you can count those even from text based datasets.
+
+</font>
+
+Multiple Correspondence Analysis
+========================================================
+incremental: false
+autosize: true
+
+<font size=6>
+
+- For the categorical variables, you can either use the [indicator matrix or the Burt matrix](https://en.wikipedia.org/wiki/Multiple_correspondence_analysis#As_an_extension_of_correspondences_analysis) in the analysis
+    - The Indicator matrix contains all the levels of categorical variables as a binary variables (1 = belongs to category, 0 = if doesn't)
+    - Burt matrix is a matrix of two-way cross-tabulations between all the variables in the dataset
+- The general aim is to condense and present the information of the cross-tabulations in a clear graphical form
+- Correspondence Analysis (a special case of MCA) works similarly with a cross-table of only two categorical variables
+- There are also several other variations of the CA methods
+
+- And next, let's look how the MCA outputs look in R!
+
+</font>
+
+MCA summary(1)
+========================================================
+incremental: false
+autosize: true
+left: 40%
+
+<font size=5>
+
+Output of MCA summary contains...
+
+- **Eigenvalues**: the variances and the percentage of variances retained by each dimension
+- **Individuals**: the individuals coordinates, the individuals contribution (%) on the dimension and the cos2 (the squared correlations) on the dimensions.
+
+</font>
+
+***
+
+<font size=4>
+
+```{r, echo=FALSE}
+
+tea_time <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/tea_time.csv", sep  =",", header = T)
+data <- dplyr::select(tea_time, dplyr::one_of(c('Tea', 'lunch', 'sugar')))
+colnames(data)<- c('Var1', 'Var2', 'Var3')
+levels(data$Var1) <-c("Label1", "Label2", "Label3")
+levels(data$Var2) <-c("Level1", "Level2")
+levels(data$Var3) <-c("Name1", "Name2")
+
+res.mca <- MCA(data, graph = FALSE, method = 'indicator')
+summary(res.mca, nbelements = 3)
+
+```
+
+</font>
+
+MCA summary(2)
+========================================================
+incremental: false
+autosize: true
+left: 40%
+
+<font size=5>
+
+Output of MCA summary contains...
+
+- **Categories**: the coordinates of the variable categories, the contribution (%), the cos2 (the squared correlations) and v.test value. The v.test follows normal distribution: if the value is below/above $\pm$ 1.96, the coordinate is significantly different from zero.
+- **Categorical variables**: the squared correlation between each variable and the dimensions. If the value is close to one it indicates a strong link with the variable and dimension.
+
+</font>
+
+***
+
+<font size=4>
+
+```{r, echo=FALSE}
+summary(res.mca, nbelements = 3)
+```
+
+Read more from [here](http://www.sthda.com/english/wiki/multiple-correspondence-analysis-essentials-interpretation-and-application-to-investigate-the-associations-between-categories-of-multiple-qualitative-variables-r-software-and-data-mining) and [here](http://factominer.free.fr/classical-methods/multiple-correspondence-analysis.html)
+
+</font>
+
+
+MCA biplot(1)
+========================================================
+incremental: false
+autosize: true
+
+<font size=5>
+
+Visualizing MCA:
+- You can plot for variables, individuals and background (supplementary variables) separately or you can draw them in the same plot. 
+- `plot.MCA()` function in R (from FactoMineR) has a lot of options for plotting
+- See a [video](https://www.youtube.com/watch?v=reG8Y9ZgcaQ) of MCA (plotting options start at 5:36).
+- Let's look at a minimal example on the next slide.
+
+</font>
+
+MCA biplot(2)
+========================================================
+incremental: false
+autosize: true
+left: 50%
+
+<font size=5>
+
+- On the right we have MCA factor map (biplot), where are variables drawn on the first two dimensions
+    - The MCA biplot is a good visualization to see the possible variable patterns
+    - The distance between variable categories gives a measure of their similarity
+    - For example Label2 and Name2 are more similar than Label2 and Level2 and Label3 is different from all the other categories
+
+
+</font>
+
+***
+
+```{r, fig.height = 6}
+plot(res.mca, invisible=c("ind"), habillage = "quali", cex = 1.3, palette=palette(brewer.pal(8, 'Dark2')))
+```
+

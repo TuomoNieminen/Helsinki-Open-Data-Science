@@ -7,16 +7,15 @@ These instructions tell you how to add a chapter to the course slides located [h
 Create a new presentation file: "chapterX.Rpres" ([instructions here](https://support.rstudio.com/hc/en-us/articles/200486468-Authoring-R-Presentations))  
 
 ##  2.  
-Use the knit() function in the knitr library to transform the file into a markdown file: `knit(input = "chapterX.Rpres", output = "chapterX.md")`  
+Use the preview button in RStudio to transform the file into a markdown file
 
 ## 3.  
 Add the "chapterX.md" to the "index.Rpres", which combines the chapters. See how the other chapters have been added and replicate.  
 
 ## 4.  
-Finally, transform the "index.Rpres" into an html document. For this, use Rstudio: Presentation viewer -> More -> Save as web page 
-![](pres2html.png)  
+Finally, transform the "index.Rpres" into an html document. For this, again use Rstudio. First Preview to update changes, then Presentation viewer -> More -> Save as web page 
 
 ## 5.  
-After these steps, simply push the changes to GitHub and the presentation will be updated at https://tuomonieminen.github.io/Helsinki-Open-Data-Science/
+After these steps, simply push the changes to GitHub and the presentation will be updated at the GitHub web page related to the helsinki-open-data-science repository (github pages are enabled at Settings - GitHub pages). [link to presentation](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/)
 
 <hr>
