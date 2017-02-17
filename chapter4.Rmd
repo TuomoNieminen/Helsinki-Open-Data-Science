@@ -78,7 +78,7 @@ In R, strings are of the basic type character and they can be created by using q
 
 *** =instructions
 - Access the stringr package
-- Print out a summary of the Gross National Income (GNI) variable in `human`
+- Look at the structure of the Gross National Income (GNI) variable in `human`
 - Execute the sample code where the comma is removed from each value of GNI.
 - Adjust the code: Use the pipe operator (`%>%`) to convert the resulting vector to numeric with `as.numeric`.
 
