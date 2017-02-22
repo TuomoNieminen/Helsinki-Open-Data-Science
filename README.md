@@ -3,29 +3,19 @@
 <a href=https://www.datacamp.com//teach/repositories/73911639/go target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/course_button.png" width="150"></a>
 <a href=https://www.datacamp.com//teach/repositories target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/dashboard_button.png" width="150"></a>
 
-Wellcome to the Helsinki Open Data Science DataCamp course repository. Changes made to this GitHub repository are automatically reflected in the linked DataCamp course. 
+Wellcome to the Helsinki Open Data Science repository. This repository includes the codes for both the <a href=https://www.datacamp.com target="_blank">DataCamp</a> and the presentation slides related to the University of Helsinki course "Introduction to Open Data Science" (IODS), thought by prof. <b>Kimmo Vehkalahti</b>. Both the DataCamp course and the presentation slides are created by <b>Tuomo Nieminen</b> and <b>Emma Kämäräinen</b>. 
 
-# About
-
-This a <a href=https://www.datacamp.com target="_blank">DataCamp</a> course created by <b>Tuomo Nieminen</b> and <b>Emma Kämäräinen</b> for the use of a University of Helsinki course called "Introduction to Open Data Science" (IODS), thought by prof. <b>Kimmo Vehkalahti</b>.
 
 # Course slides
 
-The course slides for the IODS course are published in a GitHub web page enabled by this repository. The slides have been created by Tuomo Nieminen and Emma Kämäräinen, using Rpresentation. They can be found in the following link  
+The presentation slides for the IODS course are published in a GitHub web page enabled by this repository. The slides have been created by Tuomo Nieminen and Emma Kämäräinen, using Rpresentation. They can be found in the following link  
 
 [IODS slides](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/#).  
 
 The Rpresentation codes are included in the 'docs' folder. The index.html file in the 'docs' folder has been used to enable the GitHub web page. See 'instructions.Rmd' in the 'docs' folder for more information.  
-
-# Datasets  
-
-The data found in the 'datasets' folder of this repository are used in the DataCamp exercises. The files with data related filename extensions in the 'datasets' folder are automatically uploaded to amazon S3 servers.  
-
-The links to the currently used data files can be seen from the chapterx.Rmd files. The links to new files can be seen from the course build log under datacamp.com/teach. There is also information about uploading assets in the DataCamp [teach documentation](https://www.datacamp.com/teach/documentation#tab_upload_assets)
-
 # DataCamp course creation
 
-Changes you make to this GitHub repository are automatically reflected in the linked DataCamp course. This means that you can enjoy all the advantages of version control, collaboration, issue handling ... of GitHub.
+Changes made to this GitHub repository are automatically reflected in the linked DataCamp course. This means that you can enjoy all the advantages of version control, collaboration, issue handling ... of GitHub.
 
 ## Workflow
 
@@ -44,8 +34,13 @@ A DataCamp course consists of two types of files:
 
 To learn more about the structure of a DataCamp course, check out the <a href=https://www.datacamp.com//teach/documentation#tab_course_structure target="_blank">documentation</a>.
 
-Every DataCamp exercise consists of different parts, read up about them <a href=https://www.datacamp.com//teach/documentation#tab_code_exercises target="_blank">here</a>. A very important part about DataCamp exercises is to provide automated personalized feedback to students. In R, these so-called Submission Correctness Tests (SCTs) are written with the <a href=https://github.com/datacamp/testwhat target="_blank">`testwhat`</a> package. SCTs for Python exercises are coded up with <a href=https://github.com/datacamp/pythonwhat target="_blank">`pythonwhat`</a>. Check out the GitHub repositories' wiki pages for more information and examples.
+Every DataCamp exercise consists of different parts, read up about them <a href=https://www.datacamp.com//teach/documentation#tab_code_exercises target="_blank">here</a>. A very important part about DataCamp exercises is to provide automated personalized feedback to students. In R, these so-called Submission Correctness Tests (SCTs) are written with the <a href=https://github.com/datacamp/testwhat target="_blank">`testwhat`</a> package. Check out the GitHub repositories' wiki pages for more information and examples.
 
-Want to learn more? Check out the <a href=https://www.datacamp.com//teach/documentation target="_blank">documentation</a> on teaching at DataCamp.
+For more information check out the <a href=https://www.datacamp.com//teach/documentation target="_blank">documentation</a> on teaching at DataCamp.
 
-*Happy teaching!*
+## Datasets  
+
+The data found in the 'datasets' folder of this repository are used in the DataCamp exercises. The files with data related filename extensions in the 'datasets' folder are automatically uploaded to amazon S3 servers.  
+
+The links to the currently used data files can be seen from the chapterx.Rmd files. The links to new files can be seen from the course build log under datacamp.com/teach. There is also information about uploading assets in the DataCamp [teach documentation](https://www.datacamp.com/teach/documentation#tab_upload_assets)
+
