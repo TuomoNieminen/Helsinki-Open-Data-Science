@@ -7,19 +7,21 @@ Wellcome to the Helsinki Open Data Science DataCamp course repository. Changes m
 
 # About
 
-This a <a href=https://www.datacamp.com target="_blank">DataCamp</a> course created by Tuomo Nieminen and Emma Kämäräinen for the use of a University of Helsinki course called "Introduction to Open Data Science", thought by prof. Kimmo Vehkalahti.
+This a <a href=https://www.datacamp.com target="_blank">DataCamp</a> course created by <b>Tuomo Nieminen</b> and <b>Emma Kämäräinen</b> for the use of a University of Helsinki course called "Introduction to Open Data Science" (IODS), thought by prof. <b>Kimmo Vehkalahti</b>.
 
 # Course slides
 
-The course slides for the University of Helsink course "Introduction to Open Data Science" (IODS) are published in the GitHub web page enabled by this repository and can be found in the following link  
+The course slides for the IODS course are published in a GitHub web page enabled by this repository. The slides have been created by Tuomo Nieminen and Emma Kämäräinen, using Rpresentation. They can be found in the following link  
 
 [IODS slides](https://tuomonieminen.github.io/Helsinki-Open-Data-Science/#).  
 
-The slides have been created by Tuomo Nieminen and Emma Kämäräinen, using Rpresentation. The codes are included in the 'docs' folder. The index.html file in the docs-folder has been used to enable the GitHub web page. See 'instructions.Rmd' in the docs-folder for more information.  
+The Rpresentation codes are included in the 'docs' folder. The index.html file in the 'docs' folder has been used to enable the GitHub web page. See 'instructions.Rmd' in the 'docs' folder for more information.  
 
 # Datasets  
 
-The files with common data related filename extensions in the 'datasets' folder are automatically uploaded to amazon S3 servers. The data found in the datasets folder of this repository are used in the DataCamp exercises. The links to the current data files can be seen from chapterx.Rmd files. The links to new files can be seen from the course build log under datacamp.com/teach. There is also information about uploading assets in the DataCamp [teach documentation](https://www.datacamp.com/teach/documentation#tab_upload_assets)
+The data found in the 'datasets' folder of this repository are used in the DataCamp exercises. The files with data related filename extensions in the 'datasets' folder are automatically uploaded to amazon S3 servers.  
+
+The links to the currently used data files can be seen from the chapterx.Rmd files. The links to new files can be seen from the course build log under datacamp.com/teach. There is also information about uploading assets in the DataCamp [teach documentation](https://www.datacamp.com/teach/documentation#tab_upload_assets)
 
 # DataCamp course creation
 
