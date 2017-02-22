@@ -3,7 +3,7 @@ instructors      :
  - kimmo.vehkalahti@helsinki.fi
  - tuomo.a.nieminen@gmail.com
  - emma.kamarainen@outlook.com
-description      : This DataCamp course has been developed for the use of University of Helsinki by Tuomo Nieminen and Emma Kämäräinen, under the supervision of adj. prof. Kimmo Vehkalahti. The corresponding HY course is titled "Introduction to Open Data Science". The core themes of the course are open data, reproduciple research and data science.
+description      : This DataCamp course has been developed for the use of University of Helsinki by Tuomo Nieminen and Emma Kämäräinen, under the supervision of adj. prof. Kimmo Vehkalahti. The corresponding HY course is titled Introduction to Open Data Science. The core themes of the course are open data, reproduciple research and data science.
 university       : University of Helsinki
 difficulty_level : 2
 time_needed      : 12 hours
