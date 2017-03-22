@@ -3,7 +3,7 @@
 <a href=https://www.datacamp.com//teach/repositories/73911639/go target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/course_button.png" width="150"></a>
 <a href=https://www.datacamp.com//teach/repositories target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/dashboard_button.png" width="150"></a>
 
-Welcome to the Helsinki Open Data Science repository! This repository includes the codes for both the <a href=https://www.datacamp.com target="_blank">DataCamp</a> and the presentation slides related to the University of Helsinki course "Introduction to Open Data Science" (IODS), thought by prof. <b>Kimmo Vehkalahti</b>.  
+Welcome to the Helsinki Open Data Science repository! This repository includes the codes for both the <a href=https://www.datacamp.com target="_blank">DataCamp</a> and the presentation slides related to the University of Helsinki course "Introduction to Open Data Science" (IODS), thought by prof. <b>Kimmo Vehkalahti</b>. You can click on the 'Course on DataCamp' -link above to go to the course page. 
 
 Both the DataCamp course and the presentation slides are created by <b>Tuomo Nieminen</b> and <b>Emma Kämäräinen</b>. 
 
