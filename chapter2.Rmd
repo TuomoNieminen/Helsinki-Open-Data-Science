@@ -5,7 +5,7 @@ description : Regression for binary outcomes, training and testing a (predictive
 --- type:NormalExercise lang:r xp:100 skills:1 key:f8515d62e1
 ## More datasets
 
-Welcome to the *Logistic regression* chapter.
+Welcome to the *Logistic Regression* chapter.
 
 During the next exercises, we will be combining, wrangling and analysing two new data sets retrieved from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets.html), a great source for open data. 
 
