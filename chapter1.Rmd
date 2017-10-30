@@ -1,5 +1,5 @@
 ---
-  title       : Regression and model validation 
+title       : Regression and model validation 
 description : Data wrangling, simple regression, multiple regression, regression diagnostics
 
 

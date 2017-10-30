@@ -1,5 +1,5 @@
 ---
-  title       : Dimensionality reduction techniques 
+title       : Dimensionality reduction techniques 
 description : Principal component analysis (PCA), Correspondence analysis (CA)
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:00f0a592f0
