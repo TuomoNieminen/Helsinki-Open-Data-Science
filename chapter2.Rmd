@@ -9,7 +9,7 @@ Welcome to the *Logistic regression* chapter.
 
 During the next exercises, we will be combining, wrangling and analysing two new data sets retrieved from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets.html), a great source for open data. 
 
-The data are from two identical questionaires related to secondary school student alcohol comsumption in Portugal. Read about the data and the variables [here](https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION).
+The data are from two identical questionaires related to secondary school student alcohol comsumption in Portugal. Read about the data and the variables [here](https://archive.ics.uci.edu/ml/datasets/Student+Performance).
 
 R offers the convenient `paste()` function which makes it easy to combine characters. Let's utilize it to get our hands on the data!
 
