@@ -219,15 +219,12 @@ success_msg("Good work!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:3d45bd1da6
 ## Creating a factor variable
 
-**obs! This exercise might have issues. If you think your correct solution isn't accepted, try refreshing the browser and submitting again.**
-
 We can create a categorical variable from a continuous one. There are many ways to to do that. Let's choose the variable `crim` (per capita crime rate by town) to be our factor variable. We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile) to get the high, low and middle rates of crime into their own categories.
 
 See how it's done below!
 
 *** =instructions
-- Save the scaled crime rate from the `boston_scaled` as `scaled_crim`
-- Look at the summary of the scaled variable `scaled_crim`
+- Look at the summary of the scaled variable `crim`
 - Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
 - Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created.
 - Use the function `table()` on the `crime` object
@@ -236,10 +233,9 @@ See how it's done below!
 - Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
 
 *** =hint
-- You can get `scaled_crim` from `boston_scaled` with the $ mark
-- For labels: you can create a vector with `c()`
-- For labels: Separate the values with comma in a vector
-- For labels: Remember that strings need the quotes around them
+- You can create a vector with `c()`
+- Separate the values with comma in a vector
+- Remember that strings need the quotes around them
 - `table(*object_name*)` creates a cross tabulation of the object
 
 *** =pre_exercise_code
@@ -251,20 +247,17 @@ boston_scaled <- as.data.frame(scale(Boston))
 
 *** =sample_code
 ```{r}
-# boston_scaled is available
+# MASS, Boston and boston_scaled are available
 
-# save the scaled crim as scaled_crim
-scaled_crim <- "change me!"
-
-# summary of the scaled_crim
+# summary of the scaled crime rate
 
 
 # create a quantile vector of crim and print it
-bins <- quantile(scaled_crim)
-
+bins <- quantile(boston_scaled$crim)
+bins
 
 # create a categorical variable 'crime'
-crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE)
+crime <- cut(boston_scaled$crim, breaks = "change me!", include.lowest = TRUE)
 
 # look at the table of the new factor crime
 
@@ -279,20 +272,17 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 *** =solution
 ```{r}
-# boston_scaled is available
+# MASS, Boston and boston_scaled are available
 
-# save the scaled crim as scaled_crim
-scaled_crim <- boston_scaled$crim
+# summary of the scaled crime rate
+summary(boston_scaled$crim)
 
-# summary of the scaled_crim
-summary(scaled_crim)
-
-# create a quantile vector of scaled_crim and print it
-bins <- quantile(scaled_crim)
+# create a quantile vector of crim and print it
+bins <- quantile(boston_scaled$crim)
 bins
 
 # create a categorical variable 'crime'
-crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
+crime <- cut(boston_scaled$crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
 
 # look at the table of the new factor crime
 table(crime)
@@ -307,13 +297,12 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 *** =sct
 ```{r}
-# test_object("scaled_crim", incorrect_msg = "Did you create `scaled_crim` ?")
-# test_function("summary", args = "object", incorrect_msg = "Did you use the summary() function on the crim variable in # boston_scaled data?")
-# test_output_contains("bins", incorrect_msg = "Did you print `bins`?")
-# test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
-# test_object("bins", incorrect_msg = "Did you create `bins`?")
+test_function("summary", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
 
-# test_error()
+test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
+test_object("bins", incorrect_msg = "Did you create `bins` ?")
+
+test_error()
 success_msg("Nicely done! By the way, sometimes there are functions with the same name in different R packages (like `select` in **dplyr** and **MASS**). You can choose which one to use by adding the name of the package with two colons in front of the function call (for example `dplyr::select()`).")
 ```
 
@@ -657,10 +646,9 @@ success_msg("Dissimilar might be similar if measured in a different way. Mind = 
 --- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
 ## K-means clustering
 
-[K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects. Let's cluster a bit!
+[K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects. In the previous exercise we got a hang of **distances**. The `kmeans()` function counts the distance matrix automatically, but it is good to know the basics.  Let's cluster a bit!
 
 *** =instructions
-- Create Euclidean distance matrix
 - Change the centers in the `kmeans()` function to be `4` and execute the clustering code
 - Plot the Boston data with `pairs()`. Adjust the code by adding the `col` argument. Set the color based on the clusters that k-means produced. You can access the cluster numbers with `km$cluster`. What variables do seem to effect the clustering results? 
 - Try a different number of clusters: `6`, `10` and `15`. Visualize the results.
@@ -677,7 +665,6 @@ library(ggplot2)
 
 data('Boston')
 set.seed(13)
-dist_eu <- dist(Boston)
 
 ```
 
@@ -685,11 +672,8 @@ dist_eu <- dist(Boston)
 ```{r}
 # Boston dataset is available
 
-# Euclidean distance matrix
-dist_eu <- dist(Boston)
-
 # k-means clustering
-km <-kmeans(dist_eu, centers = "change me!")
+km <-kmeans(Boston, centers = "change me!")
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = "change me!")
@@ -700,11 +684,8 @@ pairs(Boston, col = "change me!")
 ```{r}
 # Boston dataset is available
 
-# Euclidean distance matrix
-dist_eu <- dist(Boston)
-
 # k-means clustering
-km <-kmeans(dist_eu, centers = 15)
+km <-kmeans(Boston, centers = 10)
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
@@ -713,7 +694,7 @@ pairs(Boston, col = km$cluster)
 
 *** =sct
 ```{r}
-test_function("kmeans", args = "centers",incorrect_msg = "Did you set the center argument in `kmeans()` ? ")
+test_function("pairs", args = "col",incorrect_msg = "Did you set the color based on the clusters in `pairs()` ? ")
  
 test_error()
 success_msg("Clustering like a pro!")
@@ -729,7 +710,6 @@ One way to determine the number of clusters is to look at how the total of withi
 K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` can be used to deal with that. 
 
 *** =instructions
-- Create Euclidean distance matrix
 - Set the max number of clusters (`k_max`) to be 10
 - Execute the code to calculate total WCSS. This might take a while.
 - Visualize the total WCSS when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of total WCSS changes radically. In this case, two clusters would seem optimal. 
@@ -754,20 +734,17 @@ data('Boston')
 # MASS, ggplot2 and Boston dataset are available
 set.seed(123)
 
-# euclidean distance matrix
-dist_eu <- dist(Boston)
-
 # determine the number of clusters
 k_max <- "change me!"
 
 # calculate the total within sum of squares
-twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
+twcss <- sapply(1:k_max, function(k){kmeans(Boston, k)$tot.withinss})
 
 # visualize the results
-plot(1:k_max, twcss, type='b')
+qplot(x = 1:k_max, y = twcss, geom = 'line')
 
 # k-means clustering
-km <-kmeans(dist_eu, centers = "change me!")
+km <-kmeans(Boston, centers = "change me!")
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
@@ -779,20 +756,17 @@ pairs(Boston, col = km$cluster)
 # Boston dataset is available
 set.seed(123)
 
-# Euclidean distance matrix
-dist_eu <- dist(Boston)
-
 # determine the number of clusters
 k_max <- 10
 
 # calculate the total within sum of squares
-twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
+twcss <- sapply(1:k_max, function(k){kmeans(Boston, k)$tot.withinss})
 
 # visualize the results
-plot(1:k_max, twcss, type='b')
+qplot(x = 1:k_max, y = twcss, geom = 'line')
 
 # k-means clustering
-km <-kmeans(dist_eu, centers = 2)
+km <-kmeans(Boston, centers = 2)
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
