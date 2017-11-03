@@ -710,7 +710,6 @@ One way to determine the number of clusters is to look at how the total of withi
 K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` can be used to deal with that. 
 
 *** =instructions
-- Create Euclidean distance matrix
 - Set the max number of clusters (`k_max`) to be 10
 - Execute the code to calculate total WCSS. This might take a while.
 - Visualize the total WCSS when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of total WCSS changes radically. In this case, two clusters would seem optimal. 
@@ -735,20 +734,17 @@ data('Boston')
 # MASS, ggplot2 and Boston dataset are available
 set.seed(123)
 
-# euclidean distance matrix
-dist_eu <- dist(Boston)
-
 # determine the number of clusters
 k_max <- "change me!"
 
 # calculate the total within sum of squares
-twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
+twcss <- sapply(1:k_max, function(k){kmeans(Boston, k)$tot.withinss})
 
 # visualize the results
 qplot(x = 1:k_max, y = twcss, geom = 'line')
 
 # k-means clustering
-km <-kmeans(dist_eu, centers = "change me!")
+km <-kmeans(Boston, centers = "change me!")
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
@@ -760,20 +756,17 @@ pairs(Boston, col = km$cluster)
 # Boston dataset is available
 set.seed(123)
 
-# Euclidean distance matrix
-dist_eu <- dist(Boston)
-
 # determine the number of clusters
 k_max <- 10
 
 # calculate the total within sum of squares
-twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
+twcss <- sapply(1:k_max, function(k){kmeans(Boston, k)$tot.withinss})
 
 # visualize the results
 qplot(x = 1:k_max, y = twcss, geom = 'line')
 
 # k-means clustering
-km <-kmeans(dist_eu, centers = 2)
+km <-kmeans(Boston, centers = 2)
 
 # plot the Boston dataset with clusters
 pairs(Boston, col = km$cluster)
