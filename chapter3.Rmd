@@ -230,7 +230,8 @@ See how it's done below!
 - Use the function `table()` on the `crime` object
 - Adjust the code of `cut()` by adding the `label` argument in the function. Create a string vector with the values `"low"`, `"med_low"`, `"med_high"`, `"high"` (in that order) and use it to set the labels.
 - Do the table of the `crime` object again
-- Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
+- Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset.
+- NOTE! If you receive an error message regarding factors while submitting and you feel your solution is correct, try pressing the submit-button again without altering the code. This usually works. We are currently working on the problem.
 
 *** =hint
 - You can create a vector with `c()`
