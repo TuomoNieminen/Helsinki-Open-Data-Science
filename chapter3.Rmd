@@ -650,9 +650,9 @@ success_msg("Dissimilar might be similar if measured in a different way. Mind = 
 [K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects. In the previous exercise we got a hang of **distances**. The `kmeans()` function counts the distance matrix automatically, but it is good to know the basics.  Let's cluster a bit!
 
 *** =instructions
-- Change the centers in the `kmeans()` function to be `4` and execute the clustering code
+- First change the centers in the `kmeans()` function to be `4` and execute the clustering code
 - Plot the Boston data with `pairs()`. Adjust the code by adding the `col` argument. Set the color based on the clusters that k-means produced. You can access the cluster numbers with `km$cluster`. What variables do seem to effect the clustering results? Note: With `pairs()` you can reduce the number of pairs to see the plots more clearly. On line 7, just replace `Boston` with for example `Boston[6:10]` to pair up 5 columns (columns 6 to 10).
-- Try a different number of clusters: `1`, `2` and `3`. Visualize the results.
+- Try a different number of clusters: `1`, `2` and `3` (leave it to `3`). Visualize the results.
 
 *** =hint
 - You can change the number of the cluster you want to have with the `centers` argument in `kmeans()`
