@@ -1,9 +1,17 @@
 ---
-title       : Clustering and classification
-description : Datasets in R, Linear Discriminant Analysis (LDA) and K-means clustering
+title: 'Clustering and classification'
+description: 'Datasets in R, Linear Discriminant Analysis (LDA) and K-means clustering'
+---
 
---- type:NormalExercise lang:r xp:100 skills:1 key:3db2d48f25
 ## Datasets inside R
+
+```yaml
+type: NormalExercise
+key: 3db2d48f25
+lang: r
+xp: 100
+skills: 1
+```
 
 Welcome to the *Clustering and classification* chapter.
 
@@ -11,20 +19,20 @@ R has many (usually small) datasets already loaded in. There are also datasets i
 
 This week we will be using the [Boston](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html) dataset from the MASS package. Let's see how it looks like!
 
-*** =instructions
+`@instructions`
 - Load the `Boston` dataset from MASS
 - Explore the `Boston` dataset. Look at the structure with `str()` and use `summary()` to see the details of the variables.
 - Draw the plot matrix with `pairs()`
 
-*** =hint
+`@hint`
 - You can draw the `pairs()` plot by typing the object name where it is saved.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # access the MASS package
 library(MASS)
@@ -41,7 +49,7 @@ data("Boston")
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # access the MASS package
 library(MASS)
@@ -58,7 +66,7 @@ pairs(Boston)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_output_contains("summary(Boston)", incorrect_msg = "Did you use the summary() function on the Boston data?")
 test_output_contains("str(Boston)", incorrect_msg = "Did you use the str() function on the Boston data?")
@@ -68,14 +76,23 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:603dff42ce
+---
+
 ## Correlations plot
+
+```yaml
+type: NormalExercise
+key: 603dff42ce
+lang: r
+xp: 100
+skills: 1
+```
 
 It is often interesting to look at the correlations between variables in the data. The function `cor()` can be used to create the correlation matrix. A more visual way to look at the correlations is to use `corrplot()` function (from the corrplot package).
 
 Use the corrplot to visualize the correlation between variables of the Boston dataset.
 
-*** =instructions
+`@instructions`
 - Calculate the correlation matrix and save it as `cor_matrix`. Print the matrix to see how it looks like.
 - Adjust the code: use the pipe (`%>%`) to round the matrix. Rounding can be done with the `round()` function. Use the first two digits. Print the matrix again. 
 - Plot the rounded correlation matrix
@@ -83,12 +100,12 @@ Use the corrplot to visualize the correlation between variables of the Boston da
 - Adjust the code little more: add arguments `cl.pos = "b"`, `tl.pos = "d"` and `tl.cex = 0.6` to the plot. Print the plot again. 
 - See more of corrplot [here](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
 
-*** =hint
+`@hint`
 - For correlation matrices, see `?cor`
 - The pipe (`%>%`) takes the data before the pipe and applies the functionality assigned in the right. For example `data_column %>% summary()` creates a summary of the data_column.
 - The link on the last line of the instructions have quite good examples about the corrplot
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 library(tidyr)
@@ -103,7 +120,7 @@ data("Boston")
 
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # MASS, corrplot, tidyverse and Boston dataset are available
 
@@ -118,7 +135,7 @@ corrplot(cor_matrix, method="circle")
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # MASS, corrplot, tidyr and Boston dataset are available
 
@@ -133,7 +150,7 @@ corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.c
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 
 test_function("round", args = "digits",incorrect_msg = "Did you use the first two digits in rounding?")
@@ -142,8 +159,17 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:3a4eacf66c
+---
+
 ## Scale the whole dataset
+
+```yaml
+type: NormalExercise
+key: 3a4eacf66c
+lang: r
+xp: 100
+skills: 1
+```
 
 Usually the R datasets do not need much data wrangling as they are already in a good shape. But we will need to do little adjustments.
 
@@ -153,22 +179,22 @@ $$scaled(x) = \frac{x - mean(x)}{ sd(x)}$$
 
 The Boston data contains only numerical values, so we can use the function `scale()` to standardize the whole dataset.
 
-*** =instructions
+`@instructions`
 - Use the `scale()` function on the `Boston` dataset. Save the scaled data to `boston_scaled` object.
 - Use `summary()` to look at the scaled variables. Note the means of the variables.
 - Find out the class of the scaled object by executing the `class()` function. 
 - Later we will want the data to be a data frame. Use `as.data.frame()` to convert the `boston_scaled` to a data frame format. Keep the object name as `boston_scaled`.
 
-*** =hint
+`@hint`
 - See `?scale`
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 data("Boston")
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # MASS and Boston dataset are available
 
@@ -186,7 +212,7 @@ class(boston_scaled)
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # MASS and Boston dataset are available
 
@@ -204,7 +230,7 @@ boston_scaled <- as.data.frame(boston_scaled)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_function("scale", args = "x",incorrect_msg = "Did you scale the dataset?")
 
@@ -216,36 +242,45 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:3d45bd1da6
+---
+
 ## Creating a factor variable
+
+```yaml
+type: NormalExercise
+key: 3d45bd1da6
+lang: r
+xp: 100
+skills: 1
+```
 
 We can create a categorical variable from a continuous one. There are many ways to to do that. Let's choose the variable `crim` (per capita crime rate by town) to be our factor variable. We want to cut the variable by [quantiles](https://en.wikipedia.org/wiki/Quantile) to get the high, low and middle rates of crime into their own categories.
 
 See how it's done below!
 
-*** =instructions
+`@instructions`
 - Look at the summary of the scaled variable `crim`
 - Use the function `quantile()` on the scaled crime rate variable and save the results to `bins`. Print the results.
 - Create categorical crime vector with the `cut()` function. Set the `breaks` argument to be the quantile vector you just created.
 - Use the function `table()` on the `crime` object
 - Adjust the code of `cut()` by adding the `label` argument in the function. Create a string vector with the values `"low"`, `"med_low"`, `"med_high"`, `"high"` (in that order) and use it to set the labels.
 - Do the table of the `crime` object again
-- Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset. 
+- Execute the last lines of code to remove the original crime rate variable and adding the new one to scaled Boston dataset.
 
-*** =hint
+`@hint`
 - You can create a vector with `c()`
 - Separate the values with comma in a vector
 - Remember that strings need the quotes around them
 - `table(*object_name*)` creates a cross tabulation of the object
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 data("Boston")
 boston_scaled <- as.data.frame(scale(Boston))
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # MASS, Boston and boston_scaled are available
 
@@ -270,7 +305,7 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # MASS, Boston and boston_scaled are available
 
@@ -295,7 +330,7 @@ boston_scaled <- data.frame(boston_scaled, crime)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_function("summary", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
 
@@ -306,8 +341,17 @@ test_error()
 success_msg("Nicely done! By the way, sometimes there are functions with the same name in different R packages (like `select` in **dplyr** and **MASS**). You can choose which one to use by adding the name of the package with two colons in front of the function call (for example `dplyr::select()`).")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:bca5932717
+---
+
 ## Divide and conquer: train and test sets
+
+```yaml
+type: NormalExercise
+key: bca5932717
+lang: r
+xp: 100
+skills: 1
+```
 
 When we want to use a statistical method to predict something, it is important to have data to test how well the predictions fit. Splitting the original data to test and train sets allows us to check how well our model works. 
 
@@ -315,7 +359,7 @@ The training of the model is done with the train set and prediction on new data 
  
 Time to split our data!
 
-*** =instructions
+`@instructions`
 - Use the function `nrow()` on the `boston_scaled` to get the number of rows in the dataset. Save the number of rows in `n`.
 - Execute the code to choose randomly 80% of the rows and save the row numbers to `ind`
 - Create `train` set by selecting the row numbers that are saved in `ind`.
@@ -323,17 +367,17 @@ Time to split our data!
 - Take the crime classes from the `test` and save them as `correct_classes`
 - Execute the code to remove `crime` from `test` set
 
-*** =hint
+`@hint`
 - You can get the number of rows with `nrow(*name_of_the_dataframe*)`
 - `train` and `test` are data frames, so you can access their columns with `$` mark
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # boston_scaled is available
 
@@ -357,7 +401,7 @@ test <- dplyr::select(test, -crime)
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # boston_scaled is available
 
@@ -381,7 +425,7 @@ test <- dplyr::select(test, -crime)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_object("n", incorrect_msg = "Did you create `n` with nrow()?")
 test_object("correct_classes", incorrect_msg = "Did you create `correct_classes`?")
@@ -389,15 +433,31 @@ test_error()
 success_msg("Splitting data is heavy work, well done!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5d4203282b
+---
+
 ## Video: Linear Discriminant Analysis
 
-*** =video_link
-//player.vimeo.com/video/203184662
+```yaml
+type: VideoExercise
+key: 5d4203282b
+lang: r
+xp: 50
+skills: 1
+video_link: //player.vimeo.com/video/203184662
+```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:2de2d66d11
+---
+
 ## Linear Discriminant analysis
+
+```yaml
+type: NormalExercise
+key: 2de2d66d11
+lang: r
+xp: 100
+skills: 1
+```
 
 [Linear Discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis) is a classification (and dimension reduction) method. It finds the (linear) combination of the variables that separate the target variable classes. The target can be binary or multiclass variable. 
 
@@ -405,22 +465,22 @@ Linear discriminant analysis is closely related to many other methods, such as p
 
 LDA can be visualized with a biplot. We will talk more about biplots next week. The LDA biplot arrow function used in the exercise is (with slight changes) taken from [this](http://stackoverflow.com/questions/17232251/how-can-i-plot-a-biplot-for-lda-in-r) Stack Overflow message thread.
 
-*** =instructions
+`@instructions`
 - Fit a linear discriminant analysis with the function `lda()`. The function takes a formula (like in regression) as a first argument. Use the `crime` as a target variable and all the other variables as predictors. Hint! You can type `target ~ .` where the dot means all other variables in the data.
 - Print the `lda.fit` object
 - Create a numeric vector of the train sets crime classes (for plotting purposes)
 - Use the function `plot()` on the `lda.fit` model. The argument `dimen` can be used to choose how many discriminants is used. 
 - Adjust the code: add arguments `col = classes` and `pch = classes` to the plot.
 - Execute the `lda.arrow()` function (if you haven't done that already). Draw the plot with the lda arrows. Note that in DataCamp you will need to select both lines of code and execute them at the same time for the `lda.arrow()` function to work.
-- You can change the `myscale` argument in `lda.arrow()` to see more clearly which way the arrows are pointing. 
+- You can change the `myscale` argument in `lda.arrow()` to see more clearly which way the arrows are pointing.
 
-*** =hint
+`@hint`
 - The formula looks like `target ~ .`
 - The target variable in here is `crime`
 - You can change a factor to numeric with `as.numeric()`
 - Remember to execute the `lda.arrows()` code together with the plot in DataCamp. Otherwise the arrows won't work.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
@@ -433,7 +493,7 @@ test <- dplyr::select(test, -crime)
 
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # MASS and train are available
 
@@ -462,7 +522,7 @@ lda.arrows(lda.fit, myscale = 1)
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # MASS and train are available
 
@@ -491,7 +551,7 @@ lda.arrows(lda.fit, myscale = 1)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_object("lda.fit", incorrect_msg = "Did you add a formula to the LDA model?")
 test_function("plot", incorrect_msg = "Did you plot the lda.fit object?")
@@ -500,23 +560,32 @@ test_error()
 success_msg("Expanding your statistcal skills! Nice!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:0efb23a544
+---
+
 ## Predict LDA
+
+```yaml
+type: NormalExercise
+key: 0efb23a544
+lang: r
+xp: 100
+skills: 1
+```
 
 Like in the regression, the function `predict()` can be used to predict values based on a model. The function arguments are almost the same. You can see the help page of prediction function for LDA with `?predict.lda`.
 
-We split our data earlier so that we have the test set and the correct class labels. See how the LDA model performs when predicting on new (test) data.  
+We split our data earlier so that we have the test set and the correct class labels. See how the LDA model performs when predicting on new (test) data.
 
-*** =instructions
+`@instructions`
 - Predict the crime classes with the `test` data. Like in regression, the `predict()` function takes the model object as a first argument.
 - Create a table of the correct classes and the predicted ones. You can get the predicted classes with `lda.pred$class`. 
 - Look at the table. Did the classifier predict the crime rates correctly?
 
-*** =hint
+`@hint`
 - `table(*object_name*)` creates a cross tabulation of the object
 - You can get the predicted classes with `lda.pred$class`
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 boston_scaled <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/boston_scaled.txt", sep  =",", header = T)
@@ -530,7 +599,7 @@ test <- dplyr::select(test, -crime)
 lda.fit = lda(crime ~ ., data=train)
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # lda.fit, correct_classes and test are available
 
@@ -542,7 +611,7 @@ table(correct = "change me!", predicted = "change me!")
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # lda.fit, correct_classes and test are available
 
@@ -554,7 +623,7 @@ table(correct = correct_classes, predicted = lda.pred$class)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_output_contains("table(correct = correct_classes, predicted = lda.pred$class)", incorrect_msg = "Please create a cross tabulation of the correct classes versus the predicted ones")
 
@@ -562,39 +631,55 @@ test_error()
 success_msg("Good work!")
 ```
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:fc6108e633
+---
+
 ## Video: Distance measures and clustering
 
-*** =video_link
-//player.vimeo.com/video/203198932
+```yaml
+type: VideoExercise
+key: fc6108e633
+lang: r
+xp: 50
+skills: 1
+video_link: //player.vimeo.com/video/203198932
+```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:6719c6079e
+---
+
 ## Towards clustering: distance measures
+
+```yaml
+type: NormalExercise
+key: 6719c6079e
+lang: r
+xp: 100
+skills: 1
+```
 
 Similarity or dissimilarity of objects can be measured with distance measures. There are many different measures for different types of data. The most common or "normal" distance measure is [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance). 
 
-There are functions that calculate the distances in R. In this exercise, we will be using the base R's `dist()` function. The function creates a distance matrix that is saved as dist object. The distance matrix is usually square matrix containing the pairwise distances of the observations. So with large datasets, the computation of distance matrix is time consuming and storing the matrix might take a lot of memory. 
+There are functions that calculate the distances in R. In this exercise, we will be using the base R's `dist()` function. The function creates a distance matrix that is saved as dist object. The distance matrix is usually square matrix containing the pairwise distances of the observations. So with large datasets, the computation of distance matrix is time consuming and storing the matrix might take a lot of memory.
 
-*** =instructions
+`@instructions`
 - Load the MASS package and the `Boston` dataset from it
 - Create `dist_eu` by calling the `dist()` function on the Boston dataset. Note that by default, the function uses Euclidean distance measure.
 - Look at the summary of the `dist_eu`
 - Next create object `dist_man` that contains the Manhattan distance matrix of the Boston dataset
 - Look at the summary of the `dist_man`
 
-*** =hint
+`@hint`
 - `data(*name_of_the_dataset*)` can be used to load dataset from R package
 - See `?dist`. The argument you will need to change the distance measure is called `method`
 - Remember that strings need the quotes in R
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 data('Boston')
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # load MASS and Boston
 library(MASS)
@@ -614,7 +699,7 @@ dist_man <- "change me!"
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # load MASS and Boston
 library(MASS)
@@ -634,7 +719,7 @@ summary(dist_man)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_object("dist_man", incorrect_msg = "Did you create dist_man?")
 test_output_contains("summary(dist_eu)", incorrect_msg = "Did you use the summary() function on the dist_eu?")
@@ -643,22 +728,31 @@ test_error()
 success_msg("Dissimilar might be similar if measured in a different way. Mind = blown!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:63da6251d5
+---
+
 ## K-means clustering
+
+```yaml
+type: NormalExercise
+key: 63da6251d5
+lang: r
+xp: 100
+skills: 1
+```
 
 [K-means](https://en.wikipedia.org/wiki/K-means_clustering) is maybe the most used and known clustering method. It is an unsupervised method, that assigns observations to groups or **clusters** based on similarity of the objects. In the previous exercise we got a hang of **distances**. The `kmeans()` function counts the distance matrix automatically, but it is good to know the basics.  Let's cluster a bit!
 
-*** =instructions
+`@instructions`
 - Change the centers in the `kmeans()` function to be `4` and execute the clustering code
 - Plot the Boston data with `pairs()`. Adjust the code by adding the `col` argument. Set the color based on the clusters that k-means produced. You can access the cluster numbers with `km$cluster`. What variables do seem to effect the clustering results? 
 - Try a different number of clusters: `6`, `10` and `15`. Visualize the results.
 
-*** =hint
+`@hint`
 - You can change the number of the cluster you want to have with the `centers` argument in `kmeans()`
 - See `?kmeans`
 - You can access the cluster numbers with `km$cluster`
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 library(ggplot2)
@@ -668,7 +762,7 @@ set.seed(13)
 
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # Boston dataset is available
 
@@ -680,7 +774,7 @@ pairs(Boston, col = "change me!")
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # Boston dataset is available
 
@@ -692,7 +786,7 @@ pairs(Boston, col = km$cluster)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_function("pairs", args = "col",incorrect_msg = "Did you set the color based on the clusters in `pairs()` ? ")
  
@@ -700,27 +794,36 @@ test_error()
 success_msg("Clustering like a pro!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:f3d6cd6c00
+---
+
 ## K-means: determine the k
+
+```yaml
+type: NormalExercise
+key: f3d6cd6c00
+lang: r
+xp: 100
+skills: 1
+```
 
 K-means needs the number of clusters as an argument. There are many ways to look at the optimal number of clusters and a good way might depend on the data you have. 
 
 One way to determine the number of clusters is to look at how the total of within cluster sum of squares (WCSS) behaves when the number of cluster changes (the calculation of total WCSS was explained in the video before). When you plot the number of clusters and the total WCSS, the optimal number of clusters is when the total WCSS drops radically.
 
-K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` can be used to deal with that. 
+K-means might produce different results every time, because it randomly assigns the initial cluster centers. The function `set.seed()` can be used to deal with that.
 
-*** =instructions
+`@instructions`
 - Set the max number of clusters (`k_max`) to be 10
 - Execute the code to calculate total WCSS. This might take a while.
 - Visualize the total WCSS when the number of cluster goes from 1 to 10. The optimal number of clusters is when the value of total WCSS changes radically. In this case, two clusters would seem optimal. 
 - Run `kmeans()` again with two clusters and visualize the results
 
-*** =hint
+`@hint`
 - Simply adjust the part of the code that says "change me!"
 - You can change the number of the cluster you want to have with the `centers` argument in `kmeans()`
 - Numeric values do not need quotes in R
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library(MASS)
 library(ggplot2)
@@ -729,7 +832,7 @@ data('Boston')
 
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # MASS, ggplot2 and Boston dataset are available
 set.seed(123)
@@ -751,7 +854,7 @@ pairs(Boston, col = km$cluster)
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # Boston dataset is available
 set.seed(123)
@@ -773,7 +876,7 @@ pairs(Boston, col = km$cluster)
 
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_object("k_max", incorrect_msg = "Did you set the k_max to 10?")
 test_object("km", incorrect_msg = "Did you do the clustering with 2 clusters?")
