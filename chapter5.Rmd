@@ -10,6 +10,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: f9ad1f5b4a
 ```
 
 Welcome to the *Analysis of longitudinal data* chapter.
