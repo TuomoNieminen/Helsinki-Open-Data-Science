@@ -66,9 +66,9 @@ summary(bprs)
 `@sct`
 ```{r}
 
-test_function("str", args = "object",incorrect_msg = "Please look at the structure of the BPRS data frame")
-test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the BPRS data frame")
+#test_function("str", args = "object",incorrect_msg = "Please look at the structure of the BPRS data frame")
+#test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the BPRS data frame")
 
-test_error()
+#test_error()
 success_msg("Awsome, you have mastered an important first step of data analysis!")
 ```
