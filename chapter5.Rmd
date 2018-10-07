@@ -72,3 +72,44 @@ test_function("summary", args = "object",incorrect_msg = "Please print out summa
 test_error()
 success_msg("Awsome, you have mastered an important first step of data analysis!")
 ```
+
+---
+
+## Graphical displays of longitudinal data: The first glimpse
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 2 introduction
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr)
+bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+```
+
+`@sample_code`
+```{r}
+# dplyr package and bprs are available
+
+```
+
+`@solution`
+```{r}
+
+```
+
+`@sct`
+```{r}
+success_msg("Success message!")
+```
