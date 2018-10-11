@@ -95,13 +95,13 @@ Exercise 2 introduction: Converting to long form
 
 `@pre_exercise_code`
 ```{r}
-library(dplyr)
+library(dplyr); library(tidyr)
 bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 ```
 
 `@sample_code`
 ```{r}
-# dplyr package and bprs are available
+# dplyr & tidyr packages and bprs are available
 
 ```
 
