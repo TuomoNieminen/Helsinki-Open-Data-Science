@@ -75,7 +75,7 @@ success_msg("Awsome, you have mastered an important first step of data analysis!
 
 ---
 
-## Graphical displays of longitudinal data: The first glimpse
+## Graphical displays of longitudinal data: The magical gathering
 
 ```yaml
 type: NormalExercise
@@ -85,7 +85,7 @@ skills: 1
 key: e9b52fd18b
 ```
 
-Exercise 2 introduction
+Exercise 2 introduction: Converting to long form
 
 `@instructions`
 - Instructions
@@ -107,10 +107,26 @@ bprs <- read.table("https://assets.datacamp.com/production/repositories/708/data
 
 `@solution`
 ```{r}
+# dplyr package and bprs are available
 
+# Factor treatment & subject
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+
+# Convert to long form
+BPRSL <- gather(BPRS, key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  mutate(BPRSL, week = as.integer(substr(weeks,5,5)))
+
+# Let's see the gathered "long" data
+glimpse(BPRSL)
 ```
 
 `@sct`
 ```{r}
+
+test_function("gather", args = "object",incorrect_msg = "Did you use the gather function?")
+test_function("mutate", args = "object",incorrect_msg = "Did you use the mutate function")
+
+test_error()
 success_msg("Success message!")
 ```
