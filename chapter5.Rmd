@@ -141,6 +141,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: a1be9da8e9
 ```
 
 Exercise 2 introduction
