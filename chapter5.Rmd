@@ -17,6 +17,8 @@ Welcome to the *Analysis of longitudinal data* chapter.
 
 THIS CHAPTER IS A DRAFT
 
+Exercise 1 introduction: Check your data
+
 `@instructions`
 - Read the `bprs` data into memory
 - Print out the (column) names of the data
@@ -88,7 +90,10 @@ key: e9b52fd18b
 Exercise 2 introduction: Converting to long form
 
 `@instructions`
-- Instructions
+- Factor treatment and subject from bprs
+- Gather by key = weeks by excluding treatment and subject (how does key work?)
+- Mutate a new integer variable week by substringing the only week number
+- Glimpse
 
 `@hint`
 - Hints
@@ -107,15 +112,15 @@ bprs <- read.table("https://assets.datacamp.com/production/repositories/708/data
 
 `@solution`
 ```{r}
-# dplyr package and bprs are available
+# dplyr & tidyr packages and bprs are available
 
 # Factor treatment & subject
 bprs$treatment <- factor(bprs$treatment)
 bprs$subject <- factor(bprs$subject)
 
 # Convert to long form
-bprsl <- gather(bprs, key = weeks, value = bprs, -treatment, -subject)
-bprsl <-  mutate(bprsl, week = as.integer(substr(weeks,5,5)))
+bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
+bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
 
 # Let's see the gathered "long" data
 glimpse(bprsl)
@@ -124,5 +129,51 @@ glimpse(bprsl)
 `@sct`
 ```{r}
 
-success_msg("Success message!")
+success_msg("No tests yet!")
+```
+
+## Graphical displays of longitudinal data: Individual plots
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 2 introduction
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr)
+bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+bprs$treatment <- factor(bprs$treatment)
+bprs$subject <- factor(bprs$subject)
+bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
+bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(bprs)
+```
+
+`@sample_code`
+```{r}
+# dplyr & tidyr packages and bprsl are available
+
+```
+
+`@solution`
+```{r}
+# dplyr & tidyr packages and bprs are available
+
+```
+
+`@sct`
+```{r}
+
+success_msg("No tests yet!")
 ```
