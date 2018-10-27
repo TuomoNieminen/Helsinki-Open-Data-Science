@@ -174,7 +174,7 @@ rm(bprs)
 
 `@solution`
 ```{r}
-# dplyr & tidyr packages and bprs are available
+# dplyr, tidyr & ggplot2 packages and bprsl are available
 
 # Plot me! (maybe do this in a function)
 p1 <- ggplot(bprsl, aes(x = week, y = bprs, linetype = subject))
@@ -201,6 +201,83 @@ p3 <- p2 + facet_grid(. ~ treatment, labeller = label_both)
 p4 <- p3 + theme_bw() + theme(legend.position = "none")
 p5 <- p4 + scale_y_continuous(name = "standardized bprs")
 p5
+
+```
+
+`@sct`
+```{r}
+
+success_msg("No tests yet!")
+```
+
+---
+
+## Graphical displays of longitudinal data: Individual plots
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: a1be9da8e9
+```
+
+Exercise 3 introduction
+
+`@instructions`
+- Draw the first plot
+- Standardise variable bprs
+- Glimpse
+- Draw a new plot of the standardised values
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+bprs$treatment <- factor(bprs$treatment)
+bprs$subject <- factor(bprs$subject)
+bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
+bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(bprs)
+bprsl <- bprsl %>%
+  group_by(week) %>%
+  mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  ungroup()
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr & ggplot2 packages and bprsl are available
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr & ggplot2 packages and bprsl are available
+
+# Make a summary data:
+
+# Number of weeks, baseline (0) included
+n <- bprsl$week %>% unique() %>% length()
+bprss <- bprsl %>%
+  group_by(treatment, week) %>%
+  summarise( mean=mean(bprs), se=sd(bprs)/sqrt(n) ) %>%
+  ungroup()
+
+glimpse(bprss)
+
+# Give something beforhand but let student add some layers
+p1 <- ggplot(bprss, aes(x = week, y = mean, linetype = treatment, shape = treatment))
+p2 <- p1 + geom_line() + scale_linetype_manual(values = c(1,2))
+p3 <- p2 + geom_point(size=3) + scale_shape_manual(values = c(1,2))
+p4 <- p3 + geom_errorbar(aes(ymin=mean-se, ymax=mean+se, linetype="1"), width=0.3)
+
+p5 <- p4 + theme(legend.position = c(0.8,0.8))
+p6 <- p5 + scale_y_continuous(name = "mean(bprs) +/- se(bprs)")
+p6
 
 ```
 
