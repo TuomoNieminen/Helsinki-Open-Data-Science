@@ -225,10 +225,9 @@ key: 4825d6d5aa
 Exercise 4 introduction
 
 `@instructions`
-- Draw the first plot
-- Standardise variable bprs
+- Create summary data bprss w/ vars mean & standard error
 - Glimpse
-- Draw a new plot of the standardised values
+- Draw a line plot of means and standard errors by treatment
 
 `@hint`
 - Hints
@@ -273,8 +272,8 @@ glimpse(bprss)
 p1 <- ggplot(bprss, aes(x = week, y = mean, linetype = treatment, shape = treatment))
 p2 <- p1 + geom_line() + scale_linetype_manual(values = c(1,2))
 p3 <- p2 + geom_point(size=3) + scale_shape_manual(values = c(1,2))
+# for example fill ymax and ymin
 p4 <- p3 + geom_errorbar(aes(ymin=mean-se, ymax=mean+se, linetype="1"), width=0.3)
-
 p5 <- p4 + theme(legend.position = c(0.8,0.8))
 p6 <- p5 + scale_y_continuous(name = "mean(bprs) +/- se(bprs)")
 p6
