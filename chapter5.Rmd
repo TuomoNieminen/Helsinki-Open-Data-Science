@@ -285,3 +285,91 @@ p6
 
 success_msg("No tests yet!")
 ```
+
+---
+
+## Graphical displays of longitudinal data: Find the outlaw
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 4825d6d5aa
+```
+
+Exercise 5 introduction
+
+`@instructions`
+- Create summary data bprsl8s
+- Glimpse
+- Draw a boxplot
+- Seek and destroy the outlier
+- Plot again
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+bprs$treatment <- factor(bprs$treatment)
+bprs$subject <- factor(bprs$subject)
+bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
+bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(bprs)
+bprsl <- bprsl %>%
+  group_by(week) %>%
+  mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  ungroup()
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr & ggplot2 packages and bprsl are available
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr & ggplot2 packages and bprsl are available
+
+bprsl8s <- bprsl %>%
+  filter(week > 0) %>%
+  group_by(treatment, subject) %>%
+  summarise( mean=mean(bprs) ) %>%
+  ungroup()
+
+glimpse(bprsl8s)
+
+p1 <- ggplot(bprsl8s, aes(x = treatment, y = mean))
+p2 <- p1 + geom_boxplot()
+#p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white")
+p4 <- p3 + scale_y_continuous(name = "mean(bprs), weeks 1-8")
+p4
+
+# Remove the outlier:
+
+bprsl8s1 <- bprsl8s %>%
+  filter(mean < 60)
+
+glimpse(bprsl8s1)
+
+# Figure 8.6 - without the outlier:
+
+p1 <- ggplot(bprsl8s1, aes(x = treatment, y = mean))
+p2 <- p1 + geom_boxplot()
+#p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") # other color?
+p4 <- p3 + scale_y_continuous(name = "mean(bprs), weeks 1-8")
+p4
+
+```
+
+`@sct`
+```{r}
+
+success_msg("No tests yet!")
+```
