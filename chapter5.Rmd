@@ -212,7 +212,7 @@ success_msg("No tests yet!")
 
 ---
 
-## Graphical displays of longitudinal data: Individual plots
+## Graphical displays of longitudinal data: Summary graphs
 
 ```yaml
 type: NormalExercise
@@ -222,7 +222,7 @@ skills: 1
 key: 4825d6d5aa
 ```
 
-Exercise 3 introduction
+Exercise 4 introduction
 
 `@instructions`
 - Draw the first plot
