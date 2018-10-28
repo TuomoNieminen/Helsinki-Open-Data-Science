@@ -52,13 +52,13 @@ names(BPRS)
 
 `@solution`
 ```{r}
-# read the human data
+# read the BPRS data
 BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 
-# look at the (column) names of human
+# look at the (column) names of BPRS
 names(BPRS)
 
-# look at the structure of human
+# look at the structure of BPRS
 str(BPRS)
 
 # print out summaries of the variables
@@ -376,7 +376,7 @@ success_msg("No tests yet!")
 
 ---
 
-## Graphical displays of longitudinal data: T-test
+## Graphical displays of longitudinal data: T-test and anova
 
 ```yaml
 type: NormalExercise
@@ -443,6 +443,64 @@ fit <- lm(mean ~ baseline + treatment, data = BPRSL8S2)
 summary(fit)
 anova(fit)
 
+```
+
+`@sct`
+```{r}
+
+success_msg("No tests yet!")
+```
+
+---
+
+## Meet and Repeat: PART II
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Welcome to the PART II of *Analysis of longitudinal data* chapter.
+
+Longitudinal data, where a response variable is measured on each subject on several different occasions poses problems for their analysis because the repeated measurements on each subject are very likely to be correlated rather than independent. In PART II of this chapter methods for dealing with longitudinal data which aim to account for the correlated nature of the data and where the response is assumed to be normally distributed are discussed, and then applied to several sets of data including a study of the use of computerized delivery of cognitive behavioral therapy.
+
+Exercise 7 introduction: Rats!!
+
+`@instructions`
+- Read the `RATS` data into memory
+
+`@hint`
+- Use `str()` to see structure
+- Use `summary()` to compute summaries
+
+`@pre_exercise_code`
+```{r}
+library(dplyr)
+```
+
+`@sample_code`
+```{r}
+# dplyr is available
+
+# read the RATS data
+
+```
+
+`@solution`
+```{r}
+# dplyr is available
+
+# read the RATS data
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+
+RATS <- within(RATS, {
+  ID <- factor(ID)
+  Group <- factor(Group)
+})
+
+glimpse(RATS)
 ```
 
 `@sct`
