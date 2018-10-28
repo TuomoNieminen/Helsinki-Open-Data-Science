@@ -81,10 +81,10 @@ success_msg("Awsome, you have mastered an important first step of data analysis!
 
 ```yaml
 type: NormalExercise
+key: e9b52fd18b
 lang: r
 xp: 100
 skills: 1
-key: e9b52fd18b
 ```
 
 Exercise 2 introduction: Converting to long form
@@ -138,10 +138,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: a1be9da8e9
 lang: r
 xp: 100
 skills: 1
-key: a1be9da8e9
 ```
 
 Exercise 3 introduction
@@ -216,10 +216,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: 4825d6d5aa
 lang: r
 xp: 100
 skills: 1
-key: 4825d6d5aa
 ```
 
 Exercise 4 introduction
@@ -292,10 +292,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: 1f43aab223
 lang: r
 xp: 100
 skills: 1
-key: 1f43aab223
 ```
 
 Exercise 5 introduction
@@ -380,10 +380,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: 692af7cc51
 lang: r
 xp: 100
 skills: 1
-key: 692af7cc51
 ```
 
 Exercise 6 introduction
