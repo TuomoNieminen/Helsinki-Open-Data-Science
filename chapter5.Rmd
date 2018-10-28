@@ -3,7 +3,7 @@ title: 'Analysis of longitudinal data [DRAFT]'
 description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effects Models for Normal Response Variables'
 ---
 
-## Meet and Repeat [DRAFT]
+## Meet and Repeat: PART I [DRAFT]
 
 ```yaml
 type: NormalExercise
@@ -15,7 +15,7 @@ skills: 1
 
 Welcome to the *Analysis of longitudinal data* chapter.
 
-THIS CHAPTER IS A DRAFT
+Many studies in the behavioral sciences involve several measurement or observations of the response variable of interest on each subject in the study. For example, the response variable may be measured under a number of different experimental conditions or on a number of different occasions over time; such data are labelled repeated measures or *longitudinal data*. In the first part (I) of this chapter useful methods for the graphical exploration of this type of data are described and a simple method for their analysis are introduced, with the warning that although simple the method should be used only in the initial stage of dealing with the data; more appropriate methods will be discussed in part II.
 
 Exercise 1 introduction: Check your data
 
