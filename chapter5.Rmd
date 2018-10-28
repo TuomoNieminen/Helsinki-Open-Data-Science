@@ -1,6 +1,6 @@
 ---
 title: 'Analysis of longitudinal data [DRAFT]'
-description: 'I: Graphical Displays and Summary Measure Approach\nII: Linear Mixed Effects Models for Normal Response Variables'
+description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effects Models for Normal Response Variables'
 ---
 
 ## Meet and Repeat [DRAFT]
