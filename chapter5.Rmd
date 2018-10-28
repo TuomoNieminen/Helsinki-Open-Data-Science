@@ -577,6 +577,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: e1bc1a20e9
 ```
 
 Exercise 9 introduction
@@ -636,6 +637,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 97a8002097
 ```
 
 Exercise 10 introduction
