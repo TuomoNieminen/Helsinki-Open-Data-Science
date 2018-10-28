@@ -590,7 +590,7 @@ Exercise 9 introduction
 
 `@pre_exercise_code`
 ```{r}
-library(dplyr); library(tidyr)
+library(dplyr); library(tidyr); library(ggplot2)
 RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
@@ -654,6 +654,8 @@ library(dplyr); library(tidyr)
 RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
 ```
 
 `@sample_code`
