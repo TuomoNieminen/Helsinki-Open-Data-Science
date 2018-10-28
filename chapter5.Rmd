@@ -402,7 +402,6 @@ BPRS$treatment <- factor(BPRS$treatment)
 BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
 BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
-rm(BPRS)
 BPRSL <- BPRSL %>%
   group_by(week) %>%
   mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
