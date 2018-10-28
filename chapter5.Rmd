@@ -683,3 +683,70 @@ pairs(RATS[, 3:13], cex = 0.7)
 
 success_msg("No tests yet!")
 ```
+
+---
+
+## Linear Mixed Effects Models: Random Intercept Model
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 11 introduction
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hint
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(lme4)
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr, lme4, RATS and RATSL are available
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr, lme4, RATS and RATSL are available
+
+# Table 9.4
+
+RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
+summary(RATS_ref)
+
+# Table 9.5
+
+RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
+summary(RATS_ref1)
+
+anova(RATS_ref1, RATS_ref)
+
+# Table 9.6
+
+RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALSE)
+summary(RATS_ref2)
+
+anova(RATS_ref1, RATS_ref2)
+
+
+```
+
+`@sct`
+```{r}
+
+success_msg("No tests yet!")
+```
