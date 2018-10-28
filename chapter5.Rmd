@@ -20,7 +20,7 @@ Many studies in the behavioral sciences involve several measurement or observati
 Exercise 1 introduction: Check your data
 
 `@instructions`
-- Read the `bprs` data into memory
+- Read the `BPRS` data into memory
 - Print out the (column) names of the data
 - Look at the structure of the data
 - Print out summaries of the variables in the data
@@ -37,10 +37,10 @@ Exercise 1 introduction: Check your data
 `@sample_code`
 ```{r}
 # read the BPRS data
-bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 
 # look at the (column) names of human
-names(bprs)
+names(BPRS)
 
 # look at the structure of human
 
@@ -53,22 +53,22 @@ names(bprs)
 `@solution`
 ```{r}
 # read the human data
-bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 
 # look at the (column) names of human
-names(bprs)
+names(BPRS)
 
 # look at the structure of human
-str(bprs)
+str(BPRS)
 
 # print out summaries of the variables
-summary(bprs)
+summary(BPRS)
 ```
 
 `@sct`
 ```{r}
 
-test_function("str", args = "object",incorrect_msg = "Please look at the structure of the bprs data frame")
+test_function("str", args = "object",incorrect_msg = "Please look at the structure of the BPRS data frame")
 test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the BPRS data frame")
 
 test_error()
@@ -90,7 +90,7 @@ key: e9b52fd18b
 Exercise 2 introduction: Converting to long form
 
 `@instructions`
-- Factor treatment and subject from bprs
+- Factor treatment and subject from BPRS
 - Gather by key = weeks by excluding treatment and subject (how does key work?)
 - Mutate a new integer variable week by substringing the only week number
 - Glimpse
@@ -101,29 +101,29 @@ Exercise 2 introduction: Converting to long form
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr)
-bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 ```
 
 `@sample_code`
 ```{r}
-# dplyr & tidyr packages and bprs are available
+# dplyr & tidyr packages and BPRS are available
 
 ```
 
 `@solution`
 ```{r}
-# dplyr & tidyr packages and bprs are available
+# dplyr & tidyr packages and BPRS are available
 
 # Factor treatment & subject
-bprs$treatment <- factor(bprs$treatment)
-bprs$subject <- factor(bprs$subject)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
 
 # Convert to long form
-bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
-bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
 # Let's see the gathered "long" data
-glimpse(bprsl)
+glimpse(BPRSL)
 ```
 
 `@sct`
@@ -158,44 +158,44 @@ Exercise 3 introduction
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
-bprs$treatment <- factor(bprs$treatment)
-bprs$subject <- factor(bprs$subject)
-bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
-bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
-rm(bprs)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
 ```
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and bprsl are available
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
 
 ```
 
 `@solution`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and bprsl are available
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
 
 # Plot me! (maybe do this in a function)
-p1 <- ggplot(bprsl, aes(x = week, y = bprs, linetype = subject))
+p1 <- ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject))
 p2 <- p1 + geom_line() + scale_linetype_manual(values = rep(1:10, times=4))
 p3 <- p2 + facet_grid(. ~ treatment, labeller = label_both)
 p4 <- p3 + theme_bw() + theme(legend.position = "none")
-p5 <- p4 + scale_y_continuous(limits = c(min(bprsl$bprs), max(bprsl$bprs)))
+p5 <- p4 + scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
 p5
 
 # Standardise
 
-bprsl <- bprsl %>%
+BPRSL <- BPRSL %>%
   group_by(week) %>%
   mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
   ungroup()
 
 # Check what's new
-glimpse(bprsl)
+glimpse(BPRSL)
 
 # Plot again
-p1 <- ggplot(bprsl, aes(x = week, y = stdbprs, linetype = subject))
+p1 <- ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject))
 p2 <- p1 + geom_line() + scale_linetype_manual(values = rep(1:10, times=4))
 p3 <- p2 + facet_grid(. ~ treatment, labeller = label_both)
 p4 <- p3 + theme_bw() + theme(legend.position = "none")
@@ -225,7 +225,7 @@ key: 4825d6d5aa
 Exercise 4 introduction
 
 `@instructions`
-- Create summary data bprss w/ vars mean & standard error
+- Create summary data BPRSS w/ vars mean & standard error
 - Glimpse
 - Draw a line plot of means and standard errors by treatment
 
@@ -235,13 +235,13 @@ Exercise 4 introduction
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
-bprs$treatment <- factor(bprs$treatment)
-bprs$subject <- factor(bprs$subject)
-bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
-bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
-rm(bprs)
-bprsl <- bprsl %>%
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+BPRSL <- BPRSL %>%
   group_by(week) %>%
   mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
   ungroup()
@@ -249,27 +249,27 @@ bprsl <- bprsl %>%
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and bprsl are available
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
 
 ```
 
 `@solution`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and bprsl are available
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
 
 # Make a summary data:
 
 # Number of weeks, baseline (0) included
-n <- bprsl$week %>% unique() %>% length()
-bprss <- bprsl %>%
+n <- BPRSL$week %>% unique() %>% length()
+BPRSS <- BPRSL %>%
   group_by(treatment, week) %>%
   summarise( mean=mean(bprs), se=sd(bprs)/sqrt(n) ) %>%
   ungroup()
 
-glimpse(bprss)
+glimpse(BPRSS)
 
 # Give something beforhand but let student add some layers
-p1 <- ggplot(bprss, aes(x = week, y = mean, linetype = treatment, shape = treatment))
+p1 <- ggplot(BPRSS, aes(x = week, y = mean, linetype = treatment, shape = treatment))
 p2 <- p1 + geom_line() + scale_linetype_manual(values = c(1,2))
 p3 <- p2 + geom_point(size=3) + scale_shape_manual(values = c(1,2))
 # for example fill ymax and ymin
@@ -301,7 +301,7 @@ key: 1f43aab223
 Exercise 5 introduction
 
 `@instructions`
-- Create summary data bprsl8s
+- Create summary data BPRSL8S
 - Glimpse
 - Draw a boxplot
 - Seek and destroy the outlier
@@ -313,13 +313,13 @@ Exercise 5 introduction
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-bprs <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
-bprs$treatment <- factor(bprs$treatment)
-bprs$subject <- factor(bprs$subject)
-bprsl <-  bprs %>% gather(key = weeks, value = bprs, -treatment, -subject)
-bprsl <-  bprsl %>% mutate(week = as.integer(substr(weeks,5,5)))
-rm(bprs)
-bprsl <- bprsl %>%
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+BPRSL <- BPRSL %>%
   group_by(week) %>%
   mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
   ungroup()
@@ -327,23 +327,23 @@ bprsl <- bprsl %>%
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and bprsl are available
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
 
 ```
 
 `@solution`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and bprsl are available
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
 
-bprsl8s <- bprsl %>%
+BPRSL8S <- BPRSL %>%
   filter(week > 0) %>%
   group_by(treatment, subject) %>%
   summarise( mean=mean(bprs) ) %>%
   ungroup()
 
-glimpse(bprsl8s)
+glimpse(BPRSL8S)
 
-p1 <- ggplot(bprsl8s, aes(x = treatment, y = mean))
+p1 <- ggplot(BPRSL8S, aes(x = treatment, y = mean))
 p2 <- p1 + geom_boxplot()
 #p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white")
@@ -352,19 +352,96 @@ p4
 
 # Remove the outlier:
 
-bprsl8s1 <- bprsl8s %>%
+BPRSL8S1 <- BPRSL8S %>%
   filter(mean < 60)
 
-glimpse(bprsl8s1)
+glimpse(BPRSL8S1)
 
 # Figure 8.6 - without the outlier:
 
-p1 <- ggplot(bprsl8s1, aes(x = treatment, y = mean))
+p1 <- ggplot(BPRSL8S1, aes(x = treatment, y = mean))
 p2 <- p1 + geom_boxplot()
 #p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") # other color?
 p4 <- p3 + scale_y_continuous(name = "mean(bprs), weeks 1-8")
 p4
+
+```
+
+`@sct`
+```{r}
+
+success_msg("No tests yet!")
+```
+
+---
+
+## Graphical displays of longitudinal data: T-test
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 6 introduction
+
+`@instructions`
+- inst
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+BPRSL <- BPRSL %>%
+  group_by(week) %>%
+  mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  ungroup()
+BPRSL8S <- BPRSL %>%
+  filter(week > 0) %>%
+  group_by(treatment, subject) %>%
+  summarise( mean=mean(bprs) ) %>%
+  ungroup()
+rm(BPRSL)
+BPRSL8S1 <- BPRSL8S %>%
+  filter(mean < 60)
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr & ggplot2 packages, BPRSL8S and BPRSL8S1 are available
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr & ggplot2 packages, BPRSL8S and BPRSL8S1 are available
+
+t.test(mean ~ treatment, data = BPRSL8S1, var.equal = TRUE)
+
+
+# Table 8.4
+
+# Add the baseline from the original data as a new variable to the summary data:
+baseline <- BPRS$week0
+BPRSL8S2 <- BPRSL8S %>%
+  mutate(baseline)
+
+# Fit the ancova model and see the results:
+
+fit <- lm(mean ~ baseline + treatment, data = BPRSL8S2)
+
+summary(fit)
+anova(fit)
 
 ```
 
