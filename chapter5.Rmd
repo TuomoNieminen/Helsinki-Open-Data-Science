@@ -460,6 +460,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 029bd37f33
 ```
 
 Welcome to the PART II of *Analysis of longitudinal data* chapter.
