@@ -520,6 +520,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: ee47059b42
 ```
 
 Exercise 8 introduction
