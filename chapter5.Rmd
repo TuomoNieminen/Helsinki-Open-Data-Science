@@ -90,9 +90,9 @@ skills: 1
 Exercise 2 introduction: Converting to long form
 
 `@instructions`
-- Factor treatment and subject from BPRS
-- Gather by key = weeks by excluding treatment and subject (how does key work?)
-- Mutate a new integer variable week by substringing the only week number
+- Factor variables treatment and subject
+- Use `gather()` to convert BPRS to a long form assigning columns to key-value pairs.
+- Use `mutate()` and `substring()` to create a new integer variable `week`.
 - Glimpse
 
 `@hint`
