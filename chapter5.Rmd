@@ -39,10 +39,10 @@ Exercise 1 introduction: Check your data
 # read the BPRS data
 BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 
-# look at the (column) names of human
+# look at the (column) names of BPRS
 names(BPRS)
 
-# look at the structure of human
+# look at the structure of BPRS
 
 
 # print out summaries of the variables
