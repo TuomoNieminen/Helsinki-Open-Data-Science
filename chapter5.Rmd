@@ -3,7 +3,7 @@ title: 'Analysis of longitudinal data [DRAFT]'
 description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effects Models for Normal Response Variables'
 ---
 
-## Meet and Repeat: PART I [DRAFT]
+## [UNDER CONSTRUCTION] Meet and Repeat: PART I
 
 ```yaml
 type: NormalExercise
@@ -24,6 +24,7 @@ Exercise 1 introduction: Check your data
 - Print out the (column) names of the data
 - Look at the structure of the data
 - Print out summaries of the variables in the data
+- Pay special attention to the structure of the data
 
 `@hint`
 - Use `str()` to see structure
@@ -100,19 +101,15 @@ Exercise 2 introduction: Converting to long form
 
 `@pre_exercise_code`
 ```{r}
-library(dplyr); library(tidyr)
 BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 ```
 
 `@sample_code`
 ```{r}
-# dplyr & tidyr packages and BPRS are available
+# The data BPRS is available
 
-```
-
-`@solution`
-```{r}
-# dplyr & tidyr packages and BPRS are available
+# Access the packages dplyr and tidyr
+library(dplyr); library(tidyr)
 
 # Factor treatment & subject
 BPRS$treatment <- factor(BPRS$treatment)
@@ -122,14 +119,36 @@ BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
 BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
-# Let's see the gathered "long" data
+# Use the glimpse() function to see what BPRSL looks like
+
+```
+
+`@solution`
+```{r}
+# The data BPRS is available
+
+# Access the packages dplyr and tidyr
+library(dplyr); library(tidyr)
+
+# Factor treatment & subject
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+
+# Convert to long form
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+
+# Use the glimpse() function to see what BPRSL looks like
 glimpse(BPRSL)
 ```
 
 `@sct`
 ```{r}
 
-success_msg("No tests yet!")
+test_function("glimpse", args = "object",incorrect_msg = "Please look at the structure of the BPRS data frame")
+
+test_error()
+success_msg("Good job!")
 ```
 
 ---
