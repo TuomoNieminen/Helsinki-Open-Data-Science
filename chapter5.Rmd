@@ -17,7 +17,8 @@ Welcome to the *Analysis of longitudinal data* chapter.
 
 Many studies in the behavioral sciences involve several measurement or observations of the response variable of interest on each subject in the study. For example, the response variable may be measured under a number of different experimental conditions or on a number of different occasions over time; such data are labelled repeated measures or *longitudinal data*. In the first part (I) of this chapter useful methods for the graphical exploration of this type of data are described and a simple method for their analysis are introduced, with the warning that although simple the method should be used only in the initial stage of dealing with the data; more appropriate methods will be discussed in part II.
 
-Exercise 1 introduction: Check your data
+In the first part we will dwelve in to the BPRS data [SITATION], in which 40 male subjects were randomly assigned to one of two treatment groups and each subject was rated on the brief psychiatric rating scale (BPRS) measured before treatment began (week 0) and then at weekly intervals for eight weeks. The BPRS assesses the level of 18 symptom constructs such as hostility, suspiciousness, hallucinations and grandiosity; each of these is rated from one (not present) to seven (extremely severe). The scale is used to evaluate patients suspected of having schizophrenia.
+
 
 `@instructions`
 - Read the `BPRS` data into memory
@@ -78,7 +79,7 @@ success_msg("Awsome, you have mastered an important first step of data analysis!
 
 ---
 
-## Graphical displays of longitudinal data: The magical gathering
+## Graphical displays of longitudinal data: The magical gather()
 
 ```yaml
 type: NormalExercise
@@ -88,7 +89,7 @@ xp: 100
 skills: 1
 ```
 
-Exercise 2 introduction: Converting to long form
+To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the gather() function which you can probably remember from previous chapters. The gather() function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about gather in the package documentation with ?gather or in the dplyr cheatsheet.
 
 `@instructions`
 - Factor variables treatment and subject
@@ -164,7 +165,7 @@ Exercise 3 introduction
 
 `@instructions`
 - Draw the first plot
-- Standardise variable bprs
+- Standardise variable bprs in BPRSL
 - Glimpse
 - Draw a new plot of the standardised values
 
@@ -190,9 +191,12 @@ rm(BPRS)
 
 `@solution`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and BPRSL are available
+# dplyr, tidyr packages and BPRSL are available
 
-# Plot me! (maybe do this in a function)
+#Access the package ggplot2
+library(ggplot2)
+
+# Draw the plot
 p1 <- ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject))
 p2 <- p1 + geom_line() + scale_linetype_manual(values = rep(1:10, times=4))
 p3 <- p2 + facet_grid(. ~ treatment, labeller = label_both)
