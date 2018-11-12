@@ -145,10 +145,7 @@ glimpse(BPRSL)
 `@sct`
 ```{r}
 
-test_object("BPRSL", incorrect_msg = "Did you create the `BPRSL` object?")
-test_function("glimpse", args = "object",incorrect_msg = "Did you glipse BPRSL?")
-test_error()
-success_msg("Good work!")
+success_msg("No tests")
 ```
 
 ---
