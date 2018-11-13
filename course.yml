@@ -1,10 +1,11 @@
-title            : Helsinki Open Data Science
-instructors      :
- - kimmo.vehkalahti@helsinki.fi
- - tuomo.a.nieminen@gmail.com
- - emma.kamarainen@outlook.com
- - petteri.mantymaa@helsinki.fi
-description      : <p>This DataCamp course has been developed for the use of University of Helsinki by <b>Tuomo Nieminen</b> and <b>Emma Kämäräinen</b>, under the supervision of adj. prof. <b>Kimmo Vehkalahti</b>. The corresponding HY course is titled Introduction to Open Data Science (IODS). The core themes of the course are open data, reproduciple research and data science.</p><p><a href = 'https://tuomonieminen.github.io/Helsinki-Open-Data-Science/#/'>IODS course slides</a><p>
-university       : University of Helsinki
-difficulty_level : 2
-time_needed      : 12 hours
+title: "Helsinki Open Data Science"
+instructors:
+- "kimmo.vehkalahti@helsinki.fi"
+- "tuomo.a.nieminen@gmail.com"
+- "emma.kamarainen@outlook.com"
+- "petteri.mantymaa@helsinki.fi"
+description: "<p>This DataCamp course has been developed for the use of University of Helsinki by <b>Tuomo Nieminen</b> and <b>Emma Kämäräinen</b>, under the supervision of adj. prof. <b>Kimmo Vehkalahti</b>. The corresponding HY course is titled Introduction to Open Data Science (IODS). The core themes of the course are open data, reproduciple research and data science.</p><p><a href = 'https://tuomonieminen.github.io/Helsinki-Open-Data-Science/#/'>IODS course slides</a><p>"
+university: "University of Helsinki"
+difficulty_level: 2
+time_needed: "12 hours"
+programming_language: "r"
