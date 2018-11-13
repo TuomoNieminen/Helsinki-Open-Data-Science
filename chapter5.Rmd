@@ -93,8 +93,8 @@ To be able to study the possible diffecences in the bprs value between the treat
 
 `@instructions`
 - Factor variables treatment and subject
-- Use `gather()` to convert BPRS to a long form assigning columns to key-value pairs.
-- Use `mutate()` and `substring()` to create a new integer variable `week`.
+- Use `gather()` to convert BPRS to a long form
+- Use `mutate()` and `substring()` to create a new integer variable `week`
 - Glimpse
 
 `@hint`
@@ -120,7 +120,7 @@ BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
 BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
-# Use the glimpse() function to see what BPRSL looks like
+# Take a glimpse at the BPRSL data
 
 ```
 
@@ -139,7 +139,7 @@ BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
 BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
-# Use the glimpse() function to see what BPRSL looks like
+# Take a glimpse at the BPRSL data
 glimpse(BPRSL)
 ```
 
@@ -161,13 +161,85 @@ xp: 100
 skills: 1
 ```
 
-Exercise 3 introduction
+Graphical displays of data are almost always useful for exposing patterns in the data, particularly when these are unexpected; this might be of great help in suggesting which class of models might be most sensibly applied in the later more formal analysis.
+
+To begin we shall plot the BPRS values for all 40 men, differentiating between the treatment groups into which the men have been randomized. This simple graph makes a number of features of the data readily apparent.
 
 `@instructions`
-- Draw the first plot
-- Standardise variable bprs in BPRSL
-- Glimpse
-- Draw a new plot of the standardised values
+- Draw the plot with `week` on the x-axis and `bprs` on the y-axis
+- Inspect the plot. See how both the BPRS-score and the variability between individuals decrease over the eight weeks time
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr packages and BPRSL are available
+
+#Access the package ggplot2
+library(ggplot2)
+
+# Draw the plot
+ggplot(BPRSL, aes(x = "Change me!", y = "Change me too!", linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr packages and BPRSL are available
+
+#Access the package ggplot2
+library(ggplot2)
+
+# Draw the plot
+ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
+```
+
+`@sct`
+```{r}
+
+success_msg("No tests yet!")
+```
+---
+
+## Graphical displays of longitudinal data: Standardise
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+An important effect we want to take notice is that the men who have higher BPRS values at the beginning tend to have higher values throughout the study. This phenomenon is generally referred to as tracking.
+
+The tracking phenomenon can be seen more clearly in a plot of the standardized values of each
+observation, i.e., the values obtained by subtracting the relevant occasion mean from the original observation and then dividing by the corresponding visit standard deviation.
+
+$$standardised(x) = \frac{x - mean(x)}{ sd(x)}$$
+
+`@instructions`
+- instu
 
 `@hint`
 - Hints
@@ -185,42 +257,42 @@ rm(BPRS)
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr & ggplot2 packages and BPRSL are available
+
+BPRSL <- BPRSL %>%
+  group_by(week) %>%
+  mutate(stdbprs = "Change me!") %>%
+  ungroup()
+
+# Glimpse the data
+glimpse(BPRSL)
+
+# Plot again with the standardised bprs
+ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  scale_y_continuous(name = "standardized bprs")
 
 ```
 
 `@solution`
 ```{r}
-# dplyr, tidyr packages and BPRSL are available
-
-#Access the package ggplot2
-library(ggplot2)
-
-# Draw the plot
-p1 <- ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject))
-p2 <- p1 + geom_line() + scale_linetype_manual(values = rep(1:10, times=4))
-p3 <- p2 + facet_grid(. ~ treatment, labeller = label_both)
-p4 <- p3 + theme_bw() + theme(legend.position = "none")
-p5 <- p4 + scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
-p5
-
-# Standardise
+# dplyr, tidyr and ggplot2 packages and BPRSL are available
 
 BPRSL <- BPRSL %>%
   group_by(week) %>%
-  mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  mutate(stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
   ungroup()
 
-# Check what's new
+# Glimpse the data
 glimpse(BPRSL)
 
-# Plot again
-p1 <- ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject))
-p2 <- p1 + geom_line() + scale_linetype_manual(values = rep(1:10, times=4))
-p3 <- p2 + facet_grid(. ~ treatment, labeller = label_both)
-p4 <- p3 + theme_bw() + theme(legend.position = "none")
-p5 <- p4 + scale_y_continuous(name = "standardized bprs")
-p5
+# Plot again with the standardised bprs
+ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  scale_y_continuous(name = "standardized bprs")
 
 ```
 
