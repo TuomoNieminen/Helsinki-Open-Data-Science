@@ -229,6 +229,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: a497ee0dcb
 ```
 
 An important effect we want to take notice is that the men who have higher BPRS values at the beginning tend to have higher values throughout the study. This phenomenon is generally referred to as tracking.
