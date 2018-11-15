@@ -1,5 +1,5 @@
 ---
-title: 'Analysis of longitudinal data [DRAFT]'
+title: '[UNDER CONSTRUCTION] Analysis of longitudinal data'
 description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effects Models for Normal Response Variables'
 ---
 
