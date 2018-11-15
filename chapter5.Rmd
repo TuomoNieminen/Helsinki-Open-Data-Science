@@ -335,7 +335,6 @@ $$se = \frac{sd(x)}{\sqrt{n}}$$
 treatment groups suggesting there might be little difference between
 the two groups in respect to the mean BPRS values
 
-
 `@hint`
 - Hints
 
