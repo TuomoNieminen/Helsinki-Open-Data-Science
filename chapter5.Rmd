@@ -37,32 +37,32 @@ In the first part we will dwelve in to the BPRS data [SITATION], in which 40 mal
 
 `@sample_code`
 ```{r}
-# read the BPRS data
+# Read the BPRS data
 BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 
-# look at the (column) names of BPRS
+# Look at the (column) names of BPRS
 names(BPRS)
 
-# look at the structure of BPRS
+# Look at the structure of BPRS
 
 
-# print out summaries of the variables
+# Print out summaries of the variables
 
 
 ```
 
 `@solution`
 ```{r}
-# read the BPRS data
+# Read the BPRS data
 BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
 
-# look at the (column) names of BPRS
+# Look at the (column) names of BPRS
 names(BPRS)
 
-# look at the structure of BPRS
+# Look at the structure of BPRS
 str(BPRS)
 
-# print out summaries of the variables
+# Print out summaries of the variables
 summary(BPRS)
 ```
 
@@ -94,7 +94,7 @@ To be able to study the possible diffecences in the bprs value between the treat
 - Factor variables treatment and subject
 - Use `gather()` to convert BPRS to a long form
 - Use `mutate()` and `substring()` to create a new integer variable `week`
-- Glimpse
+- Glimpse the data using `glimpse()`
 
 `@hint`
 - Hints
@@ -121,6 +121,7 @@ BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
 # Take a glimpse at the BPRSL data
 
+
 ```
 
 `@solution`
@@ -140,11 +141,11 @@ BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
 # Take a glimpse at the BPRSL data
 glimpse(BPRSL)
+
 ```
 
 `@sct`
 ```{r}
-
 success_msg("No tests")
 ```
 
