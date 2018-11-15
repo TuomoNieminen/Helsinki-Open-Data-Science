@@ -19,7 +19,6 @@ Many studies in the behavioral sciences involve several measurement or observati
 
 In the first part we will dwelve in to the BPRS data [SITATION], in which 40 male subjects were randomly assigned to one of two treatment groups and each subject was rated on the brief psychiatric rating scale (BPRS) measured before treatment began (week 0) and then at weekly intervals for eight weeks. The BPRS assesses the level of 18 symptom constructs such as hostility, suspiciousness, hallucinations and grandiosity; each of these is rated from one (not present) to seven (extremely severe). The scale is used to evaluate patients suspected of having schizophrenia.
 
-
 `@instructions`
 - Read the `BPRS` data into memory
 - Print out the (column) names of the data
@@ -220,16 +219,17 @@ ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) +
 
 success_msg("No tests yet!")
 ```
+
 ---
 
 ## Graphical displays of longitudinal data: Standardise
 
 ```yaml
 type: NormalExercise
+key: a497ee0dcb
 lang: r
 xp: 100
 skills: 1
-key: a497ee0dcb
 ```
 
 An important effect we want to take notice is that the men who have higher BPRS values at the beginning tend to have higher values throughout the study. This phenomenon is generally referred to as tracking.
@@ -550,10 +550,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: 029bd37f33
 lang: r
 xp: 100
 skills: 1
-key: 029bd37f33
 ```
 
 Welcome to the PART II of *Analysis of longitudinal data* chapter.
@@ -610,10 +610,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: ee47059b42
 lang: r
 xp: 100
 skills: 1
-key: ee47059b42
 ```
 
 Exercise 8 introduction
@@ -667,10 +667,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: e1bc1a20e9
 lang: r
 xp: 100
 skills: 1
-key: e1bc1a20e9
 ```
 
 Exercise 9 introduction
@@ -727,10 +727,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: 97a8002097
 lang: r
 xp: 100
 skills: 1
-key: 97a8002097
 ```
 
 Exercise 10 introduction
@@ -783,10 +783,10 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
+key: 1099c7c4ce
 lang: r
 xp: 100
 skills: 1
-key: 1099c7c4ce
 ```
 
 Exercise 11 introduction
