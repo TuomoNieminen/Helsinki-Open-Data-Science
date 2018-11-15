@@ -165,8 +165,10 @@ Graphical displays of data are almost always useful for exposing patterns in the
 
 To begin we shall plot the BPRS values for all 40 men, differentiating between the treatment groups into which the men have been randomized. This simple graph makes a number of features of the data readily apparent.
 
+REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" variable names!
+
 `@instructions`
-- Draw the plot with `week` on the x-axis and `bprs` on the y-axis (REMEMBER: In `ggplot2` or `dplyr` syntax, you don't generally need to quote variable names)
+- Draw the plot with `week` on the x-axis and `bprs` on the y-axis
 - Inspect the plot. See how both the BPRS-score and the variability between individuals decrease over the eight weeks time
 
 `@hint`
@@ -237,6 +239,8 @@ An important effect we want to take notice is how the men who have higher BPRS v
 
 The tracking phenomenon can be seen more clearly in a plot of the standardized values of each
 observation, i.e., the values obtained by subtracting the relevant occasion mean from the original observation and then dividing by the corresponding visit standard deviation.
+
+REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" variable names!
 
 $$standardised(x) = \frac{x - mean(x)}{ sd(x)}$$
 
