@@ -525,10 +525,15 @@ skills: 1
 key: '4714162745'
 ```
 
-Although the informal graphical material presented up to now has all indicated a lack of difference in the two treatment groups, most investigators would still require a formal test for a difference.
+Although the informal graphical material presented up to now has all indicated a lack of difference in the two treatment groups, most investigators would still require a formal test for a difference. Consequently we shall now apply a t-test to assess any difference between the treatment groups, and also calculate a confidence interval for this difference. We use the data without the outlier created in the previous exercise. The t-test confirms the lack of any evidence for a group difference. Also the 95% confidence interval is wide and includes the zero, allowing for similar conclusions to be made.
+
+Baseline measurements of the outcome variable in a longitudinal study are often correlated with the chosen summary measure and using such measures in the analysis can often lead to substantial gains in precision when used appropriately as a covariate in an analysis of covariance. We can illustrate the analysis on the data using the BPRS value corresponding to time zero taken prior to the start of treatment as the baseline covariate. We see that the baseline BPRS is strongly related to the BPRS values taken after treatment has begun, but there is still no evidence of a treatment difference even after conditioning on the baseline value.
 
 `@instructions`
-- inst
+- Perform a two-sample t-test...
+- Add the baseline from the original data as a new variable to the summary data
+- Fit the linear model...
+- Compute the analysis of variance table for the fitted model
 
 `@hint`
 - Hints
@@ -557,31 +562,38 @@ BPRSL8S1 <- BPRSL8S %>%
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr & ggplot2 packages, BPRSL8S and BPRSL8S1 are available
+# dplyr, tidyr & ggplot2 packages and BPRSL8S & BPRSL8S1 data are available
 
-# sample code here
+# Perform a two-sample t-test
+t.test(mean ~ treatment, data = BPRSL8S1, var.equal = TRUE)
+
+# Add the baseline from the original data as a new variable to the summary data
+BPRSL8S2 <- BPRSL8S %>%
+  mutate(baseline = BPRS$week0)
+
+# Fit the linear model with the mean as the response 
+fit <- lm(mean ~ baseline + treatment, data = BPRSL8S2)
+
+# Compute the analysis of variance table for the fitted model
+anova(fit)
 
 ```
 
 `@solution`
 ```{r}
-# dplyr, tidyr & ggplot2 packages, BPRSL8S and BPRSL8S1 are available
+# dplyr, tidyr & ggplot2 packages and BPRSL8S & BPRSL8S1 data are available
 
+# Perform a two-sample t-test
 t.test(mean ~ treatment, data = BPRSL8S1, var.equal = TRUE)
 
-
-# Table 8.4
-
-# Add the baseline from the original data as a new variable to the summary data:
-baseline <- BPRS$week0
+# Add the baseline from the original data as a new variable to the summary data
 BPRSL8S2 <- BPRSL8S %>%
-  mutate(baseline)
+  mutate(baseline = BPRS$week0)
 
-# Fit the ancova model and see the results:
-
+# Fit the linear model with the mean as the response 
 fit <- lm(mean ~ baseline + treatment, data = BPRSL8S2)
 
-summary(fit)
+# Compute the analysis of variance table for the fitted model
 anova(fit)
 
 ```
