@@ -46,3 +46,5 @@ The data found in the 'datasets' folder of this repository are used in the DataC
 
 The links to the currently used data files can be seen from the chapterx.Rmd files. The links to new files can be seen from the course build log under datacamp.com/teach. There is also information about uploading assets in the DataCamp [teach documentation](https://www.datacamp.com/teach/documentation#tab_upload_assets)
 
+adding a line
+adding a line
