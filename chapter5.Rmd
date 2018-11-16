@@ -108,7 +108,8 @@ BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/data
 # The data BPRS is available
 
 # Access the packages dplyr and tidyr
-library(dplyr); library(tidyr)
+library(dplyr)
+library(tidyr)
 
 # Factor treatment & subject
 BPRS$treatment <- factor(BPRS$treatment)
@@ -119,7 +120,7 @@ BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
 BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
 # Take a glimpse at the BPRSL data
-
+glimpse(BPRSL)
 
 ```
 
@@ -128,7 +129,8 @@ BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 # The data BPRS is available
 
 # Access the packages dplyr and tidyr
-library(dplyr); library(tidyr)
+library(dplyr)
+library(tidyr)
 
 # Factor treatment & subject
 BPRS$treatment <- factor(BPRS$treatment)
