@@ -62,7 +62,7 @@ names(BPRS)
 # Look at the structure of BPRS
 str(BPRS)
 
-# Print out summaries of the variables
+# print out summaries of the variables
 summary(BPRS)
 ```
 
