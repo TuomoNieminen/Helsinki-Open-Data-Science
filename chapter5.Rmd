@@ -1,0 +1,879 @@
+---
+title: '[UNDER CONSTRUCTION] Analysis of longitudinal data'
+description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effects Models for Normal Response Variables'
+---
+
+## [UNDER CONSTRUCTION] Meet and Repeat: PART I
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Welcome to the *Analysis of longitudinal data* chapter.
+
+Many studies in the behavioral sciences involve several measurement or observations of the response variable of interest on each subject in the study. For example, the response variable may be measured under a number of different experimental conditions or on a number of different occasions over time; such data are labelled repeated measures or *longitudinal data*. In the first part (I) of this chapter useful methods for the graphical exploration of this type of data are described and a simple method for their analysis are introduced, with the warning that although simple the method should be used only in the initial stage of dealing with the data; more appropriate methods will be discussed in part II.
+
+In the first part we will dwelve in to the BPRS data [SITATION], in which 40 male subjects were randomly assigned to one of two treatment groups and each subject was rated on the brief psychiatric rating scale (BPRS) measured before treatment began (week 0) and then at weekly intervals for eight weeks. The BPRS assesses the level of 18 symptom constructs such as hostility, suspiciousness, hallucinations and grandiosity; each of these is rated from one (not present) to seven (extremely severe). The scale is used to evaluate patients suspected of having schizophrenia.
+
+`@instructions`
+- Read the `BPRS` data into memory
+- Print out the (column) names of the data
+- Look at the structure of the data
+- Print out summaries of the variables in the data
+- Pay special attention to the structure of the data
+
+`@hint`
+- Use `str()` to see structure
+- Use `summary()` to compute summaries
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# Read the BPRS data
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+
+# Look at the (column) names of BPRS
+names(BPRS)
+
+# Look at the structure of BPRS
+
+
+# Print out summaries of the variables
+
+
+```
+
+`@solution`
+```{r}
+# Read the BPRS data
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+
+# Look at the (column) names of BPRS
+names(BPRS)
+
+# Look at the structure of BPRS
+str(BPRS)
+
+# print out summaries of the variables
+summary(BPRS)
+
+```
+
+`@sct`
+```{r}
+test_function("str", args = "object",incorrect_msg = "Please look at the structure of the BPRS data frame")
+test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the BPRS data frame")
+test_error()
+success_msg("Awsome, you have mastered an important first step of data analysis!")
+```
+
+---
+
+## Graphical displays of longitudinal data: The magical gather()
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the gather() function which you can probably remember from previous chapters. The gather() function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about gather in the package documentation with ?gather or in the dplyr cheatsheet.
+
+`@instructions`
+- Factor variables treatment and subject
+- Use `gather()` to convert BPRS to a long form
+- Use `mutate()` and `substring()` to create a new integer variable `week`
+- Glimpse the data using `glimpse()`
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+```
+
+`@sample_code`
+```{r}
+# The data BPRS is available
+
+# Access the packages dplyr and tidyr
+library(dplyr)
+library(tidyr)
+
+# Factor treatment & subject
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+
+# Convert to long form
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+
+# Take a glimpse at the BPRSL data
+glimpse(BPRSL)
+
+```
+
+`@solution`
+```{r}
+# The data BPRS is available
+
+# Access the packages dplyr and tidyr
+library(dplyr)
+library(tidyr)
+
+# Factor treatment & subject
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+
+# Convert to long form
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+
+# Take a glimpse at the BPRSL data
+glimpse(BPRSL)
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests")
+```
+
+---
+
+## Graphical displays of longitudinal data: Individual plots
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Graphical displays of data are almost always useful for exposing patterns in the data, particularly when these are unexpected; this might be of great help in suggesting which class of models might be most sensibly applied in the later more formal analysis.
+
+To begin we shall plot the BPRS values for all 40 men, differentiating between the treatment groups into which the men have been randomized. This simple graph makes a number of features of the data readily apparent.
+
+REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" variable names!
+
+`@instructions`
+- Draw the plot with `week` on the x-axis and `bprs` on the y-axis
+- Inspect the plot. See how both the BPRS-score and the variability between individuals decrease over the eight weeks time
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr packages and BPRSL are available
+
+#Access the package ggplot2
+library(ggplot2)
+
+# Draw the plot
+ggplot(BPRSL, aes(x = "Change me!", y = "Change me too!", linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr packages and BPRSL are available
+
+#Access the package ggplot2
+library(ggplot2)
+
+# Draw the plot
+ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Graphical displays of longitudinal data: Standardise
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+An important effect we want to take notice is how the men who have higher BPRS values at the beginning tend to have higher values throughout the study. This phenomenon is generally referred to as tracking.
+
+The tracking phenomenon can be seen more clearly in a plot of the standardized values of each
+observation, i.e., the values obtained by subtracting the relevant occasion mean from the original observation and then dividing by the corresponding visit standard deviation.
+
+$$standardised(x) = \frac{x - mean(x)}{ sd(x)}$$
+
+REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" variable names!
+
+`@instructions`
+- Assign `week` as the grouping variable
+- Standardise the variable `bprs`
+- Glimpse the data now with the standardised `brps`
+- Plot the data now with the standardised `brps`
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr and ggplot2 packages and BPRSL are available
+
+# Standardise the variable bprs
+BPRSL <- BPRSL %>%
+  group_by("Change me!") %>%
+  mutate(stdbprs = "Change me!") %>%
+  ungroup()
+
+# Glimpse the data
+glimpse(BPRSL)
+
+# Plot again with the standardised bprs
+ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  scale_y_continuous(name = "standardized bprs")
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr and ggplot2 packages and BPRSL are available
+
+# Standardise the variable bprs
+BPRSL <- BPRSL %>%
+  group_by(week) %>%
+  mutate(stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  ungroup()
+
+# Glimpse the data
+glimpse(BPRSL)
+
+# Plot again with the standardised bprs
+ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  scale_y_continuous(name = "standardized bprs")
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Graphical displays of longitudinal data: Summary graphs
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+With large numbers of observations, graphical displays of individual response profiles are of little use and investigators then commonly produce graphs showing average (mean) profiles for each treatment group along with some indication of the variation of the observations at each time point, in this case the standard error of mean
+
+$$se = \frac{sd(x)}{\sqrt{n}}$$
+
+`@instructions`
+- Create the summary data `BPRSS` with the mean and standard error of the variable `bprs`
+- Glimpse the data
+- Plot the mean profiles (with `geom_errorbar()` line commented out)
+- Uncomment the `geom_errorbar()` line and plot the mean profiles again
+- Note the considerable overlap in the mean profiles of the two
+treatment groups suggesting there might be little difference between
+the two groups in respect to the mean BPRS values
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+BPRSL <- BPRSL %>%
+  group_by(week) %>%
+  mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  ungroup()
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
+
+# Number of weeks, baseline (week 0) included
+n <- BPRSL$week %>% unique() %>% length()
+
+# Summary data with mean and standard error of bprs by treatment and week 
+BPRSS <- BPRSL %>%
+  group_by(treatment, week) %>%
+  summarise( mean = "Change me!", se = "Change me!" ) %>%
+  ungroup()
+
+# Glimpse the data
+glimpse(BPRSS)
+
+# Plot the mean profiles
+ggplot(BPRSS, aes(x = week, y = mean, linetype = treatment, shape = treatment)) +
+  geom_line() +
+  scale_linetype_manual(values = c(1,2)) +
+  geom_point(size=3) +
+  scale_shape_manual(values = c(1,2)) +
+  #geom_errorbar(aes(ymin=mean-se, ymax=mean+se, linetype="1"), width=0.3) +
+  theme(legend.position = c(0.8,0.8)) +
+  scale_y_continuous(name = "mean(bprs) +/- se(bprs)")
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
+
+# Number of weeks, baseline (week 0) included
+n <- BPRSL$week %>% unique() %>% length()
+
+# Summary data with mean and standard error of bprs by treatment and week 
+BPRSS <- BPRSL %>%
+  group_by(treatment, week) %>%
+  summarise( mean = mean(bprs), se = sd(bprs)/sqrt(n) ) %>%
+  ungroup()
+
+# Glimpse the data
+glimpse(BPRSS)
+
+# Plot the mean profiles
+ggplot(BPRSS, aes(x = week, y = mean, linetype = treatment, shape = treatment)) +
+  geom_line() +
+  scale_linetype_manual(values = c(1,2)) +
+  geom_point(size=3) +
+  scale_shape_manual(values = c(1,2)) +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se, linetype="1"), width=0.3) +
+  theme(legend.position = c(0.8,0.8)) +
+  scale_y_continuous(name = "mean(bprs) +/- se(bprs)")
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Graphical displays of longitudinal data: Find the outlaw
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 5 introduction
+
+`@instructions`
+- Create summary data BPRSL8S
+- Glimpse
+- Draw a boxplot
+- Seek and destroy the outlier
+- Plot again
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+rm(BPRS)
+BPRSL <- BPRSL %>%
+  group_by(week) %>%
+  mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  ungroup()
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
+
+# sample code here
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr & ggplot2 packages and BPRSL are available
+
+BPRSL8S <- BPRSL %>%
+  filter(week > 0) %>%
+  group_by(treatment, subject) %>%
+  summarise( mean=mean(bprs) ) %>%
+  ungroup()
+
+glimpse(BPRSL8S)
+
+p1 <- ggplot(BPRSL8S, aes(x = treatment, y = mean))
+p2 <- p1 + geom_boxplot()
+#p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white")
+p4 <- p3 + scale_y_continuous(name = "mean(bprs), weeks 1-8")
+p4
+
+# Remove the outlier:
+
+BPRSL8S1 <- BPRSL8S %>%
+  filter(mean < 60)
+
+glimpse(BPRSL8S1)
+
+# Figure 8.6 - without the outlier:
+
+p1 <- ggplot(BPRSL8S1, aes(x = treatment, y = mean))
+p2 <- p1 + geom_boxplot()
+#p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") # other color?
+p4 <- p3 + scale_y_continuous(name = "mean(bprs), weeks 1-8")
+p4
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Graphical displays of longitudinal data: T-test and anova
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 6 introduction
+
+`@instructions`
+- inst
+
+`@hint`
+- Hints
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+BPRSL <- BPRSL %>%
+  group_by(week) %>%
+  mutate( stdbprs = (bprs - mean(bprs))/sd(bprs) ) %>%
+  ungroup()
+BPRSL8S <- BPRSL %>%
+  filter(week > 0) %>%
+  group_by(treatment, subject) %>%
+  summarise( mean=mean(bprs) ) %>%
+  ungroup()
+rm(BPRSL)
+BPRSL8S1 <- BPRSL8S %>%
+  filter(mean < 60)
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr & ggplot2 packages, BPRSL8S and BPRSL8S1 are available
+
+# sample code here
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr & ggplot2 packages, BPRSL8S and BPRSL8S1 are available
+
+t.test(mean ~ treatment, data = BPRSL8S1, var.equal = TRUE)
+
+
+# Table 8.4
+
+# Add the baseline from the original data as a new variable to the summary data:
+baseline <- BPRS$week0
+BPRSL8S2 <- BPRSL8S %>%
+  mutate(baseline)
+
+# Fit the ancova model and see the results:
+
+fit <- lm(mean ~ baseline + treatment, data = BPRSL8S2)
+
+summary(fit)
+anova(fit)
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Meet and Repeat: PART II
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Welcome to the PART II of *Analysis of longitudinal data* chapter.
+
+Longitudinal data, where a response variable is measured on each subject on several different occasions poses problems for their analysis because the repeated measurements on each subject are very likely to be correlated rather than independent. In PART II of this chapter methods for dealing with longitudinal data which aim to account for the correlated nature of the data and where the response is assumed to be normally distributed are discussed, and then applied to several sets of data including a study of the use of computerized delivery of cognitive behavioral therapy.
+
+Exercise 7 introduction: Rats!!
+
+`@instructions`
+- Read the `RATS` data into memory
+
+`@hint`
+- Use `str()` to see structure
+- Use `summary()` to compute summaries
+
+`@pre_exercise_code`
+```{r}
+library(dplyr)
+```
+
+`@sample_code`
+```{r}
+# dplyr is available
+
+# read the RATS data
+
+# sample code here
+
+```
+
+`@solution`
+```{r}
+# dplyr is available
+
+# read the RATS data
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+
+glimpse(RATS)
+
+pairs(RATS[, 3:13], cex = 0.7)
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Linear Mixed Effects Models: Gather 'round
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 8 introduction
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hint
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr)
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr and RATS are available
+
+# Convert data to long form:
+
+# sample code here
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr and RATS are available
+
+# Convert data to long form:
+
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
+
+glimpse(RATSL)
+head(RATSL)
+tail(RATSL)
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Linear Mixed Effects Models: Plot first, ask questions later
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 9 introduction
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hint
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(ggplot2)
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr and RATSL are available
+
+# Plot RATS
+
+# sample code here
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr and RATSL are available
+
+# Plot RATS
+p1 <- ggplot(RATSL, aes(x = Time, y = Weight, group = ID))
+p2 <- p1 + geom_line(aes(linetype = Group))
+p3 <- p2 + scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 10))
+# p4 <- p3 + scale_y_continuous(name = "Weight (grams)", limits = c(200, 700))
+p4 <- p3 + scale_y_continuous(name = "Weight (grams)")
+# p5 <- p4 + theme_bw() + theme(legend.position = c(0.1,0.85))
+p5 <- p4 + theme(legend.position = "top")
+#p6 <- p5 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+p5
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Linear Mixed Effects Models: Linear Model (assumed independence)
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 10 introduction
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hint
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr)
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr RATS and RATSL are available
+
+# sample code here
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr, RATS and RATSL are available
+
+# dummies (in Table) vs summary output: D1 = Group2, D2 = Group3
+RATS_reg <- lm(Weight ~ Time + Group, data = RATSL)
+summary(RATS_reg)
+
+# Not independent
+pairs(RATS[, 3:13], cex = 0.7)
+
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
+
+---
+
+## Linear Mixed Effects Models: Random Intercept Model
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Exercise 11 introduction
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hint
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(lme4)
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr, lme4, RATS and RATSL are ava
+
+# sample code here
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr, lme4, RATS and RATSL are available
+
+# Table 9.4
+
+RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
+summary(RATS_ref)
+
+# Table 9.5
+
+RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
+summary(RATS_ref1)
+
+anova(RATS_ref1, RATS_ref)
+
+# Table 9.6
+
+RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALSE)
+summary(RATS_ref2)
+
+anova(RATS_ref1, RATS_ref2)
+
+
+```
+
+`@sct`
+```{r}
+success_msg("No tests yet!")
+```
