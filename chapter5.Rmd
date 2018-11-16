@@ -7,7 +7,6 @@ description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effe
 
 ```yaml
 type: NormalExercise
-key: f9ad1f5b4a
 lang: r
 xp: 100
 skills: 1
@@ -81,7 +80,6 @@ success_msg("Awsome, you have mastered an important first step of data analysis!
 
 ```yaml
 type: NormalExercise
-key: e9b52fd18b
 lang: r
 xp: 100
 skills: 1
@@ -154,7 +152,6 @@ success_msg("No tests")
 
 ```yaml
 type: NormalExercise
-key: a1be9da8e9
 lang: r
 xp: 100
 skills: 1
@@ -227,7 +224,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: a497ee0dcb
 lang: r
 xp: 100
 skills: 1
@@ -317,7 +313,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: 4825d6d5aa
 lang: r
 xp: 100
 skills: 1
@@ -421,7 +416,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: 1f43aab223
 lang: r
 xp: 100
 skills: 1
@@ -510,7 +504,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: 692af7cc51
 lang: r
 xp: 100
 skills: 1
@@ -588,7 +581,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: 029bd37f33
 lang: r
 xp: 100
 skills: 1
@@ -649,7 +641,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: ee47059b42
 lang: r
 xp: 100
 skills: 1
@@ -707,7 +698,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: e1bc1a20e9
 lang: r
 xp: 100
 skills: 1
@@ -768,7 +758,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: 97a8002097
 lang: r
 xp: 100
 skills: 1
@@ -825,7 +814,6 @@ success_msg("No tests yet!")
 
 ```yaml
 type: NormalExercise
-key: 1099c7c4ce
 lang: r
 xp: 100
 skills: 1
