@@ -64,14 +64,13 @@ str(BPRS)
 
 # print out summaries of the variables
 summary(BPRS)
+
 ```
 
 `@sct`
 ```{r}
-
 test_function("str", args = "object",incorrect_msg = "Please look at the structure of the BPRS data frame")
 test_function("summary", args = "object",incorrect_msg = "Please print out summaries of the variables in the BPRS data frame")
-
 test_error()
 success_msg("Awsome, you have mastered an important first step of data analysis!")
 ```
@@ -219,7 +218,6 @@ ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) +
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -310,7 +308,6 @@ ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject)) +
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -415,7 +412,6 @@ ggplot(BPRSS, aes(x = week, y = mean, linetype = treatment, shape = treatment)) 
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -462,6 +458,8 @@ BPRSL <- BPRSL %>%
 ```{r}
 # dplyr, tidyr & ggplot2 packages and BPRSL are available
 
+# sample code here
+
 ```
 
 `@solution`
@@ -503,7 +501,6 @@ p4
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -553,6 +550,8 @@ BPRSL8S1 <- BPRSL8S %>%
 ```{r}
 # dplyr, tidyr & ggplot2 packages, BPRSL8S and BPRSL8S1 are available
 
+# sample code here
+
 ```
 
 `@solution`
@@ -580,7 +579,6 @@ anova(fit)
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -620,6 +618,8 @@ library(dplyr)
 
 # read the RATS data
 
+# sample code here
+
 ```
 
 `@solution`
@@ -640,7 +640,6 @@ pairs(RATS[, 3:13], cex = 0.7)
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -678,6 +677,8 @@ RATS$Group <- factor(RATS$Group)
 
 # Convert data to long form:
 
+# sample code here
+
 ```
 
 `@solution`
@@ -697,7 +698,6 @@ tail(RATSL)
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -737,6 +737,8 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 
 # Plot RATS
 
+# sample code here
+
 ```
 
 `@solution`
@@ -757,7 +759,6 @@ p5
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -795,6 +796,8 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 ```{r}
 # dplyr, tidyr RATS and RATSL are available
 
+# sample code here
+
 ```
 
 `@solution`
@@ -813,7 +816,6 @@ pairs(RATS[, 3:13], cex = 0.7)
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
 
@@ -849,7 +851,9 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr, lme4, RATS and RATSL are available
+# dplyr, tidyr, lme4, RATS and RATSL are ava
+
+# sample code here
 
 ```
 
@@ -881,6 +885,5 @@ anova(RATS_ref1, RATS_ref2)
 
 `@sct`
 ```{r}
-
 success_msg("No tests yet!")
 ```
