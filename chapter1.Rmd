@@ -13,7 +13,7 @@ xp: 100
 skills: 1
 ```
 
-Welcome to **Helsinki Open Data Science**: Regression and model validation. 
+Welcome to **Helsinki Open Data Science**: Regression and Model validation. 
 
 The first step of data analysis with R is reading data into R. This is done with a function. Which function and function arguments to use to do this, depends on the original format of the data. 
 
@@ -40,10 +40,10 @@ After the correct function has been identified and data read into R, the data wi
 # read the data into memory
 lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
 
-# look at the dimensions of the data
+# Look at the dimensions of the data
 
 
-# look at the structure of the data
+# Look at the structure of the data
 
 
 ```
@@ -54,10 +54,10 @@ lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt
 # read the data into memory
 lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
 
-# look at the dimensions of the data
+# Look at the dimensions of the data
 dim(lrn14)
 
-# look at the structure of the data
+# Look at the structure of the data
 str(lrn14)
 
 ```

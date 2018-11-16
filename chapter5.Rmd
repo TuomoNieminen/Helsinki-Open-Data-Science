@@ -240,9 +240,9 @@ An important effect we want to take notice is how the men who have higher BPRS v
 The tracking phenomenon can be seen more clearly in a plot of the standardized values of each
 observation, i.e., the values obtained by subtracting the relevant occasion mean from the original observation and then dividing by the corresponding visit standard deviation.
 
-REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" variable names!
-
 $$standardised(x) = \frac{x - mean(x)}{ sd(x)}$$
+
+REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" variable names!
 
 `@instructions`
 - Assign `week` as the grouping variable
