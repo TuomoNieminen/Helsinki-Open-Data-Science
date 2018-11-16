@@ -429,14 +429,15 @@ skills: 1
 key: 539b15366d
 ```
 
-Exercise 5 introduction
+As an example of the summary measure approach we will look into the post treatment values of the BPRS. The mean of weeks 1 to 8 will be our summary measure. First calculate this measure and then look at boxplots of the measure for each treatment group. See how the mean summary measure is more variable in the second treatment group and its distribution in this group is somewhat skew. The boxplot of the second group also reveals an outlier, a subject whose mean BPRS score of the eight weeks is over 70. It might bias the conclusions from further comparisons of the groups, so we shall remove that subject from the data. Without the outlier, try to figure which treatment group might have the lower the eight-week mean. Think, considering the variation, how can we be sure? 
+
 
 `@instructions`
-- Create summary data BPRSL8S
-- Glimpse
-- Draw a boxplot
-- Seek and destroy the outlier
-- Plot again
+- Create the summary data BPRSL8S
+- Glimpse the data
+- Draw the boxplot and observe the outlier
+- Find a suitable threshold value and use `filter()` to exclude the outlier to form a new data BPRSL8S1
+- Glimpse and draw a boxplot of the new data to check the outlier has been dealt with
 
 `@hint`
 - Hints
@@ -460,7 +461,24 @@ BPRSL <- BPRSL %>%
 ```{r}
 # dplyr, tidyr & ggplot2 packages and BPRSL are available
 
-# sample code here
+# Create a summary data by treatment and subject with mean as the summary variable (ignoring baseline week 0).
+BPRSL8S <- BPRSL %>%
+  filter(week > 0) %>%
+  group_by(treatment, subject) %>%
+  summarise( mean=mean(bprs) ) %>%
+  ungroup()
+
+# Glimpse the data
+glimpse(BPRSL8S)
+
+# Draw a boxplot of the mean versus treatment
+ggplot(BPRSL8S, aes(x = treatment, y = mean)) +
+  geom_boxplot() +
+  stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") +
+  scale_y_continuous(name = "mean(bprs), weeks 1-8")
+
+# Create a new data by filtering the outlier
+BPRSL8S1 <- "Change me!"
 
 ```
 
@@ -468,36 +486,25 @@ BPRSL <- BPRSL %>%
 ```{r}
 # dplyr, tidyr & ggplot2 packages and BPRSL are available
 
+# Create a summary data by treatment and subject with mean as the summary variable (ignoring baseline week 0).
 BPRSL8S <- BPRSL %>%
   filter(week > 0) %>%
   group_by(treatment, subject) %>%
   summarise( mean=mean(bprs) ) %>%
   ungroup()
 
+# Glimpse the data
 glimpse(BPRSL8S)
 
-p1 <- ggplot(BPRSL8S, aes(x = treatment, y = mean))
-p2 <- p1 + geom_boxplot()
-#p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white")
-p4 <- p3 + scale_y_continuous(name = "mean(bprs), weeks 1-8")
-p4
+# Draw a boxplot of the mean versus treatment
+ggplot(BPRSL8S, aes(x = treatment, y = mean)) +
+  geom_boxplot() +
+  stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") +
+  scale_y_continuous(name = "mean(bprs), weeks 1-8")
 
-# Remove the outlier:
-
+# Create a new data by filtering the outlier
 BPRSL8S1 <- BPRSL8S %>%
   filter(mean < 60)
-
-glimpse(BPRSL8S1)
-
-# Figure 8.6 - without the outlier:
-
-p1 <- ggplot(BPRSL8S1, aes(x = treatment, y = mean))
-p2 <- p1 + geom_boxplot()
-#p3 <- p2 + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-p3 <- p2 + stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") # other color?
-p4 <- p3 + scale_y_continuous(name = "mean(bprs), weeks 1-8")
-p4
 
 ```
 
@@ -518,7 +525,7 @@ skills: 1
 key: '4714162745'
 ```
 
-Exercise 6 introduction
+Although the informal graphical material presented up to now has all indicated a lack of difference in the two treatment groups, most investigators would still require a formal test for a difference.
 
 `@instructions`
 - inst
