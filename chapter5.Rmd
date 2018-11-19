@@ -619,7 +619,8 @@ Welcome to the PART II of *Analysis of longitudinal data* chapter.
 
 Longitudinal data, where a response variable is measured on each subject on several different occasions poses problems for their analysis because the repeated measurements on each subject are very likely to be correlated rather than independent. In PART II of this chapter methods for dealing with longitudinal data which aim to account for the correlated nature of the data and where the response is assumed to be normally distributed are discussed, and then applied to several sets of data including a study of the use of computerized delivery of cognitive behavioral therapy.
 
-Exercise 7 introduction: Rats!!
+To begin to see how linear mixed effects models are applied in practice, we shall use some data from a nutrition study conducted in three groups of rats. The three groups were put on different diets, and each animal’s body weight (grams) was recorded repeatedly (approximately) weekly, except in week seven when two recordings were taken) over a 9-week period. The question of most interest is whether the growth profiles of the three groups differ.
+
 
 `@instructions`
 - Read the `RATS` data into memory
