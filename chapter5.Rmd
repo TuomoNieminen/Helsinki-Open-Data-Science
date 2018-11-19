@@ -617,17 +617,18 @@ key: 707255f740
 
 Welcome to the PART II of *Analysis of longitudinal data* chapter.
 
-Longitudinal data, where a response variable is measured on each subject on several different occasions poses problems for their analysis because the repeated measurements on each subject are very likely to be correlated rather than independent. In PART II of this chapter methods for dealing with longitudinal data which aim to account for the correlated nature of the data and where the response is assumed to be normally distributed are discussed, and then applied to several sets of data including a study of the use of computerized delivery of cognitive behavioral therapy.
+Longitudinal data, where a response variable is measured on each subject on several different occasions poses problems for their analysis because the repeated measurements on each subject are very likely to be correlated rather than independent. In PART II of this chapter methods for dealing with longitudinal data which aim to account for the correlated nature of the data and where the response is assumed to be normally distributed are discussed.
 
-To begin to see how linear mixed effects models are applied in practice, we shall use some data from a nutrition study conducted in three groups of rats. The three groups were put on different diets, and each animal’s body weight (grams) was recorded repeatedly (approximately) weekly, except in week seven when two recordings were taken) over a 9-week period. The question of most interest is whether the growth profiles of the three groups differ.
+To investigate the use of linear mixed effects models in practice, we shall use data from a nutrition study conducted in three groups of rats. The groups were put on different diets, and each animal’s body weight (grams) was recorded repeatedly (approximately) weekly, except in week seven when two recordings were taken) over a 9-week period. The question of most interest is whether the growth profiles of the three groups differ.
 
 
 `@instructions`
 - Read the `RATS` data into memory
+- Glimpse the data
+- Plot a scatter plot matrix to view the correlated nature of the repeated measures
 
 `@hint`
-- Use `str()` to see structure
-- Use `summary()` to compute summaries
+- Hints
 
 `@pre_exercise_code`
 ```{r}
@@ -639,8 +640,17 @@ library(dplyr)
 # dplyr is available
 
 # read the RATS data
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
 
-# sample code here
+# Factor variables ID and Group
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+
+# Glimpse the data
+glimpse(RATS)
+
+# Plot a scatter plot matrix 
+pairs(RATS[, 3:13], cex = 0.7)
 
 ```
 
@@ -651,11 +661,14 @@ library(dplyr)
 # read the RATS data
 RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
 
+# Factor variables ID and Group
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
 
+# Glimpse the data
 glimpse(RATS)
 
+# Plot a scatter plot matrix 
 pairs(RATS[, 3:13], cex = 0.7)
 
 ```
@@ -713,8 +726,6 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
   mutate(Time = as.integer(substr(WD,3,4))) 
 
 glimpse(RATSL)
-head(RATSL)
-tail(RATSL)
 
 ```
 
@@ -768,15 +779,11 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 # dplyr, tidyr and RATSL are available
 
 # Plot RATS
-p1 <- ggplot(RATSL, aes(x = Time, y = Weight, group = ID))
-p2 <- p1 + geom_line(aes(linetype = Group))
-p3 <- p2 + scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 10))
-# p4 <- p3 + scale_y_continuous(name = "Weight (grams)", limits = c(200, 700))
-p4 <- p3 + scale_y_continuous(name = "Weight (grams)")
-# p5 <- p4 + theme_bw() + theme(legend.position = c(0.1,0.85))
-p5 <- p4 + theme(legend.position = "top")
-#p6 <- p5 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-p5
+ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 10)) +
+  scale_y_continuous(name = "Weight (grams)") +
+  theme(legend.position = "top")
 ```
 
 `@sct`
@@ -829,10 +836,6 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 # dummies (in Table) vs summary output: D1 = Group2, D2 = Group3
 RATS_reg <- lm(Weight ~ Time + Group, data = RATSL)
 summary(RATS_reg)
-
-# Not independent
-pairs(RATS[, 3:13], cex = 0.7)
-
 
 ```
 
