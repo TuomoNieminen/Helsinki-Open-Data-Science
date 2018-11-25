@@ -938,6 +938,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: f4e6239457
 ```
 
 Now we can move on to fit the random intercept and random slope model
