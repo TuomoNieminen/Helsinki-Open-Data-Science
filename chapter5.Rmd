@@ -951,7 +951,7 @@ to the rat growth data. Fitting a random intercept and random slope model allows
 
 `@pre_exercise_code`
 ```{r}
-library(dplyr); library(tidyr)
+library(dplyr); library(tidyr); library(lme4)
 RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
