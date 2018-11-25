@@ -957,7 +957,8 @@ RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datas
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
 RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
-  mutate(Time = as.integer(substr(WD,3,4))) 
+  mutate(Time = as.integer(substr(WD,3,4)))
+RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
 ```
 
 `@sample_code`
