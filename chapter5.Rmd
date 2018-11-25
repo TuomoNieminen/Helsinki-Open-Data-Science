@@ -929,16 +929,17 @@ summary(RATS_ref)
 ```{r}
 success_msg("Success!")
 ```
+
 ---
 
 ## Linear Mixed Effects Models: Random Intercept and Slope Model
 
 ```yaml
 type: NormalExercise
+key: f4e6239457
 lang: r
 xp: 100
 skills: 1
-key: f4e6239457
 ```
 
 Now we can move on to fit the random intercept and random slope model
