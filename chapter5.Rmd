@@ -147,7 +147,7 @@ glimpse(BPRSL)
 
 `@sct`
 ```{r}
-success_msg("No tests")
+success_msg("Success!")
 ```
 
 ---
@@ -806,10 +806,17 @@ xp: 100
 skills: 1
 ```
 
-Exercise 10 introduction
+Continuing to ignore the repeated-measures structure of the data, we will fit a multiple linear regression model with weight as response and `Time` and `Group` (coded as two dummy variables Group2 and Group3 , with both Group2 and Group3 taking the value 0 for rats in group 1, Group2 being 1 and Group3 being 0 for rats in group 2, and Group2 being 0 and Group3 being 1 for rats in group 3) as explanatory variables.
+
+Recall from *Chapter 1: Multiple regression* that this is done by defining explanatory variables with the `formula` argument of `lm()`, as below
+
+```
+y ~ x1 + x2 + ..
+```
+Here `y` is again the target variable and `x1, x2, ..` are the explanatory variables.
 
 `@instructions`
-- Instructions
+- Create a regression model with `Weight` as the response variable and `Time` and `Group` as explanatory variables
 
 `@hint`
 - Hint
@@ -826,9 +833,12 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr RATS and RATSL are available
+# dplyr, tidyr, RATS and RATSL are available
 
-# sample code here
+# create a regression model RATS_reg
+RATS_reg <- "Regression model here!"
+
+# print out a summary of the model
 
 ```
 
@@ -836,8 +846,10 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 ```{r}
 # dplyr, tidyr, RATS and RATSL are available
 
-# dummies (in Table) vs summary output: D1 = Group2, D2 = Group3
+# create a regression model RATS_reg
 RATS_reg <- lm(Weight ~ Time + Group, data = RATSL)
+
+# print out a summary of the model
 summary(RATS_reg)
 
 ```
@@ -859,7 +871,13 @@ xp: 100
 skills: 1
 ```
 
-Exercise 11 introduction
+The previous model assumes independence of the repeated measures of
+weight, and this assumption is highly unlikely. So, now we will move on to
+consider both some more appropriate graphics and appropriate models.
+
+To begin the more formal analysis of the rat growth data, we will first fit
+the *random intercept model* the same two explanatory variables: `Time`
+and `Group`. Fitting a random intercept model allows the linear regression fit for each rat to differ in intercept from other rats.
 
 `@instructions`
 - Instructions
@@ -869,7 +887,7 @@ Exercise 11 introduction
 
 `@pre_exercise_code`
 ```{r}
-library(dplyr); library(tidyr); library(lme4)
+library(dplyr); library(tidyr)
 RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
@@ -879,9 +897,84 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr, lme4, RATS and RATSL are ava
+# dplyr, tidyr, RATS and RATSL are available
 
-# sample code here
+# access library lme4
+library(lme4)
+
+# Create a random intercept model
+RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
+
+# Print the summary of the model
+summary(RATS_ref)
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr, RATS and RATSL are available
+
+# access library lme4
+library(lme4)
+
+# Create a random intercept model
+RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
+
+# Print the summary of the model
+summary(RATS_ref)
+
+```
+
+`@sct`
+```{r}
+success_msg("Success!")
+```
+---
+
+## Linear Mixed Effects Models: Random Intercept and Slope Model
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Now we can move on to fit the random intercept and random slope model
+to the rat growth data. Fitting a random intercept and random slope model allows the linear regression fits for each individual to differ also in slope.
+
+`@instructions`
+- Instructions
+
+`@hint`
+- Hint
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr)
+RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr, lme4, RATS and RATSL are available
+
+# create a random intercept and random slope model
+RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
+
+# print a summary of the model
+summary(RATS_ref1)
+
+# perform an ANOVA test on the two models
+anova(RATS_ref1, RATS_ref)
+
+# "ADJUST THE CODE: Time x Group"
+
+RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALSE)
 
 ```
 
@@ -889,25 +982,18 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 ```{r}
 # dplyr, tidyr, lme4, RATS and RATSL are available
 
-# Table 9.4
-
-RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
-summary(RATS_ref)
-
-# Table 9.5
-
+# create a random intercept and random slope model
 RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
+
+# print a summary of the model
 summary(RATS_ref1)
 
+# perform an ANOVA test on the two models
 anova(RATS_ref1, RATS_ref)
 
-# Table 9.6
+# "ADJUST THE CODE: Time x Group"
 
 RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALSE)
-summary(RATS_ref2)
-
-anova(RATS_ref1, RATS_ref2)
-
 
 ```
 
