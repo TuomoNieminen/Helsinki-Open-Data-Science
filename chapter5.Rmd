@@ -220,7 +220,7 @@ ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) +
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -310,7 +310,7 @@ ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject)) +
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -414,7 +414,7 @@ ggplot(BPRSS, aes(x = week, y = mean, linetype = treatment, shape = treatment)) 
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -510,7 +510,7 @@ BPRSL8S1 <- BPRSL8S %>%
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -600,7 +600,7 @@ anova(fit)
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -625,7 +625,6 @@ To investigate the use of linear mixed effects models in practice, we shall use 
 `@instructions`
 - Read the `RATS` data into memory
 - Glimpse the data
-- Plot a scatter plot matrix to view the correlated nature of the repeated measures
 
 `@hint`
 - Hints
@@ -649,9 +648,6 @@ RATS$Group <- factor(RATS$Group)
 # Glimpse the data
 glimpse(RATS)
 
-# Plot a scatter plot matrix 
-pairs(RATS[, 3:13], cex = 0.7)
-
 ```
 
 `@solution`
@@ -668,14 +664,11 @@ RATS$Group <- factor(RATS$Group)
 # Glimpse the data
 glimpse(RATS)
 
-# Plot a scatter plot matrix 
-pairs(RATS[, 3:13], cex = 0.7)
-
 ```
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -690,10 +683,11 @@ skills: 1
 key: f2f670e284
 ```
 
-Exercise 8 introduction
+Again, to be able to study the diffecences between the variable of interest, that is the weight of the individual rats, and the groups as well as the change of the weight in time, we want to *gather* the data to a long form.
 
 `@instructions`
-- Instructions
+- Assign `key` as `WD` and value as `Weight` and convert the data to a long form
+- `glimpse` the data
 
 `@hint`
 - Hint
@@ -710,9 +704,12 @@ RATS$Group <- factor(RATS$Group)
 ```{r}
 # dplyr, tidyr and RATS are available
 
-# Convert data to long form:
+# Convert data to long form
+RATSL <- RATS %>% gather(key = "Change me!", value = "Change me!", -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
 
-# sample code here
+# Glimpse the data
+glimpse(RATSL)
 
 ```
 
@@ -720,18 +717,18 @@ RATS$Group <- factor(RATS$Group)
 ```{r}
 # dplyr, tidyr and RATS are available
 
-# Convert data to long form:
-
-RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+# Convert data to long form
+RATSL <- RATS %>% gather(key = WD, value = Weight, -ID, -Group) %>%
   mutate(Time = as.integer(substr(WD,3,4))) 
 
+# Glimpse the data
 glimpse(RATSL)
 
 ```
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -746,10 +743,11 @@ skills: 1
 key: e85d52657c
 ```
 
-Exercise 9 introduction
+To begin, we shall ignore the repeated-measures structure of the data and assume that all the observations are independent of one another. Now if we simply ignore that the sets of 11 weights come from the same rat, we have a data set consisting of 176 weights, times, and group memberships that we see can easily be analyzed using multiple linear regression. To begin, we will plot the data, identifying the observations in each group but ignoring the longitudinal nature of the data.
 
 `@instructions`
-- Instructions
+- Check the dimensions of RATSL
+- Observe the difference between the weights of the groups 1 rats and those in the other two groups
 
 `@hint`
 - Hint
@@ -768,17 +766,24 @@ RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
 ```{r}
 # dplyr, tidyr and RATSL are available
 
-# Plot RATS
+# Check the dimensions of the data
 
-# sample code here
-
+# Plot the RATSL data
+ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 10)) +
+  scale_y_continuous(name = "Weight (grams)") +
+  theme(legend.position = "top")
 ```
 
 `@solution`
 ```{r}
 # dplyr, tidyr and RATSL are available
 
-# Plot RATS
+# Check the dimensions of the data
+dim(RATSL)
+
+# Plot the RATSL data
 ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
   geom_line(aes(linetype = Group)) +
   scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 10)) +
@@ -788,7 +793,7 @@ ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -841,7 +846,7 @@ summary(RATS_reg)
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
 
 ---
@@ -910,5 +915,5 @@ anova(RATS_ref1, RATS_ref2)
 
 `@sct`
 ```{r}
-success_msg("No tests yet!")
+success_msg("Success!")
 ```
