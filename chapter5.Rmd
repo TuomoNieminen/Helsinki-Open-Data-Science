@@ -7,10 +7,10 @@ description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effe
 
 ```yaml
 type: NormalExercise
+key: 7f7f6ab8ba
 lang: r
 xp: 100
 skills: 1
-key: 7f7f6ab8ba
 ```
 
 Welcome to the *Analysis of longitudinal data* chapter.
@@ -81,10 +81,10 @@ success_msg("Awsome, you have mastered an important first step of data analysis!
 
 ```yaml
 type: NormalExercise
+key: 4751cc12a0
 lang: r
 xp: 100
 skills: 1
-key: 4751cc12a0
 ```
 
 To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the gather() function which you can probably remember from previous chapters. The gather() function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about gather in the package documentation with ?gather or in the dplyr cheatsheet.
@@ -156,10 +156,10 @@ success_msg("No tests")
 
 ```yaml
 type: NormalExercise
+key: 5d54d96aee
 lang: r
 xp: 100
 skills: 1
-key: 5d54d96aee
 ```
 
 Graphical displays of data are almost always useful for exposing patterns in the data, particularly when these are unexpected; this might be of great help in suggesting which class of models might be most sensibly applied in the later more formal analysis.
@@ -229,10 +229,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: 2923bbb346
 lang: r
 xp: 100
 skills: 1
-key: 2923bbb346
 ```
 
 An important effect we want to take notice is how the men who have higher BPRS values at the beginning tend to have higher values throughout the study. This phenomenon is generally referred to as tracking.
@@ -319,10 +319,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: c2cb0fb62a
 lang: r
 xp: 100
 skills: 1
-key: c2cb0fb62a
 ```
 
 With large numbers of observations, graphical displays of individual response profiles are of little use and investigators then commonly produce graphs showing average (mean) profiles for each treatment group along with some indication of the variation of the observations at each time point, in this case the standard error of mean
@@ -423,14 +423,13 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: 539b15366d
 lang: r
 xp: 100
 skills: 1
-key: 539b15366d
 ```
 
-As an example of the summary measure approach we will look into the post treatment values of the BPRS. The mean of weeks 1 to 8 will be our summary measure. First calculate this measure and then look at boxplots of the measure for each treatment group. See how the mean summary measure is more variable in the second treatment group and its distribution in this group is somewhat skew. The boxplot of the second group also reveals an outlier, a subject whose mean BPRS score of the eight weeks is over 70. It might bias the conclusions from further comparisons of the groups, so we shall remove that subject from the data. Without the outlier, try to figure which treatment group might have the lower the eight-week mean. Think, considering the variation, how can we be sure? 
-
+As an example of the summary measure approach we will look into the post treatment values of the BPRS. The mean of weeks 1 to 8 will be our summary measure. First calculate this measure and then look at boxplots of the measure for each treatment group. See how the mean summary measure is more variable in the second treatment group and its distribution in this group is somewhat skew. The boxplot of the second group also reveals an outlier, a subject whose mean BPRS score of the eight weeks is over 70. It might bias the conclusions from further comparisons of the groups, so we shall remove that subject from the data. Without the outlier, try to figure which treatment group might have the lower the eight-week mean. Think, considering the variation, how can we be sure?
 
 `@instructions`
 - Create the summary data BPRSL8S
@@ -519,10 +518,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: 4714162745
 lang: r
 xp: 100
 skills: 1
-key: '4714162745'
 ```
 
 Although the informal graphical material presented up to now has all indicated a lack of difference in the two treatment groups, most investigators would still require a formal test for a difference. Consequently we shall now apply a t-test to assess any difference between the treatment groups, and also calculate a confidence interval for this difference. We use the data without the outlier created in the previous exercise. The t-test confirms the lack of any evidence for a group difference. Also the 95% confidence interval is wide and includes the zero, allowing for similar conclusions to be made.
@@ -609,10 +608,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: 707255f740
 lang: r
 xp: 100
 skills: 1
-key: 707255f740
 ```
 
 Welcome to the PART II of *Analysis of longitudinal data* chapter.
@@ -620,7 +619,6 @@ Welcome to the PART II of *Analysis of longitudinal data* chapter.
 Longitudinal data, where a response variable is measured on each subject on several different occasions poses problems for their analysis because the repeated measurements on each subject are very likely to be correlated rather than independent. In PART II of this chapter methods for dealing with longitudinal data which aim to account for the correlated nature of the data and where the response is assumed to be normally distributed are discussed.
 
 To investigate the use of linear mixed effects models in practice, we shall use data from a nutrition study conducted in three groups of rats. The groups were put on different diets, and each animal’s body weight (grams) was recorded repeatedly (approximately) weekly, except in week seven when two recordings were taken) over a 9-week period. The question of most interest is whether the growth profiles of the three groups differ.
-
 
 `@instructions`
 - Read the `RATS` data into memory
@@ -677,10 +675,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: f2f670e284
 lang: r
 xp: 100
 skills: 1
-key: f2f670e284
 ```
 
 Again, to be able to study the diffecences between the variable of interest, that is the weight of the individual rats, and the groups as well as the change of the weight in time, we want to *gather* the data to a long form.
@@ -737,10 +735,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: e85d52657c
 lang: r
 xp: 100
 skills: 1
-key: e85d52657c
 ```
 
 To begin, we shall ignore the repeated-measures structure of the data and assume that all the observations are independent of one another. Now if we simply ignore that the sets of 11 weights come from the same rat, we have a data set consisting of 176 weights, times, and group memberships that we see can easily be analyzed using multiple linear regression. To begin, we will plot the data, identifying the observations in each group but ignoring the longitudinal nature of the data.
@@ -802,10 +800,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: 3c0a95b7b1
 lang: r
 xp: 100
 skills: 1
-key: 3c0a95b7b1
 ```
 
 Exercise 10 introduction
@@ -855,10 +853,10 @@ success_msg("Success!")
 
 ```yaml
 type: NormalExercise
+key: 98fbbfad2e
 lang: r
 xp: 100
 skills: 1
-key: 98fbbfad2e
 ```
 
 Exercise 11 introduction
