@@ -635,10 +635,13 @@ To investigate the use of linear mixed effects models in practice, we shall use 
 
 `@instructions`
 - Read the `RATS` data into memory
+- Factor variables `ID` and `group`
 - Glimpse the data
 
 `@hint`
-- Hints
+- Read the `RATS` data
+- Factor variables `ID` and `group` with `factor()`
+- Glimpse the data with `glimpse()`
 
 `@pre_exercise_code`
 ```{r}
@@ -653,11 +656,8 @@ library(dplyr)
 RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 
 # Factor variables ID and Group
-RATS$ID <- factor(RATS$ID)
-RATS$Group <- factor(RATS$Group)
 
 # Glimpse the data
-glimpse(RATS)
 
 ```
 
@@ -696,12 +696,17 @@ skills: 1
 
 Again, to be able to study the diffecences between the variable of interest, that is the weight of the individual rats, and the groups as well as the change of the weight in time, we want to *gather* the data to a long form.
 
+This time we need to extract the number of days as an integer variable.
+
 `@instructions`
 - Assign `key` as `WD` and value as `Weight` and convert the data to a long form
-- `glimpse` the data
+- Mutate a new variable `Time` by extracting the number of the day from `WD`
+- `glimpse()` the data
 
 `@hint`
-- Hint
+- Assign `key` as `WD` and value as `Weight`
+- Use `substr()` to extract the number of the day. Check what is the maximum number of digits in the numbers after `WD`.
+- `glimpse()` the data
 
 `@pre_exercise_code`
 ```{r}
@@ -716,8 +721,9 @@ RATS$Group <- factor(RATS$Group)
 # dplyr, tidyr and RATS are available
 
 # Convert data to long form
-RATSL <- RATS %>% gather(key = "Change me!", value = "Change me!", -ID, -Group) %>%
-  mutate(Time = as.integer(substr(WD,3,4))) 
+RATSL <- RATS %>%
+  gather(key = "Change me!", value = "Change me!", -ID, -Group) %>%
+  mutate(Time = as.integer(substr("Change me!"))) 
 
 # Glimpse the data
 glimpse(RATSL)
@@ -729,7 +735,8 @@ glimpse(RATSL)
 # dplyr, tidyr and RATS are available
 
 # Convert data to long form
-RATSL <- RATS %>% gather(key = WD, value = Weight, -ID, -Group) %>%
+RATSL <- RATS %>%
+  gather(key = WD, value = Weight, -ID, -Group) %>%
   mutate(Time = as.integer(substr(WD,3,4))) 
 
 # Glimpse the data
