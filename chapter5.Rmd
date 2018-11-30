@@ -38,7 +38,7 @@ In the first part we will dwelve in to the BPRS data [SITATION], in which 40 mal
 `@sample_code`
 ```{r}
 # Read the BPRS data
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 
 # Look at the (column) names of BPRS
 names(BPRS)
@@ -54,7 +54,7 @@ names(BPRS)
 `@solution`
 ```{r}
 # Read the BPRS data
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 
 # Look at the (column) names of BPRS
 names(BPRS)
@@ -87,12 +87,18 @@ xp: 100
 skills: 1
 ```
 
-To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the gather() function which you can probably remember from previous chapters. The gather() function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about gather in the package documentation with ?gather or in the dplyr cheatsheet.
+To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the gather() function which you can probably remember from previous chapters.
+
+The `gather()` function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about gather in the package documentation with ?gather or in the dplyr cheatsheet.
+
+Our `weeks` are in a bit inconvenient form as characters, so we somehow need to extract the week numbers from the character vector `weeks`.
+
+With the `substr()` function we can extract a part of longer character object. We simply supply it with a character object or vector, start position, as in the position of the first letter to extract and stop position, as in the position of the last letter to extract. For example `substr("Hello world!", 1, 5)` would return "Hello".
 
 `@instructions`
 - Factor variables treatment and subject
 - Use `gather()` to convert BPRS to a long form
-- Use `mutate()` and `substring()` to create a new integer variable `week`
+- Use `mutate()` and `substr()` to create column `week` by extracting the week number from column `weeks`
 - Glimpse the data using `glimpse()`
 
 `@hint`
@@ -100,7 +106,7 @@ To be able to study the possible diffecences in the bprs value between the treat
 
 `@pre_exercise_code`
 ```{r}
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 ```
 
 `@sample_code`
@@ -117,7 +123,9 @@ BPRS$subject <- factor(BPRS$subject)
 
 # Convert to long form
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
-BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+
+# Extract the week number
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr("Change me!")))
 
 # Take a glimpse at the BPRSL data
 glimpse(BPRSL)
@@ -138,6 +146,8 @@ BPRS$subject <- factor(BPRS$subject)
 
 # Convert to long form
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+
+# Extract the week number
 BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
 
 # Take a glimpse at the BPRSL data
@@ -178,7 +188,7 @@ REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" v
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr)
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 BPRS$treatment <- factor(BPRS$treatment)
 BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
@@ -256,7 +266,7 @@ REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" v
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 BPRS$treatment <- factor(BPRS$treatment)
 BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
@@ -344,7 +354,7 @@ the two groups in respect to the mean BPRS values
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 BPRS$treatment <- factor(BPRS$treatment)
 BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
@@ -444,7 +454,7 @@ As an example of the summary measure approach we will look into the post treatme
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 BPRS$treatment <- factor(BPRS$treatment)
 BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
@@ -540,7 +550,7 @@ Baseline measurements of the outcome variable in a longitudinal study are often 
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-BPRS <- read.table("https://assets.datacamp.com/production/repositories/708/datasets/5346751c337348a8fad84fd239b6b42a730a99c9/BPRS.txt", sep  =" ", header = T)
+BPRS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep  =" ", header = T)
 BPRS$treatment <- factor(BPRS$treatment)
 BPRS$subject <- factor(BPRS$subject)
 BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
@@ -637,7 +647,7 @@ library(dplyr)
 # dplyr is available
 
 # read the RATS data
-RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 
 # Factor variables ID and Group
 RATS$ID <- factor(RATS$ID)
@@ -653,7 +663,7 @@ glimpse(RATS)
 # dplyr is available
 
 # read the RATS data
-RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 
 # Factor variables ID and Group
 RATS$ID <- factor(RATS$ID)
@@ -693,7 +703,7 @@ Again, to be able to study the diffecences between the variable of interest, tha
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr)
-RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
 ```
@@ -753,7 +763,7 @@ To begin, we shall ignore the repeated-measures structure of the data and assume
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(ggplot2)
-RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
 RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
@@ -824,7 +834,7 @@ Here `y` is again the target variable and `x1, x2, ..` are the explanatory varia
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr)
-RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
 RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
@@ -888,7 +898,7 @@ and `Group`. Fitting a random intercept model allows the linear regression fit f
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr)
-RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
 RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
@@ -954,7 +964,7 @@ to the rat growth data. Fitting a random intercept and random slope model allows
 `@pre_exercise_code`
 ```{r}
 library(dplyr); library(tidyr); library(lme4)
-RATS <- read.table("http://assets.datacamp.com/production/repositories/708/datasets/9475c75ae0ffa340f53ef895e2494b256774a1d6/rats.txt", header = TRUE, sep = '\t')
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
 RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
