@@ -17,7 +17,7 @@ Welcome to the *Analysis of longitudinal data* chapter.
 
 Many studies in the behavioral sciences involve several measurement or observations of the response variable of interest on each subject in the study. For example, the response variable may be measured under a number of different experimental conditions or on a number of different occasions over time; such data are labelled repeated measures or *longitudinal data*. In the first part (I) of this chapter useful methods for the graphical exploration of this type of data are described and a simple method for their analysis are introduced, with the warning that although simple the method should be used only in the initial stage of dealing with the data; more appropriate methods will be discussed in part II.
 
-In the first part we will dwelve in to the BPRS data [SITATION], in which 40 male subjects were randomly assigned to one of two treatment groups and each subject was rated on the brief psychiatric rating scale (BPRS) measured before treatment began (week 0) and then at weekly intervals for eight weeks. The BPRS assesses the level of 18 symptom constructs such as hostility, suspiciousness, hallucinations and grandiosity; each of these is rated from one (not present) to seven (extremely severe). The scale is used to evaluate patients suspected of having schizophrenia.
+In the first part we will dwelve in to the BPRS data, in which 40 male subjects were randomly assigned to one of two treatment groups and each subject was rated on the brief psychiatric rating scale (BPRS) measured before treatment began (week 0) and then at weekly intervals for eight weeks. The BPRS assesses the level of 18 symptom constructs such as hostility, suspiciousness, hallucinations and grandiosity; each of these is rated from one (not present) to seven (extremely severe). The scale is used to evaluate patients suspected of having schizophrenia.
 
 `@instructions`
 - Read the `BPRS` data into memory
@@ -87,7 +87,7 @@ xp: 100
 skills: 1
 ```
 
-To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the gather() function which you can probably remember from previous chapters.
+To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the `gather()` function which you can probably remember from previous chapters.
 
 The `gather()` function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about gather in the package documentation with ?gather or in the dplyr cheatsheet.
 
@@ -102,7 +102,8 @@ With the `substr()` function we can extract a part of longer character object. W
 - Glimpse the data using `glimpse()`
 
 `@hint`
-- Hints
+- Use `gather()` to convert the data to a long form
+- Use `mutate()` and `substr()` to create `week`
 
 `@pre_exercise_code`
 ```{r}
@@ -183,7 +184,7 @@ REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" v
 - Inspect the plot. See how both the BPRS-score and the variability between individuals decrease over the eight weeks time
 
 `@hint`
-- Hints
+- Draw the `ggplot`. You may need to select all the lines before running the code.
 
 `@pre_exercise_code`
 ```{r}
@@ -261,7 +262,7 @@ REMEMBER: In `ggplot2` or `dplyr` syntax, you generally do not need to "quote" v
 - Plot the data now with the standardised `brps`
 
 `@hint`
-- Hints
+- Standardise the `bprs` by grouping variable `week`
 
 `@pre_exercise_code`
 ```{r}
@@ -349,7 +350,7 @@ treatment groups suggesting there might be little difference between
 the two groups in respect to the mean BPRS values
 
 `@hint`
-- Hints
+- Calculate the summary variables `mean` and `se` inside the `summarise()` function
 
 `@pre_exercise_code`
 ```{r}
@@ -486,7 +487,7 @@ ggplot(BPRSL8S, aes(x = treatment, y = mean)) +
   stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") +
   scale_y_continuous(name = "mean(bprs), weeks 1-8")
 
-# Create a new data by filtering the outlier
+# Create a new data by filtering the outlier and adjust the ggplot code the draw the plot again with the new data
 BPRSL8S1 <- "Change me!"
 
 ```
@@ -511,7 +512,7 @@ ggplot(BPRSL8S, aes(x = treatment, y = mean)) +
   stat_summary(fun.y = "mean", geom = "point", shape=23, size=4, fill = "white") +
   scale_y_continuous(name = "mean(bprs), weeks 1-8")
 
-# Create a new data by filtering the outlier
+# Create a new data by filtering the outlier and adjust the ggplot code the draw the plot again with the new data
 BPRSL8S1 <- BPRSL8S %>%
   filter(mean < 60)
 
@@ -539,13 +540,15 @@ Although the informal graphical material presented up to now has all indicated a
 Baseline measurements of the outcome variable in a longitudinal study are often correlated with the chosen summary measure and using such measures in the analysis can often lead to substantial gains in precision when used appropriately as a covariate in an analysis of covariance. We can illustrate the analysis on the data using the BPRS value corresponding to time zero taken prior to the start of treatment as the baseline covariate. We see that the baseline BPRS is strongly related to the BPRS values taken after treatment has begun, but there is still no evidence of a treatment difference even after conditioning on the baseline value.
 
 `@instructions`
-- Perform a two-sample t-test...
+- Perform a two-sample t-test and observe the differences as seen in in the boxplots of the previous exercise
 - Add the baseline from the original data as a new variable to the summary data
-- Fit the linear model...
-- Compute the analysis of variance table for the fitted model
+- Fit the linear model with `mean` as the target and `baseline` + `treatment` as the response from the `BPRSL8S1` (Remember the `lm()` formula `y` ~ `x1` + `x2`)
+- Compute the analysis of variance table for the fitted model and pay close attention to the significance of `baseline`
 
 `@hint`
-- Hints
+- Perform the t-test
+- Fit the linear model
+- Compute `anova()`
 
 `@pre_exercise_code`
 ```{r}
@@ -581,10 +584,10 @@ BPRSL8S2 <- BPRSL8S %>%
   mutate(baseline = BPRS$week0)
 
 # Fit the linear model with the mean as the response 
-fit <- lm(mean ~ baseline + treatment, data = BPRSL8S2)
+fit <- lm("Linear model formula here!", data = BPRSL8S2)
 
-# Compute the analysis of variance table for the fitted model
-anova(fit)
+# Compute the analysis of variance table for the fitted model with anova()
+
 
 ```
 
@@ -602,7 +605,7 @@ BPRSL8S2 <- BPRSL8S %>%
 # Fit the linear model with the mean as the response 
 fit <- lm(mean ~ baseline + treatment, data = BPRSL8S2)
 
-# Compute the analysis of variance table for the fitted model
+# Compute the analysis of variance table for the fitted model with anova()
 anova(fit)
 
 ```
