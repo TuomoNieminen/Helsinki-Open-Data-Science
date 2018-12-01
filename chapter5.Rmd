@@ -832,9 +832,9 @@ xp: 100
 skills: 1
 ```
 
-Continuing to ignore the repeated-measures structure of the data, we will fit a multiple linear regression model with weight as response and `Time` and `Group` (coded as two dummy variables Group2 and Group3 , with both Group2 and Group3 taking the value 0 for rats in group 1, Group2 being 1 and Group3 being 0 for rats in group 2, and Group2 being 0 and Group3 being 1 for rats in group 3) as explanatory variables.
+Continuing to ignore the repeated-measures structure of the data, we will fit a multiple linear regression model with weight as response and `Time` and `Group` as explanatory variables.
 
-Recall from *Chapter 1: Multiple regression* that this is done by defining explanatory variables with the `formula` argument of `lm()`, as below
+Recall again from *Chapter 1: Multiple regression* that this is done by defining explanatory variables with the `formula` argument of `lm()`, as below
 
 ```
 y ~ x1 + x2 + ..
@@ -843,9 +843,13 @@ Here `y` is again the target variable and `x1, x2, ..` are the explanatory varia
 
 `@instructions`
 - Create a regression model with `Weight` as the response variable and `Time` and `Group` as explanatory variables
+- Print out the summary of the model
+- Observe 1) How Group2 and Group3 differ from Group1
+conditional on `Time` and 2) The significance of the regression on `Time`
 
 `@hint`
-- Hint
+- Use `lm()` with the formula `Weight ~ Time + Group`
+- Use `summary()` to print the summary of the model
 
 `@pre_exercise_code`
 ```{r}
