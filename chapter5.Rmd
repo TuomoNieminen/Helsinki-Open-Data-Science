@@ -976,7 +976,11 @@ Now we can move on to fit the random intercept and random slope model
 to the rat growth data. Fitting a random intercept and random slope model allows the linear regression fits for each individual to differ also in slope.
 
 `@instructions`
-- Instructions
+- Draw the plot
+- Fit the model
+- Print summary and anova
+- Adjust interaction Time * Group
+- Draw the plot again with Fitted as response
 
 `@hint`
 - Hint
@@ -996,6 +1000,13 @@ RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
 ```{r}
 # dplyr, tidyr, lme4, RATS and RATSL are available
 
+# draw the plot of RATSL
+ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
+  scale_y_continuous(name = "Weight (grams)") +
+  theme(legend.position = "top")
+
 # create a random intercept and random slope model
 RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
 
@@ -1005,9 +1016,12 @@ summary(RATS_ref1)
 # perform an ANOVA test on the two models
 anova(RATS_ref1, RATS_ref)
 
-# "ADJUST THE CODE: Time x Group"
+# Create a vector of the fitted values
+Fitted <- fitted(RATS_ref1)
 
-RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALSE)
+# Create a new column fitted to RATSL
+RATSL <- RATSL %>%
+  mutate(Fitted)
 
 ```
 
@@ -1015,6 +1029,13 @@ RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALS
 ```{r}
 # dplyr, tidyr, lme4, RATS and RATSL are available
 
+# draw the plot of RATSL
+ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
+  scale_y_continuous(name = "Weight (grams)") +
+  theme(legend.position = "top")
+
 # create a random intercept and random slope model
 RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
 
@@ -1024,9 +1045,12 @@ summary(RATS_ref1)
 # perform an ANOVA test on the two models
 anova(RATS_ref1, RATS_ref)
 
-# "ADJUST THE CODE: Time x Group"
+# Create a vector of the fitted values
+Fitted <- fitted(RATS_ref1)
 
-RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALSE)
+# Create a new column fitted to RATSL
+RATSL <- RATSL %>%
+  mutate(Fitted)
 
 ```
 
@@ -1034,3 +1058,4 @@ RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALS
 ```{r}
 success_msg("Success!")
 ```
+---
