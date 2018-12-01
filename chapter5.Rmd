@@ -987,7 +987,7 @@ to the rat growth data. Fitting a random intercept and random slope model allows
 
 `@pre_exercise_code`
 ```{r}
-library(dplyr); library(tidyr); library(lme4)
+library(dplyr); library(tidyr); library(lme4); library(ggplot2)
 RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
 RATS$ID <- factor(RATS$ID)
 RATS$Group <- factor(RATS$Group)
@@ -1058,4 +1058,3 @@ RATSL <- RATSL %>%
 ```{r}
 success_msg("Success!")
 ```
----
