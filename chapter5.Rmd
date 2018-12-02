@@ -616,7 +616,7 @@ anova(fit)
 
 `@sct`
 ```{r}
-ex() %>% check_function('BPRSL8S2') %>% check_arg('formula') %>% check_equal()
+ex() %>% check_object("BPRSL8S2") %>% check_equal()
 success_msg("Tests passed with flying colors!")
 ```
 
@@ -684,11 +684,8 @@ glimpse(RATS)
 
 `@sct`
 ```{r}
-test_function("factor", not_called_msg = "Did you use `factor()`?")
-test_object("RATS", incorrect_msg = "Did you factor RATS?")
-test_function("glimpse", not_called_msg = "Did you use `glimpse()`?")
-test_error()
-success_msg("Success!")
+ex() %>% check_object("RATS") %>% check_equal()
+success_msg("RATS!")
 ```
 
 ---
@@ -755,7 +752,8 @@ glimpse(RATSL)
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("RATSL") %>% check_equal()
+success_msg("I gather you gathered! Neat!")
 ```
 
 ---
@@ -826,7 +824,7 @@ ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
 
 `@sct`
 ```{r}
-success_msg("Success!")
+success_msg("Tough plotting!")
 ```
 
 ---
@@ -895,7 +893,8 @@ summary(RATS_reg)
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("RATS_reg") %>% check_equal()
+success_msg("Pretty good modelling!")
 ```
 
 ---
@@ -972,7 +971,8 @@ summary(RATS_ref)
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("RATS_ref") %>% check_equal()
+success_msg("Excellent work!")
 ```
 
 ---
@@ -1043,7 +1043,8 @@ anova(RATS_ref1, RATS_ref)
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("RATS_ref1") %>% check_equal()
+success_msg("Superb!")
 ```
 
 ---
@@ -1162,5 +1163,5 @@ ggplot(RATSL, aes(x = Time, y = Fitted, group = ID)) +
 
 `@sct`
 ```{r}
-success_msg("Success!")
+success_msg("That's all, folks!")
 ```
