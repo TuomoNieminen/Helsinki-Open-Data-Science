@@ -158,7 +158,8 @@ glimpse(BPRSL)
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("BPRSL") %>% check_equal()
+success_msg("Well done!")
 ```
 
 ---
