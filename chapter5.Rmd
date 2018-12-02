@@ -159,7 +159,7 @@ glimpse(BPRSL)
 `@sct`
 ```{r}
 ex() %>% check_object("BPRSL") %>% check_equal()
-success_msg("Well done!")
+success_msg("That was a tall order! Nice!")
 ```
 
 ---
@@ -232,7 +232,7 @@ ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) +
 
 `@sct`
 ```{r}
-success_msg("Success!")
+success_msg("Nice plot!")
 ```
 
 ---
@@ -322,7 +322,8 @@ ggplot(BPRSL, aes(x = week, y = stdbprs, linetype = subject)) +
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("BPRSL") %>% check_equal()
+success_msg("You really set the standard! Good job!")
 ```
 
 ---
@@ -426,7 +427,8 @@ ggplot(BPRSS, aes(x = week, y = mean, linetype = treatment, shape = treatment)) 
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("BPRSS") %>% check_equal()
+success_msg("Exquisite!")
 ```
 
 ---
@@ -521,7 +523,8 @@ BPRSL8S1 <- BPRSL8S %>%
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_object("BPRSL8S1") %>% check_equal()
+success_msg("I see the sheriff's back in town! Good work!")
 ```
 
 ---
@@ -613,7 +616,8 @@ anova(fit)
 
 `@sct`
 ```{r}
-success_msg("Success!")
+ex() %>% check_function('BPRSL8S2') %>% check_arg('formula') %>% check_equal()
+success_msg("Tests passed with flying colors!")
 ```
 
 ---
