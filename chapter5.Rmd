@@ -679,7 +679,9 @@ glimpse(RATS)
 
 `@sct`
 ```{r}
-test_function("factor", not_called_msg = "Did you use `factor()` to factor `RATS$ID and `RATS$Group`?")
+test_function("factor", not_called_msg = "Did you use `factor()`?")
+test_object("RATS$ID", incorrect_msg = "Did you factor RATS$ID?")
+test_object("RATS$Group", incorrect_msg = "Did you factor RATS$Group?")
 test_function("glimpse", not_called_msg = "Did you use `glimpse()`?")
 test_error()
 success_msg("Success!")
