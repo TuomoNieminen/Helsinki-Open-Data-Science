@@ -906,14 +906,20 @@ weight, and this assumption is highly unlikely. So, now we will move on to
 consider both some more appropriate graphics and appropriate models.
 
 To begin the more formal analysis of the rat growth data, we will first fit
-the *random intercept model* the same two explanatory variables: `Time`
-and `Group`. Fitting a random intercept model allows the linear regression fit for each rat to differ in intercept from other rats.
+the *random intercept model* for the same two explanatory variables: `Time`
+and `Group`. Fitting a random intercept model allows the linear regression fit for each rat to differ in *intercept* from other rats.
+
+We will use the `lme4` package which offers efficient tools for fitting linear and generalized linear mixed-effects models. The first argument is the `formula` object describing both the fixed-effects and random effects part of the model, with the response on the left of a ~ operator and the terms, separated by + operators, on the right. Note the random-effects terms distinguished by vertical bars (|).
 
 `@instructions`
-- Instructions
+- Access the `lme4` package
+- Fit the random intercept model with the rat `ID` as the random effect
+- Print out the summary of the model
+- Pay attention to variability (standard deviation) of the rat `ID`
 
 `@hint`
-- Hint
+- Fit the random intercept model with the rat `ID` as the random effect
+- Print out the summary of the model with `summary()`
 
 `@pre_exercise_code`
 ```{r}
@@ -936,7 +942,7 @@ library(lme4)
 RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
 
 # Print the summary of the model
-summary(RATS_ref)
+
 
 ```
 
@@ -972,18 +978,18 @@ xp: 100
 skills: 1
 ```
 
-Now we can move on to fit the random intercept and random slope model
-to the rat growth data. Fitting a random intercept and random slope model allows the linear regression fits for each individual to differ also in slope.
+Now we can move on to fit the *random intercept and random slope model*
+to the rat growth data. Fitting a random intercept and random slope model allows the linear regression fits for each individual to differ in intercept but also in slope. This way it is possible to account for the individual differences in the rats' growth profiles, but also the effect of time.
 
 `@instructions`
-- Draw the plot
-- Fit the model
-- Print summary and anova
-- Adjust interaction Time * Group
-- Draw the plot again with Fitted as response
+- Fit the random intercept and slope model with `Time` and `ID` as the random effects
+- Print the summary of the model
+- Compute the analysis of variance tables of the models `RATS_ref` and `RATS_ref1`
+- Pay attention to the chi-squared statistics and p-value of the likelihood ratio test between `RATS_ref1` and `RATS_ref`. The lower the value the better the fit against the comparison model.
 
 `@hint`
-- Hint
+- Print the summary of the model with `summary()`
+- Compute the analysis of variance tables of the models `RATS_ref1` and `RATS_ref` with `anova()`
 
 `@pre_exercise_code`
 ```{r}
@@ -998,43 +1004,22 @@ RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
 
 `@sample_code`
 ```{r}
-# dplyr, tidyr, lme4, RATS and RATSL are available
-
-# draw the plot of RATSL
-ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
-  geom_line(aes(linetype = Group)) +
-  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
-  scale_y_continuous(name = "Weight (grams)") +
-  theme(legend.position = "top")
+# dplyr, tidyr, lme4, ggplot2, RATS and RATSL are available
 
 # create a random intercept and random slope model
 RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
 
 # print a summary of the model
-summary(RATS_ref1)
+
 
 # perform an ANOVA test on the two models
 anova(RATS_ref1, RATS_ref)
-
-# Create a vector of the fitted values
-Fitted <- fitted(RATS_ref1)
-
-# Create a new column fitted to RATSL
-RATSL <- RATSL %>%
-  mutate(Fitted)
 
 ```
 
 `@solution`
 ```{r}
-# dplyr, tidyr, lme4, RATS and RATSL are available
-
-# draw the plot of RATSL
-ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
-  geom_line(aes(linetype = Group)) +
-  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
-  scale_y_continuous(name = "Weight (grams)") +
-  theme(legend.position = "top")
+# dplyr, tidyr, lme4, ggplot2, RATS and RATSL are available
 
 # create a random intercept and random slope model
 RATS_ref1 <- lmer(Weight ~ Time + Group + (Time | ID), data = RATSL, REML = FALSE)
@@ -1045,12 +1030,121 @@ summary(RATS_ref1)
 # perform an ANOVA test on the two models
 anova(RATS_ref1, RATS_ref)
 
+```
+
+`@sct`
+```{r}
+success_msg("Success!")
+```
+---
+
+## Linear Mixed Effects Models: Random Intercept and Slope Model with interaction
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+```
+
+Finally, we can fit a random intercept and slope model that allows for a
+group × time interaction.
+
+`@instructions`
+- Write the same model as in the previous exercise but add `Time` * `Group` interaction.
+- Print out the summary of the model
+- Compute the analysis of variance tables of the models `RATS_ref2` and `RATS_ref1`
+- Again pay attention to the likelihood ratio test chi-squared value and the according p-value. The lower the value the better the fit against the comparison model.
+- Draw the plot of *observed* values of RATSL (this is the same plot drawn earlier)
+- Create a vector of the fitted values of the model using the function `fitted()`
+- Use for example `mutate()` to add the vector `Fitted` as a new column to RATSL
+- Draw the plot of *fitted* values of RATSL
+
+`@hint`
+- Print the summary of the model with `summary()`
+- Compute the analysis of variance tables of the models `RATS_ref1` and `RATS_ref` with `anova()`
+- Create a vector of the fitted values of the model using the function `fitted()`. Supply it with the model `RATS_ref2`
+- Use `mutate()` to add the vector `Fitted` as a new column to RATSL. 
+
+`@pre_exercise_code`
+```{r}
+library(dplyr); library(tidyr); library(lme4); library(ggplot2)
+RATS <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/rats.txt", header = TRUE, sep = '\t')
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+RATSL <- gather(RATS, key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4)))
+RATS_ref <- lmer(Weight ~ Time + Group + (1 | ID), data = RATSL, REML = FALSE)
+```
+
+`@sample_code`
+```{r}
+# dplyr, tidyr, lme4, ggplot2, RATS and RATSL are available
+
+# create a random intercept and random slope model with the interaction
+RATS_ref2 <- "Write the model here"
+
+# print a summary of the model
+
+
+# perform an ANOVA test on the two models
+anova(RATS_ref2, RATS_ref1)
+
+# draw the plot of RATSL with the observed Weight values
+ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
+  scale_y_continuous(name = "Observed weight (grams)") +
+  theme(legend.position = "top")
+
 # Create a vector of the fitted values
-Fitted <- fitted(RATS_ref1)
+Fitted <- "Change me!"
+
+# Create a new column fitted to RATSL
+
+
+# draw the plot of RATSL with the Fitted values of weight
+ggplot(RATSL, aes(x = Time, y = "Change me!", group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
+  scale_y_continuous(name = "Fitted weight (grams)") +
+  theme(legend.position = "top")
+
+```
+
+`@solution`
+```{r}
+# dplyr, tidyr, lme4, ggplot2, RATS and RATSL are available
+
+# create a random intercept and random slope model
+RATS_ref2 <- lmer(Weight ~ Time * Group + (Time | ID), data = RATSL, REML = FALSE)
+
+# print a summary of the model
+summary(RATS_ref2)
+
+# perform an ANOVA test on the two models
+anova(RATS_ref2, RATS_ref1)
+
+# draw the plot of RATSL
+ggplot(RATSL, aes(x = Time, y = Weight, group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
+  scale_y_continuous(name = "Observed weight (grams)") +
+  theme(legend.position = "top")
+
+# Create a vector of the fitted values
+Fitted <- fitted(RATS_ref2)
 
 # Create a new column fitted to RATSL
 RATSL <- RATSL %>%
   mutate(Fitted)
+
+# draw the plot of RATSL
+ggplot(RATSL, aes(x = Time, y = Fitted, group = ID)) +
+  geom_line(aes(linetype = Group)) +
+  scale_x_continuous(name = "Time (days)", breaks = seq(0, 60, 20)) +
+  scale_y_continuous(name = "Fitted weight (grams)") +
+  theme(legend.position = "top")
 
 ```
 
