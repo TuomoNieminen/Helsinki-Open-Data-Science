@@ -1036,16 +1036,17 @@ anova(RATS_ref1, RATS_ref)
 ```{r}
 success_msg("Success!")
 ```
+
 ---
 
 ## Time to interact: Random Intercept and Random Slope Model with interaction
 
 ```yaml
 type: NormalExercise
+key: eea6a450e5
 lang: r
 xp: 100
 skills: 1
-key: eea6a450e5
 ```
 
 Finally, we can fit a random intercept and slope model that allows for a
@@ -1065,7 +1066,7 @@ group × time interaction.
 - Print the summary of the model with `summary()`
 - Compute the analysis of variance tables of the models `RATS_ref1` and `RATS_ref` with `anova()`
 - Create a vector of the fitted values of the model using the function `fitted()`. Supply it with the model `RATS_ref2`
-- Use `mutate()` to add the vector `Fitted` as a new column to RATSL. 
+- Use `mutate()` to add the vector `Fitted` as a new column to RATSL.
 
 `@pre_exercise_code`
 ```{r}
