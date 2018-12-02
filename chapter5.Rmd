@@ -1045,6 +1045,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: eea6a450e5
 ```
 
 Finally, we can fit a random intercept and slope model that allows for a
