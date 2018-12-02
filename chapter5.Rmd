@@ -10,6 +10,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: df7802f990
 ```
 
 Welcome to the *Analysis of longitudinal data* chapter.
@@ -83,6 +84,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 7017a339dd
 ```
 
 To be able to study the possible diffecences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. In comes the `gather()` function which you can probably remember from previous chapters.
@@ -168,6 +170,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 19d69bfdca
 ```
 
 Graphical displays of data are almost always useful for exposing patterns in the data, particularly when these are unexpected; this might be of great help in suggesting which class of models might be most sensibly applied in the later more formal analysis.
@@ -240,6 +243,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: ac3f58578d
 ```
 
 An important effect we want to take notice is how the men who have higher BPRS values at the beginning tend to have higher values throughout the study. This phenomenon is generally referred to as tracking.
@@ -329,6 +333,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 5ccdf906b0
 ```
 
 With large numbers of observations, graphical displays of individual response profiles are of little use and investigators then commonly produce graphs showing average (mean) profiles for each treatment group along with some indication of the variation of the observations at each time point, in this case the standard error of mean
@@ -432,6 +437,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 2fa4d1ac40
 ```
 
 As an example of the summary measure approach we will look into the post treatment values of the BPRS. The mean of weeks 1 to 8 will be our summary measure. First calculate this measure and then look at boxplots of the measure for each treatment group. See how the mean summary measure is more variable in the second treatment group and its distribution in this group is somewhat skew. The boxplot of the second group also reveals an outlier, a subject whose mean BPRS score of the eight weeks is over 70. It might bias the conclusions from further comparisons of the groups, so we shall remove that subject from the data. Without the outlier, try to figure which treatment group might have the lower the eight-week mean. Think, considering the variation, how can we be sure?
@@ -526,6 +532,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: fab9887c9a
 ```
 
 Although the informal graphical material presented up to now has all indicated a lack of difference in the two treatment groups, most investigators would still require a formal test for a difference. Consequently we shall now apply a t-test to assess any difference between the treatment groups, and also calculate a confidence interval for this difference. We use the data without the outlier created in the previous exercise. The t-test confirms the lack of any evidence for a group difference. Also the 95% confidence interval is wide and includes the zero, allowing for similar conclusions to be made.
@@ -617,6 +624,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: a0a0d656a6
 ```
 
 Welcome to the PART II of *Analysis of longitudinal data* chapter.
@@ -683,6 +691,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 1f8133599a
 ```
 
 Again, to be able to study the diffecences between the variable of interest, that is the weight of the individual rats, and the groups as well as the change of the weight in time, we want to *gather* the data to a long form.
@@ -749,6 +758,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 6012a8627f
 ```
 
 To begin, we shall ignore the repeated-measures structure of the data and assume that all the observations are independent of one another. Now if we simply ignore that the sets of 11 weights come from the same rat, we have a data set consisting of 176 weights, times, and group memberships that we see can easily be analyzed using multiple linear regression. To begin, we will plot the data, identifying the observations in each group but ignoring the longitudinal nature of the data.
@@ -819,6 +829,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 109ab81e14
 ```
 
 Continuing to ignore the repeated-measures structure of the data, we will fit a multiple linear regression model with weight as response and `Time` and `Group` as explanatory variables.
@@ -887,6 +898,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 76d5ea0d52
 ```
 
 The previous model assumes independence of the repeated measures of
@@ -963,6 +975,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: 98f7eb09f8
 ```
 
 Now we can move on to fit the *random intercept and random slope model*
@@ -1033,6 +1046,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
+key: bcaf55bd38
 ```
 
 Finally, we can fit a random intercept and slope model that allows for a
