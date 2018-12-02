@@ -1,9 +1,9 @@
 ---
-title: '[UNDER CONSTRUCTION] Analysis of longitudinal data'
+title: 'Analysis of longitudinal data'
 description: 'Graphical Displays and Summary Measure Approach, Linear Mixed Effects Models for Normal Response Variables'
 ---
 
-## [UNDER CONSTRUCTION] Meet and Repeat: PART I
+## Meet and Repeat: PART I
 
 ```yaml
 type: NormalExercise
@@ -163,7 +163,7 @@ success_msg("Success!")
 
 ---
 
-## Graphical displays of longitudinal data: Individual plots
+## Individuals on the plot
 
 ```yaml
 type: NormalExercise
@@ -236,7 +236,7 @@ success_msg("Success!")
 
 ---
 
-## Graphical displays of longitudinal data: Standardise
+## The Golden Standardise
 
 ```yaml
 type: NormalExercise
@@ -326,7 +326,7 @@ success_msg("Success!")
 
 ---
 
-## Graphical displays of longitudinal data: Summary graphs
+## Good things come in Summary graphs
 
 ```yaml
 type: NormalExercise
@@ -430,7 +430,7 @@ success_msg("Success!")
 
 ---
 
-## Graphical displays of longitudinal data: Find the outlaw
+## Find the outlaw... Outlier!
 
 ```yaml
 type: NormalExercise
@@ -525,7 +525,7 @@ success_msg("Success!")
 
 ---
 
-## Graphical displays of longitudinal data: T-test and anova
+## T for test and A for Anova
 
 ```yaml
 type: NormalExercise
@@ -751,7 +751,7 @@ success_msg("Success!")
 
 ---
 
-## Linear Mixed Effects Models: Plot first, ask questions later
+## Plot first, ask questions later
 
 ```yaml
 type: NormalExercise
@@ -822,7 +822,7 @@ success_msg("Success!")
 
 ---
 
-## Linear Mixed Effects Models: Linear Model (assumed independence)
+## Holding on to independence: The Linear model
 
 ```yaml
 type: NormalExercise
@@ -891,7 +891,7 @@ success_msg("Success!")
 
 ---
 
-## Linear Mixed Effects Models: Random Intercept Model
+## The Random Intercept Model
 
 ```yaml
 type: NormalExercise
@@ -968,7 +968,7 @@ success_msg("Success!")
 
 ---
 
-## Linear Mixed Effects Models: Random Intercept and Slope Model
+## Slippery slopes: Random Intercept and Random Slope Model
 
 ```yaml
 type: NormalExercise
@@ -1038,7 +1038,7 @@ success_msg("Success!")
 ```
 ---
 
-## Linear Mixed Effects Models: Random Intercept and Slope Model with interaction
+## Time to interact: Random Intercept and Random Slope Model with interaction
 
 ```yaml
 type: NormalExercise
