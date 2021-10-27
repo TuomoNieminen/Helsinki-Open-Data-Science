@@ -279,6 +279,7 @@ See how it's done below!
 library(MASS)
 data("Boston")
 boston_scaled <- as.data.frame(scale(Boston))
+boston_scaled$crim <- as.numeric(boston_scaled$crim)
 ```
 
 `@sample_code`
@@ -338,8 +339,6 @@ test_function("summary", incorrect_msg = "Did you use the summary() function on 
 test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
 
 test_function("table", incorrect_msg = "Did you look at the table of the new factor crime?")
-
-test_object("bins", incorrect_msg = "Did you create `bins` ?")
 
 test_error()
 
