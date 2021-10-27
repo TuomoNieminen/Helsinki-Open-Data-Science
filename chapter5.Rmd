@@ -97,6 +97,7 @@ With the `substr()` function we can extract a part of longer character object. W
 
 The `arrange()` function is also used for information purposes although it is not necessary for the analyses: it simply allows the final table to be ordered according to a variable (e.g. Time or week number to respect the chronology).
 
+
 `@instructions`
 - Factor variables treatment and subject
 - Use `pivot_longer()` to convert BPRS to a long form
