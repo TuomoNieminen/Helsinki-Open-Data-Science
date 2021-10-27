@@ -336,9 +336,13 @@ boston_scaled <- data.frame(boston_scaled, crime)
 test_function("summary", incorrect_msg = "Did you use the summary() function on the crim variable in boston_scaled data?")
 
 test_function("cut", args = "labels", incorrect_msg = "Did you set the labels to cut()?")
+
+test_function("table", incorrect_msg = "Did you look at the table of the new factor crime?")
+
 test_object("bins", incorrect_msg = "Did you create `bins` ?")
 
 test_error()
+
 success_msg("Nicely done! By the way, sometimes there are functions with the same name in different R packages (like `select` in **dplyr** and **MASS**). You can choose which one to use by adding the name of the package with two colons in front of the function call (for example `dplyr::select()`).")
 ```
 
