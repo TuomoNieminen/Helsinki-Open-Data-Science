@@ -89,7 +89,7 @@ skills: 1
 
 To be able to study the possible differences in the bprs value between the treatment groups and the possible change of the value in time, we don't want the weeks to be individual variables. The `pivot_longer()` function is used to transform the dataset accordingly.
 
-The `pivot_longer()` function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about pivot_longer in the package documentation with ?pivot_longer or in the dplyr cheatsheet.
+The `pivot_longer()` function takes multiple columns and collapses them into key-value pairs, so that we can have the weeks as values of a new variable week. You can find more information about pivot_longer in the package documentation with `?pivot_longer` or in the dplyr cheatsheet.
 
 Our `weeks` are in a bit inconvenient form as characters, so we somehow need to extract the week numbers from the character vector `weeks`.
 
