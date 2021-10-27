@@ -105,7 +105,7 @@ The `arrange()` function is also used for information purposes although it is no
 - Glimpse the data using `glimpse()`
 
 `@hint`
-- Use `pivot_longer()` to convert the data to a long form
+- Use `pivot_longer()` to convert the data to a long form (the cols arguments ask for the variables to be kept *i.e.* not pivoted) 
 - Use `mutate()` and `substr()` to create `week`
 
 `@pre_exercise_code`
