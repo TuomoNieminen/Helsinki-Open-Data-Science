@@ -785,7 +785,7 @@ mca <- MCA("change me!", graph = FALSE)
 
 
 # visualize MCA
-plot("change me!", invisible=c("ind"))
+plot("change me!", invisible=c("ind"), habillage = "quali", graph.type = "classic")
 
 ```
 
